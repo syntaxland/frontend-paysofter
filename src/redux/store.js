@@ -1,0 +1,81 @@
+// store.js
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+import { userTransactionReducer } from "./reducers/transactionReducers";
+import { userPayoutReducer } from "./reducers/payoutReducers";
+
+import {
+  userLoginReducers,
+  userRegisterReducers,
+} from "./reducers/userReducers";
+// import { userRegisterReducers } from "./reducers/userReducers";
+import {
+  fundAccountReducer,
+  getUserAccountBalanceReducer,
+  userAccountFundListReducer,
+} from "./reducers/AccountFundReducers";
+import {
+  getUserProfileReducer,
+  changePasswordReducer,
+  updateUserProfileReducer,
+  deleteUserProfileReducer,
+  updateUserAvatarReducer,
+  sendPasswordResetLinkReducer,
+  resetPasswordReducer,
+} from "./reducers/userProfileReducers";
+
+import {
+  emailOtpSendReducer,
+  emailOtpVerifyReducer,
+} from "./reducers/emailOtpReducers";
+
+import { creditPointBalanceReducer, creditPointRequestCreateReducer } from "./reducers/creditPointReducers";
+
+import { referralReducer } from "./reducers/promoReducer";
+import { orderListReducer } from "./reducers/orderReducers";
+const reducer = combineReducers({
+  userLogin: userLoginReducers,
+  userRegister: userRegisterReducers,
+
+  emailOtpSend: emailOtpSendReducer,
+  emailOtpVerify: emailOtpVerifyReducer,
+
+  userProfile: getUserProfileReducer,
+  updateProfile: updateUserProfileReducer,
+  userChangePassword: changePasswordReducer,
+  deleteProfile: deleteUserProfileReducer,
+  updateUserAvatar: updateUserAvatarReducer,
+  sendPasswordResetLink: sendPasswordResetLinkReducer,
+  resetPassword: resetPasswordReducer,
+  referral: referralReducer,
+
+  userTransactions: userTransactionReducer,
+  userPayouts: userPayoutReducer,
+
+  fundAccountState: fundAccountReducer,
+  userAccountBalanceState: getUserAccountBalanceReducer,
+  userAccountFundListState: userAccountFundListReducer,
+  creditPointBal: creditPointBalanceReducer,
+  creditPointRequestCreate: creditPointRequestCreateReducer,
+
+  orderList: orderListReducer,
+});
+
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
+
+const initialState = {
+  userLogin: { userInfo: userInfoFromStorage },
+};
+
+const middleware = [thunk];
+const store = createStore(
+  reducer,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
+
+export default store;

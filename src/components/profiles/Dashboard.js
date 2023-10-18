@@ -1,0 +1,322 @@
+// Dashboard.js
+import React, { useState } from "react";
+import { Row, Col, Container, Button } from "react-bootstrap";
+// import { Link} from "react-router-dom";
+// import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+// import { login } from "../../redux/actions/userActions";
+import UserProfile from "./UserProfile";
+import Transactions from "./Transactions";
+import Payouts from "./Payouts";
+import UserDashboard from "./UserDashboard";
+// import MessageInbox from "./MessageInbox";
+// import CreditPoint from "./CreditPoint";
+import AccountFunds from "./AccountFunds";
+import Referrals from "./Referrals";
+import Webhooks from "./Webhooks";
+import ApiEndPoints from "./ApiEndPoints";
+import Subscriptions from "./Subscriptions";
+
+function Dashboard({ history }) {
+  // const userLogin = useSelector((state) => state.userLogin);
+  // const { userInfo } = userLogin;
+  // const dispatch = useDispatch();
+
+  const [activeTab, setActiveTab] = useState("user-dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const handleSidebarToggle = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const handleAdminDashboard = () => {
+    history.push("/admin-dashboard");
+  };
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "profile":
+        return <UserProfile />;
+
+      case "transactions":
+        return <Transactions />;
+
+      case "payouts":
+        return <Payouts />;
+
+      case "webhooks":
+        return <Webhooks />;
+
+      case "api-endpoints":
+        return <ApiEndPoints />;
+
+      case "subscriptions":
+        return <Subscriptions />;
+
+      // case "reviews":
+      //   return <Reviews />;
+
+      // case "message-inbox":
+      //   return <MessageInbox />;
+
+      // case "credit-point":
+      //   return <CreditPoint />;
+
+      // case "recommended-products":
+      //   return <RecommendedProducts />;
+
+      case "account-funds":
+        return <AccountFunds />;
+
+      case "referrals":
+        return <Referrals />;
+
+      default:
+        return <UserDashboard />;
+    }
+  };
+
+  return (
+    <Container fluid>
+      <Row>
+        <Col xs={sidebarOpen ? 3 : 1} className="sidebar">
+          <Button
+            variant="link"
+            className="sidebar-toggle-button"
+            onClick={handleSidebarToggle}
+          >
+            {/* <FontAwesomeIcon icon={sidebarOpen ? faBars : faBars} /> */}
+            <FontAwesomeIcon icon={sidebarOpen ? faTimes : faBars} />
+          </Button>
+
+          {sidebarOpen && (
+            <div className="sidebar-content">
+              <div>
+                <Button
+                  variant={
+                    activeTab === "user-dashboard" ? "info" : "outline-info"
+                  }
+                  className="sidebar-link"
+                  // activeClassName="active-link"
+                  onClick={() => handleTabChange("user-dashboard")}
+                >
+                  <i className="fa fa-dashboard"></i> Dashboard
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={activeTab === "profile" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("profile")}
+                >
+                  <i className="fas fa-user"></i> Profile
+                </Button>
+              </div>
+              <div>
+                <Button
+                  variant={
+                    activeTab === "transactions" ? "info" : "outline-info"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("transactions")}
+                >
+                  <i className="fa fa-cart-arrow-down"></i> Transactions
+                </Button>
+              </div>
+              {/* <div>
+                <Button
+                  variant={
+                    activeTab === "order-items" ? "info" : "outline-info"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("order-items")}
+                >
+                  <i className="fa fas fa-cart-plus"></i> Purchased Items
+                </Button>
+              </div> */}
+              <div>
+                <Button
+                  variant={activeTab === "payouts" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("payouts")}
+                >
+                  <i className="fas fa-credit-card"></i> Payouts
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={activeTab === "referrals" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("referrals")}
+                >
+                  <i className="fa fa-user-plus"></i> Referrals
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "credit-point" ? "info" : "outline-info"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("credit-point")}
+                >
+                  <i className="fas fa-sack-dollar"></i> Credit Point
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "account-funds" ? "info" : "outline-info"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("account-funds")}
+                >
+                  <i className="fa fa-credit-card"></i> Acccount Funds 
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "message-inbox" ? "info" : "outline-info"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("message-inbox")}
+                >
+                  <i className="fa fa-message"></i> Inbox
+                </Button>
+              </div>
+              
+
+              <div>
+                <Button
+                  variant={activeTab === "offers" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("offers")}
+                >
+                  <i className="fa fa-gift"></i> Offers
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={activeTab === "subscriptions" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("subscriptions")}
+                >
+                  <i className="fa fa-plus"></i> Subscriptions
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={activeTab === "live-chat" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("live-chat")}
+                >
+                  <i className="fas fa-comments"></i> Live Chat
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={activeTab === "api-endpoints" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("api-endpoints")}
+                >
+                  <i className="fas fa-code"></i> API EndPoints
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={activeTab === "webhooks" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("webhooks")}
+                >
+                  <i className="fas fa-codepen"></i> SDK & Webhooks
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={activeTab === "ticket" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("ticket")}
+                >
+                  <i className="fa fa-ticket"></i> Support Ticket
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={activeTab === "feedback" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("feedback")}
+                >
+                  <i className="fas fa-gear"></i> Feedback
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={activeTab === "settings" ? "info" : "outline-info"}
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("settings")}
+                >
+                  <i className="fas fa-gear"></i> Settings
+                </Button>
+              </div>
+
+              {/* <div>
+                {userInfo.is_superuser ? (
+                  <div>
+                    <Button
+                      variant={
+                        activeTab === "admin-dashboard"
+                          ? "info"
+                          : "outline-info"
+                      }
+                      className="sidebar-link"
+                      onClick={() => handleAdminDashboard()}
+                    >
+                     <i className="fas fa-user-check"></i> Admin 
+                    </Button>
+                  </div>
+                ) : (
+                  <span>Not Admin</span>
+                )}
+              </div> */}
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "admin-dashboard" ? "info" : "outline-info"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleAdminDashboard()}
+                >
+                  <i className="fas fa-user-tag"></i> Admin Dashboard
+                </Button>
+              </div>
+            </div>
+          )}
+        </Col>
+        <Col xs={sidebarOpen ? 9 : 11} className="main-content">
+          {renderTabContent()}
+        </Col>
+      </Row>
+    </Container>
+  );
+}
+
+export default Dashboard;
