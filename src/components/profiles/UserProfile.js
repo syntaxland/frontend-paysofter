@@ -306,7 +306,7 @@ function UserProfile() {
                 <div>
                   <div>Referred Users: ()</div>
                   <div>Referral Link: {profile.referral_link}</div>
-                  <div>Referred Code: {profile.referral_code}</div>
+                  <div>Referral Code: {profile.referral_code}</div>
                   <div>
                     {" "}
                     <Button>Generate New Referral Link</Button>

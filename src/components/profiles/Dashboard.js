@@ -13,7 +13,7 @@ import UserDashboard from "./UserDashboard";
 // import MessageInbox from "./MessageInbox";
 // import CreditPoint from "./CreditPoint";
 import AccountFunds from "./AccountFunds";
-import Referrals from "./Referrals";
+// import Referrals from "./Referrals";
 import Webhooks from "./Webhooks";
 import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
@@ -73,8 +73,8 @@ function Dashboard({ history }) {
       case "account-funds":
         return <AccountFunds />;
 
-      case "referrals":
-        return <Referrals />;
+      // case "referrals":
+      //   return <Referrals />;
 
       default:
         return <UserDashboard />;
