@@ -7,7 +7,7 @@ import Message from "../Message";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../FormContainer"; 
 import { login } from "../../redux/actions/userActions";
-import GoogleLoginScreen from "./GoogleLoginScreen";
+// import GoogleLoginScreen from "./GoogleLoginScreen";
 
 function LoginScreen({ location }) {
   const [email, setEmail] = useState("");
@@ -21,7 +21,7 @@ function LoginScreen({ location }) {
   // const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { success, error, userInfo } = userLogin;
+  const { error, userInfo } = userLogin;
 
   // const handleGoogleLoginClick = () => {
   //   setShowGoogleLogin(true);
@@ -124,11 +124,11 @@ function LoginScreen({ location }) {
         {/* <Row className="py-3">
           <Col className="text-center">
             <Button variant="danger" className="rounded w-100" block>
-              Continue with Google
+            <i className="fab fa-google"></i> Continue with Google
             </Button> 
           </Col>
-        </Row> */}
-        <GoogleLoginScreen />
+        </Row>*/}
+        {/* <GoogleLoginScreen /> */}
 
         <Row className="py-3">
           <Col className="text-center">
