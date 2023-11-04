@@ -1,20 +1,15 @@
 // Webhooks.js
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
 
-import { Form, Button, Row, Col, Container, Accordion } from "react-bootstrap";
+import {Row, Col, Container, Accordion } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
 
 function Webhooks() {
-  const dispatch = useDispatch();
-
   const userProfile = useSelector((state) => state.userProfile);
   const { loading: profileLoading, error: profileError, profile } = userProfile;
   console.log("profile:", profile);
-
-  const history = useHistory();
 
   return (
     <Container Fluid>

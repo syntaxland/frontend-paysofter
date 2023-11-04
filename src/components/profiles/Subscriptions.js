@@ -1,20 +1,15 @@
 // Subscriptions.js
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-
-import { Form, Button, Row, Col, Container, Accordion } from "react-bootstrap";
+import React  from "react";
+import { useSelector } from "react-redux";
+import { Row, Col, Container, Accordion } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
 
 function Subscriptions() {
-  const dispatch = useDispatch();
 
   const userProfile = useSelector((state) => state.userProfile);
   const { loading: profileLoading, error: profileError, profile } = userProfile;
   console.log("profile:", profile);
-
-  const history = useHistory();
 
   return (
     <Container Fluid>
@@ -33,15 +28,11 @@ function Subscriptions() {
               <Accordion.Header>CableTV</Accordion.Header>
               <Accordion.Body>
                 <Row>
-                  <div className="text-center py-2">
-                    <h2></h2>
-                  </div>
+                  <div className="text-center py-2"></div>
                   <Col>DSTV</Col>
                   <Col>Star Time</Col>
                   <Col>GoTV</Col>
-                  <div className="text-center py-2">
-                    <h2></h2>
-                  </div>
+                  <div className="text-center py-2"></div>
                 </Row>
               </Accordion.Body>
             </Accordion.Item>
