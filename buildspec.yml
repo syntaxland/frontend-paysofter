@@ -11,7 +11,7 @@ phases:
       - npm install --legacy-peer-deps
   build:
     commands:
-      - echo "Building the React app..."
+      - echo "Building the React app..." 
       - npm run build
       # - tar -czvf build.tar.gz build/ 
   post_build:
@@ -20,12 +20,3 @@ phases:
     - aws s3 cp --debug --recursive ./build s3://paysofter.com/
     - aws cloudfront create-invalidation --distribution-id ERK5PD6OZ3TFE --path /\* 
   
-# artifacts:
-#   files:
-#     - '**/*'
-#   base-directory: build
-
-# cache:
-#   paths:
-#     - 'node_modules/**/'
-

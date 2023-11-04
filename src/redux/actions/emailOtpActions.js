@@ -10,20 +10,16 @@ import {
   EMAIL_OTP_RESEND_REQUEST, 
   EMAIL_OTP_RESEND_SUCCESS,
   EMAIL_OTP_RESEND_FAIL,
-} from "../constants/emailOtpConstants";
+} from "../constants/emailOtpConstants"; 
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export const sendEmailOtp =
-  (email, firstName) => async (dispatch, getState) => {
+  (email, firstName) => async (dispatch) => {
     try {
       dispatch({
         type: EMAIL_OTP_SEND_REQUEST,
       });
-
-      // const {
-      //   userLogin: { userInfo },
-      // } = getState();
 
       const config = {
         headers: {
@@ -33,15 +29,16 @@ export const sendEmailOtp =
 
       const body = JSON.stringify({ email, first_name: firstName });
 
-      await axios.post(`${API_URL}/api/send-email-otp/`, body, config);
+      const { data } = await axios.post(`${API_URL}/api/send-email-otp/`, body, config);
 
       dispatch({
         type: EMAIL_OTP_SEND_SUCCESS,
+        payload: data,
       });
     } catch (error) {
       dispatch({
         type: EMAIL_OTP_SEND_FAIL,
-        payload:
+        payload: 
           error.response && error.response.data.detail
             ? error.response.data.detail
             : error.message,

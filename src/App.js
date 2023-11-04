@@ -1,18 +1,18 @@
 // App.js
 import "./App.css";
 import React from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux"; 
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 // import OrderSuccessPage from "./components/OrderSuccessPage";
-// import HomeScreen from "./components/screens/HomeScreen";
+import HomeScreen from "./components/screens/HomeScreen";
 // import ProductScreen from "./components/screens/ProductScreen";
 // // import FavouritesScreen from "./components/profiles/FavouritesScreen";
 // import SearchScreen from "./components/screens/SearchScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
-import LoginScreen from "./components/screens/LoginScreen";
+import LoginScreen from "./components/screens/LoginScreen"; 
 import FundAccountScreen from "./components/screens/FundAccountScreen";
 // import CheckoutScreen from "./components/screens/CheckoutScreen";
 // import PaymentScreen from "./components/screens/PaymentScreen";
@@ -46,7 +46,7 @@ function App() {
         {/* <section class="container-fliud"> */}
         <Header />
         <main className=" py-3">
-          {/* <Route exact path="/" component={HomeScreen} /> */}
+          <Route exact path="/" component={HomeScreen} />
           <Route path="/login" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
           <Route path="/verify-email-otp" component={VerifyEmailOtpScreen} />

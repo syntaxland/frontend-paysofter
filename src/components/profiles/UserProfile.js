@@ -324,8 +324,9 @@ function UserProfile() {
                   </div>
                   <Col>Test API key: {profile.test_api_key}</Col>
                   <Col>Test Secret Key: {profile.test_api_secret_key}</Col>
+                  
                   <div className="text-center py-2">
-                    <h2>Test API keys</h2>
+                    <h2>Live API keys</h2>
                   </div>
 
                   <Col>Live API Key: {profile.live_api_key}</Col>
