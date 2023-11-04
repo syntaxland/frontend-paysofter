@@ -19,7 +19,6 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-flags-select": "^2.2.3",
-    "react-google-login": "^5.2.2",
     "react-paystack": "^4.0.3",
     "react-phone-number-input": "^3.3.0",
     "react-quill": "^2.0.0",
