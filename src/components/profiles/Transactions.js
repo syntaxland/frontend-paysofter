@@ -46,8 +46,8 @@ function Transactions() {
                 <tr>
                   <th>SN</th>
                   <th>Payment ID</th>
-                  <th>User</th>
-                  <th>Payer</th>
+                  <th>Seller</th>
+                  <th>Payer</th> 
                   <th>Amount</th>
                   <th>Payment Method</th>
                   <th>Currency</th>
