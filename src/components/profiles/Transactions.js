@@ -37,7 +37,7 @@ function Transactions() {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <>
+        <> 
           {currentItems.length === 0 ? (
             <div className="text-center py-3">Transactions appear here.</div>
           ) : (
