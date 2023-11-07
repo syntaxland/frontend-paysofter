@@ -10,6 +10,7 @@ import {
   NavDropdown,
   Form,
 } from "react-bootstrap";
+import { getUserProfile } from "../redux/actions/userProfileActions";
 import { logout } from "../redux/actions/userActions";
 import "./Header.css";
 
@@ -19,10 +20,10 @@ function Header() {
 
   const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
-  console.log("Header profile:", profile);
 
   const [keyword, setKeyword] = useState("");
   const [greeting, setGreeting] = useState("");
+  const [isAccountIdCopied, setIsAccountIdCopied] = useState(false);
   const history = useHistory();
 
   const dispatch = useDispatch();
@@ -39,6 +40,28 @@ function Header() {
     }
   };
 
+  // const formatAccountID = (accountID) => {
+  //   return accountID.match(/.{1,4}/g).join("-");
+  // };
+
+  const formatAccountID = (accountID) => {
+    if (accountID) {
+      return accountID.match(/.{1,4}/g).join("-");
+    }
+    return "";
+  };
+
+  // Function to copy the account ID to the clipboard
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    setIsAccountIdCopied(true);
+
+    // Reset the "Copied" message after a few seconds
+    setTimeout(() => {
+      setIsAccountIdCopied(false);
+    }, 3000);
+  };
+
   useEffect(() => {
     const currentHour = new Date().getHours();
     if (currentHour >= 5 && currentHour < 12) {
@@ -50,9 +73,14 @@ function Header() {
     }
   }, []);
 
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(getUserProfile());
+    }
+  }, [dispatch, userInfo]);
+
   return (
     <header>
-      {/* <Navbar className="custom-dark-blue" expand="md" sticky="top"> */}
       <Navbar
         bg="primary"
         variant="dark"
@@ -74,12 +102,12 @@ function Header() {
             >
               <Form.Control
                 type="search"
-                placeholder="Search "
+                placeholder="Search"
                 className="mr-auto ml-auto rounded"
                 aria-label="Search"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-              />{" "}
+              />
               <Button
                 variant="primary"
                 type="submit"
@@ -90,19 +118,18 @@ function Header() {
             </Form>
 
             <Nav className="mr-auto ml-auto">
-
-            {userInfo ? (
-              <Nav.Link as={Link} to="/dashboard">
-                {" "}
-                <i
-                  className="fas fa-dashboard"
-                  style={{ fontSize: "16px" }}
-                ></i>{" "}
-                Dashboard
-              </Nav.Link>
-              ):(<span>
-              
-              </span>)}
+              {userInfo ? (
+                <Nav.Link as={Link} to="/dashboard">
+                  {" "}
+                  <i
+                    className="fas fa-dashboard"
+                    style={{ fontSize: "16px" }}
+                  ></i>{" "}
+                  Dashboard
+                </Nav.Link>
+              ) : (
+                <span></span>
+              )}
 
               <Nav.Link>
                 <i
@@ -111,8 +138,6 @@ function Header() {
                 ></i>{" "}
                 <span>{greeting}</span>
               </Nav.Link>
-
-             
 
               {userInfo ? (
                 <>
@@ -142,13 +167,34 @@ function Header() {
                   ></i>
                 </Nav.Link>
               )}
-              <NavDropdown>
-                <Nav.Link as={Link} to="#">
-                  {" "}
-                  Settings
-                </Nav.Link>
-                <NavDropdown.Divider />
-              </NavDropdown>
+              <div>
+                <NavDropdown>
+                  <div>
+                    Account ID: {formatAccountID(profile.account_id)}
+                    <Button
+                      variant="outline"
+                      className="rounded"
+                      size="sm"
+                      onClick={() => copyToClipboard(profile.account_id)}
+                    >
+                      {isAccountIdCopied ? (
+                        <span>
+                          <i className="fa fa-check"></i> Copied
+                        </span>
+                      ) : (
+                        <span>
+                          <i className="fa fa-copy"></i>
+                        </span>
+                      )}
+                    </Button>
+                    <NavDropdown.Divider />
+                    <Nav.Link as={Link} to="/dashboard">
+                      {" "}
+                      Settings
+                    </Nav.Link>
+                  </div>
+                </NavDropdown>
+              </div>
 
               {!userInfo ? (
                 <Nav.Link as={Link} to="/login">
@@ -173,3 +219,184 @@ function Header() {
 }
 
 export default Header;
+
+// import React, { useState, useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { Link, useHistory } from "react-router-dom";
+// import {
+//   Navbar,
+//   Nav,
+//   Container,
+//   Button,
+//   NavDropdown,
+//   Form,
+// } from "react-bootstrap";
+// import { getUserProfile } from "../redux/actions/userProfileActions";
+
+// import { logout } from "../redux/actions/userActions";
+// import "./Header.css";
+
+// function Header() {
+//   const userLogin = useSelector((state) => state.userLogin);
+//   const { userInfo } = userLogin;
+
+//   const userProfile = useSelector((state) => state.userProfile);
+//   const { profile } = userProfile;
+//   console.log("Header profile:", profile);
+
+//   const [keyword, setKeyword] = useState("");
+//   const [greeting, setGreeting] = useState("");
+//   const history = useHistory();
+
+//   const dispatch = useDispatch();
+//   const logoutHandler = () => {
+//     dispatch(logout());
+//   };
+
+//   const searchHandler = (e) => {
+//     e.preventDefault();
+//     if (keyword.trim()) {
+//       history.push(`/products/search/${keyword}`);
+//     } else {
+//       history.push("/");
+//     }
+//   };
+
+//   useEffect(() => {
+//     const currentHour = new Date().getHours();
+//     if (currentHour >= 5 && currentHour < 12) {
+//       setGreeting(`Good morning!`);
+//     } else if (currentHour >= 12 && currentHour < 18) {
+//       setGreeting(`Good afternoon!`);
+//     } else {
+//       setGreeting(`Good evening!`);
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     if (userInfo) {
+//       dispatch(getUserProfile());
+//     }
+//   }, [dispatch, userInfo]);
+
+//   return (
+//     <header>
+//       {/* <Navbar className="custom-dark-blue" expand="md" sticky="top"> */}
+//       <Navbar
+//         bg="primary"
+//         variant="dark"
+//         className="custom-dark-blue"
+//         expand="md"
+//         sticky="top"
+//       >
+//         <Container fluid>
+//           <Navbar.Brand as={Link} to="/">
+//             <i className="fas fa-home" style={{ fontSize: "16px" }}></i>{" "}
+//             Paysofter
+//           </Navbar.Brand>
+//           <Navbar.Toggle aria-controls="navbarCollapse" />
+//           <Navbar.Collapse id="navbarCollapse">
+//             <Form
+//               className="searchBarContainer d-flex flex-grow-1 mt-2"
+//               onSubmit={searchHandler}
+//               inline={!userInfo}
+//             >
+//               <Form.Control
+//                 type="search"
+//                 placeholder="Search "
+//                 className="mr-auto ml-auto rounded"
+//                 aria-label="Search"
+//                 value={keyword}
+//                 onChange={(e) => setKeyword(e.target.value)}
+//               />{" "}
+//               <Button
+//                 variant="primary"
+//                 type="submit"
+//                 className="mr-auto ml-auto rounded"
+//               >
+//                 <i className="fas fa-search" style={{ fontSize: "16px" }}></i>
+//               </Button>
+//             </Form>
+
+//             <Nav className="mr-auto ml-auto">
+//               {userInfo ? (
+//                 <Nav.Link as={Link} to="/dashboard">
+//                   {" "}
+//                   <i
+//                     className="fas fa-dashboard"
+//                     style={{ fontSize: "16px" }}
+//                   ></i>{" "}
+//                   Dashboard
+//                 </Nav.Link>
+//               ) : (
+//                 <span></span>
+//               )}
+
+//               <Nav.Link>
+//                 <i
+//                   className="fas fa-hand-peace"
+//                   style={{ fontSize: "16px" }}
+//                 ></i>{" "}
+//                 <span>{greeting}</span>
+//               </Nav.Link>
+
+//               {userInfo ? (
+//                 <>
+//                   <Nav.Link>
+//                     {userInfo.first_name
+//                       ? userInfo.first_name.charAt(0).toUpperCase() +
+//                         userInfo.first_name.slice(1)
+//                       : ""}{" "}
+//                     <img
+//                       src={profile.avatar}
+//                       alt="Avatar"
+//                       className="avatar"
+//                       style={{
+//                         width: "25px",
+//                         height: "25px",
+//                         objectFit: "cover",
+//                         borderRadius: "50%",
+//                       }}
+//                     />
+//                   </Nav.Link>
+//                 </>
+//               ) : (
+//                 <Nav.Link>
+//                   <i
+//                     className="fa fa-user-circle"
+//                     style={{ fontSize: "16px" }}
+//                   ></i>
+//                 </Nav.Link>
+//               )}
+//               <NavDropdown>
+//                 Account ID: {profile.account_id}
+//                 <NavDropdown.Divider />
+//                 <Nav.Link as={Link} to="/dashboard">
+//                   {" "}
+//                   Settings
+//                 </Nav.Link>
+//               </NavDropdown>
+
+//               {!userInfo ? (
+//                 <Nav.Link as={Link} to="/login">
+//                   Login{" "}
+//                   <i className="fa fa-sign-in" style={{ fontSize: "16px" }}></i>
+//                 </Nav.Link>
+//               ) : (
+//                 <Nav.Link onClick={logoutHandler}>
+//                   Logout{" "}
+//                   <i
+//                     className="fas fa-sign-out-alt"
+//                     style={{ fontSize: "16px" }}
+//                   ></i>
+//                 </Nav.Link>
+//               )}
+//             </Nav>
+//           </Navbar.Collapse>
+//         </Container>
+//       </Navbar>
+//     </header>
+//   );
+// }
+
+// export default Header;

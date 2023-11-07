@@ -316,7 +316,7 @@ function UserProfile() {
             </Accordion.Item>
 
             <Accordion.Item eventKey="4">
-              <Accordion.Header>API Endpoints</Accordion.Header>
+              <Accordion.Header>API Endpoints</Accordion.Header> 
               <Accordion.Body>
                 <Row>
                   <div className="text-center py-2">
