@@ -8,8 +8,8 @@ import {
   USER_ACCOUNT_FUND_BALANCE_SUCCESS,
   USER_ACCOUNT_FUND_BALANCE_FAIL,
   USER_ACCOUNT_FUND_LIST_REQUEST,
-USER_ACCOUNT_FUND_LIST_SUCCESS,
-USER_ACCOUNT_FUND_LIST_FAIL,
+  USER_ACCOUNT_FUND_LIST_SUCCESS,
+  USER_ACCOUNT_FUND_LIST_FAIL,
 } from "../constants/AccountFundConstants";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -42,6 +42,8 @@ export const fundUserAccount =
         type: USER_FUND_ACCOUNT_SUCCESS,
         payload: data,
       });
+      window.location.href = "/dashboard";
+      window.location.reload();
     } catch (error) {
       dispatch({
         type: USER_FUND_ACCOUNT_FAIL,

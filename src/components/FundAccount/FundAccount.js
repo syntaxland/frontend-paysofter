@@ -1,34 +1,22 @@
-// FundAccountScreen.js
+// FundAccount.js
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { fundUserAccount } from "../../redux/actions/AccountFundActions";
 import Message from "../Message";
 import Loader from "../Loader";
+import FundAccountButton from "./FundAccountButton";
 
-const FundAccountScreen = ({ history }) => {
-  const dispatch = useDispatch();
-
+const FundAccount = ({ history }) => {
   const fundAccountState = useSelector((state) => state.fundAccountState);
   const { loading, success, error } = fundAccountState;
 
   const [currency, setCurrency] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [paymentProvider, setPaymentProvider] = useState("");
   const [amount, setAmount] = useState(0);
+  const [showFundAccountButton, setShowFundAccountButton] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    const fundAccountData = {
-      currency: currency,
-      payment_method: paymentMethod,
-      payment_provider: paymentProvider,
-      amount: amount,
-    };
-    console.log("fundAccountData:", fundAccountData);
-
-    dispatch(fundUserAccount(fundAccountData));
+    setShowFundAccountButton(true);
   };
 
   useEffect(() => {
@@ -42,6 +30,14 @@ const FundAccountScreen = ({ history }) => {
 
   return (
     <Container>
+      {showFundAccountButton && (
+        <FundAccountButton
+          amount={amount}
+          currency={currency}
+          showFundAccountButton={showFundAccountButton}
+          setShowFundAccountButton={setShowFundAccountButton}
+        />
+      )}
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
           <h2 className="py-3 text-center">Fund Account</h2>
@@ -55,37 +51,14 @@ const FundAccountScreen = ({ history }) => {
             <Form.Group controlId="currency">
               <Form.Label>Currency</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Enter currency"
+                as="select"
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                required
-                maxLength={30}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="paymentMethod">
-              <Form.Label>Payment Method</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter payment method"
-                value={paymentMethod}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-                required
-                maxLength={30}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="paymentProvider">
-              <Form.Label>Payment Provider</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter payment provider"
-                value={paymentProvider}
-                onChange={(e) => setPaymentProvider(e.target.value)}
-                required
-                maxLength={30}
-              />
+                disabled
+              >
+                <option value="NGN">NGN</option>
+                <option value="USD">USD</option>
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="amount">
@@ -109,4 +82,4 @@ const FundAccountScreen = ({ history }) => {
   );
 };
 
-export default FundAccountScreen;
+export default FundAccount;

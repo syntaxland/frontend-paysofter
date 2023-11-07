@@ -13,7 +13,7 @@ import HomeScreen from "./components/screens/HomeScreen";
 // import SearchScreen from "./components/screens/SearchScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
 import LoginScreen from "./components/screens/LoginScreen"; 
-import FundAccountScreen from "./components/screens/FundAccountScreen";
+import FundAccount from "./components/FundAccount/FundAccount";
 // import CheckoutScreen from "./components/screens/CheckoutScreen";
 // import PaymentScreen from "./components/screens/PaymentScreen";
 // import ShipmentScreen from "./components/screens/ShipmentScreen";
@@ -51,7 +51,7 @@ function App() {
           <Route path="/register" component={RegisterScreen} />
           <Route path="/verify-email-otp" component={VerifyEmailOtpScreen} />
           <Route path="/dashboard" component={Dashboard} />
-          <Route path="/fund-account" component={FundAccountScreen} />
+          <Route path="/fund-account" component={FundAccount} />
           <Route path="/credit-point-request/" component={CreditPointRequestScreen} /> 
           {/* <Route path="/admin-dashboard" component={AdminDashboard} /> */}
           {/* 

@@ -37,18 +37,32 @@ const VerifyEmailOtpScreen = () => {
     }
   }, [success, history]);
 
+  // useEffect(() => {
+  //   let timer;
+  //   if (countdown > 0 && resendDisabled) {
+  //     timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+  //   } else if (!resendDisabled) {
+  //     setCountdown(60);
+  //   }
+
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [countdown, resendDisabled]);
+
   useEffect(() => {
     let timer;
     if (countdown > 0 && resendDisabled) {
       timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    } else if (countdown === 0 && resendDisabled) {
+      setResendDisabled(false); 
     } else if (!resendDisabled) {
       setCountdown(60);
     }
-
     return () => {
       clearTimeout(timer);
     };
-  }, [countdown, resendDisabled]);
+  }, [countdown, resendDisabled])
 
   const handleVerifyEmailOtp = () => {
     dispatch(verifyEmailOtp(otp));
@@ -119,11 +133,11 @@ const VerifyEmailOtpScreen = () => {
                 </Button>
               </div>
             </Form>
-            <Form onSubmit={handleResendEmailOtp}>
-              <Button
+            <Button
                 variant="link"
                 type="submit"
                 disabled={resendDisabled || resendLoading}
+                onClick={handleResendEmailOtp}
               >
                 {resendLoading
                   ? "Resending OTP..."
@@ -131,7 +145,6 @@ const VerifyEmailOtpScreen = () => {
                   ? `Resend OTP (${countdown}sec)`
                   : "Resend OTP"}
               </Button>
-            </Form>
           </div>
         </Col>
       </Row>
