@@ -71,7 +71,7 @@ function Header() {
     setSecurityCodeVisible(!securityCodeVisible);
   };
 
-  const securityCode = Math.floor(1000 + Math.random() * 9000);
+  // const securityCode = Math.floor(1000 + Math.random() * 9000);
 
   useEffect(() => {
     const currentHour = new Date().getHours();
@@ -234,13 +234,13 @@ function Header() {
                             )}
                           </Button>
                           Security Code:{" "}
-                          {securityCodeVisible ? securityCode : "****"}
+                          {securityCodeVisible ? profile.security_code : "****"}
                         </span>
                         <Button
                           variant="outline"
                           className="rounded"
                           size="sm"
-                          onClick={() => copyToClipboardSecCode(securityCode)}
+                          onClick={() => copyToClipboardSecCode(profile.security_code)}
                         >
                           {isSecurityCodeCopied ? (
                             <span>

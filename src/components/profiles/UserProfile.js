@@ -28,6 +28,9 @@ function UserProfile() {
   const { userInfo } = userLogin;
 
   const [successMessage, setSuccessMessage] = useState("");
+  const [isSecurityCodeCopied, setIsSecurityCodeCopied] = useState(false);
+  const [securityCodeVisible, setSecurityCodeVisible] = useState(false);
+
   const history = useHistory();
 
   // const handleAvatarChange = (e) => {
@@ -51,19 +54,6 @@ function UserProfile() {
       dispatch(getUserProfile());
     }
   }, [dispatch, userInfo]);
-
-  // useEffect(() => {
-  //   if (userProfile && userProfile.profile) {
-  //     const profile = userProfile.profile;
-  //     setUserData({
-  //       ...userData,
-  //       first_name: profile.first_name,
-  //       last_name: profile.last_name,
-  //       phone_number: profile.phone_number,
-  //       avatar: profile.avatar,
-  //     });
-  //   }
-  // }, [userProfile, userData]);
 
   useEffect(() => {
     if (userProfile && userProfile.profile) {
@@ -139,6 +129,18 @@ function UserProfile() {
     history.push("/change-password");
   };
 
+  const copyToClipboardSecCode = (text) => {
+    navigator.clipboard.writeText(text);
+    setIsSecurityCodeCopied(true);
+    setTimeout(() => {
+      setIsSecurityCodeCopied(false);
+    }, 3000);
+  };
+
+  const toggleSecurityCodeVisibility = () => {
+    setSecurityCodeVisible(!securityCodeVisible);
+  };
+
   return (
     <Container Fluid>
       <Row>
@@ -197,6 +199,55 @@ function UserProfile() {
                       value={profile.account_id}
                       readOnly
                     />
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>Securty Code</Form.Label>
+                    <Form.Control
+                      type={securityCodeVisible ? "text" : "password"} 
+                      name="first_name"
+                      value={profile.security_code}
+                      readOnly
+                    />
+                    <div>
+                      <span>
+                        <Button
+                          variant="outline"
+                          className="rounded"
+                          size="sm"
+                          onClick={toggleSecurityCodeVisibility}
+                        >
+                          {securityCodeVisible ? (
+                            <span>
+                              <i className="fa fa-eye-slash"></i> Hide
+                            </span>
+                          ) : (
+                            <span>
+                              <i className="fa fa-eye"></i> Show
+                            </span>
+                          )}
+                        </Button>
+                        {/* {securityCodeVisible ? profile.security_code : "****"} */}
+                      </span>
+                      <Button
+                        variant="outline"
+                        className="rounded"
+                        size="sm"
+                        onClick={() =>
+                          copyToClipboardSecCode(profile.security_code)
+                        }
+                      >
+                        {isSecurityCodeCopied ? (
+                          <span>
+                            <i className="fa fa-check"></i> Copied
+                          </span>
+                        ) : (
+                          <span>
+                            <i className="fa fa-copy"></i> Copy
+                          </span>
+                        )}
+                      </Button>
+                    </div>
                   </Form.Group>
 
                   <Form.Group>
@@ -316,7 +367,7 @@ function UserProfile() {
             </Accordion.Item>
 
             <Accordion.Item eventKey="4">
-              <Accordion.Header>API Endpoints</Accordion.Header> 
+              <Accordion.Header>API Endpoints</Accordion.Header>
               <Accordion.Body>
                 <Row>
                   <div className="text-center py-2">
@@ -324,7 +375,7 @@ function UserProfile() {
                   </div>
                   <Col>Test API key: {profile.test_api_key}</Col>
                   <Col>Test Secret Key: {profile.test_api_secret_key}</Col>
-                  
+
                   <div className="text-center py-2">
                     <h2>Live API keys</h2>
                   </div>

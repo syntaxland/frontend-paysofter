@@ -262,7 +262,7 @@ function RegisterScreen({ location, history }) {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="password">
+          <Form.Group controlId="password"> 
             <Form.Label>
               <i className="fas fa-key"></i> Password
             </Form.Label>
