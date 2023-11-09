@@ -112,7 +112,7 @@ function LoginScreen({ location }) {
               <Button
                 className="mt-3 rounded w-100"
                 type="submit"
-                variant="success"
+                variant="primary"
                 block
               >
                 Login <i className="fa fa-sign-in"></i>

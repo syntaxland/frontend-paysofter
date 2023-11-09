@@ -1,7 +1,18 @@
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Modal, Button } from "react-bootstrap";
+import OtpDeactivateAccountFund from "./settings/OtpDeactivateAccountFund";
 
 function Footer() {
+  const [showSetMaxFund, setShowSetMaxFund] = useState(false);
+
+  const handleSetMaxFundOpen = () => {
+    setShowSetMaxFund(true);
+  };
+
+  const handleSetMaxFundClose = () => {
+    setShowSetMaxFund(false);
+  };
+
   return (
     // <footer className="text-light footer custom-dark-blue">
     <footer className="bg-primary text-light footer custom-dark-blue">
@@ -33,8 +44,8 @@ function Footer() {
           <Col className="text-muted py-1 text-center">
             <ul className="">
               <strong>Offices:</strong> Lagos (<strong>Coming soon:</strong> San
-              Francisco, Ontario, London, Dubai, Mumbai, Ghana, Johannesburg, Sidney,
-              Brazil, Kanye)
+              Francisco, Ontario, London, Dubai, Mumbai, Ghana, Johannesburg,
+              Sidney, Brazil, Kanye)
               {/* <li>Ontario</li>
               <li>London</li>
               <li>Dubai</li>
@@ -49,6 +60,35 @@ function Footer() {
         <Row>
           <Col className="text-center py-1">
             &copy; Paysofter Inc. | Powered by SoftGlobal | +2349066167293
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-end">
+            <p>
+              Lost access to your Account Fund?{" "}
+              <Button
+                variant="danger"
+                onClick={handleSetMaxFundOpen}
+                title="Set Account Fund active or locked."
+              >
+                <i
+                  className="fas fa-sack-dollar"
+                  style={{ fontSize: "18px" }}
+                ></i>{" "}
+                Deactivate
+              </Button>
+            </p>
+
+            <Modal show={showSetMaxFund} onHide={handleSetMaxFundClose}>
+              <Modal.Header closeButton>
+                <Modal.Title className="text-center w-100 py-2">
+                  Deactivate Account Fund
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {showSetMaxFund && <OtpDeactivateAccountFund />}
+              </Modal.Body>
+            </Modal>
           </Col>
         </Row>
       </Container>

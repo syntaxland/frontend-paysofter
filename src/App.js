@@ -38,7 +38,7 @@ import Dashboard from "./components/profiles/Dashboard";
 import ToggleAccountSettings from "./components/settings/ToggleAccountSettings";
 import MaxWithdrawalSettings from "./components/settings/MaxWithdrawalSettings";
 import Settings from "./components/settings/Settings";
-
+import OtpDeactivateAccountFund from "./components/settings/OtpDeactivateAccountFund";
 
 function App() {
   // const userLogin = useSelector((state) => state.userLogin);
@@ -62,6 +62,7 @@ function App() {
           <Route path="/settings" component={Settings} />
           <Route path="/set-max-fund" component={MaxWithdrawalSettings} />
           <Route path="/toggle-fund" component={ToggleAccountSettings} />
+          <Route path="/otp-deactivate-account-fund" component={OtpDeactivateAccountFund} />
           
           {/* <Route path="/admin-dashboard" component={AdminDashboard} /> */}
           {/* 

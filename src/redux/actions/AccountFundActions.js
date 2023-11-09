@@ -142,6 +142,46 @@ export const toggleAccountFund = (toggleData) => async (dispatch, getState) => {
   }
 };
 
+export const deactivateAccountFund = (amountData) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SET_MAX_FUND_WITHDRAWAL_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `${API_URL}/api/otp-account-fund-deactivation/`,
+      amountData,
+      config
+    );
+
+    dispatch({
+      type: SET_MAX_FUND_WITHDRAWAL_SUCCESS,
+      payload: data,
+    });
+    // window.location.href = "/dashboard";
+    window.location.reload();
+  } catch (error) {
+    dispatch({
+      type: SET_MAX_FUND_WITHDRAWAL_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
 export const getUserAccountFundBalance = () => async (dispatch, getState) => {
   try {
     dispatch({
