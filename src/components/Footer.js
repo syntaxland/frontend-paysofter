@@ -57,13 +57,9 @@ function Footer() {
             </ul>
           </Col>
         </Row>
+        
         <Row>
-          <Col className="text-center py-1">
-            &copy; Paysofter Inc. | Powered by SoftGlobal | +2349066167293
-          </Col>
-        </Row>
-        <Row>
-          <Col className="d-flex justify-content-end">
+          <Col className="d-flex justify-content-center text-center py-2">
             <p>
               Lost access to your Account Fund?{" "}
               <Button
@@ -89,6 +85,11 @@ function Footer() {
                 {showSetMaxFund && <OtpDeactivateAccountFund />}
               </Modal.Body>
             </Modal>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="text-center py-2">
+            &copy; Paysofter Inc. | Powered by SoftGlobal | +2349066167293
           </Col>
         </Row>
       </Container>
