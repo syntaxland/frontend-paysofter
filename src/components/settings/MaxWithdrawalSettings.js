@@ -66,6 +66,7 @@ function MaxWithdrawalSettings({ history }) {
               >
                 <option value="10000">Less than 10,000</option>
                 <option value="100000">Less than 100,000</option>
+                <option value="500000">Less than 500,000</option>
                 <option value="1000000">Less than 1,000,000</option>
                 <option value="2000000">Less than 2,000,000</option>
                 <option value="5000000">Less than 5,000,000</option>
