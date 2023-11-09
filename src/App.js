@@ -35,6 +35,11 @@ import VerifyEmailOtpScreen from "./components/screens/VerifyEmailOtpScreen";
 import Dashboard from "./components/profiles/Dashboard";
 // import AdminDashboard from "./components/admin/AdminDashboard";
 
+import ToggleAccountSettings from "./components/settings/ToggleAccountSettings";
+import MaxWithdrawalSettings from "./components/settings/MaxWithdrawalSettings";
+import Settings from "./components/settings/Settings";
+
+
 function App() {
   // const userLogin = useSelector((state) => state.userLogin);
   // const { userInfo } = userLogin;
@@ -53,6 +58,11 @@ function App() {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/fund-account" component={FundAccount} />
           <Route path="/credit-point-request/" component={CreditPointRequestScreen} /> 
+
+          <Route path="/settings" component={Settings} />
+          <Route path="/set-max-fund" component={MaxWithdrawalSettings} />
+          <Route path="/toggle-fund" component={ToggleAccountSettings} />
+          
           {/* <Route path="/admin-dashboard" component={AdminDashboard} /> */}
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
@@ -80,6 +90,8 @@ function App() {
 
           <Route path="/add-review/" component={AddReviewScreen} />
           <Route path="/edit-review/" component={EditReviewScreen} />
+
+
           */}
         </main>
         <Footer />

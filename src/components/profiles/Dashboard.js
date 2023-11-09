@@ -271,6 +271,7 @@ function Dashboard({ history }) {
                 <Button
                   variant={activeTab === "settings" ? "info" : "outline-info"}
                   className="sidebar-link"
+                  // onClick={history.push("/settings")}
                   onClick={() => handleTabChange("settings")}
                 >
                   <i className="fas fa-gear"></i> Settings

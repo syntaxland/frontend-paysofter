@@ -10,6 +10,13 @@ import {
   USER_ACCOUNT_FUND_LIST_REQUEST,
   USER_ACCOUNT_FUND_LIST_SUCCESS,
   USER_ACCOUNT_FUND_LIST_FAIL,
+
+  SET_MAX_FUND_WITHDRAWAL_REQUEST,
+  SET_MAX_FUND_WITHDRAWAL_SUCCESS,
+  SET_MAX_FUND_WITHDRAWAL_FAIL,
+  TOGGLE_ACCCOUNT_FUND_REQUEST,
+  TOGGLE_ACCCOUNT_FUND_SUCCESS,
+  TOGGLE_ACCCOUNT_FUND_FAIL,
 } from "../constants/AccountFundConstants";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -54,6 +61,86 @@ export const fundUserAccount =
       });
     }
   };
+
+export const setMaxWithdrawal = (amountData) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SET_MAX_FUND_WITHDRAWAL_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `${API_URL}/api/set-maximum-withdrawal/`,
+      amountData,
+      config
+    );
+
+    dispatch({
+      type: SET_MAX_FUND_WITHDRAWAL_SUCCESS,
+      payload: data,
+    });
+    // window.location.href = "/dashboard";
+    window.location.reload();
+  } catch (error) {
+    dispatch({
+      type: SET_MAX_FUND_WITHDRAWAL_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const toggleAccountFund = (toggleData) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TOGGLE_ACCCOUNT_FUND_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `${API_URL}/api/toggle-activate-account/`,
+      toggleData,
+      config
+    );
+
+    dispatch({
+      type: TOGGLE_ACCCOUNT_FUND_SUCCESS,
+      payload: data,
+    });
+    window.location.href = "/dashboard";
+    window.location.reload();
+  } catch (error) {
+    dispatch({
+      type: TOGGLE_ACCCOUNT_FUND_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const getUserAccountFundBalance = () => async (dispatch, getState) => {
   try {

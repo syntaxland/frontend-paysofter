@@ -189,13 +189,14 @@ function Header() {
               )}
 
               <div>
-                <NavDropdown>
+                <NavDropdown className="profile-dropdown custom-dropdown">
                   <div>
                     {userInfo ? (
                       <>
                         <span>
                           Account ID: {formatAccountID(profile.account_id)}
                         </span>
+
                         <Button
                           variant="outline"
                           className="rounded"
@@ -217,6 +218,8 @@ function Header() {
 
                         <NavDropdown.Divider />
                         <span>
+                          Security Code:{" "}
+                          {securityCodeVisible ? profile.security_code : "****"}
                           <Button
                             variant="outline"
                             className="rounded"
@@ -233,14 +236,16 @@ function Header() {
                               </span>
                             )}
                           </Button>
-                          Security Code:{" "}
-                          {securityCodeVisible ? profile.security_code : "****"}
+                          {/* Security Code:{" "}
+                          {securityCodeVisible ? profile.security_code : "****"} */}
                         </span>
                         <Button
                           variant="outline"
                           className="rounded"
                           size="sm"
-                          onClick={() => copyToClipboardSecCode(profile.security_code)}
+                          onClick={() =>
+                            copyToClipboardSecCode(profile.security_code)
+                          }
                         >
                           {isSecurityCodeCopied ? (
                             <span>
@@ -254,10 +259,15 @@ function Header() {
                         </Button>
 
                         <NavDropdown.Divider />
-                        <Nav.Link as={Link} to="/dashboard">
+                        <Nav.Link
+                          as={Link}
+                          to="/settings"
+                          className="dropdown-item"
+                        >
                           {" "}
-                          Settings
+                          <i className="fas fa-gear"></i> <span>Settings</span>
                         </Nav.Link>
+                        <NavDropdown.Divider />
                       </>
                     ) : (
                       <Nav.Link>
@@ -269,7 +279,11 @@ function Header() {
                               style={{ fontSize: "16px" }}
                             ></i>
                           </Nav.Link> */}
-                          <Nav.Link as={Link} to="/register">
+                          <Nav.Link
+                            as={Link}
+                            to="/register"
+                            className="dropdown-item"
+                          >
                             Register{" "}
                             <i
                               className="fa fa-sign-in"

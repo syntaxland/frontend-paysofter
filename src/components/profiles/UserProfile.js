@@ -30,6 +30,7 @@ function UserProfile() {
   const [successMessage, setSuccessMessage] = useState("");
   const [isSecurityCodeCopied, setIsSecurityCodeCopied] = useState(false);
   const [securityCodeVisible, setSecurityCodeVisible] = useState(false);
+  const [isAccountIdCopied, setIsAccountIdCopied] = useState(false);
 
   const history = useHistory();
 
@@ -137,9 +138,24 @@ function UserProfile() {
     }, 3000);
   };
 
+  const copyToClipboardAccountID = (text) => {
+    navigator.clipboard.writeText(text);
+    setIsAccountIdCopied(true);
+    setTimeout(() => {
+      setIsAccountIdCopied(false);
+    }, 3000);
+  };
+
   const toggleSecurityCodeVisibility = () => {
     setSecurityCodeVisible(!securityCodeVisible);
   };
+
+  // const formatAccountID = (accountID) => {
+  //   if (accountID) {
+  //     return accountID.match(/.{1,4}/g).join("-");
+  //   }
+  //   return "";
+  // };
 
   return (
     <Container Fluid>
@@ -197,14 +213,34 @@ function UserProfile() {
                       type="text"
                       name="first_name"
                       value={profile.account_id}
+                      // value={formatAccountID(profile.account_id)}
                       readOnly
                     />
+
+                    <Button
+                      variant="outline"
+                      className="rounded"
+                      size="sm"
+                      onClick={() =>
+                        copyToClipboardAccountID(profile.account_id)
+                      }
+                    >
+                      {isAccountIdCopied ? (
+                        <span>
+                          <i className="fa fa-check"></i> Copied
+                        </span>
+                      ) : (
+                        <span>
+                          <i className="fa fa-copy"></i> Copy
+                        </span>
+                      )}
+                    </Button>
                   </Form.Group>
 
                   <Form.Group>
                     <Form.Label>Securty Code</Form.Label>
                     <Form.Control
-                      type={securityCodeVisible ? "text" : "password"} 
+                      type={securityCodeVisible ? "text" : "password"}
                       name="first_name"
                       value={profile.security_code}
                       readOnly
@@ -255,7 +291,13 @@ function UserProfile() {
                     <Form.Control
                       type="text"
                       name="first_name"
-                      value={userData.first_name}
+                      // value={userData.first_name}
+                      value={
+                        userData.first_name
+                          ? userData.first_name.charAt(0).toUpperCase() +
+                            userData.first_name.slice(1)
+                          : ""
+                      }
                       onChange={handleInputChange}
                     />
                   </Form.Group>
@@ -265,7 +307,13 @@ function UserProfile() {
                     <Form.Control
                       type="text"
                       name="last_name"
-                      value={userData.last_name}
+                      // value={userData.last_name}
+                      value={
+                        userData.last_name
+                          ? userData.last_name.charAt(0).toUpperCase() +
+                            userData.last_name.slice(1)
+                          : ""
+                      }
                       onChange={handleInputChange}
                     />
                   </Form.Group>

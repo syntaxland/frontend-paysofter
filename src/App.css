@@ -1,11 +1,15 @@
 /* App.css */
 /* Header --------------------------------------------------------------------------------- */
 
-.custom-dark-blue {
+/* .custom-dark-blue {
   background-color: #001f3f; 
   color: #ffffff; 
 }
 
+.navbar-nav .nav-link { 
+  text-transform: none; 
+} */
+ 
 /* Dashboard --------------------------------------------------------------------------------- */
 
 .sidebar-content .sidebar-link  {

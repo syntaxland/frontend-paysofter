@@ -13,6 +13,8 @@ import {
 // import { userRegisterReducers } from "./reducers/userReducers";
 import {
   fundAccountReducer,
+  toggleAccountFundReducer,
+  setMaxFundReducer,
   getUserAccountBalanceReducer,
   userAccountFundListReducer,
 } from "./reducers/AccountFundReducers";
@@ -31,7 +33,10 @@ import {
   emailOtpVerifyReducer,
 } from "./reducers/emailOtpReducers";
 
-import { creditPointBalanceReducer, creditPointRequestCreateReducer } from "./reducers/creditPointReducers";
+import {
+  creditPointBalanceReducer,
+  creditPointRequestCreateReducer,
+} from "./reducers/creditPointReducers";
 
 import { referralReducer } from "./reducers/promoReducer";
 import { orderListReducer } from "./reducers/orderReducers";
@@ -55,6 +60,8 @@ const reducer = combineReducers({
   userPayouts: userPayoutReducer,
 
   fundAccountState: fundAccountReducer,
+  toggleAccountFundState: toggleAccountFundReducer,
+  setMaxFundState: setMaxFundReducer,
   userAccountBalanceState: getUserAccountBalanceReducer,
   userAccountFundListState: userAccountFundListReducer,
   creditPointBal: creditPointBalanceReducer,

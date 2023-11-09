@@ -1,8 +1,8 @@
 // UserDashboard.js
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Col, Row, Button } from "react-bootstrap";
+import { Col, Row, Button, Modal } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
 import { getCreditPointBalance } from "../../redux/actions/creditPointActions";
@@ -23,6 +23,7 @@ import {
   PointElement,
   Title,
 } from "chart.js";
+import ToggleAccountSettings from "../settings/ToggleAccountSettings";
 
 ChartJS.register(
   ArcElement,
@@ -61,16 +62,22 @@ function UserDashboard() {
     (state) => state.userAccountBalanceState
   );
   const { loading, error, accountFundBalance } = userAccountBalanceState;
-  console.log(
-    "AccountFund Balance:",
-    accountFundBalance,
-    "accountFundBalance.balance",
-    accountFundBalance?.balance
-  );
+  console.log("accountFundBalance:", accountFundBalance);
 
   const userPayouts = useSelector((state) => state.userPayouts);
   const { loading: payoutLoading, payouts, error: payoutError } = userPayouts;
   console.log("User Dashboard Payouts:", payouts);
+
+  const [showToggleAccountSettings, setShowToggleAccountSettings] =
+    useState(false);
+
+  const handleToggleFundOpen = () => {
+    setShowToggleAccountSettings(true);
+  };
+
+  const handleToggleFundClose = () => {
+    setShowToggleAccountSettings(false);
+  };
 
   useEffect(() => {
     dispatch(getCreditPointBalance());
@@ -124,8 +131,8 @@ function UserDashboard() {
     return totalPayment;
   };
 
-  const creditPoints = creditPointBalance.balance;
-  const accountBalance = accountFundBalance?.balance;
+  const creditPoints = creditPointBalance?.balance;
+  // const accountBalance = accountFundBalance?.balance;
 
   const withdrawCreditPoints =
     creditPoints >= 1000 ? (
@@ -150,6 +157,10 @@ function UserDashboard() {
   const handleFundAccount = () => {
     history.push("/fund-account");
   };
+
+  // const handleFundAccountSettings = () => {
+  //   history.push("/toggle-fund");
+  // };
 
   const paidPayoutRateData = {
     labels: [
@@ -226,25 +237,70 @@ function UserDashboard() {
               <Col>
                 <div>
                   <div className="bar-chart">
-                    <h2 className="py-3">
+                    <h2 className="py-2">
                       <i className="	fas fa-money-bill"></i> Total Transactions
                     </h2>
                     <div className="bar"></div>
-                  <strong>
+                    <strong>
                       NGN{" "}
                       {getTotalTransaction().toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
-                  </strong>
+                    </strong>
                   </div>
                 </div>
               </Col>
-              <Row className="py-3">
+              <Row className="py-2">
                 <Col>
-                  <h2 className="py-3">
-                    <i className="fas fa-wallet"></i> Account Fund Wallet
-                  </h2>
+                  <Row>
+                    <Col>
+                      <h2 className="py-2">
+                        <i className="fas fa-wallet"></i> Account Fund Wallet
+                      </h2>{" "}
+                      <strong>Staus:</strong>{" "}
+                      <Button
+                        variant="outline"
+                        onClick={handleToggleFundOpen}
+                        className="rounded"
+                        size="sm"
+                        title="Set Account Fund active or locked."
+                      >
+                        {accountFundBalance.is_active ? (
+                          <>
+                            <i
+                              className="fas fa-lock-open"
+                              style={{ fontSize: "16px", color: "green" }}
+                            ></i>{" "}
+                            Active
+                          </>
+                        ) : (
+                          <>
+                            <i
+                              className="fas fa-lock"
+                              style={{ fontSize: "16px", color: "red" }}
+                            ></i>{" "}
+                            Locked
+                          </>
+                        )}
+                      </Button>
+                    </Col>
+
+                    <Modal
+                      show={showToggleAccountSettings}
+                      onHide={handleToggleFundClose}
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title className="text-center w-100 py-2">
+                          Toggle Account Fund Status
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        {showToggleAccountSettings && <ToggleAccountSettings />}
+                      </Modal.Body>
+                    </Modal>
+                  </Row>
+
                   {/* <p>
                     Account Fund Balance: NGN 94,659.99
                     {
@@ -255,9 +311,16 @@ function UserDashboard() {
                       })
                     }
                   </p>  */}
-
                   <p>Account Fund Balance:</p>
                   <strong>
+                    NGN{" "}
+                    {accountFundBalance?.balance?.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </strong>
+
+                  {/* <strong>
                     NGN{" "}
                     {accountBalance
                       ? accountBalance.toLocaleString(undefined, {
@@ -265,8 +328,7 @@ function UserDashboard() {
                           maximumFractionDigits: 2,
                         })
                       : "N/A"}
-                  </strong>
-
+                  </strong> */}
                   <div className="py-3">
                     <Button
                       variant="primary"
@@ -279,23 +341,20 @@ function UserDashboard() {
                 </Col>
 
                 <Col>
-                  <h2 className="py-3">
+                  <h2 className="py-2">
                     <i className="far fa-money-bill-alt"></i> Credit Point
                     Wallet
                   </h2>
                   <p>Credit Point Balance:</p>
                   <strong>
                     NGN{" "}
-                    {
-                      creditPoints
-                      // .toLocaleString(undefined, {
-                      //   minimumFractionDigits: 2,
-                      //   maximumFractionDigits: 2,
-                      // })
-                    }
+                    {creditPoints?.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </strong>
-                  <div className="py-3">{withdrawCreditPoints}</div>
-                </Col>
+                  <div className="py-2">{withdrawCreditPoints}</div>
+                </Col> 
               </Row>
 
               <hr />

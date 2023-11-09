@@ -9,14 +9,19 @@ import FundAccountButton from "./FundAccountButton";
 const FundAccount = ({ history }) => {
   const fundAccountState = useSelector((state) => state.fundAccountState);
   const { loading, success, error } = fundAccountState;
-
+  const [messsage, setMesssage] = useState("");
   const [currency, setCurrency] = useState("");
   const [amount, setAmount] = useState(0);
   const [showFundAccountButton, setShowFundAccountButton] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setShowFundAccountButton(true);
+
+    if (amount >= 100) {
+      setShowFundAccountButton(true);
+    } else {
+      setMesssage("Minimum amount is 100.");
+    }
   };
 
   useEffect(() => {
@@ -45,6 +50,7 @@ const FundAccount = ({ history }) => {
             <Message variant="success">Request sent successfully.</Message>
           )}
 
+          {messsage && <Message variant="danger">{messsage}</Message>}
           {error && <Message variant="danger">{error}</Message>}
           {loading && <Loader />}
           <Form onSubmit={submitHandler}>
@@ -65,6 +71,7 @@ const FundAccount = ({ history }) => {
               <Form.Label>Amount</Form.Label>
               <Form.Control
                 type="number"
+                placeholder="Enter amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 required
