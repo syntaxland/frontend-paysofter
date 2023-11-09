@@ -99,7 +99,7 @@ function Dashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "user-dashboard" ? "info" : "outline-info"
+                    activeTab === "user-dashboard" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   // activeClassName="active-link"
@@ -111,7 +111,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "profile" ? "info" : "outline-info"}
+                  variant={activeTab === "profile" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("profile")}
                 >
@@ -121,7 +121,7 @@ function Dashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "transactions" ? "info" : "outline-info"
+                    activeTab === "transactions" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("transactions")}
@@ -132,7 +132,7 @@ function Dashboard({ history }) {
               {/* <div>
                 <Button
                   variant={
-                    activeTab === "order-items" ? "info" : "outline-info"
+                    activeTab === "order-items" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("order-items")}
@@ -142,7 +142,7 @@ function Dashboard({ history }) {
               </div> */}
               <div>
                 <Button
-                  variant={activeTab === "payouts" ? "info" : "outline-info"}
+                  variant={activeTab === "payouts" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("payouts")}
                 >
@@ -152,7 +152,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "referrals" ? "info" : "outline-info"}
+                  variant={activeTab === "referrals" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("referrals")}
                 >
@@ -163,7 +163,7 @@ function Dashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "credit-point" ? "info" : "outline-info"
+                    activeTab === "credit-point" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("credit-point")}
@@ -175,7 +175,7 @@ function Dashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "account-funds" ? "info" : "outline-info"
+                    activeTab === "account-funds" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("account-funds")}
@@ -187,7 +187,7 @@ function Dashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "message-inbox" ? "info" : "outline-info"
+                    activeTab === "message-inbox" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("message-inbox")}
@@ -199,7 +199,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "offers" ? "info" : "outline-info"}
+                  variant={activeTab === "offers" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("offers")}
                 >
@@ -209,7 +209,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "subscriptions" ? "info" : "outline-info"}
+                  variant={activeTab === "subscriptions" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("subscriptions")}
                 >
@@ -219,7 +219,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "live-chat" ? "info" : "outline-info"}
+                  variant={activeTab === "live-chat" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("live-chat")}
                 >
@@ -229,7 +229,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "api-endpoints" ? "info" : "outline-info"}
+                  variant={activeTab === "api-endpoints" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("api-endpoints")}
                 >
@@ -239,7 +239,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "webhooks" ? "info" : "outline-info"}
+                  variant={activeTab === "webhooks" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("webhooks")}
                 >
@@ -249,7 +249,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "ticket" ? "info" : "outline-info"}
+                  variant={activeTab === "ticket" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("ticket")}
                 >
@@ -259,7 +259,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "feedback" ? "info" : "outline-info"}
+                  variant={activeTab === "feedback" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("feedback")}
                 >
@@ -269,7 +269,7 @@ function Dashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "settings" ? "info" : "outline-info"}
+                  variant={activeTab === "settings" ? "primary" : "outline-primary"} 
                   className="sidebar-link"
                   // onClick={history.push("/settings")}
                   onClick={() => handleTabChange("settings")}
@@ -284,8 +284,8 @@ function Dashboard({ history }) {
                     <Button
                       variant={
                         activeTab === "admin-dashboard"
-                          ? "info"
-                          : "outline-info"
+                          ? "primary"
+                          : "outline-primary"
                       }
                       className="sidebar-link"
                       onClick={() => handleAdminDashboard()}
@@ -301,7 +301,7 @@ function Dashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "admin-dashboard" ? "info" : "outline-info"
+                    activeTab === "admin-dashboard" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleAdminDashboard()}

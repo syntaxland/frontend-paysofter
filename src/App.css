@@ -44,7 +44,8 @@
 
 /* Style the active link */
 .active-link {
-  background-color: #007bff; /* Active link background color */
+  background-color: green; 
+  /* background-color: #007bff;  */
   color: #fff; /* Active link text color */
 }
 
@@ -57,11 +58,6 @@
 
 .sidebar:hover .sidebar-content {
   overflow-y: auto; 
-}
-
-.active-link {
-  background-color: #007bff; /* Active link background color */
-  color: #fff; /* Active link text color */
 }
 
 /* --------------------------------------------------------------------------------- */
