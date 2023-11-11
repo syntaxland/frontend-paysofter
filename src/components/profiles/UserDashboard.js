@@ -90,8 +90,6 @@ function UserDashboard() {
     setShowToggleAccountSettings(false);
   };
 
-  
-
   useEffect(() => {
     dispatch(getCreditPointBalance());
     dispatch(getUserTransactions());
@@ -228,337 +226,332 @@ function UserDashboard() {
 
   return (
     <div className="justify-content-center text-center">
-      <div>
-        {loading ||
-        creditPointBalanceLoading ||
-        transactionLoading ||
-        payoutLoading ? (
-          <Loader />
-        ) : error ||
-          creditPointBalanceError ||
-          transactionError ||
-          payoutError ? (
-          <Message variant="danger">
-            {error ||
+      <Row>
+        <Col>
+          <div>
+            {loading ||
+            creditPointBalanceLoading ||
+            transactionLoading ||
+            payoutLoading ? (
+              <Loader />
+            ) : error ||
               creditPointBalanceError ||
               transactionError ||
-              payoutError}
-          </Message>
-        ) : (
-          <div>
-            <Row>
-              <Col>
-                <div>
-                  <div className="bar-chart">
-                    <h2 className="py-2">
-                      <i className="	fas fa-money-bill"></i> Total Transactions
-                    </h2>
-                    <div className="bar"></div>
-                    <strong>
-                      NGN{" "}
-                      {getTotalTransaction().toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </strong>
-                  </div>
-                </div>
-              </Col>
-              <Row className="py-2">
-                <Col>
-                  <Row>
-                    <Col>
-                      <h2 className="py-2">
-                        <i className="fas fa-wallet"></i> Account Fund Wallet
-                      </h2>{" "}
-                      <strong>Staus:</strong>{" "}
-                      {accountFundBalance?.is_diabled ? (
-                        <>
-                          <span className="py-2">
-                            <Button
-                              variant="outline-transparent"
-                              onClick={handleDisableFundOpen}
-                              className="rounded"
-                              size="sm"
-                              title="Account Fund is currently disabled. Please contact support."
-                            >
-                              <i
-                                className="fas fa-lock"
-                                style={{ fontSize: "16px", color: "red" }}
-                              ></i>{" "}
-                              Disabled
-                            </Button>
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <Button
-                            variant="outline-transparent"
-                            onClick={handleToggleFundOpen}
-                            className="rounded"
-                            size="sm"
-                            title="Set Account Fund active or locked."
-                          >
-                            {accountFundBalance?.is_active ? (
-                              <>
-                                <i
-                                  className="fas fa-lock-open"
-                                  style={{ fontSize: "16px", color: "green" }}
-                                ></i>{" "}
-                                Active
-                              </>
-                            ) : (
-                              <>
-                                <i
-                                  className="fas fa-lock"
-                                  style={{
-                                    fontSize: "16px",
-                                    color: "yellow",
-                                  }}
-                                ></i>{" "}
-                                Locked
-                              </>
-                            )}
-                          </Button>
-                        </>
-                      )}
-                    </Col>
-
-                    <Modal
-                      show={showToggleAccountSettings}
-                      onHide={handleToggleFundClose}
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title className="text-center w-100 py-2">
-                          Toggle Account Fund Status
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        {showToggleAccountSettings && <ToggleAccountSettings />}
-                      </Modal.Body>
-                    </Modal>
-
-                    <Modal
-                      show={showDisableAccountSettings}
-                      onHide={handleDisableFundClose}
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title className="text-center w-100 py-2">
-                        Account Fund Disabled
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <p className="text-center  py-2">
-                          Account Fund is currently disabled. Please contact
-                          support for reactivation.
-                        </p>
-                      </Modal.Body>
-                    </Modal>
-                  </Row>
-
-                  {/* <p>
-                    Account Fund Balance: NGN 94,659.99
-                    {
-                      accountBalance
-                      .toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })
-                    }
-                  </p>  */}
-                  <p>Account Fund Balance:</p>
-                  <strong>
-                    NGN{" "}
-                    {accountFundBalance?.balance?.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </strong>
-
-                  {/* <strong>
-                    NGN{" "}
-                    {accountBalance
-                      ? accountBalance.toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })
-                      : "N/A"}
-                  </strong> */}
-                  <div className="py-3">
-                    <Button
-                      variant="primary"
-                      onClick={handleFundAccount}
-                      className="rounded"
-                    >
-                      Fund Account
-                    </Button>
-                  </div>
-                </Col>
-
-                <Col>
-                  <h2 className="py-2">
-                    <i className="far fa-money-bill-alt"></i> Credit Point
-                    Wallet
-                  </h2>
-                  <p>Credit Point Balance:</p>
-                  <strong>
-                    NGN{" "}
-                    {creditPoints?.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </strong>
-                  <div className="py-2">{withdrawCreditPoints}</div>
-                </Col>
-              </Row>
-
-              <hr />
-              <Row>
-                <h2 className="py-3">Services</h2>
-
-                <hr />
-
-                <Col>
-                  <div className="py-3">
-                    <Button
-                      variant="primary"
-                      // onClick={handleFundAccount}
-                      className="rounded"
-                    >
-                      Airtime <i className="fas fa-phone"></i>
-                    </Button>
-                  </div>
-                </Col>
-
-                <Col>
-                  <div className="py-3">
-                    <Button
-                      variant="primary"
-                      // onClick={handleFundAccount}
-                      className="rounded"
-                    >
-                      Electricity <i className="fas fa-lightbulb"></i>
-                    </Button>
-                  </div>
-                </Col>
-
-                <Col>
-                  <div className="py-3">
-                    <Button
-                      variant="primary"
-                      // onClick={handleFundAccount}
-                      className="rounded"
-                    >
-                      Mobile Data <i className="fas fa-wifi"></i>
-                    </Button>
-                  </div>
-                </Col>
-
-                <Col>
-                  <div className="py-3">
-                    <Button
-                      variant="primary"
-                      // onClick={handleFundAccount}
-                      className="rounded"
-                    >
-                      CableTV <i className="fas fa-television"></i>
-                    </Button>
-                  </div>
-                </Col>
-
-                <Col>
-                  <div className="py-3">
-                    <Button
-                      variant="primary"
-                      // onClick={handleFundAccount}
-                      className="rounded"
-                    >
-                      Internet <i className="fas fa-globe"></i>
-                    </Button>
-                  </div>
-                </Col>
-
-                <Col>
-                  <div className="py-3">
-                    <Button
-                      variant="primary"
-                      // onClick={handleFundAccount}
-                      className="rounded"
-                    >
-                      Book Flight <i className="fa fa-plane"></i>
-                    </Button>
-                  </div>
-                </Col>
-
-                <Col>
-                  <div className="py-3">
-                    <Button
-                      variant="primary"
-                      // onClick={handleFundAccount}
-                      className="rounded"
-                    >
-                      Gaming <i className="fa fa-gamepad"></i>
-                    </Button>
-                  </div>
-                </Col>
-
-                <Col>
-                  <div className="py-3">
-                    <Button
-                      variant="primary"
-                      // onClick={handleFundAccount}
-                      className="rounded"
-                    >
-                      POS Terminal <i className="fas fa-calculator"></i>
-                    </Button>
-                  </div>
-                </Col>
-              </Row>
-              <hr />
-
-              <div className="line-graph">
-                <h2 className="py-3">Transactions</h2>
-                <hr />
-                <Line data={lineGraphData} options={lineChartOptions} />
-              </div>
-
-              <hr />
-              <div className="py-3">
-                <h2 className="">
-                  Payouts <i className="fas fa-money-bill"></i>
-                </h2>
-                <hr />
+              payoutError ? (
+              <Message variant="danger">
+                {error ||
+                  creditPointBalanceError ||
+                  transactionError ||
+                  payoutError}
+              </Message>
+            ) : (
+              <div>
                 <Row>
                   <Col>
-                    <h5 className="py-3">Paid Payout Rate</h5>
-                    <div className="chart-container">
-                      <Pie
-                        data={paidPayoutRateData}
-                        options={pieChartOptions}
-                        width={200}
-                        height={200}
-                      />
+                    <div>
+                      <div className="bar-chart">
+                        <h2 className="py-2">
+                          <i className="	fas fa-money-bill"></i> Total
+                          Transactions
+                        </h2>
+                        <div className="bar"></div>
+                        <strong>
+                          NGN{" "}
+                          {getTotalTransaction().toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </strong>
+                      </div>
                     </div>
                   </Col>
+                  <Row className="py-2">
+                    <Col>
+                      <Row>
+                        <Col>
+                          <h2 className="py-2">
+                            <i className="fas fa-wallet"></i> Account Fund
+                            Wallet
+                          </h2>{" "}
+                          <strong>Staus:</strong>{" "}
+                          {accountFundBalance?.is_diabled ? (
+                            <>
+                              <span className="py-2">
+                                <Button
+                                  variant="outline-transparent"
+                                  onClick={handleDisableFundOpen}
+                                  className="rounded"
+                                  size="sm"
+                                  title="Account Fund is currently disabled. Please contact support."
+                                >
+                                  <i
+                                    className="fas fa-lock"
+                                    style={{ fontSize: "16px", color: "red" }}
+                                  ></i>{" "}
+                                  Disabled
+                                </Button>
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <Button
+                                variant="outline-transparent"
+                                onClick={handleToggleFundOpen}
+                                className="rounded"
+                                size="sm"
+                                title="Set Account Fund active or locked."
+                              >
+                                {accountFundBalance?.is_active ? (
+                                  <>
+                                    <i
+                                      className="fas fa-lock-open"
+                                      style={{
+                                        fontSize: "16px",
+                                        color: "green",
+                                      }}
+                                    ></i>{" "}
+                                    Active
+                                  </>
+                                ) : (
+                                  <>
+                                    <i
+                                      className="fas fa-lock"
+                                      style={{
+                                        fontSize: "16px",
+                                        color: "yellow",
+                                      }}
+                                    ></i>{" "}
+                                    Locked
+                                  </>
+                                )}
+                              </Button>
+                            </>
+                          )}
+                        </Col>
 
-                  <Col>
-                    <h5 className="py-3">Payout Approval Rate</h5>
-                    <div className="chart-container">
-                      <Pie
-                        data={unfulfilledPayoutRateData}
-                        options={pieChartOptions}
-                        width={200}
-                        height={200}
-                      />
-                    </div>
-                  </Col>
+                        <Modal
+                          show={showToggleAccountSettings}
+                          onHide={handleToggleFundClose}
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title className="text-center w-100 py-2">
+                              Toggle Account Fund Status
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            {showToggleAccountSettings && (
+                              <ToggleAccountSettings />
+                            )}
+                          </Modal.Body>
+                        </Modal>
+
+                        <Modal
+                          show={showDisableAccountSettings}
+                          onHide={handleDisableFundClose}
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title className="text-center w-100 py-2">
+                              Account Fund Disabled
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <p className="text-center  py-2">
+                              Account Fund is currently disabled. Please contact
+                              support for reactivation.
+                            </p>
+                          </Modal.Body>
+                        </Modal>
+                      </Row>
+
+                      <p>Account Fund Balance:</p>
+                      <strong>
+                        NGN{" "}
+                        {accountFundBalance?.balance?.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }
+                        )}
+                      </strong>
+
+                      <div className="py-3">
+                        <Button
+                          variant="primary"
+                          onClick={handleFundAccount}
+                          className="rounded"
+                        >
+                          Fund Account
+                        </Button>
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <h2 className="py-2">
+                        <i className="far fa-money-bill-alt"></i> Credit Point
+                        Wallet
+                      </h2>
+                      <p>Credit Point Balance:</p>
+                      <strong>
+                        NGN{" "}
+                        {creditPoints?.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </strong>
+                      <div className="py-2">{withdrawCreditPoints}</div>
+                    </Col>
+                  </Row>
+
+                  <hr />
+                  <Row>
+                    <h2 className="py-3">Services</h2>
+
+                    <hr />
+
+                    <Col>
+                      <div className="py-3">
+                        <Button
+                          variant="primary"
+                          // onClick={handleFundAccount}
+                          className="rounded"
+                        >
+                          Airtime <i className="fas fa-phone"></i>
+                        </Button>
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <div className="py-3">
+                        <Button
+                          variant="primary"
+                          // onClick={handleFundAccount}
+                          className="rounded"
+                        >
+                          Electricity <i className="fas fa-lightbulb"></i>
+                        </Button>
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <div className="py-3">
+                        <Button
+                          variant="primary"
+                          // onClick={handleFundAccount}
+                          className="rounded"
+                        >
+                          Mobile Data <i className="fas fa-wifi"></i>
+                        </Button>
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <div className="py-3">
+                        <Button
+                          variant="primary"
+                          // onClick={handleFundAccount}
+                          className="rounded"
+                        >
+                          CableTV <i className="fas fa-television"></i>
+                        </Button>
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <div className="py-3">
+                        <Button
+                          variant="primary"
+                          // onClick={handleFundAccount}
+                          className="rounded"
+                        >
+                          Internet <i className="fas fa-globe"></i>
+                        </Button>
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <div className="py-3">
+                        <Button
+                          variant="primary"
+                          // onClick={handleFundAccount}
+                          className="rounded"
+                        >
+                          Book Flight <i className="fa fa-plane"></i>
+                        </Button>
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <div className="py-3">
+                        <Button
+                          variant="primary"
+                          // onClick={handleFundAccount}
+                          className="rounded"
+                        >
+                          Gaming <i className="fa fa-gamepad"></i>
+                        </Button>
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <div className="py-3">
+                        <Button
+                          variant="primary"
+                          // onClick={handleFundAccount}
+                          className="rounded"
+                        >
+                          POS Terminal <i className="fas fa-calculator"></i>
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                  <hr />
+
+                  <div className="line-graph">
+                    <h2 className="py-3">Transactions</h2>
+                    <hr />
+                    <Line data={lineGraphData} options={lineChartOptions} />
+                  </div>
+
+                  <hr />
+                  <div className="py-3">
+                    <h2 className="">
+                      Payouts <i className="fas fa-money-bill"></i>
+                    </h2>
+                    <hr />
+                    <Row>
+                      <Col>
+                        <h5 className="py-3">Paid Payout Rate</h5>
+                        <div className="chart-container">
+                          <Pie
+                            data={paidPayoutRateData}
+                            options={pieChartOptions}
+                            width={200}
+                            height={200}
+                          />
+                        </div>
+                      </Col>
+
+                      <Col>
+                        <h5 className="py-3">Payout Approval Rate</h5>
+                        <div className="chart-container">
+                          <Pie
+                            data={unfulfilledPayoutRateData}
+                            options={pieChartOptions}
+                            width={200}
+                            height={200}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                  <hr />
                 </Row>
               </div>
-              <hr />
-            </Row>
+            )}
           </div>
-        )}
-      </div>
+        </Col>
+      </Row>
     </div>
   );
 }
