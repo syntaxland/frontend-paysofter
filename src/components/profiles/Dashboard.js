@@ -1,6 +1,6 @@
 // Dashboard.js
 import React, { useState } from "react";
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 // import { Link} from "react-router-dom";
 // import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -86,7 +86,7 @@ function Dashboard({ history }) {
   };
 
   return (
-    <Container fluid>
+    <>
       <Row>
         <Col xs={sidebarOpen ? 3 : 1} className="sidebar">
           <Button
@@ -332,7 +332,7 @@ function Dashboard({ history }) {
           {renderTabContent()}
         </Col>
       </Row>
-    </Container>
+    </>
   );
 }
 

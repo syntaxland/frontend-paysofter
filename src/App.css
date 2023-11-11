@@ -67,7 +67,7 @@
 
   &.open {
     .sidebar-toggle-button {
-      transform: translateX(-100%);
+      transform: translateX(-100%); 
     }
 
     .sidebar-content {
