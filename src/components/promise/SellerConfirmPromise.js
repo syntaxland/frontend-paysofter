@@ -30,13 +30,13 @@ const SellerConfirmPromise = ({
   );
   // const createdAt = new Date().toISOString();
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [showPaysofterAccountFund, setShowPaysofterAccountFund] = useState(
-    false
-  );
+  // const [showPaysofterAccountFund, setShowPaysofterAccountFund] = useState(
+  //   false
+  // );
 
-  const handleShowPaysofterAccountFund = () => {
-    setShowPaysofterAccountFund(true);
-  };
+  // const handleShowPaysofterAccountFund = () => {
+  //   setShowPaysofterAccountFund(true);
+  // };
 
   const handleInfoModalShow = () => {
     setShowInfoModal(true);
@@ -296,7 +296,7 @@ const SellerConfirmPromise = ({
                   className="w-100 rounded"
                   type="submit"
                   variant="primary"
-                  onClick={handleShowPaysofterAccountFund}
+                  // onClick={handleShowPaysofterAccountFund}
                 >
                   Submit{" "}
                   {/* <span>
