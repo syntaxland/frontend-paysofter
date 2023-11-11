@@ -14,6 +14,8 @@ import {
 import {
   fundAccountReducer,
   toggleAccountFundReducer,
+  disableAccountFundReducer,
+  verifyOtpAccountFundReducer,
   setMaxFundReducer,
   getUserAccountBalanceReducer,
   userAccountFundListReducer,
@@ -61,6 +63,8 @@ const reducer = combineReducers({
 
   fundAccountState: fundAccountReducer,
   toggleAccountFundState: toggleAccountFundReducer,
+  disableAccountFundState: disableAccountFundReducer,
+  verifyOtpAccountFundState: verifyOtpAccountFundReducer,
   setMaxFundState: setMaxFundReducer,
   userAccountBalanceState: getUserAccountBalanceReducer,
   userAccountFundListState: userAccountFundListReducer,

@@ -91,7 +91,7 @@ function Header() {
       dispatch(getUserProfile());
     }
   }, [dispatch, userInfo]);
-
+ 
   return (
     <header>
       <Row>

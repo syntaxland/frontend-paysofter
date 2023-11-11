@@ -15,6 +15,12 @@ import {
   TOGGLE_ACCCOUNT_FUND_REQUEST,
   TOGGLE_ACCCOUNT_FUND_SUCCESS,
   TOGGLE_ACCCOUNT_FUND_FAIL,
+  DISABLE_ACCCOUNT_FUND_REQUEST,
+  DISABLE_ACCCOUNT_FUND_SUCCESS,
+  DISABLE_ACCCOUNT_FUND_FAIL,
+  VERIFY_OTP_DISABLE_ACCCOUNT_FUND_REQUEST,
+  VERIFY_OTP_DISABLE_ACCCOUNT_FUND_SUCCESS,
+  VERIFY_OTP_DISABLE_ACCCOUNT_FUND_FAIL,
 } from "../constants/AccountFundConstants";
 
 const initialState = {
@@ -24,6 +30,41 @@ const initialState = {
   accountFunds: [],
   accountFund: [],
   accountFundBalance: [],
+  formattedEmail: [],
+};
+
+export const disableAccountFundReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case DISABLE_ACCCOUNT_FUND_REQUEST:
+      return { loading: true };
+    case DISABLE_ACCCOUNT_FUND_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        formattedEmail: action.payload.formattedEmail,
+      };
+    case DISABLE_ACCCOUNT_FUND_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const verifyOtpAccountFundReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case VERIFY_OTP_DISABLE_ACCCOUNT_FUND_REQUEST:
+      return { loading: true };
+    case VERIFY_OTP_DISABLE_ACCCOUNT_FUND_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        formattedEmail: action.payload.formattedEmail,
+      };
+    case VERIFY_OTP_DISABLE_ACCCOUNT_FUND_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const toggleAccountFundReducer = (state = initialState, action) => {

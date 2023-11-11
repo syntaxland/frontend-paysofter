@@ -38,6 +38,10 @@ function Dashboard({ history }) {
     history.push("/admin-dashboard");
   };
 
+  const handleSettings = () => {
+    history.push("/settings");
+  };
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "profile":
@@ -187,6 +191,18 @@ function Dashboard({ history }) {
               <div>
                 <Button
                   variant={
+                    activeTab === "promise" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("promise")}
+                >
+                  <i className="fa fa-credit-card"></i> Paysofter Promise 
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
                     activeTab === "message-inbox" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
@@ -272,7 +288,7 @@ function Dashboard({ history }) {
                   variant={activeTab === "settings" ? "primary" : "outline-primary"} 
                   className="sidebar-link"
                   // onClick={history.push("/settings")}
-                  onClick={() => handleTabChange("settings")}
+                  onClick={handleSettings}
                 >
                   <i className="fas fa-gear"></i> Settings
                 </Button>

@@ -46,7 +46,7 @@ function ToggleAccountSettings() {
   return (
     <Container>
       <Row className="justify-content-center py-2">
-        <Col md={6}>
+        <Col>
           {/* <h2 className="mb-4">Toggle Account Fund</h2> */}
           {loading && <Loader />}
           {success && (
@@ -57,30 +57,54 @@ function ToggleAccountSettings() {
           {error && <Message variant="danger">{error}</Message>}
           <div className="text-center py-2">
             <strong>Staus:</strong>{" "}
-            <Button
-              variant="outline"
-              className="rounded"
-              size="sm"
-              title="Set Account Fund active or locked."
-            >
-              {accountFundBalance?.is_active ? (
-                <>
-                  <i
-                    className="fas fa-lock-open"
-                    style={{ fontSize: "16px", color: "green" }}
-                  ></i>{" "}
-                  Active
-                </>
-              ) : (
-                <>
-                  <i
-                    className="fas fa-lock"
-                    style={{ fontSize: "16px", color: "red" }}
-                  ></i>{" "}
-                  Locked
-                </>
-              )}
-            </Button>
+            {accountFundBalance?.is_diabled ? (
+              <>
+                <span className="py-2">
+                  <Button
+                    variant="outline-transparent"
+                    className="rounded"
+                    size="sm"
+                    title="Account Fund is currently disabled. Please contact support."
+                  >
+                    <i
+                      className="fas fa-lock"
+                      style={{ fontSize: "16px", color: "red" }}
+                    ></i>{" "}
+                    Disabled
+                  </Button>
+                </span>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="outline-transparent"
+                  className="rounded"
+                  size="sm"
+                  title="Set Account Fund active or locked."
+                >
+                  {accountFundBalance?.is_active ? (
+                    <>
+                      <i
+                        className="fas fa-lock-open"
+                        style={{ fontSize: "16px", color: "green" }}
+                      ></i>{" "}
+                      Active
+                    </>
+                  ) : (
+                    <>
+                      <i
+                        className="fas fa-lock"
+                        style={{
+                          fontSize: "16px",
+                          color: "yellow",
+                        }}
+                      ></i>{" "}
+                      Locked
+                    </>
+                  )}
+                </Button>
+              </>
+            )}
           </div>
           <p className="rounded mt-2 py-1 text-center">
             <i

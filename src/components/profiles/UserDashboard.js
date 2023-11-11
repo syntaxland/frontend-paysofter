@@ -71,13 +71,26 @@ function UserDashboard() {
   const [showToggleAccountSettings, setShowToggleAccountSettings] =
     useState(false);
 
+  const [showDisableAccountSettings, setShowDisableAccountSettings] =
+    useState(false);
+
   const handleToggleFundOpen = () => {
     setShowToggleAccountSettings(true);
+  };
+
+  const handleDisableFundOpen = () => {
+    setShowDisableAccountSettings(true);
+  };
+
+  const handleDisableFundClose = () => {
+    setShowDisableAccountSettings(false);
   };
 
   const handleToggleFundClose = () => {
     setShowToggleAccountSettings(false);
   };
+
+  
 
   useEffect(() => {
     dispatch(getCreditPointBalance());
@@ -259,31 +272,56 @@ function UserDashboard() {
                         <i className="fas fa-wallet"></i> Account Fund Wallet
                       </h2>{" "}
                       <strong>Staus:</strong>{" "}
-                      <Button
-                        variant="outline"
-                        onClick={handleToggleFundOpen}
-                        className="rounded"
-                        size="sm"
-                        title="Set Account Fund active or locked."
-                      >
-                        {accountFundBalance.is_active ? (
-                          <>
-                            <i
-                              className="fas fa-lock-open"
-                              style={{ fontSize: "16px", color: "green" }}
-                            ></i>{" "}
-                            Active
-                          </>
-                        ) : (
-                          <>
-                            <i
-                              className="fas fa-lock"
-                              style={{ fontSize: "16px", color: "red" }}
-                            ></i>{" "}
-                            Locked
-                          </>
-                        )}
-                      </Button>
+                      {accountFundBalance?.is_diabled ? (
+                        <>
+                          <span className="py-2">
+                            <Button
+                              variant="outline-transparent"
+                              onClick={handleDisableFundOpen}
+                              className="rounded"
+                              size="sm"
+                              title="Account Fund is currently disabled. Please contact support."
+                            >
+                              <i
+                                className="fas fa-lock"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              Disabled
+                            </Button>
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <Button
+                            variant="outline-transparent"
+                            onClick={handleToggleFundOpen}
+                            className="rounded"
+                            size="sm"
+                            title="Set Account Fund active or locked."
+                          >
+                            {accountFundBalance?.is_active ? (
+                              <>
+                                <i
+                                  className="fas fa-lock-open"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                Active
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fas fa-lock"
+                                  style={{
+                                    fontSize: "16px",
+                                    color: "yellow",
+                                  }}
+                                ></i>{" "}
+                                Locked
+                              </>
+                            )}
+                          </Button>
+                        </>
+                      )}
                     </Col>
 
                     <Modal
@@ -297,6 +335,23 @@ function UserDashboard() {
                       </Modal.Header>
                       <Modal.Body>
                         {showToggleAccountSettings && <ToggleAccountSettings />}
+                      </Modal.Body>
+                    </Modal>
+
+                    <Modal
+                      show={showDisableAccountSettings}
+                      onHide={handleDisableFundClose}
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title className="text-center w-100 py-2">
+                        Account Fund Disabled
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <p className="text-center  py-2">
+                          Account Fund is currently disabled. Please contact
+                          support for reactivation.
+                        </p>
                       </Modal.Body>
                     </Modal>
                   </Row>
@@ -354,7 +409,7 @@ function UserDashboard() {
                     })}
                   </strong>
                   <div className="py-2">{withdrawCreditPoints}</div>
-                </Col> 
+                </Col>
               </Row>
 
               <hr />
