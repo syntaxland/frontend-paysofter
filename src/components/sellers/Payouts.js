@@ -1,18 +1,23 @@
-// AccountFunds.js
+// Payouts.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table } from "react-bootstrap";
-import { userAccountFundList } from "../../redux/actions/AccountFundActions"; 
+import { getUserPayouts } from "../../redux/actions/payoutActions"; 
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
 
-function AccountFunds() {
+function Payouts() {
   const dispatch = useDispatch();
 
-  const userAccountFundListState = useSelector((state) => state.userAccountFundListState); 
-  const { loading, accountFunds, error } = userAccountFundListState;
-  console.log("AccountFunds:", accountFunds);
+  const userPayouts = useSelector((state) => state.userPayouts);
+  const { loading, payouts, error } = userPayouts;
+  console.log("Payouts:", payouts);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  console.log('userInfo.access:',userInfo.access)
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -21,16 +26,16 @@ function AccountFunds() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = accountFunds.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = payouts.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
-    dispatch(userAccountFundList());
+    dispatch(getUserPayouts());
   }, [dispatch]);
 
   return (
     <div>
       <h1 className="text-center py-3">
-        <i className="fas fa-credit-card"></i> Account Funds
+        <i className="fas fa-credit-card"></i> Payouts
       </h1>
       {loading ? (
         <Loader />
@@ -39,36 +44,38 @@ function AccountFunds() {
       ) : (
         <>
           {currentItems.length === 0 ? (
-            <div className="text-center py-3">Account funds appear here.</div>
+            <div className="text-center py-3">Payouts appear here.</div>
           ) : (
             <Table striped bordered hover responsive className="table-sm">
               <thead>
                 <tr>
                   <th>SN</th>
-                  <th>Fund Account ID</th>
+                  <th>Payment ID</th>
                   <th>User</th>
+                  {/* <th>Payer</th> */}
                   <th>Amount</th>
-                  <th>Currency</th>
                   <th>Payment Method</th>
-                  <th>Payment Provider</th>
+                  <th>Currency</th>
                   <th>Status</th>
-                  <th>Timestamp</th>
+                  <th>Payment Provider</th>
+                  <th>Payout ID</th>
+                  <th>Created At</th>
                 </tr>
               </thead>
               <tbody>
-                {currentItems.map((accountFund, index) => (
-                  <tr key={accountFund.id}>
+                {currentItems.map((payout, index) => (
+                  <tr key={payout.id}>
                     <td>{index + 1}</td>
-                    <td>{accountFund.fund_account_id}</td>
+                    <td>{payout.payment_id}</td>
                     <td>
-                      {/* <td>{accountFund.user_email}</td> */}
+                      <td>{payout.seller_email}</td>
                     </td>
-                    <td>{accountFund.amount}</td>
-                    <td>{accountFund.currency}</td>
-                    <td>{accountFund.payment_method}</td>
-                    <td>{accountFund.payment_provider}</td>
+                    {/* <td>{payout.buyer_email}</td> */}
+                    <td>{payout.amount}</td>
+                    <td>{payout.payment_method}</td>
+                    <td>{payout.currency}</td>
                     <td>
-                      {accountFund.is_success ? (
+                      {payout.is_success ? (
                         <i
                           className="fas fa-check-circle"
                           style={{ fontSize: "16px", color: "green" }}
@@ -80,8 +87,10 @@ function AccountFunds() {
                         ></i>
                       )}
                     </td>
+                    <td>{payout.payment_provider}</td>
+                    <td>{payout.payout_id}</td>
                     <td>
-                      {new Date(accountFund.timestamp).toLocaleString("en-US", {
+                      {new Date(payout.timestamp).toLocaleString("en-US", {
                         weekday: "long",
                         year: "numeric",
                         month: "long",
@@ -98,7 +107,7 @@ function AccountFunds() {
           )}
           <Pagination
             itemsPerPage={itemsPerPage}
-            totalItems={accountFunds.length}
+            totalItems={payouts.length}
             currentPage={currentPage}
             paginate={paginate}
           />
@@ -108,4 +117,4 @@ function AccountFunds() {
   );
 }
 
-export default AccountFunds;
+export default Payouts;

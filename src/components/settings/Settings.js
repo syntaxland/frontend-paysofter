@@ -206,7 +206,7 @@ function Settings() {
                       </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      {showToggleAccountSettings && <ToggleAccountSettings />}
+                      {showToggleAccountSettings && <ToggleAccountSettings />} 
                     </Modal.Body>
                   </Modal>
 

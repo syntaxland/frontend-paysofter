@@ -10,7 +10,8 @@ import {
   userLoginReducers,
   userRegisterReducers,
 } from "./reducers/userReducers";
-// import { userRegisterReducers } from "./reducers/userReducers";
+
+
 import {
   fundAccountReducer,
   toggleAccountFundReducer,
@@ -20,6 +21,16 @@ import {
   getUserAccountBalanceReducer,
   userAccountFundListReducer,
 } from "./reducers/AccountFundReducers";
+
+import { 
+  
+  getBuyerpromiseReducer,
+getSellerPromiseReducer,
+buyerConfirmPromiseReducer,
+sellerConfirmPromiseReducer,
+
+} from "./reducers/PromiseReducers";
+
 import {
   getUserProfileReducer,
   changePasswordReducer,
@@ -68,6 +79,11 @@ const reducer = combineReducers({
   setMaxFundState: setMaxFundReducer,
   userAccountBalanceState: getUserAccountBalanceReducer,
   userAccountFundListState: userAccountFundListReducer,
+  getBuyerPromiseState: getBuyerpromiseReducer,
+  getSellerPromiseState: getSellerPromiseReducer,
+buyerConfirmPromiseState: buyerConfirmPromiseReducer,
+sellerConfirmPromiseState: sellerConfirmPromiseReducer,
+
   creditPointBal: creditPointBalanceReducer,
   creditPointRequestCreate: creditPointRequestCreateReducer,
 

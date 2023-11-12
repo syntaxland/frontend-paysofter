@@ -38,9 +38,9 @@ import Dashboard from "./components/profiles/Dashboard";
 import ToggleAccountSettings from "./components/settings/ToggleAccountSettings";
 import MaxWithdrawalSettings from "./components/settings/MaxWithdrawalSettings";
 import Settings from "./components/settings/Settings";
-// import OtpDisableAccountFund from "./components/settings/OtpDisableAccountFund";
+import SellerDashboard from "./components/sellers/Dashboard";
 
-import BuyerConfirmPromise from "./components/promise/BuyerConfirmPromise";
+import PaysofterPromise from "./components/profiles/PaysofterPromise";
 import SellerConfirmPromise from "./components/promise/SellerConfirmPromise";
 
 function App() {
@@ -66,9 +66,9 @@ function App() {
           <Route path="/set-max-fund" component={MaxWithdrawalSettings} />
           <Route path="/toggle-fund" component={ToggleAccountSettings} />
 
-          <Route path="/buyer-confirm-promise/" component={BuyerConfirmPromise} />
+          <Route path="/promise/" component={PaysofterPromise} />
           <Route path="/seller-confirm-promise/" component={SellerConfirmPromise} />
-          {/* <Route path="/otp-deactivate-account-fund" component={OtpDisableAccountFund} /> */}
+          <Route path="/seller-dashboard" component={SellerDashboard} />
           
           {/* <Route path="/admin-dashboard" component={AdminDashboard} /> */}
           {/* 

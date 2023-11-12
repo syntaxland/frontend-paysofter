@@ -1,4 +1,4 @@
-// Dashboard.js
+// SellerDashboard.js
 import React, { useState } from "react";
 import { Row, Col, Button, NavDropdown } from "react-bootstrap";
 // import { Link} from "react-router-dom";
@@ -6,21 +6,20 @@ import { Row, Col, Button, NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 // import { login } from "../../redux/actions/userActions";
-import UserProfile from "./UserProfile"; 
+import UserProfile from "./UserProfile";
 import Transactions from "./Transactions";
 import Payouts from "./Payouts";
-import UserDashboard from "./UserDashboard";
-// import MessageInbox from "./MessageInbox";
+import Dashboard from "./Dashboard";
+// import MessageInbox from "./MessageInbox"; 
 // import CreditPoint from "./CreditPoint";
 import AccountFunds from "./AccountFunds";
 // import Referrals from "./Referrals";
 import Webhooks from "./Webhooks";
 import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
-import PaysofterPromise from "./PaysofterPromise";
 
-function Dashboard({ history }) {
-  // const userLogin = useSelector((state) => state.userLogin);
+function SellerDashboard({ history }) {
+  // const userLogin = useSelector((state) => state.userLogin); 
   // const { userInfo } = userLogin;
   // const dispatch = useDispatch();
 
@@ -41,10 +40,6 @@ function Dashboard({ history }) {
 
   const handleSettings = () => {
     history.push("/settings");
-  };
-
-  const handlePaysofterPromise = () => {
-    history.push("/promise");
   };
 
   const handleAddbusiness = () => {
@@ -75,8 +70,8 @@ function Dashboard({ history }) {
       case "subscriptions":
         return <Subscriptions />;
 
-      case "promise":
-        return <PaysofterPromise />;
+      // case "reviews":
+      //   return <Reviews />;
 
       // case "message-inbox":
       //   return <MessageInbox />;
@@ -94,7 +89,7 @@ function Dashboard({ history }) {
       //   return <Referrals />;
 
       default:
-        return <UserDashboard />;
+        return <Dashboard />;
     }
   };
 
@@ -217,14 +212,11 @@ function Dashboard({ history }) {
                     activeTab === "promise" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
-                  // onClick={() => handleTabChange("promise")}
-                  onClick={handlePaysofterPromise}
+                  onClick={() => handleTabChange("promise")}
                 >
                   <i className="fa fa-credit-card"></i> Paysofter Promise
                 </Button>
               </div>
-
-              
 
               <div>
                 <Button
@@ -383,7 +375,7 @@ function Dashboard({ history }) {
                   >
                     <span>
                       <Button variant="outline-primary" onClick={handleAddbusiness}>
-                        Create Seller Account
+                        Add Bussine
                       </Button>
                       <Button variant="outline-primary" onClick={handleSellerDashboard}>
                         Seller Dashboard
@@ -417,4 +409,4 @@ function Dashboard({ history }) {
   );
 }
 
-export default Dashboard;
+export default SellerDashboard;

@@ -28,7 +28,7 @@ function Pagination({ itemsPerPage, totalItems, currentPage, paginate }) {
 
   return (
     <nav>
-      <ul className="pagination justify-content-center">
+      <ul className="pagination justify-content-center py-2">
         <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
           <button className="page-link" onClick={() => paginate(currentPage - 1)}>
             Previous

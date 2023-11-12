@@ -1,327 +1,94 @@
-// SellerConfirmPromise.js
+// BuyerConfirmPromise.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
-// import {
-//   sellerConfirmPromise,
-// } from "../../actions/paymentActions";
+import { buyerConfirmPromise } from "../../redux/actions/PromiseActions";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import Message from "../Message";
 import Loader from "../Loader";
-// import PaysofterAccountFund from "./PaysofterAccountFund"; 
 
-const SellerConfirmPromise = ({
-  promoTotalPrice,
-  paymentData,
-  reference,
-  userEmail,
-  publicApiKey,
-}) => {
+function BuyerConfirmPromise({ promiseId }) {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
-  const debitPaysofterAccountState = useSelector(
-    (state) => state.debitPaysofterAccountState
+  const buyerConfirmPromiseState = useSelector(
+    (state) => state.buyerConfirmPromiseState
   );
-  const { loading, success, error } = debitPaysofterAccountState;
+  const { success, error, loading } = buyerConfirmPromiseState;
 
-  const [duration, setDuration] = useState("1day");
-  const [currency, setCurrency] = useState("NGN");
-  const [paymenthMethod, setPaymenthMethod] = useState(
-    "paysofter_account_fund"
-  );
-  // const createdAt = new Date().toISOString();
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  // const [showPaysofterAccountFund, setShowPaysofterAccountFund] = useState(
-  //   false
+  // const sellerConfirmPromiseState = useSelector(
+  //   (state) => state.sellerConfirmPromiseState
   // );
+  // const { success, error, loading } = sellerConfirmPromiseState;
 
-  // const handleShowPaysofterAccountFund = () => {
-  //   setShowPaysofterAccountFund(true);
-  // };
-
-  const handleInfoModalShow = () => {
-    setShowInfoModal(true);
-  };
-
-  const handleInfoModalClose = () => {
-    setShowInfoModal(false);
-  };
-
-  // const paysofterPaymentData = {
-  //   payment_id: reference,
-  //   email: userEmail,
-  //   amount: promoTotalPrice,
-  //   public_api_key: publicApiKey,
-  //   created_at: createdAt,
-  // };
-
-  // const debitAccountData = {
-  //   currency: currency,
-  //   amount: promoTotalPrice,
-  //   // account_id: accountId,
-  // };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    // try {
-    //   // dispatch(sellerConfirmPromise(debitAccountData));
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  };
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (success) {
-      // dispatch(createPaysofterPayment(paysofterPaymentData));
-      // dispatch(createPayment(paymentData));
-      // dispatch(clearCart());
       const timer = setTimeout(() => {
+        window.location.reload();
         // history.push("/dashboard");
-        // window.location.href = "/dashboard";
-        // window.location.reload();
       }, 3000);
       return () => clearTimeout(timer);
     }
-    // console.log("// eslint-disable-next-line");
-    // eslint-disable-next-line
-  }, [dispatch, success, history]);
+  }, [success, history]);
+
+  const promiseData = {
+    password: password,
+    promise_id: promiseId,
+  };
+  console.log("promiseId:", promiseId);
+
+  const handleBuyerConfirmPromise = () => {
+    dispatch(buyerConfirmPromise(promiseData));
+  };
 
   return (
     <Container>
-      {/* {showPaysofterAccountFund ? (
-        <PaysofterAccountFund
-          promoTotalPrice={promoTotalPrice}
-          paymentData={paymentData}
-          reference={reference}
-          userEmail={userEmail}
-          publicApiKey={publicApiKey}
-          currency={currency}
-          duration={duration}
-          paymenthMethod={paymenthMethod}
-        />
-      ) : ( */}
-        <Row className="justify-content-center">
-          <Col>
-            <Row className="text-center py-2">
-              <Col md={10}>
-                <h2 className="py-2 text-center">Paysofter Promise</h2>
-              </Col>
-              <Col md={2}>
-                <Button
-                  variant="outline"
-                  onClick={handleInfoModalShow}
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Paysofter Promise option escrows or places in custody the received payment until a specified condition has been fulfilled before payment is transferred to the seller."
-                >
-                  <i className="fa fa-info-circle"> </i>
-                </Button>
+      <Row className="justify-content-center py-2">
+        <Col>
+          {/* <h2 className="mb-4">Toggle Account Fund</h2> */}
+          {loading && <Loader />}
+          {success && (
+            <Message variant="success">Promise confirmed successfully.</Message>
+          )}
+          {error && <Message variant="danger">{error}</Message>}
 
-                <Modal show={showInfoModal} onHide={handleInfoModalClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title className="text-center w-100 py-2">
-                      Paysofter Promise
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p className="text-center">
-                      Paysofter Promise option escrows or places in custody the
-                      payment made to a seller (using the payer's funded
-                      Paysofter Account Fund) until a specified condition has
-                      been fulfilled.{" "}
-                      <a
-                        href="https://paysofter.com/promise/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {" "}
-                        <span>
-                          <Button
-                            variant="primary"
-                            size="sm"
-                            className="text-center py-2"
-                          >
-                            Learn more
-                          </Button>
-                        </span>
-                      </a>
-                    </p>
-                  </Modal.Body>
-                </Modal>
-              </Col>
-            </Row>
+          <p className="rounded mt-2 py-1 text-center">
+            <i
+              className="fa fa-warning"
+              style={{ fontSize: "18px", color: "yellow" }}
+            ></i>{" "}
+            Warning! This action will confirm that your promise order from this
+            seller is fulfilled and will transfer the promise amount from your
+            account to the seller's. Please enter the password for your account
+            email <strong>({userInfo.email}</strong>):{" "}
+          </p>
 
-            {success && (
-              <Message variant="success">Payment made successfully.</Message>
-            )}
-
-            {error && <Message variant="danger">{error}</Message>}
-            {loading && <Loader />}
-
-            <Form onSubmit={submitHandler}>
-              <Form.Group controlId="currency">
-                <Form.Label>Currency</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                >
-                  <option value="NGN">NGN</option>
-                  <option value="USD">USD</option>
-                </Form.Control>
-              </Form.Group>
-
-              {/* <Form.Group controlId="currency">
-              <Form.Label>Seller Paysofter Account ID</Form.Label>
+          <Form>
+            <Form.Group>
               <Form.Control
-                // as="select"
-                // value={currency}
-                // onChange={(e) => setCurrency(e.target.value)}
-                placeholder="123456789012"
-                disabled
-              ></Form.Control>
-            </Form.Group> */}
-
-              {/* <Form.Group controlId="seller_name">
-              <Form.Label>Seller Name</Form.Label>
-              <Form.Control
-                // as="select"
-                // value={seller_name}
-                // onChange={(e) => setCurrency(e.target.value)}
-                placeholder="Seller name"
-                disabled
-              ></Form.Control>
-            </Form.Group> */}
-
-              <Form.Group controlId="paymenthMethod">
-                <Form.Label>Payment Method</Form.Label>
-                <Form.Control
-                  disabled
-                  as="select"
-                  value={paymenthMethod}
-                  onChange={(e) => setPaymenthMethod(e.target.value)}
-                >
-                  <option value="paysofter_promise">Paysofter Promise</option>
-                  <option value="paysofter_account_fund">
-                    Paysofter Account Fund
-                  </option>
-                  <option value="debit_card">Debit Card</option>
-                  <option value="bank">Bank</option>
-                  <option value="transfer">Transfer</option>
-                  <option value="qrcode">QR COde</option>
-                  <option value="USSD">USSD</option>
-                </Form.Control>
-              </Form.Group>
-
-              <Form.Group controlId="duration">
-                <Form.Label>Settlement Duration</Form.Label>
-                <Form.Control
-                  as="select"
-                  readOnly
-                  value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
-                >
-                  <option value="1day">Within 1 day</option>
-                  <option value="2days">Less than 2 days</option>
-                  <option value="3days">Less than 3 days</option>
-                  <option value="1week">Less than 1 week</option>
-                  <option value="2week">Less than 2 weeks</option>
-                  <option value="1month">Less than 1 month</option>
-                </Form.Control>
-              </Form.Group>
-
-              {/* <Form.Group controlId="accountId">
-              <Form.Label>Payer Paysofter Account ID</Form.Label>
-
-              <Row className="text-center py-2">
-                <Col md={10}>
-                  <Form.Control
-                    type="number"
-                    placeholder="Enter Paysofter Account ID"
-                    value={accountId}
-                    onChange={(e) => setAccountId(e.target.value)}
-                    required
-                    maxLength={11}
-                  />
-                </Col>
-                <Col md={2}>
-                  <Button
-                    variant="outline"
-                    onClick={handleAccountInfoModalShow}
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="A unqiuely assigned 12-digit Paysofter Account ID. Don't have a Paysofter account? Click here."
-                  >
-                    <i className="fa fa-info-circle"> </i>
-                  </Button>
-
-                  <Modal
-                    show={showAccountInfoModal}
-                    onHide={handleAccountInfoModalClose}
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title className="text-center w-100 py-2">
-                        Paysofter Account ID
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <p className="text-center">
-                        A unqiuely assigned 12-digit Paysofter Account ID. Don't
-                        have a Paysofter account? You're just about 3 minutes
-                        away!{" "}
-                        <a
-                          href="https://paysofter.com/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {" "}
-                          <span>
-                            <Button
-                              variant="primary"
-                              size="sm"
-                              className="text-center py-2"
-                            >
-                              Create A Free Account
-                            </Button>
-                          </span>
-                        </a>
-                      </p>
-                    </Modal.Body>
-                  </Modal>
-                </Col>
-              </Row>
-            </Form.Group> */}
-
-              <div className="py-3 text-center">
-                <Button
-                  className="w-100 rounded"
-                  type="submit"
-                  variant="primary"
-                  // onClick={handleShowPaysofterAccountFund}
-                >
-                  Submit{" "}
-                  {/* <span>
-                  (NGN{" "}
-                  {promoTotalPrice.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                  )
-                </span> */}
-                </Button>
-              </div>
-            </Form>
-            {/* {showPaysofterAccountFund && (
-            <PaysofterAccountFund
-              duration={duration}
-              currency={currency}
-              paymenthMethod={paymenthMethod}
-            />
-          )} */}
-          </Col>
-        </Row>
-      {/* )} */}
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="rounded mt-2"
+              />
+            </Form.Group>
+            <Button
+              variant="primary"
+              onClick={handleBuyerConfirmPromise}
+              className="rounded mt-2 text-center w-100"
+            >
+              Submit
+            </Button>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   );
-};
+}
 
-export default SellerConfirmPromise;
+export default BuyerConfirmPromise;
