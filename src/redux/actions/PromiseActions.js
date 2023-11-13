@@ -34,7 +34,7 @@ export const getSellerPromises = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`${API_URL}/api/get-promise/`, config);
+    const { data } = await axios.get(`${API_URL}/api/get-seller-promise/`, config);
 
     dispatch({
       type: GET_SELLER_PROMISE_SUCCESS,
@@ -68,7 +68,7 @@ export const getBuyerPromises = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`${API_URL}/api/get-promise/`, config);
+    const { data } = await axios.get(`${API_URL}/api/get-buyer-promise/`, config);
 
     dispatch({
       type: GET_BUYER_PROMISE_SUCCESS,

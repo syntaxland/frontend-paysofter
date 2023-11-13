@@ -33,15 +33,15 @@ import VerifyEmailOtpScreen from "./components/screens/VerifyEmailOtpScreen";
 // import Orders from "./components/profiles/Orders";
 // import Payments from "./components/profiles/Payments";
 import Dashboard from "./components/profiles/Dashboard";
+import PaysofterPromise from "./components/profiles/PaysofterPromise";
 // import AdminDashboard from "./components/admin/AdminDashboard";
 
 import ToggleAccountSettings from "./components/settings/ToggleAccountSettings";
 import MaxWithdrawalSettings from "./components/settings/MaxWithdrawalSettings";
 import Settings from "./components/settings/Settings";
-import SellerDashboard from "./components/sellers/Dashboard";
 
-import PaysofterPromise from "./components/profiles/PaysofterPromise";
-import SellerConfirmPromise from "./components/promise/SellerConfirmPromise";
+import SellerDashboard from "./components/sellers/Dashboard";
+import PaysofterPromiseSeller from "./components/sellers/PaysofterPromiseSeller";
 
 function App() {
   // const userLogin = useSelector((state) => state.userLogin);
@@ -66,8 +66,8 @@ function App() {
           <Route path="/set-max-fund" component={MaxWithdrawalSettings} />
           <Route path="/toggle-fund" component={ToggleAccountSettings} />
 
-          <Route path="/promise/" component={PaysofterPromise} />
-          <Route path="/seller-confirm-promise/" component={SellerConfirmPromise} />
+          <Route path="/promise/buyer" component={PaysofterPromise} />
+          <Route path="/promise/seller/" component={PaysofterPromiseSeller} />
           <Route path="/seller-dashboard" component={SellerDashboard} />
           
           {/* <Route path="/admin-dashboard" component={AdminDashboard} /> */}

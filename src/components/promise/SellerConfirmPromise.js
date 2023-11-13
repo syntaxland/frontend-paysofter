@@ -1,29 +1,31 @@
-// BuyerConfirmPromise.js
-import React, { useState, useEffect } from "react";
+// SellerConfirmPromise.js
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { buyerConfirmPromise } from "../../redux/actions/PromiseActions";
+import { sellerConfirmPromise } from "../../redux/actions/PromiseActions";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Message from "../Message";
 import Loader from "../Loader";
 
-function BuyerConfirmPromise({ promiseId }) {
+function SellerConfirmPromise({ promiseId }) {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const buyerConfirmPromiseState = useSelector(
-    (state) => state.buyerConfirmPromiseState
+  useEffect(() => {
+    if (!userInfo) {
+      history.push("/login");
+    }
+  }, [userInfo, history]);
+
+  const sellerConfirmPromiseState = useSelector(
+    (state) => state.sellerConfirmPromiseState
   );
-  const { success, error, loading } = buyerConfirmPromiseState;
+  const { success, error, loading } = sellerConfirmPromiseState;
 
-  // const sellerConfirmPromiseState = useSelector(
-  //   (state) => state.sellerConfirmPromiseState
-  // );
-  // const { success, error, loading } = sellerConfirmPromiseState;
-
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (success) {
@@ -36,20 +38,20 @@ function BuyerConfirmPromise({ promiseId }) {
   }, [success, history]);
 
   const promiseData = {
-    password: password,
+    // password: password,
     promise_id: promiseId,
   };
   console.log("promiseId:", promiseId);
 
-  const handleBuyerConfirmPromise = () => {
-    dispatch(buyerConfirmPromise(promiseData));
+  const handleSellerConfirmPromise = () => {
+    dispatch(sellerConfirmPromise(promiseData));
   };
 
   return (
     <Container>
       <Row className="justify-content-center py-2">
         <Col>
-          {/* <h2 className="mb-4">Toggle Account Fund</h2> */}
+          {/* <h2 className="mb-4">Seller Confirm Promises</h2> */}
           {loading && <Loader />}
           {success && (
             <Message variant="success">Promise confirmed successfully.</Message>
@@ -61,14 +63,12 @@ function BuyerConfirmPromise({ promiseId }) {
               className="fa fa-warning"
               style={{ fontSize: "18px", color: "yellow" }}
             ></i>{" "}
-            Warning! This action will confirm that your promise order from this
-            seller is fulfilled and will transfer the promise amount from your
-            account to the seller's. Please enter the password for your account
-            email <strong>({userInfo.email}</strong>):{" "}
+            Warning! This action will confirm that you have fulfilled the promise condition of this
+            buyer. 
           </p>
 
           <Form>
-            <Form.Group>
+            {/* <Form.Group>
               <Form.Control
                 type="password"
                 value={password}
@@ -76,13 +76,13 @@ function BuyerConfirmPromise({ promiseId }) {
                 placeholder="Enter your password"
                 className="rounded mt-2"
               />
-            </Form.Group>
+            </Form.Group> */}
             <Button
               variant="primary"
-              onClick={handleBuyerConfirmPromise}
+              onClick={handleSellerConfirmPromise}
               className="rounded mt-2 text-center w-100"
             >
-              Submit
+              Confirm Promise
             </Button>
           </Form>
         </Col>
@@ -91,4 +91,4 @@ function BuyerConfirmPromise({ promiseId }) {
   );
 }
 
-export default BuyerConfirmPromise;
+export default SellerConfirmPromise;

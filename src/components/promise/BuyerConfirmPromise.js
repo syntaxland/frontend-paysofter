@@ -1,15 +1,17 @@
 // BuyerConfirmPromise.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { buyerConfirmPromise } from "../../redux/actions/PromiseActions";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { buyerConfirmPromise } from "../../redux/actions/PromiseActions";
+import { createTransaction } from "../../redux/actions/transactionActions";
 import { useHistory } from "react-router-dom";
 import Message from "../Message";
 import Loader from "../Loader";
 
-function BuyerConfirmPromise({ promiseId }) {
+function BuyerConfirmPromise({ promiseId, amount }) {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -18,22 +20,33 @@ function BuyerConfirmPromise({ promiseId }) {
   );
   const { success, error, loading } = buyerConfirmPromiseState;
 
-  // const sellerConfirmPromiseState = useSelector(
-  //   (state) => state.sellerConfirmPromiseState
+  // const createTransactionState = useSelector(
+  //   (state) => state.createTransactionState
   // );
-  // const { success, error, loading } = sellerConfirmPromiseState;
+  // const { success, error, loading } = createTransactionState;
 
   const [password, setPassword] = useState("");
+  const createdAt = new Date().toISOString();
+
+  const transactionData = {
+    payment_id: promiseId,
+    // email: userEmail,
+    amount: amount,
+    // public_api_key: publicApiKey,
+    created_at: createdAt,
+  };
 
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {
+        dispatch(createTransaction(transactionData));
         window.location.reload();
         // history.push("/dashboard");
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [success, history]);
+    // eslint-disable-next-line
+  }, [dispatch, success, history]);
 
   const promiseData = {
     password: password,

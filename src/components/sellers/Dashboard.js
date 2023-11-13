@@ -252,7 +252,7 @@ function SellerDashboard() {
                       <div className="bar-chart">
                         <h2 className="py-2">
                           <i className="	fas fa-money-bill"></i> Total
-                          Transactions
+                          Transactions (Seller Account)
                         </h2>
                         <div className="bar"></div>
                         <strong>

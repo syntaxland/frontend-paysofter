@@ -17,15 +17,12 @@ function PaysofterPromise({ history }) {
   const { loading, promises, error } = getBuyerPromiseState;
   console.log("Promises:", promises);
 
-  // const getSellerPromiseState = useSelector((state) => state.getSellerPromiseState);
-  // const { loading, promises, error } = getSellerPromiseState;
-  // console.log("Promises:", promises);
-
   const [showConfirmPromise, setShowConfirmPromise] = useState(false);
-  const [selectedPromiseId, setSelectedPromiseId] = useState(null);
+  // const [selectedPromiseId, setSelectedPromiseId] = useState(null);
+  const [selectedPromise, setSelectedPromise] = useState(null);
 
-  const handleConfirmPromiseOpen = (promiseId) => {
-    setSelectedPromiseId(promiseId);
+  const handleConfirmPromiseOpen = (promise) => {
+    setSelectedPromise(promise);
     setShowConfirmPromise(true);
   };
 
@@ -63,11 +60,11 @@ function PaysofterPromise({ history }) {
   };
 
   return (
-    <Container fluid>
+    <Container>
       <Row>
         <Col>
           <h1 className="text-center py-3">
-            <i className="fas fa-money-check-alt"></i> Buyer Promises
+            <i className="fas fa-money-check-alt"></i> Promises (Buyer)
           </h1>
           {loading ? (
             <Loader />
@@ -91,15 +88,16 @@ function PaysofterPromise({ history }) {
                       <th>Promise ID</th>
                       <th>Amount</th>
                       <th>Seller Account ID</th>
-                      <th>Seller Email</th>
+                      {/* <th>Seller Email</th> */}
                       <th>Buyer Account ID</th>
-                      <th>Buyer Email</th>
+                      {/* <th>Buyer Email</th> */}
                       <th>Buyer Promise Fulfilled</th>
                       <th>Seller Fulfilled Promise</th>
+                      <th>Status</th>
+                      <th>Success</th>                      
+                      <th>Expected Settlement Duration</th>
                       <th>Payment Method</th>
                       <th>payment Provider</th>
-                      <th>Status</th>
-                      <th>Successful</th>
                       <th>Created At</th>
                     </tr>
                   </thead>
@@ -109,24 +107,25 @@ function PaysofterPromise({ history }) {
                         <td>{index + 1}</td>
                         <td>
                           {promise.buyer_promise_fulfilled ? (
-                            <span>
+                            <>
                               <Button variant="outline-link" size="sm" disabled>
                                 {promise.promise_id}
                               </Button>
-                            </span>
+                            </>
                           ) : (
-                            <span>
+                            <>
                               <Button
                                 variant="outline-link"
                                 size="sm"
                                 // onClick={handleConfirmPromiseOpen}
-                                onClick={() =>
-                                  handleConfirmPromiseOpen(promise.promise_id)
-                                }
+                                // onClick={() =>
+                                //   handleConfirmPromiseOpen(promise.promise_id)
+                                // }
+                                onClick={() => handleConfirmPromiseOpen({ promise_id: promise.promise_id, amount: promise.amount })}
                               >
                                 {promise.promise_id}
                               </Button>
-                            </span>
+                            </>
                           )}
                         </td>
 
@@ -138,7 +137,7 @@ function PaysofterPromise({ history }) {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
                               })}
-                            </span>
+                            </span> 
                           ) : (
                             <span style={{ fontSize: "16px", color: "yellow" }}>
                               {promise.currency}{" "}
@@ -149,11 +148,10 @@ function PaysofterPromise({ history }) {
                             </span>
                           )}
                         </td>
-
                         <td>{formatAccountId(promise.seller_account_id)}</td>
-                        <td>{promise.seller_email}</td>
+                        {/* <td>{promise.seller_email}</td> */}
                         <td>{formatAccountId(promise.buyer_account_id)}</td>
-                        <td>{promise.buyer_email}</td>
+                        {/* <td>{promise.buyer_email}</td> */}
                         <td>
                           {promise.buyer_promise_fulfilled ? (
                             <i
@@ -180,22 +178,29 @@ function PaysofterPromise({ history }) {
                             ></i>
                           )}
                         </td>
-                        <td>{promise.payment_method}</td>
-                        <td>{promise.payment_provider}</td>
                         <td>{promise.status}</td>
                         <td>
                           {promise.is_success ? (
-                            <i
-                              className="fas fa-check-circle"
-                              style={{ fontSize: "16px", color: "green" }}
-                            ></i>
+                            <sapn>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Yes
+                            </sapn>
                           ) : (
-                            <i
-                              className="fas fa-times-circle"
-                              style={{ fontSize: "16px", color: "red" }}
-                            ></i>
+                            <sapn>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </sapn>
                           )}
                         </td>
+                                                <td>{promise.duration}</td>
+                        <td>{promise.payment_method}</td>
+                        <td>{promise.payment_provider}</td>
                         <td>
                           {new Date(promise.timestamp).toLocaleString("en-US", {
                             weekday: "long",
@@ -207,10 +212,9 @@ function PaysofterPromise({ history }) {
                             second: "numeric",
                           })}
                         </td>
-
                         <td>
                           {promise.buyer_promise_fulfilled ? (
-                            <span>
+                            <>
                               <Button
                                 variant="outline-primary"
                                 size="sm"
@@ -219,23 +223,24 @@ function PaysofterPromise({ history }) {
                               >
                                 Promise Confirmed
                               </Button>
-                            </span>
+                            </>
                           ) : (
-                            <span>
+                            <>
                               <Button
                                 variant="outline-primary"
                                 size="sm"
                                 // onClick={handleConfirmPromiseOpen}
-                                onClick={() =>
-                                  handleConfirmPromiseOpen(promise.promise_id)
-                                }
+                                // onClick={() =>
+                                //   handleConfirmPromiseOpen(promise.promise_id)
+                                // }
+                                onClick={() => handleConfirmPromiseOpen({ promise_id: promise.promise_id, amount: promise.amount })}
+
                               >
                                 Confirm Promise
                               </Button>
-                            </span>
+                            </>
                           )}
                         </td>
-
                         <td>
                           <Button
                             variant="outline-primary"
@@ -258,7 +263,9 @@ function PaysofterPromise({ history }) {
                           <Modal.Body>
                             {showConfirmPromise && (
                               <BuyerConfirmPromise
-                                promiseId={selectedPromiseId}
+                              promiseId={selectedPromise?.promise_id}
+                              amount={selectedPromise?.amount}
+                              onClose={handleConfirmPromiseClose}
                               />
                             )}
                           </Modal.Body>

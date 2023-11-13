@@ -44,7 +44,7 @@ function Dashboard({ history }) {
   };
 
   const handlePaysofterPromise = () => {
-    history.push("/promise");
+    history.push("/promise/buyer");
   };
 
   const handleAddbusiness = () => {

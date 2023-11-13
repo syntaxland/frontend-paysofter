@@ -3,7 +3,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { userTransactionReducer } from "./reducers/transactionReducers";
+import { userTransactionReducer, createTransactionReducer } from "./reducers/transactionReducers";
 import { userPayoutReducer } from "./reducers/payoutReducers";
 
 import {
@@ -70,6 +70,7 @@ const reducer = combineReducers({
   referral: referralReducer,
 
   userTransactions: userTransactionReducer,
+  createTransactionState: createTransactionReducer,
   userPayouts: userPayoutReducer,
 
   fundAccountState: fundAccountReducer,

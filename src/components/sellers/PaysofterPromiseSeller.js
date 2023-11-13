@@ -1,25 +1,21 @@
-// PaysofterPromise.js
+// PaysofterPromiseSeller.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table, Button, Row, Col, Modal, Container } from "react-bootstrap";
-import { getBuyerPromises } from "../../redux/actions/PromiseActions";
+import { getSellerPromises } from "../../redux/actions/PromiseActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
-import BuyerConfirmPromise from "../promise/BuyerConfirmPromise";
+import SellerConfirmPromise from "../promise/SellerConfirmPromise";
 
-function PaysofterPromise({ history }) {
+function PaysofterPromiseSeller({ history }) {
   const dispatch = useDispatch();
 
-  const getBuyerPromiseState = useSelector(
-    (state) => state.getBuyerPromiseState
+  const getSellerPromiseState = useSelector(
+    (state) => state.getSellerPromiseState
   );
-  const { loading, promises, error } = getBuyerPromiseState;
+  const { loading, promises, error } = getSellerPromiseState;
   console.log("Promises:", promises);
-
-  // const getSellerPromiseState = useSelector((state) => state.getSellerPromiseState);
-  // const { loading, promises, error } = getSellerPromiseState;
-  // console.log("Promises:", promises);
 
   const [showConfirmPromise, setShowConfirmPromise] = useState(false);
   const [selectedPromiseId, setSelectedPromiseId] = useState(null);
@@ -55,19 +51,19 @@ function PaysofterPromise({ history }) {
   };
 
   useEffect(() => {
-    dispatch(getBuyerPromises());
+    dispatch(getSellerPromises());
   }, [dispatch]);
 
-  const handleMessageSeller = () => {
-    history.push("/message-seller");
+  const handleMessageBuyer = () => {
+    history.push("/message-buyer");
   };
 
   return (
-    <Container fluid>
+    <Container>
       <Row>
         <Col>
           <h1 className="text-center py-3">
-            <i className="fas fa-money-check-alt"></i> Buyer Promises
+            <i className="fas fa-money-check-alt"></i> Promises (Seller)
           </h1>
           {loading ? (
             <Loader />
@@ -91,15 +87,16 @@ function PaysofterPromise({ history }) {
                       <th>Promise ID</th>
                       <th>Amount</th>
                       <th>Seller Account ID</th>
-                      <th>Seller Email</th>
+                      {/* <th>Seller Email</th> */}
                       <th>Buyer Account ID</th>
-                      <th>Buyer Email</th>
+                      {/* <th>Buyer Email</th> */}
                       <th>Buyer Promise Fulfilled</th>
                       <th>Seller Fulfilled Promise</th>
-                      <th>Payment Method</th>
-                      <th>payment Provider</th>
                       <th>Status</th>
-                      <th>Successful</th>
+                      <th>Success</th>
+                      <th>Expected Settlement Duration</th>
+                      <th>Payment Method</th>
+                      <th>Payment Provider</th>
                       <th>Created At</th>
                     </tr>
                   </thead>
@@ -108,14 +105,14 @@ function PaysofterPromise({ history }) {
                       <tr key={promise.id} className="rounded">
                         <td>{index + 1}</td>
                         <td>
-                          {promise.buyer_promise_fulfilled ? (
-                            <span>
+                          {promise.seller_fulfilled_promise ? (
+                            <>
                               <Button variant="outline-link" size="sm" disabled>
                                 {promise.promise_id}
                               </Button>
-                            </span>
+                            </>
                           ) : (
-                            <span>
+                            <>
                               <Button
                                 variant="outline-link"
                                 size="sm"
@@ -126,10 +123,9 @@ function PaysofterPromise({ history }) {
                               >
                                 {promise.promise_id}
                               </Button>
-                            </span>
+                            </>
                           )}
                         </td>
-
                         <td>
                           {promise.buyer_promise_fulfilled ? (
                             <span style={{ fontSize: "16px", color: "green" }}>
@@ -149,11 +145,10 @@ function PaysofterPromise({ history }) {
                             </span>
                           )}
                         </td>
-
                         <td>{formatAccountId(promise.seller_account_id)}</td>
-                        <td>{promise.seller_email}</td>
+                        {/* <td>{promise.seller_email}</td> */}
                         <td>{formatAccountId(promise.buyer_account_id)}</td>
-                        <td>{promise.buyer_email}</td>
+                        {/* <td>{promise.buyer_email}</td> */}
                         <td>
                           {promise.buyer_promise_fulfilled ? (
                             <i
@@ -180,22 +175,29 @@ function PaysofterPromise({ history }) {
                             ></i>
                           )}
                         </td>
-                        <td>{promise.payment_method}</td>
-                        <td>{promise.payment_provider}</td>
                         <td>{promise.status}</td>
                         <td>
                           {promise.is_success ? (
-                            <i
-                              className="fas fa-check-circle"
-                              style={{ fontSize: "16px", color: "green" }}
-                            ></i>
+                            <>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Yes
+                            </>
                           ) : (
-                            <i
-                              className="fas fa-times-circle"
-                              style={{ fontSize: "16px", color: "red" }}
-                            ></i>
+                            <>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </>
                           )}
                         </td>
+                        <td>{promise.duration}</td>
+                        <td>{promise.payment_method}</td>
+                        <td>{promise.payment_provider}</td>
                         <td>
                           {new Date(promise.timestamp).toLocaleString("en-US", {
                             weekday: "long",
@@ -209,8 +211,8 @@ function PaysofterPromise({ history }) {
                         </td>
 
                         <td>
-                          {promise.buyer_promise_fulfilled ? (
-                            <span>
+                          {promise.seller_fulfilled_promise ? (
+                            <>
                               <Button
                                 variant="outline-primary"
                                 size="sm"
@@ -219,9 +221,9 @@ function PaysofterPromise({ history }) {
                               >
                                 Promise Confirmed
                               </Button>
-                            </span>
+                            </>
                           ) : (
-                            <span>
+                            <>
                               <Button
                                 variant="outline-primary"
                                 size="sm"
@@ -232,7 +234,7 @@ function PaysofterPromise({ history }) {
                               >
                                 Confirm Promise
                               </Button>
-                            </span>
+                            </>
                           )}
                         </td>
 
@@ -240,9 +242,9 @@ function PaysofterPromise({ history }) {
                           <Button
                             variant="outline-primary"
                             size="sm"
-                            onClick={handleMessageSeller}
+                            onClick={handleMessageBuyer}
                           >
-                            Message Seller
+                            Message Buyer
                           </Button>
                         </td>
 
@@ -257,7 +259,7 @@ function PaysofterPromise({ history }) {
                           </Modal.Header>
                           <Modal.Body>
                             {showConfirmPromise && (
-                              <BuyerConfirmPromise
+                              <SellerConfirmPromise
                                 promiseId={selectedPromiseId}
                               />
                             )}
@@ -282,4 +284,4 @@ function PaysofterPromise({ history }) {
   );
 }
 
-export default PaysofterPromise;
+export default PaysofterPromiseSeller;
