@@ -1,6 +1,7 @@
 // PaysofterPromise.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Table, Button, Row, Col, Modal, Container } from "react-bootstrap";
 import { getBuyerPromises } from "../../redux/actions/PromiseActions";
 import Message from "../Message";
@@ -55,9 +56,9 @@ function PaysofterPromise({ history }) {
     dispatch(getBuyerPromises());
   }, [dispatch]);
 
-  const handleMessageSeller = () => {
-    history.push("/message-seller");
-  };
+  // const handleMessageSeller = () => {
+  //   history.push("/message-seller");
+  // };
 
   return (
     <Container>
@@ -94,11 +95,11 @@ function PaysofterPromise({ history }) {
                       <th>Buyer Promise Fulfilled</th>
                       <th>Seller Fulfilled Promise</th>
                       <th>Status</th>
-                      <th>Success</th>                      
+                      <th>Success</th>
                       <th>Expected Settlement Duration</th>
                       <th>Payment Method</th>
-                      <th>payment Provider</th>
-                      <th>Created At</th>
+                      <th>Payment Provider</th>
+                      <th>Promise Made At</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -121,7 +122,12 @@ function PaysofterPromise({ history }) {
                                 // onClick={() =>
                                 //   handleConfirmPromiseOpen(promise.promise_id)
                                 // }
-                                onClick={() => handleConfirmPromiseOpen({ promise_id: promise.promise_id, amount: promise.amount })}
+                                onClick={() =>
+                                  handleConfirmPromiseOpen({
+                                    promise_id: promise.promise_id,
+                                    amount: promise.amount,
+                                  })
+                                }
                               >
                                 {promise.promise_id}
                               </Button>
@@ -137,7 +143,7 @@ function PaysofterPromise({ history }) {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
                               })}
-                            </span> 
+                            </span>
                           ) : (
                             <span style={{ fontSize: "16px", color: "yellow" }}>
                               {promise.currency}{" "}
@@ -198,7 +204,7 @@ function PaysofterPromise({ history }) {
                             </sapn>
                           )}
                         </td>
-                                                <td>{promise.duration}</td>
+                        <td>{promise.duration}</td>
                         <td>{promise.payment_method}</td>
                         <td>{promise.payment_provider}</td>
                         <td>
@@ -233,21 +239,27 @@ function PaysofterPromise({ history }) {
                                 // onClick={() =>
                                 //   handleConfirmPromiseOpen(promise.promise_id)
                                 // }
-                                onClick={() => handleConfirmPromiseOpen({ promise_id: promise.promise_id, amount: promise.amount })}
-
+                                onClick={() =>
+                                  handleConfirmPromiseOpen({
+                                    promise_id: promise.promise_id,
+                                    amount: promise.amount,
+                                  })
+                                }
                               >
                                 Confirm Promise
                               </Button>
                             </>
                           )}
                         </td>
+
                         <td>
-                          <Button
-                            variant="outline-primary"
-                            size="sm"
-                            onClick={handleMessageSeller}
-                          >
-                            Message Seller
+                          <Button variant="outline-primary" size="sm">
+                            <Link
+                              to={`/promise/message/${promise.promise_id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              Message Seller
+                            </Link>
                           </Button>
                         </td>
 
@@ -263,9 +275,9 @@ function PaysofterPromise({ history }) {
                           <Modal.Body>
                             {showConfirmPromise && (
                               <BuyerConfirmPromise
-                              promiseId={selectedPromise?.promise_id}
-                              amount={selectedPromise?.amount}
-                              onClose={handleConfirmPromiseClose}
+                                promiseId={selectedPromise?.promise_id}
+                                amount={selectedPromise?.amount}
+                                onClose={handleConfirmPromiseClose}
                               />
                             )}
                           </Modal.Body>

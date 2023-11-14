@@ -12,6 +12,12 @@ import {
   SELLER_CONFIRM_PROMISE_REQUEST,
   SELLER_CONFIRM_PROMISE_SUCCESS,
   SELLER_CONFIRM_PROMISE_FAIL,
+  CREATE_PROMISE_MESSAGE_REQUEST,
+  CREATE_PROMISE_MESSAGE_SUCCESS,
+  CREATE_PROMISE_MESSAGE_FAIL,
+  LIST_PROMISE_MESSAGE_REQUEST,
+  LIST_PROMISE_MESSAGE_SUCCESS,
+  LIST_PROMISE_MESSAGE_FAIL,
 } from "../constants/PromiseConstants";
 
 const initialState = {
@@ -19,6 +25,33 @@ const initialState = {
   success: false,
   error: null,
   promises: [],
+  promiseMessages: [],
+};
+
+export const createPromiseMessagesReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case CREATE_PROMISE_MESSAGE_REQUEST:
+      return { ...state, loading: true };
+    case CREATE_PROMISE_MESSAGE_SUCCESS:
+      return { loading: false, success: true };
+    case CREATE_PROMISE_MESSAGE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const listPromiseMessagesReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LIST_PROMISE_MESSAGE_REQUEST:
+      return { ...state, loading: true };
+    case LIST_PROMISE_MESSAGE_SUCCESS:
+      return { loading: false, success: true, promiseMessages: action.payload };
+    case LIST_PROMISE_MESSAGE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const getBuyerpromiseReducer = (state = initialState, action) => {

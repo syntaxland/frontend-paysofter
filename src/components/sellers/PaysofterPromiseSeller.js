@@ -1,6 +1,7 @@
 // PaysofterPromiseSeller.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Table, Button, Row, Col, Modal, Container } from "react-bootstrap";
 import { getSellerPromises } from "../../redux/actions/PromiseActions";
 import Message from "../Message";
@@ -54,9 +55,9 @@ function PaysofterPromiseSeller({ history }) {
     dispatch(getSellerPromises());
   }, [dispatch]);
 
-  const handleMessageBuyer = () => {
-    history.push("/message-buyer");
-  };
+  // const handleMessageBuyer = () => {
+  //   history.push("/message-buyer");
+  // };
 
   return (
     <Container>
@@ -97,7 +98,7 @@ function PaysofterPromiseSeller({ history }) {
                       <th>Expected Settlement Duration</th>
                       <th>Payment Method</th>
                       <th>Payment Provider</th>
-                      <th>Created At</th>
+                      <th>Promise Made At</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -238,13 +239,24 @@ function PaysofterPromiseSeller({ history }) {
                           )}
                         </td>
 
-                        <td>
+                        {/* <td>
                           <Button
                             variant="outline-primary"
                             size="sm"
                             onClick={handleMessageBuyer}
                           >
                             Message Buyer
+                          </Button>
+                        </td> */}
+
+                        <td>
+                          <Button variant="outline-primary" size="sm">
+                            <Link
+                              to={`/promise/message/${promise.promise_id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              Message Buyer
+                            </Link>
                           </Button>
                         </td>
 

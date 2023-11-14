@@ -3,14 +3,16 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { userTransactionReducer, createTransactionReducer } from "./reducers/transactionReducers";
+import {
+  userTransactionReducer,
+  createTransactionReducer,
+} from "./reducers/transactionReducers";
 import { userPayoutReducer } from "./reducers/payoutReducers";
 
 import {
   userLoginReducers,
   userRegisterReducers,
 } from "./reducers/userReducers";
-
 
 import {
   fundAccountReducer,
@@ -22,13 +24,13 @@ import {
   userAccountFundListReducer,
 } from "./reducers/AccountFundReducers";
 
-import { 
-  
+import {
   getBuyerpromiseReducer,
-getSellerPromiseReducer,
-buyerConfirmPromiseReducer,
-sellerConfirmPromiseReducer,
-
+  getSellerPromiseReducer,
+  buyerConfirmPromiseReducer,
+  sellerConfirmPromiseReducer,
+  createPromiseMessagesReducer,
+  listPromiseMessagesReducer,
 } from "./reducers/PromiseReducers";
 
 import {
@@ -82,8 +84,11 @@ const reducer = combineReducers({
   userAccountFundListState: userAccountFundListReducer,
   getBuyerPromiseState: getBuyerpromiseReducer,
   getSellerPromiseState: getSellerPromiseReducer,
-buyerConfirmPromiseState: buyerConfirmPromiseReducer,
-sellerConfirmPromiseState: sellerConfirmPromiseReducer,
+  buyerConfirmPromiseState: buyerConfirmPromiseReducer,
+  sellerConfirmPromiseState: sellerConfirmPromiseReducer,
+
+  createPromiseMessageState: createPromiseMessagesReducer,
+  listPromiseMessageState: listPromiseMessagesReducer,
 
   creditPointBal: creditPointBalanceReducer,
   creditPointRequestCreate: creditPointRequestCreateReducer,

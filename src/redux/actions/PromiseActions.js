@@ -13,9 +13,130 @@ import {
   SELLER_CONFIRM_PROMISE_REQUEST,
   SELLER_CONFIRM_PROMISE_SUCCESS,
   SELLER_CONFIRM_PROMISE_FAIL,
+  CREATE_PROMISE_MESSAGE_REQUEST,
+  CREATE_PROMISE_MESSAGE_SUCCESS,
+  CREATE_PROMISE_MESSAGE_FAIL,
+  LIST_PROMISE_MESSAGE_REQUEST,
+  LIST_PROMISE_MESSAGE_SUCCESS,
+  LIST_PROMISE_MESSAGE_FAIL,
 } from "../constants/PromiseConstants";
 
 const API_URL = process.env.REACT_APP_API_URL;
+
+export const createPromiseMessages =
+  (promiseMessageData) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: CREATE_PROMISE_MESSAGE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `${API_URL}/api/create-promise-messages/`,
+        promiseMessageData,
+        config
+      );
+
+      dispatch({
+        type: CREATE_PROMISE_MESSAGE_SUCCESS,
+        payload: data,
+      });
+      // window.location.href = "/promise";
+      // window.location.reload();
+    } catch (error) {
+      dispatch({
+        type: CREATE_PROMISE_MESSAGE_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+// export const listPromiseMessage =
+//   (promiseId) => async (dispatch, getState) => {
+//     try {
+//       dispatch({
+//         type: LIST_PROMISE_MESSAGE_REQUEST,
+//       });
+
+//       const {
+//         userLogin: { userInfo },
+//       } = getState();
+
+//       const config = {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${userInfo.access}`,
+//         },
+//       };
+
+//       const { data } = await axios.get(
+//         `${API_URL}/api/list-promise-messages/`,
+//         promiseId,
+//         config
+//       );
+
+//       dispatch({
+//         type: LIST_PROMISE_MESSAGE_SUCCESS,
+//         payload: data,
+//       });
+//     } catch (error) {
+//       dispatch({
+//         type: LIST_PROMISE_MESSAGE_FAIL,
+//         payload:
+//           error.response && error.response.data.detail
+//             ? error.response.data.detail
+//             : error.message,
+//       });
+//     }
+//   };
+
+  export const listPromiseMessages = (promiseId) => async (
+    dispatch,
+    getState
+  ) => {
+    try {
+      dispatch({ type: LIST_PROMISE_MESSAGE_REQUEST });
+  
+      const {
+        userLogin: { userInfo },
+      } = getState();
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+  
+      const { data } = await axios.get(
+        `${API_URL}/api/list-promise-messages/${promiseId}/`,
+        config
+      );
+  
+      dispatch({ type: LIST_PROMISE_MESSAGE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: LIST_PROMISE_MESSAGE_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
 
 export const getSellerPromises = () => async (dispatch, getState) => {
   try {
@@ -34,7 +155,10 @@ export const getSellerPromises = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`${API_URL}/api/get-seller-promise/`, config);
+    const { data } = await axios.get(
+      `${API_URL}/api/get-seller-promise/`,
+      config
+    );
 
     dispatch({
       type: GET_SELLER_PROMISE_SUCCESS,
@@ -68,7 +192,10 @@ export const getBuyerPromises = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`${API_URL}/api/get-buyer-promise/`, config);
+    const { data } = await axios.get(
+      `${API_URL}/api/get-buyer-promise/`,
+      config
+    );
 
     dispatch({
       type: GET_BUYER_PROMISE_SUCCESS,

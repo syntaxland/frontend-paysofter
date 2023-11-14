@@ -1,7 +1,7 @@
 // App.js
 import "./App.css";
 import React from "react";
-// import { useSelector } from "react-redux"; 
+// import { useSelector } from "react-redux";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./components/Header";
@@ -12,7 +12,7 @@ import HomeScreen from "./components/screens/HomeScreen";
 // // import FavouritesScreen from "./components/profiles/FavouritesScreen";
 // import SearchScreen from "./components/screens/SearchScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
-import LoginScreen from "./components/screens/LoginScreen"; 
+import LoginScreen from "./components/screens/LoginScreen";
 import FundAccount from "./components/FundAccount/FundAccount";
 // import CheckoutScreen from "./components/screens/CheckoutScreen";
 // import PaymentScreen from "./components/screens/PaymentScreen";
@@ -43,6 +43,8 @@ import Settings from "./components/settings/Settings";
 import SellerDashboard from "./components/sellers/Dashboard";
 import PaysofterPromiseSeller from "./components/sellers/PaysofterPromiseSeller";
 
+import PromiseMessage from "./components/promise/PromiseMessage";
+
 function App() {
   // const userLogin = useSelector((state) => state.userLogin);
   // const { userInfo } = userLogin;
@@ -60,7 +62,10 @@ function App() {
           <Route path="/verify-email-otp" component={VerifyEmailOtpScreen} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/fund-account" component={FundAccount} />
-          <Route path="/credit-point-request/" component={CreditPointRequestScreen} /> 
+          <Route
+            path="/credit-point-request/"
+            component={CreditPointRequestScreen}
+          />
 
           <Route path="/settings" component={Settings} />
           <Route path="/set-max-fund" component={MaxWithdrawalSettings} />
@@ -69,7 +74,9 @@ function App() {
           <Route path="/promise/buyer" component={PaysofterPromise} />
           <Route path="/promise/seller/" component={PaysofterPromiseSeller} />
           <Route path="/seller-dashboard" component={SellerDashboard} />
-          
+
+          <Route path="/promise/message/:id" component={PromiseMessage} />
+
           {/* <Route path="/admin-dashboard" component={AdminDashboard} /> */}
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
