@@ -95,6 +95,7 @@ function PaysofterPromiseSeller({ history }) {
                       <th>Seller Fulfilled Promise</th>
                       <th>Status</th>
                       <th>Success</th>
+                      <th>Delivered</th>
                       <th>Expected Settlement Duration</th>
                       <th>Payment Method</th>
                       <th>Payment Provider</th>
@@ -179,6 +180,25 @@ function PaysofterPromiseSeller({ history }) {
                         <td>{promise.status}</td>
                         <td>
                           {promise.is_success ? (
+                            <>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Yes
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          {promise.is_delivered ? (
                             <>
                               <i
                                 className="fas fa-check-circle"

@@ -379,7 +379,7 @@ function Dashboard({ history }) {
                 <span>
                   <NavDropdown
                     // className="profile-dropdown custom-dropdown"
-                    align="down"
+                    align="end"
                   >
                     <span>
                       <Button variant="outline-primary" onClick={handleAddbusiness}>
