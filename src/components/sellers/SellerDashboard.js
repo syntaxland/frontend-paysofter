@@ -1,12 +1,12 @@
 // SellerDashboard.js
 import React, { useState } from "react";
-import { Row, Col, Button, NavDropdown } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 // import { Link} from "react-router-dom";
 // import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 // import { login } from "../../redux/actions/userActions";
-import UserProfile from "./UserProfile"; 
+// import UserProfile from "./UserProfile";
 import Transactions from "./Transactions";
 import Payouts from "./Payouts";
 import Dashboard from "./Dashboard";
@@ -17,7 +17,7 @@ import AccountFunds from "./AccountFunds";
 import Webhooks from "./Webhooks";
 import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
-import PaysofterPromise from "./PaysofterPromise";
+import PaysofterPromiseSeller from "./PaysofterPromiseSeller";
 
 function SellerDashboard({ history }) {
   // const userLogin = useSelector((state) => state.userLogin);
@@ -35,30 +35,30 @@ function SellerDashboard({ history }) {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const handleAdminDashboard = () => {
-    history.push("/admin-dashboard");
-  };
+  // const handleAdminDashboard = () => {
+  //   history.push("/admin-dashboard");
+  // };
 
-  const handleSettings = () => {
-    history.push("/settings");
-  };
+  // const handleSettings = () => {
+  //   history.push("/settings");
+  // };
 
   const handlePaysofterPromise = () => {
-    history.push("/promise/buyer");
+    history.push("/promise/seller");
   };
 
-  const handleAddbusiness = () => {
-    history.push("/add-business");
-  };
+  // const handleAddbusiness = () => {
+  //   history.push("/add-business");
+  // };
 
-  const handleSellerDashboard = () => {
-    history.push("/seller-dashboard");
-  };
+  // const handleSellerDashboard = () => {
+  //   history.push("/seller-dashboard");
+  // };
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case "profile":
-        return <UserProfile />;
+      // case "profile":
+      //   return <UserProfile />;
 
       case "transactions":
         return <Transactions />;
@@ -76,7 +76,7 @@ function SellerDashboard({ history }) {
         return <Subscriptions />;
 
       case "promise":
-        return <PaysofterPromise />;
+        return <PaysofterPromiseSeller />;
 
       // case "message-inbox":
       //   return <MessageInbox />;
@@ -94,7 +94,7 @@ function SellerDashboard({ history }) {
       //   return <Referrals />;
 
       default:
-        return <UserDashboard />;
+        return <Dashboard />;
     }
   };
 
@@ -131,14 +131,28 @@ function SellerDashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "profile" ? "primary" : "outline-primary"
+                    activeTab === "profile" ? "primary" : "outline-primary" 
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("profile")}
                 >
-                  <i className="fas fa-user"></i> Profile
+                  <i className="fas fa-user"></i> Seller Profile
                 </Button>
               </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "promise" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  // onClick={() => handleTabChange("promise")}
+                  onClick={handlePaysofterPromise}
+                >
+                  <i className="fa fa-credit-card"></i> Paysofter Promise
+                </Button>
+              </div>
+
               <div>
                 <Button
                   variant={
@@ -173,7 +187,7 @@ function SellerDashboard({ history }) {
                 </Button>
               </div>
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "referrals" ? "primary" : "outline-primary"
@@ -183,7 +197,7 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fa fa-user-plus"></i> Referrals
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button
@@ -211,22 +225,7 @@ function SellerDashboard({ history }) {
                 </Button>
               </div>
 
-              <div>
-                <Button
-                  variant={
-                    activeTab === "promise" ? "primary" : "outline-primary"
-                  }
-                  className="sidebar-link"
-                  // onClick={() => handleTabChange("promise")}
-                  onClick={handlePaysofterPromise}
-                >
-                  <i className="fa fa-credit-card"></i> Paysofter Promise
-                </Button>
-              </div>
-
-              
-
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "message-inbox"
@@ -238,8 +237,8 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fa fa-message"></i> Inbox
                 </Button>
-              </div>
-
+              </div> */}
+              {/* 
               <div>
                 <Button
                   variant={
@@ -250,7 +249,7 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fa fa-gift"></i> Offers
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button
@@ -316,7 +315,7 @@ function SellerDashboard({ history }) {
                 </Button>
               </div>
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "feedback" ? "primary" : "outline-primary"
@@ -326,20 +325,19 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fas fa-gear"></i> Feedback
                 </Button>
-              </div>
+              </div> */}
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "settings" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
-                  // onClick={history.push("/settings")}
                   onClick={handleSettings}
                 >
                   <i className="fas fa-gear"></i> Settings
                 </Button>
-              </div>
+              </div> */}
 
               {/* <div>
                 {userInfo.is_superuser ? (
@@ -361,7 +359,7 @@ function SellerDashboard({ history }) {
                 )}
               </div> */}
 
-              <div>
+              {/* <div>
                 <span>
                   <Button
                     variant={
@@ -391,9 +389,9 @@ function SellerDashboard({ history }) {
                     </span>
                   </NavDropdown>
                 </span>
-              </div>
+              </div> */}
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "admin-dashboard"
@@ -405,7 +403,7 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fas fa-user-tag"></i> Admin Dashboard
                 </Button>
-              </div>
+              </div> */}
             </div>
           )}
         </Col>

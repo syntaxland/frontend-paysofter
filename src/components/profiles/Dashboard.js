@@ -7,15 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 // import { login } from "../../redux/actions/userActions";
 import UserProfile from "./UserProfile"; 
-import Transactions from "./Transactions";
-import Payouts from "./Payouts";
+// import Transactions from "./Transactions";
+// import Payouts from "./Payouts";
 import UserDashboard from "./UserDashboard";
 // import MessageInbox from "./MessageInbox";
 // import CreditPoint from "./CreditPoint";
 import AccountFunds from "./AccountFunds";
-// import Referrals from "./Referrals";
-import Webhooks from "./Webhooks";
-import ApiEndPoints from "./ApiEndPoints";
+// import Referraols from "./Referrals";
+// import Webhoks from "./Webhooks";
+// import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
 import PaysofterPromise from "./PaysofterPromise";
 
@@ -52,7 +52,7 @@ function Dashboard({ history }) {
   };
 
   const handleSellerDashboard = () => {
-    history.push("/seller-dashboard");
+    history.push("/dashboard/sellers");
   };
 
   const renderTabContent = () => {
@@ -60,17 +60,17 @@ function Dashboard({ history }) {
       case "profile":
         return <UserProfile />;
 
-      case "transactions":
-        return <Transactions />;
+      // case "transactions":
+      //   return <Transactions />;
 
-      case "payouts":
-        return <Payouts />;
+      // case "payouts":
+      //   return <Payouts />;
 
-      case "webhooks":
-        return <Webhooks />;
+      // case "webhooks":
+      //   return <Webhooks />;
 
-      case "api-endpoints":
-        return <ApiEndPoints />;
+      // case "api-endpoints":
+      //   return <ApiEndPoints />;
 
       case "subscriptions":
         return <Subscriptions />;
@@ -161,7 +161,7 @@ function Dashboard({ history }) {
                   <i className="fa fas fa-cart-plus"></i> Purchased Items
                 </Button>
               </div> */}
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "payouts" ? "primary" : "outline-primary"
@@ -171,7 +171,7 @@ function Dashboard({ history }) {
                 >
                   <i className="fas fa-credit-card"></i> Payouts
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button
@@ -278,7 +278,7 @@ function Dashboard({ history }) {
                 </Button>
               </div>
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "api-endpoints"
@@ -302,7 +302,7 @@ function Dashboard({ history }) {
                 >
                   <i className="fas fa-codepen"></i> SDK & Webhooks
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button
@@ -379,14 +379,14 @@ function Dashboard({ history }) {
                 <span>
                   <NavDropdown
                     // className="profile-dropdown custom-dropdown"
-                    // align="end"
+                    align="down"
                   >
                     <span>
                       <Button variant="outline-primary" onClick={handleAddbusiness}>
                         Create Seller Account
                       </Button>
                       <Button variant="outline-primary" onClick={handleSellerDashboard}>
-                        Seller Dashboard
+                       Go to Seller Dashboard
                       </Button>
                     </span>
                   </NavDropdown>

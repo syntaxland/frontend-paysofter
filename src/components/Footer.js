@@ -7,7 +7,7 @@ import OtpDisableAccountFund from "./settings/OtpDisableAccountFund";
 function Footer() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
+  const currentYear = new Date().getFullYear();
   const [showSetMaxFund, setShowSetMaxFund] = useState(false);
 
   const handleSetMaxFundOpen = () => {
@@ -96,11 +96,14 @@ function Footer() {
             </Row>
           ) : null}
 
-         
-
           <Row>
             <Col className="text-center py-2">
-              &copy; Paysofter Inc. | Powered by SoftGlobal | +2349066167293
+              <p>
+                &copy; Paysofter Inc, {currentYear}. |{" "}
+                <i>Payment solution for all humans...</i>
+              </p>
+
+              <p>Powered by SoftGlobal | +2349066167293</p>
             </Col>
           </Row>
         </Col>

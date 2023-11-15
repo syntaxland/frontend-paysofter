@@ -40,7 +40,7 @@ import ToggleAccountSettings from "./components/settings/ToggleAccountSettings";
 import MaxWithdrawalSettings from "./components/settings/MaxWithdrawalSettings";
 import Settings from "./components/settings/Settings";
 
-import SellerDashboard from "./components/sellers/Dashboard";
+import SellerDashboard from "./components/sellers/SellerDashboard";
 import PaysofterPromiseSeller from "./components/sellers/PaysofterPromiseSeller";
 
 import PromiseMessage from "./components/promise/PromiseMessage";
@@ -60,7 +60,7 @@ function App() {
           <Route path="/login" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
           <Route path="/verify-email-otp" component={VerifyEmailOtpScreen} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard/users/" component={Dashboard} />
           <Route path="/fund-account" component={FundAccount} />
           <Route
             path="/credit-point-request/"
@@ -73,7 +73,7 @@ function App() {
 
           <Route path="/promise/buyer" component={PaysofterPromise} />
           <Route path="/promise/seller/" component={PaysofterPromiseSeller} />
-          <Route path="/seller-dashboard" component={SellerDashboard} />
+          <Route path="/dashboard/sellers" component={SellerDashboard} />
 
           <Route path="/promise/message/:id" component={PromiseMessage} />
 

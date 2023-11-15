@@ -247,7 +247,7 @@ function PaysofterPromiseSeller({ history }) {
                           >
                             Message Buyer
                           </Button>
-                        </td> */}
+                        </td> */} 
 
                         <td>
                           <Button variant="outline-primary" size="sm">

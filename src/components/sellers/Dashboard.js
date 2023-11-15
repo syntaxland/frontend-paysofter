@@ -1,8 +1,8 @@
 // SellerDashboard.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Col, Row, Button, Modal } from "react-bootstrap";
+// import { useHistory } from "react-router-dom";
+import { Col, Row } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
 import { getCreditPointBalance } from "../../redux/actions/creditPointActions";
@@ -23,7 +23,7 @@ import {
   PointElement,
   Title,
 } from "chart.js";
-import ToggleAccountSettings from "../settings/ToggleAccountSettings";
+// import ToggleAccountSettings from "../settings/ToggleAccountSettings";
 
 ChartJS.register(
   ArcElement,
@@ -40,7 +40,7 @@ ChartJS.register(
 function SellerDashboard() {
   // const [creditPointEarning, setCreditPointEarning] = useState(0);
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
 
   const userTransactions = useSelector((state) => state.userTransactions);
   const {
@@ -68,27 +68,27 @@ function SellerDashboard() {
   const { loading: payoutLoading, payouts, error: payoutError } = userPayouts;
   console.log("User Dashboard Payouts:", payouts);
 
-  const [showToggleAccountSettings, setShowToggleAccountSettings] =
-    useState(false);
+  // const [showToggleAccountSettings, setShowToggleAccountSettings] =
+  //   useState(false);
 
-  const [showDisableAccountSettings, setShowDisableAccountSettings] =
-    useState(false);
+  // const [showDisableAccountSettings, setShowDisableAccountSettings] =
+  //   useState(false);
 
-  const handleToggleFundOpen = () => {
-    setShowToggleAccountSettings(true);
-  };
+  // const handleToggleFundOpen = () => {
+  //   setShowToggleAccountSettings(true);
+  // };
 
-  const handleDisableFundOpen = () => {
-    setShowDisableAccountSettings(true);
-  };
+  // const handleDisableFundOpen = () => {
+  //   setShowDisableAccountSettings(true);
+  // };
 
-  const handleDisableFundClose = () => {
-    setShowDisableAccountSettings(false);
-  };
+  // const handleDisableFundClose = () => {
+  //   setShowDisableAccountSettings(false);
+  // };
 
-  const handleToggleFundClose = () => {
-    setShowToggleAccountSettings(false);
-  };
+  // const handleToggleFundClose = () => {
+  //   setShowToggleAccountSettings(false);
+  // };
 
   useEffect(() => {
     dispatch(getCreditPointBalance());
@@ -98,7 +98,7 @@ function SellerDashboard() {
   }, [dispatch]);
 
   const lineGraphData = {
-    labels: transactions.map((transaction) =>
+    labels: transactions?.map((transaction) =>
       new Date(transaction.timestamp).toLocaleString()
     ),
     datasets: [
@@ -107,8 +107,8 @@ function SellerDashboard() {
         fill: false,
         bpayoutColor: "rgba(75,192,192,1)",
         bpayoutWidth: 2,
-        data: transactions.map((transaction) => transaction.amount),
-        transactionIds: transactions.map(
+        data: transactions?.map((transaction) => transaction.amount),
+        transactionIds: transactions?.map(
           (transaction) => transaction.payment_id
         ),
       },
@@ -142,32 +142,32 @@ function SellerDashboard() {
     return totalPayment;
   };
 
-  const creditPoints = creditPointBalance?.balance;
+  // const creditPoints = creditPointBalance?.balance;
   // const accountBalance = accountFundBalance?.balance;
 
-  const withdrawCreditPoints =
-    creditPoints >= 1000 ? (
-      <Link
-        to={{
-          pathname: "/credit-point-request",
-          search: `?creditPoints=${creditPoints}`,
-        }}
-      >
-        <Button variant="primary" className="rounded">
-          Withdraw Points
-        </Button>
-      </Link>
-    ) : (
-      <p>
-        <Button variant="danger" className="rounded" readOnly>
-          Maturity from NGN 1,000
-        </Button>
-      </p>
-    );
+  // const withdrawCreditPoints =
+  //   creditPoints >= 1000 ? (
+  //     <Link
+  //       to={{
+  //         pathname: "/credit-point-request",
+  //         search: `?creditPoints=${creditPoints}`,
+  //       }}
+  //     >
+  //       <Button variant="primary" className="rounded">
+  //         Withdraw Points
+  //       </Button>
+  //     </Link>
+  //   ) : (
+  //     <p>
+  //       <Button variant="danger" className="rounded" readOnly>
+  //         Maturity from NGN 1,000
+  //       </Button>
+  //     </p>
+  //   );
 
-  const handleFundAccount = () => {
-    history.push("/fund-account");
-  };
+  // const handleFundAccount = () => {
+  //   history.push("/fund-account");
+  // };
 
   // const handleFundAccountSettings = () => {
   //   history.push("/toggle-fund");
@@ -265,7 +265,8 @@ function SellerDashboard() {
                       </div>
                     </div>
                   </Col>
-                  <Row className="py-2">
+                  {/* <Row className="py-2">
+
                     <Col>
                       <Row>
                         <Col>
@@ -401,10 +402,10 @@ function SellerDashboard() {
                       </strong>
                       <div className="py-2">{withdrawCreditPoints}</div>
                     </Col>
-                  </Row>
+                  </Row> */}
 
                   <hr />
-                  <Row>
+                  {/* <Row>
                     <h2 className="py-3">Services</h2>
 
                     <hr />
@@ -505,13 +506,44 @@ function SellerDashboard() {
                       </div>
                     </Col>
                   </Row>
-                  <hr />
+                  <hr /> */}
 
                   <div className="line-graph">
                     <h2 className="py-3">Transactions</h2>
                     <hr />
                     <Line data={lineGraphData} options={lineChartOptions} />
                   </div>
+
+                  <hr />
+                  <h2 className="py-3">
+                    Paysofter Promise <i className="fas fa-money-bill"></i>
+                  </h2>
+                  <hr />
+                  <Row>
+                    <Col>
+                      <h5 className="py-3">Paid Promise Rate</h5>
+                      <div className="chart-container">
+                        <Pie
+                          data={paidPayoutRateData}
+                          options={pieChartOptions}
+                          width={200}
+                          height={200}
+                        />
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <h5 className="py-3">Promise Approval Rate</h5>
+                      <div className="chart-container">
+                        <Pie
+                          data={unfulfilledPayoutRateData}
+                          options={pieChartOptions}
+                          width={200}
+                          height={200}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
 
                   <hr />
                   <div className="py-3">
@@ -545,6 +577,37 @@ function SellerDashboard() {
                       </Col>
                     </Row>
                   </div>
+
+                  <hr />
+                  <h2 className="py-3">
+                    Acccount Funds <i className="fas fa-money-bill"></i>
+                  </h2>
+                  <hr />
+                  <Row>
+                    <Col>
+                      <h5 className="py-3">Paid Acccount Funds Rate</h5>
+                      <div className="chart-container">
+                        <Pie
+                          data={paidPayoutRateData}
+                          options={pieChartOptions}
+                          width={200}
+                          height={200}
+                        />
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <h5 className="py-3">Acccount Funds Approval Rate</h5>
+                      <div className="chart-container">
+                        <Pie
+                          data={unfulfilledPayoutRateData}
+                          options={pieChartOptions}
+                          width={200}
+                          height={200}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
                   <hr />
                 </Row>
               </div>

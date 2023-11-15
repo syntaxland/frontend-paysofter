@@ -137,7 +137,7 @@ function Header() {
 
                 <Nav className="mr-auto ml-auto">
                   {userInfo ? (
-                    <Nav.Link as={Link} to="/dashboard">
+                    <Nav.Link as={Link} to="/dashboard/users">
                       {" "}
                       <i
                         className="fas fa-dashboard"

@@ -252,7 +252,7 @@ function UserDashboard() {
                       <div className="bar-chart">
                         <h2 className="py-2">
                           <i className="	fas fa-money-bill"></i> Total
-                          Transactions
+                          Payments
                         </h2>
                         <div className="bar"></div>
                         <strong>
@@ -508,7 +508,7 @@ function UserDashboard() {
                   <hr />
 
                   <div className="line-graph">
-                    <h2 className="py-3">Transactions</h2>
+                    <h2 className="py-3">Payments</h2>
                     <hr />
                     <Line data={lineGraphData} options={lineChartOptions} />
                   </div>
@@ -516,12 +516,12 @@ function UserDashboard() {
                   <hr />
                   <div className="py-3">
                     <h2 className="">
-                      Payouts <i className="fas fa-money-bill"></i>
+                      Paysofter Promise <i className="fas fa-money-bill"></i>
                     </h2>
                     <hr />
                     <Row>
                       <Col>
-                        <h5 className="py-3">Paid Payout Rate</h5>
+                        <h5 className="py-3">Paid Promise Rate</h5>
                         <div className="chart-container">
                           <Pie
                             data={paidPayoutRateData}
@@ -533,7 +533,7 @@ function UserDashboard() {
                       </Col>
 
                       <Col>
-                        <h5 className="py-3">Payout Approval Rate</h5>
+                        <h5 className="py-3">Promise Approval Rate</h5>
                         <div className="chart-container">
                           <Pie
                             data={unfulfilledPayoutRateData}
