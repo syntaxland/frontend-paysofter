@@ -77,6 +77,7 @@ function OtpDisableAccountFund() {
                   onChange={(e) => setIdentifier(e.target.value)}
                   placeholder="Enter email or Account ID"
                   className="rounded mt-2"
+                  required
                 />
               </Form.Group>
               <Button

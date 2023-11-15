@@ -88,6 +88,7 @@ function BuyerConfirmPromise({ promiseId, amount }) {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 className="rounded mt-2"
+                required
               />
             </Form.Group>
             <Button

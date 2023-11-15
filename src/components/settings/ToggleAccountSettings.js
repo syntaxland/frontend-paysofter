@@ -25,6 +25,7 @@ function ToggleAccountSettings() {
   console.log("accountFundBalance:", accountFundBalance);
 
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   useEffect(() => {
     if (success) {
@@ -39,7 +40,12 @@ function ToggleAccountSettings() {
     password: password,
   };
 
-  const handleDelete = () => {
+  const handleFundAccountToggle = () => {
+    if (!password.trim()) {
+      setPasswordError("Password is required");
+      console.error("Password is required");
+      return;
+    }
     dispatch(toggleAccountFund(toggleData));
   };
 
@@ -124,11 +130,13 @@ function ToggleAccountSettings() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 className="rounded mt-2"
+                required
               />
+              <Form.Text className="text-danger">{passwordError}</Form.Text>
             </Form.Group>
             <Button
               variant="primary"
-              onClick={handleDelete}
+              onClick={handleFundAccountToggle}
               className="rounded mt-2 text-center w-100"
             >
               Toggle Account Fund Status
