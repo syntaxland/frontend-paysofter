@@ -22,6 +22,13 @@ import {
   VERIFY_OTP_DISABLE_ACCCOUNT_FUND_REQUEST,
   VERIFY_OTP_DISABLE_ACCCOUNT_FUND_SUCCESS,
   VERIFY_OTP_DISABLE_ACCCOUNT_FUND_FAIL,
+  
+  GET_USER_FUND_ACCOUNT_DEBITS_REQUEST,
+  GET_USER_FUND_ACCOUNT_DEBITS_SUCCESS,
+  GET_USER_FUND_ACCOUNT_DEBITS_FAIL,
+  GET_USER_FUND_ACCOUNT_CREDITS_REQUEST,
+  GET_USER_FUND_ACCOUNT_CREDITS_SUCCESS,
+  GET_USER_FUND_ACCOUNT_CREDITS_FAIL,
 } from "../constants/AccountFundConstants";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -66,6 +73,70 @@ export const fundUserAccount =
       });
     }
   };
+
+export const getUserAccountFundDebits = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: GET_USER_FUND_ACCOUNT_DEBITS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${API_URL}/api/get-user-account-fund-debits/`,
+      config
+    );
+
+    dispatch({ type: GET_USER_FUND_ACCOUNT_DEBITS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_FUND_ACCOUNT_DEBITS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const getUserAccountFundCredits = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: GET_USER_FUND_ACCOUNT_CREDITS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${API_URL}/api/get-user-account-fund-credits/`,
+      config
+    );
+
+    dispatch({ type: GET_USER_FUND_ACCOUNT_CREDITS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_FUND_ACCOUNT_CREDITS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const setMaxWithdrawal = (amountData) => async (dispatch, getState) => {
   try {
@@ -147,46 +218,45 @@ export const toggleAccountFund = (toggleData) => async (dispatch, getState) => {
   }
 };
 
-export const disableAccountFund =
-  (amountData) => async (dispatch) => {
-    try {
-      dispatch({
-        type: DISABLE_ACCCOUNT_FUND_REQUEST,
-      });
+export const disableAccountFund = (amountData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DISABLE_ACCCOUNT_FUND_REQUEST,
+    });
 
-      // const {
-      //   userLogin: { userInfo },
-      // } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          // Authorization: `Bearer ${userInfo.access}`,
-        },
-      };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
 
-      const { data } = await axios.post(
-        `${API_URL}/api/send-otp-account-disable/`,
-        amountData,
-        config
-      );
+    const { data } = await axios.post(
+      `${API_URL}/api/send-otp-account-disable/`,
+      amountData,
+      config
+    );
 
-      dispatch({
-        type: DISABLE_ACCCOUNT_FUND_SUCCESS,
-        payload: data,
-      });
-      // window.location.href = "/dashboard";
-      // window.location.reload();
-    } catch (error) {
-      dispatch({
-        type: DISABLE_ACCCOUNT_FUND_FAIL,
-        payload:
-          error.response && error.response.data.detail
-            ? error.response.data.detail
-            : error.message,
-      });
-    }
-  };
+    dispatch({
+      type: DISABLE_ACCCOUNT_FUND_SUCCESS,
+      payload: data,
+    });
+    // window.location.href = "/dashboard";
+    // window.location.reload();
+  } catch (error) {
+    dispatch({
+      type: DISABLE_ACCCOUNT_FUND_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const verifyOtpDisableAccountFund =
   (otpData) => async (dispatch, getState) => {

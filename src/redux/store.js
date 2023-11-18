@@ -16,6 +16,8 @@ import {
 
 import {
   fundAccountReducer,
+  getUserAccountFundDebitsReducer,
+getUserAccountFundCreditsReducer,
   toggleAccountFundReducer,
   disableAccountFundReducer,
   verifyOtpAccountFundReducer,
@@ -76,6 +78,8 @@ const reducer = combineReducers({
   userPayouts: userPayoutReducer,
 
   fundAccountState: fundAccountReducer,
+  getUserAccountFundDebitsState: getUserAccountFundDebitsReducer,
+getUserAccountFundCreditsState: getUserAccountFundCreditsReducer,
   toggleAccountFundState: toggleAccountFundReducer,
   disableAccountFundState: disableAccountFundReducer,
   verifyOtpAccountFundState: verifyOtpAccountFundReducer,

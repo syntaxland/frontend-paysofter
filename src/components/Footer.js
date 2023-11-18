@@ -51,7 +51,7 @@ function Footer() {
               <ul className="">
                 <strong>Offices:</strong> Lagos (<strong>Coming soon:</strong>{" "}
                 San Francisco, Ontario, London, Dubai, Mumbai, Ghana,
-                Johannesburg, Sidney, Brazil, Kanye)
+                Johannesburg, Sidney, Sao Paulo, Nairobi, Shanghai)
                 {/* <li>Ontario</li>
               <li>London</li>
               <li>Dubai</li>
@@ -99,11 +99,17 @@ function Footer() {
           <Row>
             <Col className="text-center py-2">
               <p>
-                &copy; Paysofter Inc, {currentYear}. {" "}
-                <i>Payment solution for all humans...</i>
+                &copy; Paysofter Inc, {currentYear}.{" "}
+                <i>A payment solution for all humans...</i>
               </p>
 
-              <p>Powered by SoftGlobal | +2349066167293</p>
+              <p>
+                Powered by{" "}
+                <Button variant="outline-transparent" size="sm" >
+                  SoftGlobal
+                </Button>{" "}
+                | +2349066167293
+              </p>
             </Col>
           </Row>
         </Col>

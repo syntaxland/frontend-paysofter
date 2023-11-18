@@ -149,7 +149,7 @@ function SellerDashboard({ history }) {
                   // onClick={() => handleTabChange("promise")}
                   onClick={handlePaysofterPromise}
                 >
-                  <i className="fas fa-money-bill-wave"></i> Paysofter Promise
+                  <i className="fas fa-money-bill-wave"></i> Paysofter Promise 
                 </Button>
               </div>
 

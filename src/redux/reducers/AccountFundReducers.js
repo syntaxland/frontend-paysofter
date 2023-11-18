@@ -21,6 +21,12 @@ import {
   VERIFY_OTP_DISABLE_ACCCOUNT_FUND_REQUEST,
   VERIFY_OTP_DISABLE_ACCCOUNT_FUND_SUCCESS,
   VERIFY_OTP_DISABLE_ACCCOUNT_FUND_FAIL,
+  GET_USER_FUND_ACCOUNT_DEBITS_REQUEST,
+GET_USER_FUND_ACCOUNT_DEBITS_SUCCESS,
+GET_USER_FUND_ACCOUNT_DEBITS_FAIL,
+GET_USER_FUND_ACCOUNT_CREDITS_REQUEST,
+GET_USER_FUND_ACCOUNT_CREDITS_SUCCESS,
+GET_USER_FUND_ACCOUNT_CREDITS_FAIL,
 } from "../constants/AccountFundConstants";
 
 const initialState = {
@@ -31,6 +37,40 @@ const initialState = {
   accountFund: [],
   accountFundBalance: [],
   formattedEmail: [],
+};
+
+export const getUserAccountFundDebitsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_USER_FUND_ACCOUNT_DEBITS_REQUEST:
+      return { loading: true };
+    case GET_USER_FUND_ACCOUNT_DEBITS_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        accountFunds: action.payload,
+      };
+    case GET_USER_FUND_ACCOUNT_DEBITS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getUserAccountFundCreditsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_USER_FUND_ACCOUNT_CREDITS_REQUEST:
+      return { loading: true };
+    case GET_USER_FUND_ACCOUNT_CREDITS_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        accountFunds: action.payload,
+      };
+    case GET_USER_FUND_ACCOUNT_CREDITS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const disableAccountFundReducer = (state = initialState, action) => {

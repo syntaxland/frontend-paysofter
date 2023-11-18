@@ -147,7 +147,7 @@ function PaysofterPromiseSeller({ history }) {
                               })}
                             </span>
                           ) : (
-                            <span style={{ fontSize: "16px", color: "yellow" }}>
+                            <span style={{ fontSize: "16px" }} className="text-warning">
                               {promise.currency}{" "}
                               {promise.amount?.toLocaleString(undefined, {
                                 minimumFractionDigits: 2,

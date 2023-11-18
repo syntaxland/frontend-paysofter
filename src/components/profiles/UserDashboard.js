@@ -98,7 +98,7 @@ function UserDashboard() {
   }, [dispatch]);
 
   const lineGraphData = {
-    labels: transactions.map((transaction) =>
+    labels: transactions?.map((transaction) =>
       new Date(transaction.timestamp).toLocaleString()
     ),
     datasets: [
@@ -107,8 +107,8 @@ function UserDashboard() {
         fill: false,
         bpayoutColor: "rgba(75,192,192,1)",
         bpayoutWidth: 2,
-        data: transactions.map((transaction) => transaction.amount),
-        transactionIds: transactions.map(
+        data: transactions?.map((transaction) => transaction.amount),
+        transactionIds: transactions?.map(
           (transaction) => transaction.payment_id
         ),
       },
@@ -176,19 +176,19 @@ function UserDashboard() {
   const paidPayoutRateData = {
     labels: [
       `Paid PayoutsPayouts (${(
-        (payouts.filter((payout) => payout.is_paid).length / payouts.length) *
+        (payouts?.filter((payout) => payout.is_paid)?.length / payouts?.length) *
         100
       ).toFixed(1)}%)`,
       `Unpaid PayoutsPayouts (${(
-        (payouts.filter((payout) => !payout.is_paid).length / payouts.length) *
+        (payouts?.filter((payout) => !payout.is_paid)?.length / payouts?.length) *
         100
       ).toFixed(1)}%)`,
     ],
     datasets: [
       {
         data: [
-          payouts.filter((payout) => payout.is_paid).length,
-          payouts.filter((payout) => !payout.is_paid).length,
+          payouts?.filter((payout) => payout.is_paid)?.length,
+          payouts?.filter((payout) => !payout.is_paid)?.length,
         ],
         backgroundColor: ["#1F77B4", "#FF6384"],
       },
@@ -198,21 +198,21 @@ function UserDashboard() {
   const unfulfilledPayoutRateData = {
     labels: [
       `Delivered Payouts (${(
-        (payouts.filter((payout) => payout.is_approved).length /
-          payouts.length) *
+        (payouts?.filter((payout) => payout.is_approved)?.length /
+          payouts?.length) *
         100
       ).toFixed(1)}%)`,
       `Undelivered Payouts (${(
-        (payouts.filter((payout) => !payout.is_approved).length /
-          payouts.length) *
+        (payouts?.filter((payout) => !payout.is_approved)?.length /
+          payouts?.length) *
         100
       ).toFixed(1)}%)`,
     ],
     datasets: [
       {
         data: [
-          payouts.filter((payout) => payout.is_approved).length,
-          payouts.filter((payout) => !payout.is_approved).length,
+          payouts?.filter((payout) => payout.is_approved)?.length,
+          payouts?.filter((payout) => !payout.is_approved)?.length,
         ],
         backgroundColor: ["#008000", "#FFA500"],
       },
