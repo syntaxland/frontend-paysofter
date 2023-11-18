@@ -258,13 +258,6 @@ function PaysofterPromise({ history }) {
                           {new Date(promise.expiration_date) < new Date() &&
                           !promise.buyer_promise_fulfilled ? (
                             <>
-                              {/* <Button
-                                variant="outline-primary"
-                                size="sm"
-                                className="py-2 mt-2"
-                              >
-                                Reactivate
-                              </Button> */}
                               <Button
                                 variant="outline-danger"
                                 size="sm"
@@ -362,7 +355,7 @@ function PaysofterPromise({ history }) {
                         >
                           <Modal.Header closeButton>
                             <Modal.Title className="text-center w-100 py-2">
-                            Settle Disputed Promise
+                              Settle Disputed Promise
                             </Modal.Title>
                           </Modal.Header>
                           <Modal.Body>
