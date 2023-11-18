@@ -6,8 +6,10 @@ import { Table, Button, Row, Col, Modal, Container } from "react-bootstrap";
 import { getBuyerPromises } from "../../redux/actions/PromiseActions";
 import Message from "../Message";
 import Loader from "../Loader";
+import Timer from "../Timer";
 import Pagination from "../Pagination";
 import BuyerConfirmPromise from "../promise/BuyerConfirmPromise";
+import SettleDisputedPromise from "../promise/SettleDisputedPromise";
 
 function PaysofterPromise({ history }) {
   const dispatch = useDispatch();
@@ -19,7 +21,7 @@ function PaysofterPromise({ history }) {
   console.log("Promises:", promises);
 
   const [showConfirmPromise, setShowConfirmPromise] = useState(false);
-  // const [selectedPromiseId, setSelectedPromiseId] = useState(null);
+  const [showSettleDispute, setShowSettleDispute] = useState(false);
   const [selectedPromise, setSelectedPromise] = useState(null);
 
   const handleConfirmPromiseOpen = (promise) => {
@@ -31,8 +33,17 @@ function PaysofterPromise({ history }) {
     setShowConfirmPromise(false);
   };
 
+  const handleSettleDisputeOpen = (promise) => {
+    setSelectedPromise(promise);
+    setShowSettleDispute(true);
+  };
+
+  const handleSettleDisputeClose = () => {
+    setShowSettleDispute(false);
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -56,16 +67,12 @@ function PaysofterPromise({ history }) {
     dispatch(getBuyerPromises());
   }, [dispatch]);
 
-  // const handleMessageSeller = () => {
-  //   history.push("/message-seller");
-  // };
-
   return (
     <Container>
       <Row>
         <Col>
           <h1 className="text-center py-3">
-            <i className="fas fa-money-check-alt"></i> Promises (Buyer)
+            <i className="fas fa-money-bill-wave"></i> Promises (Buyer)
           </h1>
           {loading ? (
             <Loader />
@@ -96,6 +103,7 @@ function PaysofterPromise({ history }) {
                       <th>Seller Fulfilled Promise</th>
                       <th>Status</th>
                       <th>Success</th>
+                      <th>Active</th>
                       <th>Expected Settlement Duration</th>
                       <th>Payment Method</th>
                       <th>Payment Provider</th>
@@ -118,10 +126,6 @@ function PaysofterPromise({ history }) {
                               <Button
                                 variant="outline-link"
                                 size="sm"
-                                // onClick={handleConfirmPromiseOpen}
-                                // onClick={() =>
-                                //   handleConfirmPromiseOpen(promise.promise_id)
-                                // }
                                 onClick={() =>
                                   handleConfirmPromiseOpen({
                                     promise_id: promise.promise_id,
@@ -187,24 +191,98 @@ function PaysofterPromise({ history }) {
                         <td>{promise.status}</td>
                         <td>
                           {promise.is_success ? (
-                            <sapn>
+                            <>
                               <i
                                 className="fas fa-check-circle"
                                 style={{ fontSize: "16px", color: "green" }}
                               ></i>{" "}
                               Yes
-                            </sapn>
+                            </>
                           ) : (
-                            <sapn>
+                            <>
                               <i
                                 className="fas fa-times-circle"
                                 style={{ fontSize: "16px", color: "red" }}
                               ></i>{" "}
                               No
-                            </sapn>
+                            </>
                           )}
                         </td>
-                        <td>{promise.duration}</td>
+                        <td>
+                          {promise.is_active ? (
+                            <i
+                              className="fas fa-check-circle"
+                              style={{ fontSize: "16px", color: "green" }}
+                            ></i>
+                          ) : (
+                            <i
+                              className="fas fa-times-circle"
+                              style={{ fontSize: "16px", color: "red" }}
+                            ></i>
+                          )}
+                        </td>
+                        <td className="text-center">
+                          {promise.duration}
+                          {promise.is_active ? (
+                            <>
+                              <Button
+                                variant="outline-primary"
+                                size="sm"
+                                className="py-2 mt-2"
+                                disabled
+                              >
+                                Timer:{" "}
+                                <Timer
+                                  expirationDate={promise?.expiration_date}
+                                />
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              {promise.buyer_promise_fulfilled ? (
+                                <>
+                                  <Button
+                                    variant="outline-primary"
+                                    size="sm"
+                                    className="py-2 mt-2"
+                                    disabled
+                                  >
+                                    Promise Settled
+                                  </Button>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          )}
+                          {new Date(promise.expiration_date) < new Date() &&
+                          !promise.buyer_promise_fulfilled ? (
+                            <>
+                              {/* <Button
+                                variant="outline-primary"
+                                size="sm"
+                                className="py-2 mt-2"
+                              >
+                                Reactivate
+                              </Button> */}
+                              <Button
+                                variant="outline-danger"
+                                size="sm"
+                                className="py-2 mt-2"
+                                onClick={() =>
+                                  handleSettleDisputeOpen({
+                                    promise_id: promise.promise_id,
+                                    amount: promise.amount,
+                                  })
+                                }
+                              >
+                                Settle Dispute
+                              </Button>
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </td>
                         <td>{promise.payment_method}</td>
                         <td>{promise.payment_provider}</td>
                         <td>
@@ -224,7 +302,6 @@ function PaysofterPromise({ history }) {
                               <Button
                                 variant="outline-primary"
                                 size="sm"
-                                // onClick={handleAddbusiness}
                                 disabled
                               >
                                 Promise Confirmed
@@ -235,10 +312,6 @@ function PaysofterPromise({ history }) {
                               <Button
                                 variant="outline-primary"
                                 size="sm"
-                                // onClick={handleConfirmPromiseOpen}
-                                // onClick={() =>
-                                //   handleConfirmPromiseOpen(promise.promise_id)
-                                // }
                                 onClick={() =>
                                   handleConfirmPromiseOpen({
                                     promise_id: promise.promise_id,
@@ -275,6 +348,26 @@ function PaysofterPromise({ history }) {
                           <Modal.Body>
                             {showConfirmPromise && (
                               <BuyerConfirmPromise
+                                promiseId={selectedPromise?.promise_id}
+                                amount={selectedPromise?.amount}
+                                onClose={handleConfirmPromiseClose}
+                              />
+                            )}
+                          </Modal.Body>
+                        </Modal>
+
+                        <Modal
+                          show={showSettleDispute}
+                          onHide={handleSettleDisputeClose}
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title className="text-center w-100 py-2">
+                            Settle Disputed Promise
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            {showSettleDispute && (
+                              <SettleDisputedPromise
                                 promiseId={selectedPromise?.promise_id}
                                 amount={selectedPromise?.amount}
                                 onClose={handleConfirmPromiseClose}

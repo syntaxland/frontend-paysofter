@@ -516,7 +516,7 @@ function SellerDashboard() {
 
                   <hr />
                   <h2 className="py-3">
-                    Paysofter Promise <i className="fas fa-money-bill"></i>
+                    Paysofter Promise <i className="fas fa-money-bill-wave"></i>
                   </h2>
                   <hr />
                   <Row>
@@ -546,6 +546,37 @@ function SellerDashboard() {
                   </Row>
 
                   <hr />
+                  <h2 className="py-3">
+                    Acccount Funds <i className="fas fa-money-bill-alt"></i>
+                  </h2>
+                  <hr />
+                  <Row>
+                    <Col>
+                      <h5 className="py-3">Paid Acccount Funds Rate</h5>
+                      <div className="chart-container">
+                        <Pie
+                          data={paidPayoutRateData}
+                          options={pieChartOptions}
+                          width={200}
+                          height={200}
+                        />
+                      </div>
+                    </Col>
+
+                    <Col>
+                      <h5 className="py-3">Acccount Funds Approval Rate</h5>
+                      <div className="chart-container">
+                        <Pie
+                          data={unfulfilledPayoutRateData}
+                          options={pieChartOptions}
+                          width={200}
+                          height={200}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                  <hr />
+
                   <div className="py-3">
                     <h2 className="">
                       Payouts <i className="fas fa-money-bill"></i>
@@ -578,36 +609,6 @@ function SellerDashboard() {
                     </Row>
                   </div>
 
-                  <hr />
-                  <h2 className="py-3">
-                    Acccount Funds <i className="fas fa-money-bill"></i>
-                  </h2>
-                  <hr />
-                  <Row>
-                    <Col>
-                      <h5 className="py-3">Paid Acccount Funds Rate</h5>
-                      <div className="chart-container">
-                        <Pie
-                          data={paidPayoutRateData}
-                          options={pieChartOptions}
-                          width={200}
-                          height={200}
-                        />
-                      </div>
-                    </Col>
-
-                    <Col>
-                      <h5 className="py-3">Acccount Funds Approval Rate</h5>
-                      <div className="chart-container">
-                        <Pie
-                          data={unfulfilledPayoutRateData}
-                          options={pieChartOptions}
-                          width={200}
-                          height={200}
-                        />
-                      </div>
-                    </Col>
-                  </Row>
                   <hr />
                 </Row>
               </div>

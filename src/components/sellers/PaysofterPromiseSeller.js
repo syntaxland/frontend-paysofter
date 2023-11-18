@@ -31,7 +31,7 @@ function PaysofterPromiseSeller({ history }) {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -64,7 +64,7 @@ function PaysofterPromiseSeller({ history }) {
       <Row>
         <Col>
           <h1 className="text-center py-3">
-            <i className="fas fa-money-check-alt"></i> Promises (Seller)
+            <i className="fas fa-money-bill-wave"></i> Promises (Seller)
           </h1>
           {loading ? (
             <Loader />

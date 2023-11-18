@@ -37,12 +37,35 @@ function HomeScreen({ history }) {
 
           <div className="text-center">
             <hr />
+            <h1 className="py-3">Selling Point</h1>
+            <hr />
+            {/* <PromoProductScroll /> */}
+            <span>
+              Wearied of never ending clause: "pay on delivery" between sellers
+              and buyers and the mistrust that ensues? Paysofter Promise fills
+              in this gap! With Paysofter Promise option, the payment made to a
+              seller (using the buyer's funded Paysofter Account Fund) is
+              escrowed or placed in custody until a specified condition between
+              the buyer and seller is fulfilled.{" "}
+            </span>
+            <Button
+              variant="primary"
+              className="rounded"
+              size="sm"
+              onClick={() => history.push("/register")}
+            >
+              Open A Free Account <i className="fas fa-sign-in"></i>
+            </Button>
+          </div>
+
+          <div className="text-center">
+            <hr />
             <h1 className="py-3">Our Experience</h1>
             <hr />
             {/* <PromoProductScroll /> */}
             <span>
-              While asleep or active with work, Paysofter work and passively
-              earn on your behalf ...{" "}
+              While asleep, Paysofter actively works for you. Active with work? Paysofter passively
+              earns on your behalf rewarding your past endeavours...{" "}
             </span>
             <Button
               variant="primary"

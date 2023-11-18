@@ -99,7 +99,7 @@ function Footer() {
           <Row>
             <Col className="text-center py-2">
               <p>
-                &copy; Paysofter Inc, {currentYear}. |{" "}
+                &copy; Paysofter Inc, {currentYear}. {" "}
                 <i>Payment solution for all humans...</i>
               </p>
 

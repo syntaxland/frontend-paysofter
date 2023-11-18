@@ -149,7 +149,22 @@ function SellerDashboard({ history }) {
                   // onClick={() => handleTabChange("promise")}
                   onClick={handlePaysofterPromise}
                 >
-                  <i className="fa fa-credit-card"></i> Paysofter Promise
+                  <i className="fas fa-money-bill-wave"></i> Paysofter Promise
+                </Button>
+              </div>
+
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "account-funds"
+                      ? "primary"
+                      : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("account-funds")}
+                >
+                  <i className="fas fa-money-bill-alt"></i> Acccount Funds
                 </Button>
               </div>
 
@@ -211,19 +226,7 @@ function SellerDashboard({ history }) {
                 </Button>
               </div>
 
-              <div>
-                <Button
-                  variant={
-                    activeTab === "account-funds"
-                      ? "primary"
-                      : "outline-primary"
-                  }
-                  className="sidebar-link"
-                  onClick={() => handleTabChange("account-funds")}
-                >
-                  <i className="fa fa-credit-card"></i> Acccount Funds
-                </Button>
-              </div>
+             
 
               {/* <div>
                 <Button
@@ -251,7 +254,7 @@ function SellerDashboard({ history }) {
                 </Button>
               </div> */}
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "subscriptions"
@@ -263,9 +266,9 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fa fa-plus"></i> Subscriptions
                 </Button>
-              </div>
+              </div> */}
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "live-chat" ? "primary" : "outline-primary"
@@ -275,7 +278,7 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fas fa-comments"></i> Live Chat
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button

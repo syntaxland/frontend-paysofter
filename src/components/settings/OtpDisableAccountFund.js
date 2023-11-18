@@ -21,6 +21,14 @@ function OtpDisableAccountFund() {
   const [identifier, setIdentifier] = useState("");
   const [showVerifyAccountFundOtp, setShowVerifyAccountFundOtp] =
     useState(false);
+  const [identifierError, setIdentifierError] = useState("");
+
+  // const [identifierError, setIdentifierError] = useState("");
+  // if (!identifier.trim()) {
+  //   setIdentifierError("Email or Account ID is required");
+  //   return;
+  // }
+  // <Form.Text className="text-danger">{identifierError}</Form.Text>
 
   useEffect(() => {
     if (success) {
@@ -37,6 +45,10 @@ function OtpDisableAccountFund() {
   };
 
   const handleDeactivateAccountFund = () => {
+    if (!identifier.trim()) {
+      setIdentifierError("Email or Account ID is required.");
+      return;
+    }
     dispatch(disableAccountFund(fundData));
     localStorage.setItem("fundData", JSON.stringify(fundData));
   };
@@ -75,10 +87,11 @@ function OtpDisableAccountFund() {
                   type="text"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="Enter email or Account ID"
+                  placeholder="Enter Email or Account ID"
                   className="rounded mt-2"
                   required
                 />
+                <Form.Text className="text-danger">{identifierError}</Form.Text>
               </Form.Group>
               <Button
                 variant="primary"

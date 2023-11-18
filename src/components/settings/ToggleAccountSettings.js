@@ -34,7 +34,7 @@ function ToggleAccountSettings() {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [success, history]);
+  }, [success, history, error]);
 
   const toggleData = {
     password: password,
@@ -43,7 +43,6 @@ function ToggleAccountSettings() {
   const handleFundAccountToggle = () => {
     if (!password.trim()) {
       setPasswordError("Password is required");
-      console.error("Password is required");
       return;
     }
     dispatch(toggleAccountFund(toggleData));
