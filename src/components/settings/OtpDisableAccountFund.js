@@ -90,6 +90,8 @@ function OtpDisableAccountFund() {
                   placeholder="Enter Email or Account ID"
                   className="rounded mt-2"
                   required
+                  maxLength={100}
+                  disabled={identifier === "" || loading || success}
                 />
                 <Form.Text className="text-danger">{identifierError}</Form.Text>
               </Form.Group>

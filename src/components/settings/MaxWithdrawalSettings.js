@@ -32,7 +32,7 @@ function MaxWithdrawalSettings({ history }) {
     if (!userInfo) {
       history.push("/dashboard");
     }
-  }, [dispatch, userInfo, history]); 
+  }, [dispatch, userInfo, history]);
 
   useEffect(() => {
     if (success) {
@@ -76,7 +76,12 @@ function MaxWithdrawalSettings({ history }) {
             </Form.Group>
 
             <div className="py-2">
-              <Button className="w-100 rounded" type="submit" variant="primary">
+              <Button
+                className="w-100 rounded"
+                type="submit"
+                variant="primary"
+                disabled={loading || success}
+              >
                 Submit
               </Button>
             </div>

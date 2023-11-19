@@ -105,12 +105,13 @@ const VerifyAccountFundOtp = ({ formattedEmail }) => {
                   onChange={(e) => setOtp(e.target.value)}
                   placeholder="Enter OTP"
                   required
+                  maxLength={10}
                 />
               </Form.Group>
               <div className="py-3">
                 <Button
                   onClick={handleVerifyEmailOtp}
-                  disabled={loading || success}
+                  disabled={otp === "" || loading || success}
                   variant="success"
                   type="submit"
                   className="rounded"

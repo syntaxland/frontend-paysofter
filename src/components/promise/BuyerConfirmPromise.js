@@ -26,7 +26,7 @@ function BuyerConfirmPromise({ promiseId, amount }) {
   // const { success, error, loading } = createTransactionState;
 
   const [password, setPassword] = useState("");
-  const createdAt = new Date().toISOString();
+  const createdAt = new Date().toISOString();  
 
   const transactionData = {
     payment_id: promiseId,
@@ -89,12 +89,14 @@ function BuyerConfirmPromise({ promiseId, amount }) {
                 placeholder="Enter your password"
                 className="rounded mt-2"
                 required
+                maxLength={100}
               />
             </Form.Group>
             <Button
               variant="primary"
               onClick={handleBuyerConfirmPromise}
               className="rounded mt-2 text-center w-100"
+              disabled={password === "" || loading || success}
             >
               Submit
             </Button>

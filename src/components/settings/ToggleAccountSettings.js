@@ -130,14 +130,16 @@ function ToggleAccountSettings() {
                 placeholder="Enter your password"
                 className="rounded mt-2"
                 required
+                maxLength={100}
               />
-              <Form.Text className="text-danger">{passwordError}</Form.Text>
+              <Form.Text className="text-danger">{passwordError}</Form.Text> 
             </Form.Group>
             <Button
               variant="primary"
               onClick={handleFundAccountToggle}
               className="rounded mt-2 text-center w-100"
-            >
+              disabled={loading || success}
+              >
               Toggle Account Fund Status
             </Button>
           </Form>

@@ -51,7 +51,8 @@ function Footer() {
               <ul className="">
                 <strong>Offices:</strong> Lagos (<strong>Coming soon:</strong>{" "}
                 San Francisco, Ontario, London, Dubai, Mumbai, Ghana,
-                Johannesburg, Sidney, Sao Paulo, Nairobi, Shanghai)
+                Johannesburg, Sidney, Sao Paulo, Nairobi, Shanghai, Amsterdam,
+                Frankfurt)
                 {/* <li>Ontario</li>
               <li>London</li>
               <li>Dubai</li>
@@ -105,7 +106,7 @@ function Footer() {
 
               <p>
                 Powered by{" "}
-                <Button variant="outline-transparent" size="sm" >
+                <Button variant="outline-transparent" size="sm">
                   SoftGlobal
                 </Button>{" "}
                 | +2349066167293
