@@ -104,11 +104,11 @@ function PaysofterPromiseSeller({ history }) {
                       <th>Seller Fulfilled Promise</th>
                       <th>Status</th>
                       <th>Success</th>
-                      <th>Delivered</th>
                       <th>Active</th>
                       <th>Expected Settlement Duration</th>
                       <th>Settle Conflict Activated</th>
                       <th>Conflict Settlement Charges</th>
+                      <th>Promise Delivered</th>
                       <th>Payment Method</th>
                       <th>Payment Provider</th>
                       <th>Promise Made At</th>
@@ -212,25 +212,7 @@ function PaysofterPromiseSeller({ history }) {
                             </>
                           )}
                         </td>
-                        <td>
-                          {promise.is_delivered ? (
-                            <>
-                              <i
-                                className="fas fa-check-circle"
-                                style={{ fontSize: "16px", color: "green" }}
-                              ></i>{" "}
-                              Yes
-                            </>
-                          ) : (
-                            <>
-                              <i
-                                className="fas fa-times-circle"
-                                style={{ fontSize: "16px", color: "red" }}
-                              ></i>{" "}
-                              No
-                            </>
-                          )}
-                        </td>
+                        
                         <td>
                           {promise.is_active ? (
                             <i
@@ -334,6 +316,25 @@ function PaysofterPromiseSeller({ history }) {
                         </td>
                         <td>
                           {promise.currency} {promise.settle_conflict_charges}
+                        </td>
+                        <td>
+                          {promise.is_delivered ? (
+                            <>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Yes
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </>
+                          )}
                         </td>
                         <td>{promise.payment_method}</td>
                         <td>{promise.payment_provider}</td>
