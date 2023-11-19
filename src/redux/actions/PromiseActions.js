@@ -19,9 +19,51 @@ import {
   LIST_PROMISE_MESSAGE_REQUEST,
   LIST_PROMISE_MESSAGE_SUCCESS,
   LIST_PROMISE_MESSAGE_FAIL,
+  SETTLE_DISPUTED_PROMISE_REQUEST,
+  SETTLE_DISPUTED_PROMISE_SUCCESS,
+  SETTLE_DISPUTED_PROMISE_FAIL,
 } from "../constants/PromiseConstants";
 
 const API_URL = process.env.REACT_APP_API_URL;
+
+export const settleDisputedPromise =
+  (promiseData) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: SETTLE_DISPUTED_PROMISE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `${API_URL}/api/settle-disputed-promise/`,
+        promiseData,
+        config
+      );
+
+      dispatch({
+        type: SETTLE_DISPUTED_PROMISE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: SETTLE_DISPUTED_PROMISE_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
 
 export const createPromiseMessages =
   (promiseMessageData) => async (dispatch, getState) => {
@@ -64,68 +106,27 @@ export const createPromiseMessages =
     }
   };
 
-// export const listPromiseMessage =
-//   (promiseId) => async (dispatch, getState) => {
-//     try {
-//       dispatch({
-//         type: LIST_PROMISE_MESSAGE_REQUEST,
-//       });
-
-//       const {
-//         userLogin: { userInfo },
-//       } = getState();
-
-//       const config = {
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${userInfo.access}`,
-//         },
-//       };
-
-//       const { data } = await axios.get(
-//         `${API_URL}/api/list-promise-messages/`,
-//         promiseId,
-//         config
-//       );
-
-//       dispatch({
-//         type: LIST_PROMISE_MESSAGE_SUCCESS,
-//         payload: data,
-//       });
-//     } catch (error) {
-//       dispatch({
-//         type: LIST_PROMISE_MESSAGE_FAIL,
-//         payload:
-//           error.response && error.response.data.detail
-//             ? error.response.data.detail
-//             : error.message,
-//       });
-//     }
-//   };
-
-  export const listPromiseMessages = (promiseId) => async (
-    dispatch,
-    getState
-  ) => {
+export const listPromiseMessages =
+  (promiseId) => async (dispatch, getState) => {
     try {
       dispatch({ type: LIST_PROMISE_MESSAGE_REQUEST });
-  
+
       const {
         userLogin: { userInfo },
       } = getState();
-  
+
       const config = {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userInfo.access}`,
         },
       };
-  
+
       const { data } = await axios.get(
         `${API_URL}/api/list-promise-messages/${promiseId}/`,
         config
       );
-  
+
       dispatch({ type: LIST_PROMISE_MESSAGE_SUCCESS, payload: data });
     } catch (error) {
       dispatch({

@@ -27,6 +27,7 @@ getUserAccountFundCreditsReducer,
 } from "./reducers/AccountFundReducers";
 
 import {
+  settleDisputedPromiseReducer,
   getBuyerpromiseReducer,
   getSellerPromiseReducer,
   buyerConfirmPromiseReducer,
@@ -91,6 +92,7 @@ getUserAccountFundCreditsState: getUserAccountFundCreditsReducer,
   buyerConfirmPromiseState: buyerConfirmPromiseReducer,
   sellerConfirmPromiseState: sellerConfirmPromiseReducer,
 
+  settleDisputedPromiseState: settleDisputedPromiseReducer, 
   createPromiseMessageState: createPromiseMessagesReducer,
   listPromiseMessageState: listPromiseMessagesReducer,
 

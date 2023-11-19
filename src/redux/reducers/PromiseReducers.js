@@ -18,6 +18,9 @@ import {
   LIST_PROMISE_MESSAGE_REQUEST,
   LIST_PROMISE_MESSAGE_SUCCESS,
   LIST_PROMISE_MESSAGE_FAIL,
+  SETTLE_DISPUTED_PROMISE_REQUEST,
+SETTLE_DISPUTED_PROMISE_SUCCESS,
+SETTLE_DISPUTED_PROMISE_FAIL,
 } from "../constants/PromiseConstants";
 
 const initialState = {
@@ -26,6 +29,19 @@ const initialState = {
   error: null,
   promises: [],
   promiseMessages: [],
+};
+
+export const settleDisputedPromiseReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SETTLE_DISPUTED_PROMISE_REQUEST:
+      return { ...state, loading: true };
+    case SETTLE_DISPUTED_PROMISE_SUCCESS:
+      return { loading: false, success: true };
+    case SETTLE_DISPUTED_PROMISE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const createPromiseMessagesReducer = (state = initialState, action) => {

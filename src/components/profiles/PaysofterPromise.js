@@ -105,6 +105,7 @@ function PaysofterPromise({ history }) {
                       <th>Success</th>
                       <th>Active</th>
                       <th>Expected Settlement Duration</th>
+                      <th>Settle Conflict Activated</th>
                       <th>Payment Method</th>
                       <th>Payment Provider</th>
                       <th>Promise Made At</th>
@@ -149,7 +150,10 @@ function PaysofterPromise({ history }) {
                               })}
                             </span>
                           ) : (
-                            <span style={{ fontSize: "16px" }} className="text-warning">
+                            <span
+                              style={{ fontSize: "16px" }}
+                              className="text-warning"
+                            >
                               {promise.currency}{" "}
                               {promise.amount?.toLocaleString(undefined, {
                                 minimumFractionDigits: 2,
@@ -265,7 +269,6 @@ function PaysofterPromise({ history }) {
                                 onClick={() =>
                                   handleSettleDisputeOpen({
                                     promise_id: promise.promise_id,
-                                    amount: promise.amount,
                                   })
                                 }
                               >
@@ -273,7 +276,41 @@ function PaysofterPromise({ history }) {
                               </Button>
                             </>
                           ) : (
-                            <></>
+                            <>
+                              {promise.is_settle_conflict_activated ? (
+                                <>
+                                  <Button
+                                    variant="danger"
+                                    size="sm"
+                                    className="py-2 mt-2"
+                                    disabled
+                                  >
+                                    Settle Conflict Activated
+                                  </Button>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          {promise.is_settle_conflict_activated ? (
+                            <>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Yes
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </>
                           )}
                         </td>
                         <td>{promise.payment_method}</td>
