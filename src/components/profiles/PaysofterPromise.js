@@ -106,6 +106,7 @@ function PaysofterPromise({ history }) {
                       <th>Active</th>
                       <th>Expected Settlement Duration</th>
                       <th>Settle Conflict Activated</th>
+                      <th>Conflict Settlement Charges</th>
                       <th>Payment Method</th>
                       <th>Payment Provider</th>
                       <th>Promise Made At</th>
@@ -312,6 +313,9 @@ function PaysofterPromise({ history }) {
                               No
                             </>
                           )}
+                        </td>
+                        <td>
+                          {promise.currency} {promise.settle_conflict_charges}
                         </td>
                         <td>{promise.payment_method}</td>
                         <td>{promise.payment_provider}</td>

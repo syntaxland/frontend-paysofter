@@ -108,6 +108,7 @@ function PaysofterPromiseSeller({ history }) {
                       <th>Active</th>
                       <th>Expected Settlement Duration</th>
                       <th>Settle Conflict Activated</th>
+                      <th>Conflict Settlement Charges</th>
                       <th>Payment Method</th>
                       <th>Payment Provider</th>
                       <th>Promise Made At</th>
@@ -149,7 +150,10 @@ function PaysofterPromiseSeller({ history }) {
                               })}
                             </span>
                           ) : (
-                            <span style={{ fontSize: "16px" }} className="text-warning">
+                            <span
+                              style={{ fontSize: "16px" }}
+                              className="text-warning"
+                            >
                               {promise.currency}{" "}
                               {promise.amount?.toLocaleString(undefined, {
                                 minimumFractionDigits: 2,
@@ -328,6 +332,9 @@ function PaysofterPromiseSeller({ history }) {
                             </>
                           )}
                         </td>
+                        <td>
+                          {promise.currency} {promise.settle_conflict_charges}
+                        </td>
                         <td>{promise.payment_method}</td>
                         <td>{promise.payment_provider}</td>
                         <td>
@@ -378,7 +385,7 @@ function PaysofterPromiseSeller({ history }) {
                           >
                             Message Buyer
                           </Button>
-                        </td> */} 
+                        </td> */}
 
                         <td>
                           <Button variant="outline-primary" size="sm">
