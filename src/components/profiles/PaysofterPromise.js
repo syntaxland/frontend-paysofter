@@ -105,9 +105,9 @@ function PaysofterPromise({ history }) {
                       <th>Promise ID</th>
                       <th>Amount</th>
                       <th>Seller Account ID</th>
-                      <th>Seller Email</th>
+                      {/* <th>Seller Email</th> */}
                       <th>Buyer Account ID</th>
-                      <th>Buyer Email</th>
+                      {/* <th>Buyer Email</th> */}
                       <th>Seller Fulfilled Promise</th>
                       <th>Buyer Promise Fulfilled</th>
                       <th>Status</th>
@@ -192,10 +192,9 @@ function PaysofterPromise({ history }) {
                           )}
                         </td>
                         <td>{formatAccountId(promise.seller_account_id)}</td>
-                        <td>{promise.seller_email}</td>
+                        {/* <td>{promise.seller_email}</td> */}
                         <td>{formatAccountId(promise.buyer_account_id)}</td>
-                        <td>{promise.buyer_email}</td>
-                        
+                        {/* <td>{promise.buyer_email}</td> */}
 
                         <td>
                           <>
@@ -424,23 +423,24 @@ function PaysofterPromise({ history }) {
                             second: "numeric",
                           })}
                         </td>
+
                         <td>
-                          {promise.buyer_promise_fulfilled ? (
+                          {promise.is_cancelled ? (
                             <>
                               <Button
-                                variant="outline-primary"
+                                variant="outline-danger"
                                 size="sm"
                                 disabled
                               >
-                                Promise Confirmed
+                                Promise Cancelled
                               </Button>
                             </>
                           ) : (
                             <>
-                              {promise.is_cancelled ? (
+                              {promise.buyer_promise_fulfilled ? (
                                 <>
                                   <Button variant="danger" size="sm" disabled>
-                                    Promise Cancelled
+                                    Promise Confirmed
                                   </Button>
                                 </>
                               ) : (
@@ -462,14 +462,29 @@ function PaysofterPromise({ history }) {
                         </td>
 
                         <td>
-                          <Button variant="outline-primary" size="sm">
-                            <Link
-                              to={`/promise/message/${promise.promise_id}`}
-                              style={{ textDecoration: "none" }}
-                            >
-                              Message Seller
-                            </Link>
-                          </Button>
+                          <>
+                            {promise.is_cancelled ? (
+                              <>
+                                <Button variant="outline-primary" size="sm">
+                                  <Link
+                                    to={`/promise/message/${promise.promise_id}`}
+                                    style={{ textDecoration: "none" }}
+                                  >
+                                    Message Seller
+                                  </Link>
+                                </Button>
+                              </>
+                            ) : (
+                              <Button variant="outline-primary" size="sm">
+                                <Link
+                                  to={`/promise/message/${promise.promise_id}`}
+                                  style={{ textDecoration: "none" }}
+                                >
+                                  Message Seller
+                                </Link>
+                              </Button>
+                            )}
+                          </>
                         </td>
 
                         <Modal

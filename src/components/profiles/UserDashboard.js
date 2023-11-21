@@ -44,9 +44,9 @@ function UserDashboard() {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const handleAdminDashboard = () => {
-    history.push("/dashboard/admin");
-  };
+  // const handleAdminDashboard = () => {
+  //   history.push("/dashboard/admin");
+  // };
 
   const handleSettings = () => {
     history.push("/settings");
@@ -156,7 +156,7 @@ function UserDashboard() {
                   className="sidebar-link"
                   onClick={() => handleTabChange("transactions")}
                 >
-                  <i className="fa fa-cart-arrow-down"></i> Transactions
+                  <i className="fa fa-cart-arrow-down"></i> Payments
                 </Button>
               </div>
               {/* <div>
@@ -331,7 +331,7 @@ function UserDashboard() {
                   className="sidebar-link"
                   onClick={() => handleTabChange("feedback")}
                 >
-                  <i className="fas fa-gear"></i> Feedback
+                  <i className="fa fa-comment-dots"></i> Feedback
                 </Button>
               </div>
 
@@ -385,7 +385,7 @@ function UserDashboard() {
                 </span>
               </div>
 
-              <div>
+              {/* <div>
                 {userInfo.is_superuser || userInfo.is_staff ? (
                   <div>
                     <Button
@@ -401,9 +401,9 @@ function UserDashboard() {
                     </Button>
                   </div>
                 ) : (
-                  <span>Not Admin</span>
+                  <> </>
                 )}
-              </div>
+              </div> */}
             </div>
           )}
         </Col>

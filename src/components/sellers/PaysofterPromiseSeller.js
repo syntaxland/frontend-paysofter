@@ -256,7 +256,7 @@ function PaysofterPromiseSeller({ history }) {
                           )}
                         </td>
 
-                         <td>
+                        <td>
                           <>
                             {promise.is_active ? (
                               <>
@@ -422,23 +422,22 @@ function PaysofterPromiseSeller({ history }) {
                         </td>
 
                         <td>
-                          {promise.seller_fulfilled_promise ? (
+                          {promise.is_cancelled ? (
                             <>
                               <Button
                                 variant="outline-primary"
                                 size="sm"
-                                // onClick={handleAddbusiness}
                                 disabled
                               >
-                                Promise Confirmed
+                                Promise Cancelled 
                               </Button>
                             </>
                           ) : (
                             <>
-                              {promise.is_cancelled ? (
+                              {promise.seller_fulfilled_promise  ? (
                                 <>
                                   <Button variant="danger" size="sm" disabled>
-                                    Promise Cancelled
+                                    Promise Confirmed
                                   </Button>
                                 </>
                               ) : (
@@ -456,25 +455,30 @@ function PaysofterPromiseSeller({ history }) {
                           )}
                         </td>
 
-                        {/* <td>
-                          <Button
-                            variant="outline-primary"
-                            size="sm"
-                            onClick={handleMessageBuyer}
-                          >
-                            Message Buyer
-                          </Button>
-                        </td> */}
-
                         <td>
-                          <Button variant="outline-primary" size="sm">
-                            <Link
-                              to={`/promise/message/${promise.promise_id}`}
-                              style={{ textDecoration: "none" }}
-                            >
-                              Message Buyer
-                            </Link>
-                          </Button>
+                          <>
+                            {promise.is_cancelled ? (
+                              <>
+                                <Button variant="outline-danger" size="sm">
+                                  <Link
+                                    to={`/promise/message/${promise.promise_id}`}
+                                    style={{ textDecoration: "none" }}
+                                  >
+                                    Message Buyer
+                                  </Link>
+                                </Button>
+                              </>
+                            ) : (
+                              <Button variant="outline-primary" size="sm">
+                                <Link
+                                  to={`/promise/message/${promise.promise_id}`}
+                                  style={{ textDecoration: "none" }}
+                                >
+                                  Message Buyer
+                                </Link>
+                              </Button>
+                            )}
+                          </>
                         </td>
 
                         <Modal

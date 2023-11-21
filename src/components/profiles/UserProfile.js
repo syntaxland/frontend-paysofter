@@ -207,6 +207,18 @@ function UserProfile() {
                     </Button>
                   )}
 
+<Form.Group>
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="username"
+                      // value={userData.first_name}
+                      value={profile.username}
+                      onChange={handleInputChange}
+                      readOnly
+                    />
+                  </Form.Group>
+
                   <Form.Group>
                     <Form.Label>Account ID</Form.Label>
                     <Form.Control

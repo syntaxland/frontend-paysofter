@@ -415,6 +415,7 @@ function PaysofterPromise({ history }) {
                             second: "numeric",
                           })}
                         </td>
+                        
                         <td>
                           {promise.buyer_promise_fulfilled ? (
                             <>
