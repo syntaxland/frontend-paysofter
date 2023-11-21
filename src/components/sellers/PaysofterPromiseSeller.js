@@ -425,7 +425,7 @@ function PaysofterPromiseSeller({ history }) {
                           {promise.is_cancelled ? (
                             <>
                               <Button
-                                variant="outline-primary"
+                                variant="danger"
                                 size="sm"
                                 disabled
                               >
@@ -436,7 +436,7 @@ function PaysofterPromiseSeller({ history }) {
                             <>
                               {promise.seller_fulfilled_promise  ? (
                                 <>
-                                  <Button variant="danger" size="sm" disabled>
+                                  <Button variant="outline-primary" size="sm" disabled>
                                     Promise Confirmed
                                   </Button>
                                 </>
