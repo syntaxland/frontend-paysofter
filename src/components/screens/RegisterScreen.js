@@ -12,13 +12,16 @@ import "react-phone-number-input/style.css";
 // import GoogleLoginScreen from "./GoogleLoginScreen";
 
 function RegisterScreen({ location, history }) {
+  const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const dispatch = useDispatch();
   const [selectedCountry] = useState("US");
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -26,6 +29,7 @@ function RegisterScreen({ location, history }) {
   const [referralCode, setReferralCode] = useState("");
 
   const [isValid, setIsValid] = useState({
+    username: false,
     firstName: false,
     lastName: false,
     email: false,
@@ -56,6 +60,26 @@ function RegisterScreen({ location, history }) {
         ...prevIsValid,
         [field]: value === password,
       }));
+    } else if (field === "username") {
+      const containsSpecialChars = /[^a-zA-Z0-9_]/.test(value);
+      setIsValid((prevIsValid) => ({
+        ...prevIsValid,
+        [field]: !containsSpecialChars,
+      }));
+
+      if (containsSpecialChars) {
+        setUsernameError("Username must not contain special characters.");
+      } else if (username.length < 6) {
+        setUsernameError("Username must be at least 6 characters.");
+
+      } else if (password !== confirmPassword) {
+        setPasswordError("Passwords do not match.");
+      } else if (password.length < 8) {
+        setPasswordError("Password must be at least 8 characters.");
+      } else {
+        setUsernameError("");
+        setPasswordError("");
+      }
     } else {
       setIsValid((prevIsValid) => ({ ...prevIsValid, [field]: !!value }));
     }
@@ -75,25 +99,41 @@ function RegisterScreen({ location, history }) {
 
   const formData = useMemo(() => {
     return {
+      username: username,
       first_name: firstName,
       last_name: lastName,
-      username: lowerCaseEmail,
       email: lowerCaseEmail,
       password,
       phone_number: phoneNumber,
       referral_code: referralCode,
     };
-  }, [firstName, lastName, lowerCaseEmail, password, phoneNumber, referralCode]);
+  }, [
+    username,
+    firstName,
+    lastName,
+    lowerCaseEmail,
+    password,
+    phoneNumber,
+    referralCode,
+  ]);
 
   console.log("formData:", formData);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
+      setPasswordError("Passwords do not match.");
     } else if (password.length < 8) {
-      setMessage("Password must be at least 8 characters");
+      setPasswordError("Password must be at least 8 characters.");
+
+    } else if (username.length < 6) {
+      setUsernameError("Username must be at least 6 characters.");
+    } else if (/[^a-zA-Z0-9_]/.test(username)) {
+      setUsernameError("Username must not contain special characters.");
     } else {
+      setUsernameError("");
+      setPasswordError("");
       console.log("Dispatching registration...");
 
       try {
@@ -131,11 +171,46 @@ function RegisterScreen({ location, history }) {
           </Message>
         )}
 
-        {message && <Message variant="danger">{message}</Message>}
+        {/* {passwordError && <Message variant="danger">{passwordError}</Message>} */}
         {error && <Message variant="danger">{error}</Message>}
 
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
+          <Form.Group controlId="username">
+            <Form.Label>
+              <i className="fas fa-user"></i> Username
+            </Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter username"
+              value={username}
+              maxLength={30}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                handleInputChange("username", e.target.value);
+              }}
+              required
+              className={`rounded ${
+                error && error.username
+                  ? "is-invalid"
+                  : isValid.username
+                  ? "is-valid"
+                  : ""
+              }`}
+            />
+
+            <div className="valid-feedback">
+              {isValid.username && username && (
+                <i className="bi bi-check2-circle text-success"></i>
+              )}
+            </div>
+
+            <Form.Control.Feedback type="invalid">
+              {error && error.username}
+            </Form.Control.Feedback>
+            <Form.Text className="text-danger">{usernameError}</Form.Text>
+          </Form.Group>
+
           <Form.Group controlId="firstName">
             <Form.Label>
               <i className="fas fa-user"></i> First Name
@@ -262,7 +337,7 @@ function RegisterScreen({ location, history }) {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="password"> 
+          <Form.Group controlId="password">
             <Form.Label>
               <i className="fas fa-key"></i> Password
             </Form.Label>
@@ -296,6 +371,7 @@ function RegisterScreen({ location, history }) {
             <Form.Control.Feedback type="invalid">
               {error && error.password}
             </Form.Control.Feedback>
+            <Form.Text className="text-danger">{passwordError}</Form.Text>
           </Form.Group>
 
           <Form.Group controlId="confirmPassword">
@@ -330,6 +406,7 @@ function RegisterScreen({ location, history }) {
             <Form.Control.Feedback type="invalid">
               {error && error.confirm_password}
             </Form.Control.Feedback>
+            <Form.Text className="text-danger">{passwordError}</Form.Text>
           </Form.Group>
 
           <Row className="py-3">

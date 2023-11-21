@@ -9,7 +9,7 @@ import {
   USER_REGISTER_REQUEST,
 } from "../constants/userConstants";
 import axios from "axios";
-import axiosInstance from "../store"; 
+import axiosInstance from "../store";  
 
 const API_URL = process.env.REACT_APP_API_URL; 
 

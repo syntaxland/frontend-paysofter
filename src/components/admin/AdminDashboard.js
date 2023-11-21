@@ -1,23 +1,34 @@
 // AdminDashboard.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Container, Button } from "react-bootstrap";
 // import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import Orders from "./Orders";
-import Payments from "./Payments";
-import OrderShipment from "./OrderShipment";
-import SendMessage from "./SendMessage";
-import MessageInbox from "./MessageInbox";
-import SendEmail from "./SendEmail";
+import PaysofterPromise from "./PaysofterPromise";
+import AccountFund from "./AccountFund";
+// import OrderShipment from "./OrderShipment";
+// import SendMessage from "./SendMessage";
+// import MessageInbox from "./MessageInbox";
+// import SendEmail from "./SendEmail";
 import Dashboard from "./Dashboard";
-import CreditPoint from "./CreditPoint";
-import SetPromoCode from "./SetPromoCode";
-import PromoTimer from "./ApplyPromoCode";
+// import CreditPoint from "./CreditPoint";
+// import SetPromoCode from "./SetPromoCode";
+// import PromoTimer from "./ApplyPromoCode";
 
 function AdminDashboard({ history }) {
   const [activeTab, setActiveTab] = useState("admin-dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  console.log("userInfo:", userInfo);
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -28,37 +39,37 @@ function AdminDashboard({ history }) {
   };
 
   const handleUserDashboard = () => {
-    history.push("/dashboard");
+    history.push("/dashboard/users");
   };
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case "orders":
-        return <Orders />;
+      case "all-promises":
+        return <PaysofterPromise />;
 
-      case "payments":
-        return <Payments />;
+      case "account-fund-balances":
+        return <AccountFund />;
 
-      case "order-shipment":
-        return <OrderShipment />;
+      // case "order-shipment":
+      //   return <OrderShipment />;
 
-      case "send-message":
-        return <SendMessage />;
+      // case "send-message":
+      //   return <SendMessage />;
 
-      case "message-inbox":
-        return <MessageInbox />;
+      // case "message-inbox":
+      //   return <MessageInbox />;
 
-      case "send-email":
-        return <SendEmail />;
+      // case "send-email":
+      //   return <SendEmail />;
 
-      case "credit-point-requests":
-        return <CreditPoint />;
+      // case "credit-point-requests":
+      //   return <CreditPoint />;
 
-      case "promo-code":
-        return <PromoTimer />;
+      // case "promo-code":
+      //   return <PromoTimer />;
 
-      case "set-promo-code":
-        return <SetPromoCode />;
+      // case "set-promo-code":
+      //   return <SetPromoCode />;
 
       default:
         return <Dashboard />;
@@ -86,30 +97,31 @@ function AdminDashboard({ history }) {
                     activeTab === "admin-dashboard" ? "info" : "outline-info"
                   }
                   className="sidebar-link"
-                  onClick={() => handleTabChange("admin-dashboard")}
+                  onClick={() => handleTabChange("admin-dashboard")} 
                 >
                   <i className="fa fa-dashboard"></i> Admin Dashboard
                 </Button>
               </div>
               <div>
                 <Button
-                  variant={activeTab === "orders" ? "info" : "outline-info"}
+                  variant={activeTab === "all-promises" ? "info" : "outline-info"}
                   className="sidebar-link"
-                  onClick={() => handleTabChange("orders")}
+                  onClick={() => handleTabChange("all-promises")}
                 >
-                  <i className="fas fa-luggage-cart"></i> Orders
+                  <i className="fas fa-luggage-cart"></i> Paysofter Promise
                 </Button>
               </div>
               <div>
                 <Button
-                  variant={activeTab === "payments" ? "info" : "outline-info"}
+                  variant={activeTab === "account-fund-balances" ? "info" : "outline-info"}
                   className="sidebar-link"
-                  onClick={() => handleTabChange("payments")}
+                  onClick={() => handleTabChange("account-fund-balances")}
                 >
-                  <i className="fas fa-credit-card"></i> Payments
+                  <i className="fas fa-credit-card"></i> Account Fund
                 </Button>
               </div>
-              <div>
+              
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "order-shipment" ? "info" : "outline-info"
@@ -119,7 +131,7 @@ function AdminDashboard({ history }) {
                 >
                   <i className="fas fa-shipping-fast"></i> Shipments
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button
@@ -181,7 +193,7 @@ function AdminDashboard({ history }) {
                 </Button>
               </div>
 
-              <div>
+              {/* <div>
                 <Button
                   variant={activeTab === "promo-code" ? "info" : "outline-info"}
                   className="sidebar-link"
@@ -189,7 +201,7 @@ function AdminDashboard({ history }) {
                 >
                   <i className="fas fa-gift"></i> Promo Code
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button

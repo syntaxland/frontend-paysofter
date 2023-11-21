@@ -50,7 +50,7 @@ function Footer() {
             <Col className="text-muted py-1 text-center">
               <ul className="">
                 <strong>Offices:</strong> Lagos (<strong>Coming soon:</strong>{" "}
-                San Francisco, Ontario, London, Dubai, Mumbai, Ghana,
+                San Francisco, Ontario, London, Dubai, Mumbai, Accra,
                 Johannesburg, Sidney, Sao Paulo, Nairobi, Shanghai, Amsterdam,
                 Frankfurt)
                 {/* <li>Ontario</li>

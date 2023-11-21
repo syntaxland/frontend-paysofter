@@ -23,12 +23,7 @@ function OtpDisableAccountFund() {
     useState(false);
   const [identifierError, setIdentifierError] = useState("");
 
-  // const [identifierError, setIdentifierError] = useState("");
-  // if (!identifier.trim()) {
-  //   setIdentifierError("Email or Account ID is required");
-  //   return;
-  // }
-  // <Form.Text className="text-danger">{identifierError}</Form.Text>
+  
 
   useEffect(() => {
     if (success) {

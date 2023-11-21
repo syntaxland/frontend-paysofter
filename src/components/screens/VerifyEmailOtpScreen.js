@@ -29,7 +29,6 @@ const VerifyEmailOtpScreen = () => {
 
   useEffect(() => {
     if (success) {
-      // dispatch(register(userRegisterData));
       localStorage.removeItem("registrationData");
       setTimeout(() => {
         history.push("/login");
@@ -37,32 +36,19 @@ const VerifyEmailOtpScreen = () => {
     }
   }, [success, history]);
 
-  // useEffect(() => {
-  //   let timer;
-  //   if (countdown > 0 && resendDisabled) {
-  //     timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-  //   } else if (!resendDisabled) {
-  //     setCountdown(60);
-  //   }
-
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [countdown, resendDisabled]);
-
   useEffect(() => {
     let timer;
     if (countdown > 0 && resendDisabled) {
       timer = setTimeout(() => setCountdown(countdown - 1), 1000);
     } else if (countdown === 0 && resendDisabled) {
-      setResendDisabled(false); 
+      setResendDisabled(false);
     } else if (!resendDisabled) {
       setCountdown(60);
     }
     return () => {
       clearTimeout(timer);
     };
-  }, [countdown, resendDisabled])
+  }, [countdown, resendDisabled]);
 
   const handleVerifyEmailOtp = () => {
     dispatch(verifyEmailOtp(otp));
@@ -74,16 +60,13 @@ const VerifyEmailOtpScreen = () => {
   };
   console.log("otpData:", otpData);
 
-  // const handleResendEmailOtp = () => {
-  //   dispatch(sendEmailOtp(otpData));
-  // };
-
   const handleResendEmailOtp = () => {
     setResendLoading(true);
     setResendMessage("");
     try {
-      // dispatch(sendEmailOtp(otpData));
-      dispatch(sendEmailOtp(userRegisterData.email, userRegisterData.first_name));
+      dispatch(
+        sendEmailOtp(userRegisterData.email, userRegisterData.first_name)
+      );
       setResendMessage(`OTP resent to ${userRegisterData.email} successfully.`);
       setResendDisabled(true);
     } catch (error) {
@@ -97,9 +80,9 @@ const VerifyEmailOtpScreen = () => {
       <Row className="justify-content-center text-center mt-5">
         <Col lg={6}>
           <div className="border rounded p-4">
-            <h1>Verify Email OTP</h1>
+            <h1 className="py-2">Verify Email OTP</h1>
             {success && (
-              <Message variant="success"> 
+              <Message variant="success">
                 Email verified successfully! You can now log in.
               </Message>
             )}
@@ -111,7 +94,7 @@ const VerifyEmailOtpScreen = () => {
                 {resendMessage}
               </Message>
             )}
-            <Form>
+            <Form className="py-2">
               <Form.Group controlId="otp">
                 <Form.Control
                   type="text"
@@ -123,7 +106,7 @@ const VerifyEmailOtpScreen = () => {
               </Form.Group>
               <div className="py-3">
                 <Button
-                  onClick={handleVerifyEmailOtp} 
+                  onClick={handleVerifyEmailOtp}
                   disabled={loading || success}
                   variant="success"
                   type="submit"
@@ -133,18 +116,22 @@ const VerifyEmailOtpScreen = () => {
                 </Button>
               </div>
             </Form>
+            <p>
+              OTP has been sent to your email <b>{userRegisterData.email}</b> and
+            will expire in 10 minutes. It might take a couple of seconds to deliver.
+            </p>
             <Button
-                variant="link"
-                type="submit"
-                disabled={resendDisabled || resendLoading}
-                onClick={handleResendEmailOtp}
-              >
-                {resendLoading
-                  ? "Resending OTP..."
-                  : resendDisabled
-                  ? `Resend OTP (${countdown}sec)`
-                  : "Resend OTP"}
-              </Button>
+              variant="link"
+              type="submit"
+              disabled={resendDisabled || resendLoading}
+              onClick={handleResendEmailOtp}
+            >
+              {resendLoading
+                ? "Resending OTP..."
+                : resendDisabled
+                ? `Resend OTP (${countdown}sec)`
+                : "Resend OTP"}
+            </Button>
           </div>
         </Col>
       </Row>

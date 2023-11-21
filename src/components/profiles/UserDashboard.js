@@ -1,558 +1,417 @@
 // UserDashboard.js
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Col, Row, Button, Modal } from "react-bootstrap";
-import Message from "../Message";
-import Loader from "../Loader";
-import { getCreditPointBalance } from "../../redux/actions/creditPointActions";
-import { getUserTransactions } from "../../redux/actions/transactionActions";
-import { getUserAccountFundBalance } from "../../redux/actions/AccountFundActions";
-import { getUserPayouts } from "../../redux/actions/payoutActions";
-import { Line, Pie } from "react-chartjs-2";
-
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  LineElement,
-  BarElement,
-  PointElement,
-  Title,
-} from "chart.js";
-import ToggleAccountSettings from "../settings/ToggleAccountSettings";
-
-ChartJS.register(
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LineElement,
-  LinearScale,
-  BarElement,
-  Title,
-  PointElement
-);
+import React, { useState, useEffect } from "react";
+import { Row, Col, Button, NavDropdown } from "react-bootstrap";
+// import { Link} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+// import { login } from "../../redux/actions/userActions";
+import UserProfile from "./UserProfile";
+// import Transactions from "./Transactions";
+// import Payouts from "./Payouts";
+import Dashboard from "./Dashboard";
+// import MessageInbox from "./MessageInbox";
+// import CreditPoint from "./CreditPoint";
+import AccountFunds from "./AccountFunds";
+// import Referraols from "./Referrals";
+// import Webhoks from "./Webhooks";
+// import ApiEndPoints from "./ApiEndPoints";
+import Subscriptions from "./Subscriptions";
+import PaysofterPromise from "./PaysofterPromise";
 
 function UserDashboard() {
-  // const [creditPointEarning, setCreditPointEarning] = useState(0);
-  const dispatch = useDispatch();
   const history = useHistory();
-
-  const userTransactions = useSelector((state) => state.userTransactions);
-  const {
-    loading: transactionLoading,
-    error: transactionError,
-    transactions,
-  } = userTransactions;
-  console.log("Transactions:", transactions);
-
-  const creditPointBal = useSelector((state) => state.creditPointBal);
-  const {
-    loading: creditPointBalanceLoading,
-    error: creditPointBalanceError,
-    creditPointBalance,
-  } = creditPointBal;
-  console.log("Credit Point Balance:", creditPointBalance);
-
-  const userAccountBalanceState = useSelector(
-    (state) => state.userAccountBalanceState
-  );
-  const { loading, error, accountFundBalance } = userAccountBalanceState;
-  console.log("accountFundBalance:", accountFundBalance);
-
-  const userPayouts = useSelector((state) => state.userPayouts);
-  const { loading: payoutLoading, payouts, error: payoutError } = userPayouts;
-  console.log("User Dashboard Payouts:", payouts);
-
-  const [showToggleAccountSettings, setShowToggleAccountSettings] =
-    useState(false);
-
-  const [showDisableAccountSettings, setShowDisableAccountSettings] =
-    useState(false);
-
-  const handleToggleFundOpen = () => {
-    setShowToggleAccountSettings(true);
-  };
-
-  const handleDisableFundOpen = () => {
-    setShowDisableAccountSettings(true);
-  };
-
-  const handleDisableFundClose = () => {
-    setShowDisableAccountSettings(false);
-  };
-
-  const handleToggleFundClose = () => {
-    setShowToggleAccountSettings(false);
-  };
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  console.log("userInfo:", userInfo);
 
   useEffect(() => {
-    dispatch(getCreditPointBalance());
-    dispatch(getUserTransactions());
-    dispatch(getUserPayouts());
-    dispatch(getUserAccountFundBalance());
-  }, [dispatch]);
+    if (!userInfo) {
+      history.push("/login");
+      // window.location.href = "/login";
+    }
+  }, [userInfo, history]);
 
-  const lineGraphData = {
-    labels: transactions?.map((transaction) =>
-      new Date(transaction.timestamp).toLocaleString()
-    ),
-    datasets: [
-      {
-        label: "Amount Paid (NGN)",
-        fill: false,
-        bpayoutColor: "rgba(75,192,192,1)",
-        bpayoutWidth: 2,
-        data: transactions?.map((transaction) => transaction.amount),
-        transactionIds: transactions?.map(
-          (transaction) => transaction.payment_id
-        ),
-      },
-    ],
+  const [activeTab, setActiveTab] = useState("user-dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
   };
 
-  const lineChartOptions = {
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const label = context.dataset.label || "";
-            if (label) {
-              const index = context.dataIndex;
-              const transactionId = context.dataset.transactionIds[index];
-              return `${label}: NGN ${context.formattedValue} (${transactionId})`;
-            }
-            return null;
-          },
-        },
-      },
-    },
+  const handleSidebarToggle = () => {
+    setSidebarOpen(!sidebarOpen);
   };
 
-  const getTotalTransaction = () => {
-    let totalPayment = 0;
-
-    transactions.forEach((transaction) => {
-      totalPayment += parseFloat(transaction.amount);
-    });
-    return totalPayment;
+  const handleAdminDashboard = () => {
+    history.push("/dashboard/admin");
   };
 
-  const creditPoints = creditPointBalance?.balance;
-  // const accountBalance = accountFundBalance?.balance;
-
-  const withdrawCreditPoints =
-    creditPoints >= 1000 ? (
-      <Link
-        to={{
-          pathname: "/credit-point-request",
-          search: `?creditPoints=${creditPoints}`,
-        }}
-      >
-        <Button variant="primary" className="rounded">
-          Withdraw Points
-        </Button>
-      </Link>
-    ) : (
-      <p>
-        <Button variant="danger" className="rounded" readOnly>
-          Maturity from NGN 1,000
-        </Button>
-      </p>
-    );
-
-  const handleFundAccount = () => {
-    history.push("/fund-account");
+  const handleSettings = () => {
+    history.push("/settings");
   };
 
-  // const handleFundAccountSettings = () => {
-  //   history.push("/toggle-fund");
-  // };
-
-  const paidPayoutRateData = {
-    labels: [
-      `Paid PayoutsPayouts (${(
-        (payouts?.filter((payout) => payout.is_paid)?.length / payouts?.length) *
-        100
-      ).toFixed(1)}%)`,
-      `Unpaid PayoutsPayouts (${(
-        (payouts?.filter((payout) => !payout.is_paid)?.length / payouts?.length) *
-        100
-      ).toFixed(1)}%)`,
-    ],
-    datasets: [
-      {
-        data: [
-          payouts?.filter((payout) => payout.is_paid)?.length,
-          payouts?.filter((payout) => !payout.is_paid)?.length,
-        ],
-        backgroundColor: ["#1F77B4", "#FF6384"],
-      },
-    ],
+  const handlePaysofterPromise = () => {
+    history.push("/promise/buyer");
   };
 
-  const unfulfilledPayoutRateData = {
-    labels: [
-      `Delivered Payouts (${(
-        (payouts?.filter((payout) => payout.is_approved)?.length /
-          payouts?.length) *
-        100
-      ).toFixed(1)}%)`,
-      `Undelivered Payouts (${(
-        (payouts?.filter((payout) => !payout.is_approved)?.length /
-          payouts?.length) *
-        100
-      ).toFixed(1)}%)`,
-    ],
-    datasets: [
-      {
-        data: [
-          payouts?.filter((payout) => payout.is_approved)?.length,
-          payouts?.filter((payout) => !payout.is_approved)?.length,
-        ],
-        backgroundColor: ["#008000", "#FFA500"],
-      },
-    ],
+  const handleAddbusiness = () => {
+    history.push("/add-business");
   };
 
-  const pieChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
+  const handleSellerDashboard = () => {
+    history.push("/dashboard/sellers");
+  };
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "profile":
+        return <UserProfile />;
+
+      // case "transactions":
+      //   return <Transactions />;
+
+      // case "payouts":
+      //   return <Payouts />;
+
+      // case "webhooks":
+      //   return <Webhooks />;
+
+      // case "api-endpoints":
+      //   return <ApiEndPoints />;
+
+      case "subscriptions":
+        return <Subscriptions />;
+
+      case "promise":
+        return <PaysofterPromise />;
+
+      // case "message-inbox":
+      //   return <MessageInbox />;
+
+      // case "credit-point":
+      //   return <CreditPoint />;
+
+      // case "recommended-products":
+      //   return <RecommendedProducts />;
+
+      case "account-funds":
+        return <AccountFunds />;
+
+      // case "referrals":
+      //   return <Referrals />;
+
+      default:
+        return <Dashboard />;
+    }
   };
 
   return (
-    <div className="justify-content-center text-center">
+    <>
       <Row>
-        <Col>
-          <div>
-            {loading ||
-            creditPointBalanceLoading ||
-            transactionLoading ||
-            payoutLoading ? (
-              <Loader />
-            ) : error ||
-              creditPointBalanceError ||
-              transactionError ||
-              payoutError ? (
-              <Message variant="danger">
-                {error ||
-                  creditPointBalanceError ||
-                  transactionError ||
-                  payoutError}
-              </Message>
-            ) : (
+        <Col xs={sidebarOpen ? 3 : 1} className="sidebar">
+          <Button
+            variant="link"
+            className="sidebar-toggle-button"
+            onClick={handleSidebarToggle}
+          >
+            {/* <FontAwesomeIcon icon={sidebarOpen ? faBars : faBars} /> */}
+            <FontAwesomeIcon icon={sidebarOpen ? faTimes : faBars} />
+          </Button>
+
+          {sidebarOpen && (
+            <div className="sidebar-content">
               <div>
-                <Row>
-                  <Col>
-                    <div>
-                      <div className="bar-chart">
-                        <h2 className="py-2">
-                          <i className="	fas fa-money-bill"></i> Total
-                          Payments
-                        </h2>
-                        <div className="bar"></div>
-                        <strong>
-                          NGN{" "}
-                          {getTotalTransaction().toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
-                        </strong>
-                      </div>
-                    </div>
-                  </Col>
-                  <Row className="py-2">
-                    <Col>
-                      <Row>
-                        <Col>
-                          <h2 className="py-2">
-                            <i className="fas fa-wallet"></i> Account Fund
-                            Wallet
-                          </h2>{" "}
-                          <strong>Staus:</strong>{" "}
-                          {accountFundBalance?.is_diabled ? (
-                            <>
-                              <span className="py-2">
-                                <Button
-                                  variant="outline-transparent"
-                                  onClick={handleDisableFundOpen}
-                                  className="rounded"
-                                  size="sm"
-                                  title="Account Fund is currently disabled. Please contact support."
-                                >
-                                  <i
-                                    className="fas fa-lock"
-                                    style={{ fontSize: "16px", color: "red" }}
-                                  ></i>{" "}
-                                  Disabled
-                                </Button>
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              <Button
-                                variant="outline-transparent"
-                                onClick={handleToggleFundOpen}
-                                className="rounded"
-                                size="sm"
-                                title="Set Account Fund active or locked."
-                              >
-                                {accountFundBalance?.is_active ? (
-                                  <>
-                                    <i
-                                      className="fas fa-lock-open"
-                                      style={{
-                                        fontSize: "16px",
-                                        color: "green",
-                                      }}
-                                    ></i>{" "}
-                                    Active
-                                  </>
-                                ) : (
-                                  <>
-                                    <i
-                                      className="fas fa-lock"
-                                      style={{
-                                        fontSize: "16px",
-                                        color: "yellow",
-                                      }}
-                                    ></i>{" "}
-                                    Locked
-                                  </>
-                                )}
-                              </Button>
-                            </>
-                          )}
-                        </Col>
-
-                        <Modal
-                          show={showToggleAccountSettings}
-                          onHide={handleToggleFundClose}
-                        >
-                          <Modal.Header closeButton>
-                            <Modal.Title className="text-center w-100 py-2">
-                              Toggle Account Fund Status
-                            </Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body>
-                            {showToggleAccountSettings && (
-                              <ToggleAccountSettings />
-                            )}
-                          </Modal.Body>
-                        </Modal>
-
-                        <Modal
-                          show={showDisableAccountSettings}
-                          onHide={handleDisableFundClose}
-                        >
-                          <Modal.Header closeButton>
-                            <Modal.Title className="text-center w-100 py-2">
-                              Account Fund Disabled
-                            </Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body>
-                            <p className="text-center  py-2">
-                              Account Fund is currently disabled. Please contact
-                              support for reactivation.
-                            </p>
-                          </Modal.Body>
-                        </Modal>
-                      </Row>
-
-                      <p>Account Fund Balance:</p>
-                      <strong>
-                        NGN{" "}
-                        {accountFundBalance?.balance?.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          }
-                        )}
-                      </strong>
-
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          Fund Account
-                        </Button>
-                      </div>
-                    </Col>
-
-                    <Col>
-                      <h2 className="py-2">
-                        <i className="far fa-money-bill-alt"></i> Credit Point
-                        Wallet
-                      </h2>
-                      <p>Credit Point Balance:</p>
-                      <strong>
-                        NGN{" "}
-                        {creditPoints?.toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </strong>
-                      <div className="py-2">{withdrawCreditPoints}</div>
-                    </Col>
-                  </Row>
-
-                  <hr />
-                  <Row>
-                    <h2 className="py-3">Services</h2>
-
-                    <hr />
-
-                    <Col>
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          Airtime <i className="fas fa-phone"></i>
-                        </Button>
-                      </div>
-                    </Col>
-
-                    <Col>
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          Electricity <i className="fas fa-lightbulb"></i>
-                        </Button>
-                      </div>
-                    </Col>
-
-                    <Col>
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          Mobile Data <i className="fas fa-wifi"></i>
-                        </Button>
-                      </div>
-                    </Col>
-
-                    <Col>
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          CableTV <i className="fas fa-television"></i>
-                        </Button>
-                      </div>
-                    </Col>
-
-                    <Col>
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          Internet <i className="fas fa-globe"></i>
-                        </Button>
-                      </div>
-                    </Col>
-
-                    <Col>
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          Book Flight <i className="fa fa-plane"></i>
-                        </Button>
-                      </div>
-                    </Col>
-
-                    <Col>
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          Gaming <i className="fa fa-gamepad"></i>
-                        </Button>
-                      </div>
-                    </Col>
-
-                    <Col>
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          POS Terminal <i className="fas fa-calculator"></i>
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
-                  <hr />
-
-                  <div className="line-graph">
-                    <h2 className="py-3">Payments</h2>
-                    <hr />
-                    <Line data={lineGraphData} options={lineChartOptions} />
-                  </div>
-
-                  <hr />
-                  <div className="py-3">
-                    <h2 className="">
-                      Paysofter Promise <i className="fas fa-money-bill"></i>
-                    </h2>
-                    <hr />
-                    <Row>
-                      <Col>
-                        <h5 className="py-3">Paid Promise Rate</h5>
-                        <div className="chart-container">
-                          <Pie
-                            data={paidPayoutRateData}
-                            options={pieChartOptions}
-                            width={200}
-                            height={200}
-                          />
-                        </div>
-                      </Col>
-
-                      <Col>
-                        <h5 className="py-3">Promise Approval Rate</h5>
-                        <div className="chart-container">
-                          <Pie
-                            data={unfulfilledPayoutRateData}
-                            options={pieChartOptions}
-                            width={200}
-                            height={200}
-                          />
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                  <hr />
-                </Row>
+                <Button
+                  variant={
+                    activeTab === "user-dashboard"
+                      ? "primary"
+                      : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  // activeClassName="active-link"
+                  onClick={() => handleTabChange("user-dashboard")}
+                >
+                  <i className="fa fa-dashboard"></i> Dashboard
+                </Button>
               </div>
-            )}
-          </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "profile" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("profile")}
+                >
+                  <i className="fas fa-user"></i> Profile
+                </Button>
+              </div>
+              <div>
+                <Button
+                  variant={
+                    activeTab === "transactions" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("transactions")}
+                >
+                  <i className="fa fa-cart-arrow-down"></i> Transactions
+                </Button>
+              </div>
+              {/* <div>
+                <Button
+                  variant={
+                    activeTab === "order-items" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("order-items")}
+                >
+                  <i className="fa fas fa-cart-plus"></i> Purchased Items
+                </Button>
+              </div> */}
+              {/* <div>
+                <Button
+                  variant={
+                    activeTab === "payouts" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("payouts")}
+                >
+                  <i className="fas fa-credit-card"></i> Payouts
+                </Button>
+              </div> */}
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "referrals" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("referrals")}
+                >
+                  <i className="fa fa-user-plus"></i> Referrals
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "credit-point" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("credit-point")}
+                >
+                  <i className="fas fa-sack-dollar"></i> Credit Point
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "account-funds"
+                      ? "primary"
+                      : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("account-funds")}
+                >
+                  <i className="fa fa-credit-card"></i> Acccount Funds
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "promise" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  // onClick={() => handleTabChange("promise")}
+                  onClick={handlePaysofterPromise}
+                >
+                  <i className="fa fa-credit-card"></i> Paysofter Promise
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "message-inbox"
+                      ? "primary"
+                      : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("message-inbox")}
+                >
+                  <i className="fa fa-message"></i> Inbox
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "offers" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("offers")}
+                >
+                  <i className="fa fa-gift"></i> Offers
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "subscriptions"
+                      ? "primary"
+                      : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("subscriptions")}
+                >
+                  <i className="fa fa-plus"></i> Subscriptions
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "live-chat" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("live-chat")}
+                >
+                  <i className="fas fa-comments"></i> Live Chat
+                </Button>
+              </div>
+
+              {/* <div>
+                <Button
+                  variant={
+                    activeTab === "api-endpoints"
+                      ? "primary"
+                      : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("api-endpoints")}
+                >
+                  <i className="fas fa-code"></i> API EndPoints
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "webhooks" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("webhooks")}
+                >
+                  <i className="fas fa-codepen"></i> SDK & Webhooks
+                </Button>
+              </div> */}
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "ticket" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("ticket")}
+                >
+                  <i className="fa fa-ticket"></i> Support Ticket
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "feedback" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("feedback")}
+                >
+                  <i className="fas fa-gear"></i> Feedback
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "settings" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  // onClick={history.push("/settings")}
+                  onClick={handleSettings}
+                >
+                  <i className="fas fa-gear"></i> Settings
+                </Button>
+              </div>
+
+              <div>
+                <span>
+                  <Button
+                    variant={
+                      activeTab === "seller-account"
+                        ? "primary"
+                        : "outline-primary"
+                    }
+                    className="sidebar-link"
+                    onClick={() => handleTabChange("seller-account")}
+                  >
+                    <i className="fas fa-user-tag"></i> Seller Account
+                  </Button>
+                </span>
+                <span>
+                  <NavDropdown
+                    // className="profile-dropdown custom-dropdown"
+                    align="end"
+                  >
+                    <span>
+                      <Button
+                        variant="outline-primary"
+                        onClick={handleAddbusiness}
+                      >
+                        Create Seller Account
+                      </Button>
+                      <Button
+                        variant="outline-primary"
+                        onClick={handleSellerDashboard}
+                      >
+                        Go to Seller Dashboard
+                      </Button>
+                    </span>
+                  </NavDropdown>
+                </span>
+              </div>
+
+              <div>
+                {userInfo.is_superuser || userInfo.is_staff ? (
+                  <div>
+                    <Button
+                      variant={
+                        activeTab === "admin-dashboard"
+                          ? "primary"
+                          : "outline-primary"
+                      }
+                      className="sidebar-link"
+                      onClick={() => handleAdminDashboard()}
+                    >
+                      <i className="fas fa-user-check"></i> Admin Dashboard
+                    </Button>
+                  </div>
+                ) : (
+                  <span>Not Admin</span>
+                )}
+              </div>
+            </div>
+          )}
+        </Col>
+        <Col xs={sidebarOpen ? 9 : 11} className="main-content">
+          {renderTabContent()}
         </Col>
       </Row>
-    </div>
+    </>
   );
 }
 

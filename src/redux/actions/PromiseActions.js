@@ -22,9 +22,90 @@ import {
   SETTLE_DISPUTED_PROMISE_REQUEST,
   SETTLE_DISPUTED_PROMISE_SUCCESS,
   SETTLE_DISPUTED_PROMISE_FAIL,
+  GET_ALL_PROMISE_REQUEST,
+  GET_ALL_PROMISE_SUCCESS,
+  GET_ALL_PROMISE_FAIL,
+  CANCEL_PROMISE_REQUEST,
+  CANCEL_PROMISE_SUCCESS,
+  CANCEL_PROMISE_FAIL,
 } from "../constants/PromiseConstants";
 
 const API_URL = process.env.REACT_APP_API_URL;
+
+export const cancelPromise = (promiseData) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: CANCEL_PROMISE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `${API_URL}/api/cancel-promise/`,
+      promiseData,
+      config
+    );
+
+    dispatch({
+      type: CANCEL_PROMISE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CANCEL_PROMISE_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const getAllPromises = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_ALL_PROMISE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${API_URL}/api/get-all-promises/`,
+      config
+    );
+
+    dispatch({
+      type: GET_ALL_PROMISE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_PROMISE_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const settleDisputedPromise =
   (promiseData) => async (dispatch, getState) => {
@@ -282,8 +363,8 @@ export const sellerConfirmPromise =
         type: SELLER_CONFIRM_PROMISE_SUCCESS,
         payload: data,
       });
-      window.location.href = "/dashboard";
       window.location.reload();
+      window.location.href = "/dashboard/users";
     } catch (error) {
       dispatch({
         type: SELLER_CONFIRM_PROMISE_FAIL,

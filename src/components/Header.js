@@ -91,7 +91,7 @@ function Header() {
       dispatch(getUserProfile());
     }
   }, [dispatch, userInfo]);
- 
+
   return (
     <header>
       <Row>
@@ -205,7 +205,8 @@ function Header() {
                         {userInfo ? (
                           <>
                             <span>
-                              Account ID: {formatAccountID(profile.account_id)}
+                              <i className="fas fa-id-card"></i> Account ID:{" "}
+                              {formatAccountID(profile.account_id)}
                             </span>
 
                             <Button
@@ -229,7 +230,7 @@ function Header() {
 
                             <NavDropdown.Divider />
                             <span>
-                              Security Code:{" "}
+                              <i className="fas fa-key"></i> Security Code:{" "}
                               {securityCodeVisible
                                 ? profile.security_code
                                 : "****"}
@@ -271,6 +272,16 @@ function Header() {
                               )}
                             </Button>
 
+                            <NavDropdown.Divider />
+                            <Nav.Link
+                              as={Link}
+                              to="/dashboard/sellers"
+                              className="dropdown-item"
+                            >
+                              {" "}
+                              <i className="fas fa-dashboard"></i> Goto Seller
+                              Dashboard{" "}
+                            </Nav.Link>
                             <NavDropdown.Divider />
                             <Nav.Link
                               as={Link}

@@ -17,7 +17,9 @@ import {
 import {
   fundAccountReducer,
   getUserAccountFundDebitsReducer,
-getUserAccountFundCreditsReducer,
+  getAllAccountFundBalanceReducer,
+  activateAccountFundReducer,
+  getUserAccountFundCreditsReducer,
   toggleAccountFundReducer,
   disableAccountFundReducer,
   verifyOtpAccountFundReducer,
@@ -27,6 +29,8 @@ getUserAccountFundCreditsReducer,
 } from "./reducers/AccountFundReducers";
 
 import {
+  cancelPromiseReducer,
+  getAllPromiseReducer,
   settleDisputedPromiseReducer,
   getBuyerpromiseReducer,
   getSellerPromiseReducer,
@@ -80,7 +84,9 @@ const reducer = combineReducers({
 
   fundAccountState: fundAccountReducer,
   getUserAccountFundDebitsState: getUserAccountFundDebitsReducer,
-getUserAccountFundCreditsState: getUserAccountFundCreditsReducer,
+  getAllAccountFundBalanceState: getAllAccountFundBalanceReducer,
+  activateAccountFundState: activateAccountFundReducer,
+  getUserAccountFundCreditsState: getUserAccountFundCreditsReducer,
   toggleAccountFundState: toggleAccountFundReducer,
   disableAccountFundState: disableAccountFundReducer,
   verifyOtpAccountFundState: verifyOtpAccountFundReducer,
@@ -92,7 +98,9 @@ getUserAccountFundCreditsState: getUserAccountFundCreditsReducer,
   buyerConfirmPromiseState: buyerConfirmPromiseReducer,
   sellerConfirmPromiseState: sellerConfirmPromiseReducer,
 
-  settleDisputedPromiseState: settleDisputedPromiseReducer, 
+  cancelPromiseState: cancelPromiseReducer,
+  getAllPromiseState: getAllPromiseReducer,
+  settleDisputedPromiseState: settleDisputedPromiseReducer,
   createPromiseMessageState: createPromiseMessagesReducer,
   listPromiseMessageState: listPromiseMessagesReducer,
 

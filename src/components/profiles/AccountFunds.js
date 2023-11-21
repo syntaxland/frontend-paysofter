@@ -11,12 +11,10 @@ function AccountFunds() {
       <Row>
         <Col>
         
-          <hr />
           <div>
             <AccountFundCredits />
           </div>
 
-          <hr />
           <div className="text-center">
             <AccountFundDebits />
           </div>

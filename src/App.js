@@ -32,15 +32,16 @@ import VerifyEmailOtpScreen from "./components/screens/VerifyEmailOtpScreen";
 // import ResetPassword from "./components/profiles/ResetPassword";
 // import Orders from "./components/profiles/Orders";
 // import Payments from "./components/profiles/Payments";
-import Dashboard from "./components/profiles/Dashboard";
 import PaysofterPromise from "./components/profiles/PaysofterPromise";
-// import AdminDashboard from "./components/admin/AdminDashboard";
 
 import ToggleAccountSettings from "./components/settings/ToggleAccountSettings";
 import MaxWithdrawalSettings from "./components/settings/MaxWithdrawalSettings";
 import Settings from "./components/settings/Settings";
 
+import UserDashboard from "./components/profiles/UserDashboard";
+import AdminDashboard from "./components/admin/AdminDashboard";
 import SellerDashboard from "./components/sellers/SellerDashboard";
+
 import PaysofterPromiseSeller from "./components/sellers/PaysofterPromiseSeller";
 
 import PromiseMessage from "./components/promise/PromiseMessage";
@@ -60,7 +61,6 @@ function App() {
           <Route path="/login" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
           <Route path="/verify-email-otp" component={VerifyEmailOtpScreen} />
-          <Route path="/dashboard/users/" component={Dashboard} />
           <Route path="/fund-account" component={FundAccount} />
           <Route
             path="/credit-point-request/"
@@ -73,11 +73,12 @@ function App() {
 
           <Route path="/promise/buyer" component={PaysofterPromise} />
           <Route path="/promise/seller/" component={PaysofterPromiseSeller} />
-          <Route path="/dashboard/sellers" component={SellerDashboard} />
 
           <Route path="/promise/message/:id" component={PromiseMessage} />
 
-          {/* <Route path="/admin-dashboard" component={AdminDashboard} /> */}
+          <Route path="/dashboard/users/" component={UserDashboard} />
+          <Route path="/dashboard/sellers" component={SellerDashboard} />
+          <Route path="/dashboard/admin" component={AdminDashboard} /> 
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
           <Route path="/checkout" component={CheckoutScreen} />

@@ -14,6 +14,15 @@ import SettleDisputedPromise from "../promise/SettleDisputedPromise";
 function PaysofterPromiseSeller({ history }) {
   const dispatch = useDispatch();
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
+
   const getSellerPromiseState = useSelector(
     (state) => state.getSellerPromiseState
   );
@@ -100,8 +109,8 @@ function PaysofterPromiseSeller({ history }) {
                       {/* <th>Seller Email</th> */}
                       <th>Buyer Account ID</th>
                       {/* <th>Buyer Email</th> */}
-                      <th>Buyer Promise Fulfilled</th>
                       <th>Seller Fulfilled Promise</th>
+                      <th>Buyer Promise Fulfilled</th>
                       <th>Status</th>
                       <th>Success</th>
                       <th>Active</th>
@@ -109,6 +118,7 @@ function PaysofterPromiseSeller({ history }) {
                       <th>Settle Conflict Activated</th>
                       <th>Conflict Settlement Charges</th>
                       <th>Promise Delivered</th>
+                      <th>Promise Cancelled</th>
                       <th>Payment Method</th>
                       <th>Payment Provider</th>
                       <th>Promise Made At</th>
@@ -130,10 +140,9 @@ function PaysofterPromiseSeller({ history }) {
                               <Button
                                 variant="outline-link"
                                 size="sm"
-                                // onClick={handleConfirmPromiseOpen}
-                                onClick={() =>
-                                  handleConfirmPromiseOpen(promise.promise_id)
-                                }
+                                // onClick={() =>
+                                //   handleConfirmPromiseOpen(promise.promise_id)
+                                // }
                               >
                                 {promise.promise_id}
                               </Button>
@@ -150,16 +159,33 @@ function PaysofterPromiseSeller({ history }) {
                               })}
                             </span>
                           ) : (
-                            <span
-                              style={{ fontSize: "16px" }}
-                              className="text-warning"
-                            >
-                              {promise.currency}{" "}
-                              {promise.amount?.toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </span>
+                            <>
+                              {promise.is_cancelled ? (
+                                <>
+                                  <span
+                                    style={{ fontSize: "16px" }}
+                                    className="text-danger"
+                                  >
+                                    {promise.currency}{" "}
+                                    {promise.amount?.toLocaleString(undefined, {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2,
+                                    })}
+                                  </span>
+                                </>
+                              ) : (
+                                <span
+                                  style={{ fontSize: "16px" }}
+                                  className="text-warning"
+                                >
+                                  {promise.currency}{" "}
+                                  {promise.amount?.toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                  })}
+                                </span>
+                              )}
+                            </>
                           )}
                         </td>
                         <td>{formatAccountId(promise.seller_account_id)}</td>
@@ -167,30 +193,47 @@ function PaysofterPromiseSeller({ history }) {
                         <td>{formatAccountId(promise.buyer_account_id)}</td>
                         {/* <td>{promise.buyer_email}</td> */}
                         <td>
-                          {promise.buyer_promise_fulfilled ? (
-                            <i
-                              className="fas fa-check-circle"
-                              style={{ fontSize: "16px", color: "green" }}
-                            ></i>
-                          ) : (
-                            <i
-                              className="fas fa-times-circle"
-                              style={{ fontSize: "16px", color: "red" }}
-                            ></i>
-                          )}
+                          <>
+                            {promise.seller_fulfilled_promise ? (
+                              <>
+                                <i
+                                  className="fas fa-check-circle"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                Yes
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fas fa-times-circle"
+                                  style={{ fontSize: "16px", color: "red" }}
+                                ></i>{" "}
+                                No
+                              </>
+                            )}
+                          </>
                         </td>
+
                         <td>
-                          {promise.seller_fulfilled_promise ? (
-                            <i
-                              className="fas fa-check-circle"
-                              style={{ fontSize: "16px", color: "green" }}
-                            ></i>
-                          ) : (
-                            <i
-                              className="fas fa-times-circle"
-                              style={{ fontSize: "16px", color: "red" }}
-                            ></i>
-                          )}
+                          <>
+                            {promise.buyer_promise_fulfilled ? (
+                              <>
+                                <i
+                                  className="fas fa-check-circle"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                Yes
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fas fa-times-circle"
+                                  style={{ fontSize: "16px", color: "red" }}
+                                ></i>{" "}
+                                No
+                              </>
+                            )}
+                          </>
                         </td>
                         <td>{promise.status}</td>
                         <td>
@@ -212,20 +255,29 @@ function PaysofterPromiseSeller({ history }) {
                             </>
                           )}
                         </td>
-                        
-                        <td>
-                          {promise.is_active ? (
-                            <i
-                              className="fas fa-check-circle"
-                              style={{ fontSize: "16px", color: "green" }}
-                            ></i>
-                          ) : (
-                            <i
-                              className="fas fa-times-circle"
-                              style={{ fontSize: "16px", color: "red" }}
-                            ></i>
-                          )}
+
+                         <td>
+                          <>
+                            {promise.is_active ? (
+                              <>
+                                <i
+                                  className="fas fa-check-circle"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                Yes
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fas fa-times-circle"
+                                  style={{ fontSize: "16px", color: "red" }}
+                                ></i>{" "}
+                                No
+                              </>
+                            )}
+                          </>
                         </td>
+
                         <td className="text-center">
                           {promise.duration}
                           {promise.is_active ? (
@@ -336,6 +388,25 @@ function PaysofterPromiseSeller({ history }) {
                             </>
                           )}
                         </td>
+                        <td>
+                          {promise.is_cancelled ? (
+                            <>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Yes
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </>
+                          )}
+                        </td>
                         <td>{promise.payment_method}</td>
                         <td>{promise.payment_provider}</td>
                         <td>
@@ -364,16 +435,23 @@ function PaysofterPromiseSeller({ history }) {
                             </>
                           ) : (
                             <>
-                              <Button
-                                variant="outline-primary"
-                                size="sm"
-                                // onClick={handleConfirmPromiseOpen}
-                                onClick={() =>
-                                  handleConfirmPromiseOpen(promise.promise_id)
-                                }
-                              >
-                                Confirm Promise
-                              </Button>
+                              {promise.is_cancelled ? (
+                                <>
+                                  <Button variant="danger" size="sm" disabled>
+                                    Promise Cancelled
+                                  </Button>
+                                </>
+                              ) : (
+                                <Button
+                                  variant="outline-primary"
+                                  size="sm"
+                                  onClick={() =>
+                                    handleConfirmPromiseOpen(promise.promise_id)
+                                  }
+                                >
+                                  Confirm Promise
+                                </Button>
+                              )}
                             </>
                           )}
                         </td>
