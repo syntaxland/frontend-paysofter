@@ -42,6 +42,15 @@ function Dashboard() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
+
   const userTransactions = useSelector((state) => state.userTransactions);
   const {
     loading: transactionLoading,

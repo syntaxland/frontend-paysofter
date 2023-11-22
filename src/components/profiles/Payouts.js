@@ -16,7 +16,12 @@ function Payouts() {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  console.log('userInfo.access:',userInfo.access)
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
 
 
   const [currentPage, setCurrentPage] = useState(1);
