@@ -1,18 +1,18 @@
 // SellerDashboard.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 // import { Link} from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 // import { login } from "../../redux/actions/userActions";
-// import UserProfile from "./UserProfile";
-import Transactions from "./Transactions";
+import SellerProfile from "./SellerProfile";
+import Transactions from "./Transactions"; 
 import Payouts from "./Payouts";
 import Dashboard from "./Dashboard"; 
 // import MessageInbox from "./MessageInbox";
 // import CreditPoint from "./CreditPoint";
-import AccountFunds from "./AccountFunds";
+// import AccountFunds from "./AccountFunds";
 // import Referrals from "./Referrals";
 import Webhooks from "./Webhooks";
 import ApiEndPoints from "./ApiEndPoints";
@@ -20,9 +20,14 @@ import Subscriptions from "./Subscriptions";
 import PaysofterPromiseSeller from "./PaysofterPromiseSeller";
 
 function SellerDashboard({ history }) {
-  // const userLogin = useSelector((state) => state.userLogin);
-  // const { userInfo } = userLogin;
-  // const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo, history]);
 
   const [activeTab, setActiveTab] = useState("user-dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -57,8 +62,8 @@ function SellerDashboard({ history }) {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      // case "profile":
-      //   return <UserProfile />;
+      case "profile":
+        return <SellerProfile />;
 
       case "transactions":
         return <Transactions />;
@@ -87,8 +92,8 @@ function SellerDashboard({ history }) {
       // case "recommended-products":
       //   return <RecommendedProducts />;
 
-      case "account-funds":
-        return <AccountFunds />;
+      // case "account-funds":
+      //   return <AccountFunds />;
 
       // case "referrals":
       //   return <Referrals />;
@@ -136,7 +141,7 @@ function SellerDashboard({ history }) {
                   className="sidebar-link"
                   onClick={() => handleTabChange("profile")}
                 >
-                  <i className="fas fa-user"></i> Seller Profile
+                  <i className="fas fa-user"></i> Business Profile
                 </Button>
               </div>
 
@@ -154,7 +159,7 @@ function SellerDashboard({ history }) {
               </div>
 
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "account-funds"
@@ -166,7 +171,7 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fas fa-money-bill-alt"></i> Acccount Funds
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button
@@ -214,7 +219,7 @@ function SellerDashboard({ history }) {
                 </Button>
               </div> */}
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "credit-point" ? "primary" : "outline-primary"
@@ -224,7 +229,7 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fas fa-sack-dollar"></i> Credit Point
                 </Button>
-              </div>
+              </div> */}
 
              
 
@@ -306,7 +311,7 @@ function SellerDashboard({ history }) {
                 </Button>
               </div>
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "ticket" ? "primary" : "outline-primary"
@@ -316,7 +321,7 @@ function SellerDashboard({ history }) {
                 >
                   <i className="fa fa-ticket"></i> Support Ticket
                 </Button>
-              </div>
+              </div> */}
 
               {/* <div>
                 <Button
@@ -386,7 +391,7 @@ function SellerDashboard({ history }) {
                       <Button variant="outline-primary" onClick={handleAddbusiness}>
                         Create Seller Account
                       </Button>
-                      <Button variant="outline-primary" onClick={handleSellerDashboard}>
+                      <Button variant="outline-primary" onClick={handleSellerDashboard}> 
                         Seller Dashboard
                       </Button>
                     </span>

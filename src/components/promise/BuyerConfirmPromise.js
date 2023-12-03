@@ -30,9 +30,7 @@ function BuyerConfirmPromise({ promiseId, amount }) {
 
   const transactionData = {
     payment_id: promiseId,
-    // email: userEmail,
     amount: amount,
-    // public_api_key: publicApiKey,
     created_at: createdAt,
   };
 

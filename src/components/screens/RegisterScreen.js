@@ -26,6 +26,8 @@ function RegisterScreen({ location, history }) {
   const [selectedCountry] = useState("US");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [isTermsConditionsRead, setIsTermsConditionsRead] = useState(false);
+  const [termsConditionsError, setTermsConditionsError] = useState("");
   const [referralCode, setReferralCode] = useState("");
 
   const [isValid, setIsValid] = useState({
@@ -54,6 +56,18 @@ function RegisterScreen({ location, history }) {
     }
   }, [location.search]);
 
+  const handleFieldChange = (fieldName, value) => {
+    switch (fieldName) {
+      case "isTermsConditionsRead":
+        setIsTermsConditionsRead(value);
+        setTermsConditionsError("");
+        break;
+
+      default:
+        break;
+    }
+  };
+
   const handleInputChange = (field, value) => {
     if (field === "confirmPassword") {
       setIsValid((prevIsValid) => ({
@@ -71,7 +85,6 @@ function RegisterScreen({ location, history }) {
         setUsernameError("Username must not contain special characters.");
       } else if (username.length < 6) {
         setUsernameError("Username must be at least 6 characters.");
-
       } else if (password !== confirmPassword) {
         setPasswordError("Passwords do not match.");
       } else if (password.length < 8) {
@@ -106,6 +119,7 @@ function RegisterScreen({ location, history }) {
       password,
       phone_number: phoneNumber,
       referral_code: referralCode,
+      is_terms_conditions_read: isTermsConditionsRead,
     };
   }, [
     username,
@@ -115,6 +129,7 @@ function RegisterScreen({ location, history }) {
     password,
     phoneNumber,
     referralCode,
+    isTermsConditionsRead,
   ]);
 
   console.log("formData:", formData);
@@ -122,11 +137,17 @@ function RegisterScreen({ location, history }) {
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    if (!isTermsConditionsRead) {
+      setTermsConditionsError("Please accept the terms and conditions.");
+      return;
+    } else {
+      setTermsConditionsError("");
+    }
+
     if (password !== confirmPassword) {
       setPasswordError("Passwords do not match.");
     } else if (password.length < 8) {
       setPasswordError("Password must be at least 8 characters.");
-
     } else if (username.length < 6) {
       setUsernameError("Username must be at least 6 characters.");
     } else if (/[^a-zA-Z0-9_]/.test(username)) {
@@ -159,6 +180,10 @@ function RegisterScreen({ location, history }) {
 
     // eslint-disable-next-line
   }, [dispatch, success, history, email, firstName, formData]);
+
+  const handleTermsAndConditions = () => {
+    window.location.href = "/terms-and-conditions";
+  };
 
   return (
     <Container>
@@ -409,16 +434,46 @@ function RegisterScreen({ location, history }) {
             <Form.Text className="text-danger">{passwordError}</Form.Text>
           </Form.Group>
 
-          <Row className="py-3">
+          <Form.Group className="d-flex justify-content-between">
+            <Form.Check
+              type="checkbox"
+              label="Accept terms and conditions."
+              checked={isTermsConditionsRead}
+              onChange={(e) =>
+                handleFieldChange("isTermsConditionsRead", e.target.checked)
+              }
+              className="py-2 mb-2"
+            />
+            <Button
+              variant="outline-link"
+              size="sm"
+              style={{ color: "blue" }}
+              onClick={handleTermsAndConditions}
+              target="_blank"
+            >
+              Terms & Conditions
+            </Button>
+          </Form.Group>
+
+          {termsConditionsError && (
+            <Form.Text className="text-danger">
+              {termsConditionsError}
+            </Form.Text>
+          )}
+          <Row className="py-2">
             <Col className="text-center">
               <Button
-                className="mt-3 rounded w-100"
+                className=" rounded w-100"
                 type="submit"
                 variant="success"
                 block
               >
                 {loading && <Loader />}
-                <i className="fas fa-registered"></i> Register
+                <i
+                  className="fas fa-registered"
+                  // onClick={submitHandler}
+                ></i>{" "}
+                Register
               </Button>
             </Col>
           </Row>

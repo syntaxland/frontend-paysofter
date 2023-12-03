@@ -300,7 +300,8 @@ function PaysofterPromise({ history }) {
                                 variant="outline-danger"
                                 size="sm"
                                 className="py-2 mt-2"
-                              >
+                                disabled
+                                >
                                 Settle Dispute
                               </Button>
                             </>

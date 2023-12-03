@@ -24,6 +24,8 @@ import CreditPointRequestScreen from "./components/screens/CreditPointRequestScr
 
 // import SendEmailOtp from "./components/emailOtp/SendEmailOtp";
 import VerifyEmailOtpScreen from "./components/screens/VerifyEmailOtpScreen";
+import TermsAndConditionScreen from "./components/screens/TermsAndConditionScreen";
+
 // import ResendEmailOtp from "./components/emailOtp/ResendEmailOtp";
 // import UserProfile from "./components/profiles/UserProfile";
 // import DeleteAccount from "./components/profiles/DeleteAccount";
@@ -41,8 +43,14 @@ import Settings from "./components/settings/Settings";
 import UserDashboard from "./components/profiles/UserDashboard";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import SellerDashboard from "./components/sellers/SellerDashboard";
-
 import PaysofterPromiseSeller from "./components/sellers/PaysofterPromiseSeller";
+import CreateSellerAccount from "./components/sellers/CreateSellerAccount";
+import CreateBusinessStatus from "./components/sellers/CreateBusinessStatus";
+
+import BusinessOwnerDetail from "./components/sellers/BusinessOwnerDetail";
+import SellerBankAccount from "./components/sellers/SellerBankAccount";
+import SellerBvn from "./components/sellers/SellerBvn";
+import SellerPhoto from "./components/sellers/SellerPhoto";
 
 import PromiseMessage from "./components/promise/PromiseMessage";
 
@@ -66,6 +74,7 @@ function App() {
             path="/credit-point-request/"
             component={CreditPointRequestScreen}
           />
+          <Route path="/terms-and-conditions" component={TermsAndConditionScreen} />
 
           <Route path="/settings" component={Settings} />
           <Route path="/set-max-fund" component={MaxWithdrawalSettings} />
@@ -73,6 +82,12 @@ function App() {
 
           <Route path="/promise/buyer" component={PaysofterPromise} />
           <Route path="/promise/seller/" component={PaysofterPromiseSeller} />
+          <Route path="/create-seller-account/" component={CreateSellerAccount} />
+          <Route path="/create-business-status/" component={CreateBusinessStatus} />
+          <Route path="/seller/details/" component={BusinessOwnerDetail} />
+          <Route path="/seller/bank/" component={SellerBankAccount} />
+          <Route path="/seller/bvn/" component={SellerBvn} />
+          <Route path="/seller/photo/" component={SellerPhoto} />
 
           <Route path="/promise/message/:id" component={PromiseMessage} />
 

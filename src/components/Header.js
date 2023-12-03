@@ -242,7 +242,7 @@ function Header() {
                           </Button>
 
                           <NavDropdown.Divider />
-                          <Nav.Link
+                          {/* <Nav.Link
                             as={Link}
                             to="/dashboard/sellers"
                             className="dropdown-item"
@@ -250,8 +250,39 @@ function Header() {
                             {" "}
                             <i className="fas fa-dashboard"></i> Goto Seller
                             Dashboard{" "}
-                          </Nav.Link>
+                          </Nav.Link> */}
+
+                          <div>
+                            {profile.is_seller ? (
+                              <>
+                                <Nav.Link as={Link} to="/dashboard/sellers">
+                                  <i
+                                    className="fas fa-dashboard"
+                                    style={{ fontSize: "16px" }}
+                                  ></i>{" "}
+                                  Go to Seller Dashboard
+                                </Nav.Link>
+                              </>
+                            ) : (
+                              <>
+                                <div>
+                                  <Nav.Link
+                                    as={Link}
+                                    to="/create-marketplace-seller"
+                                  >
+                                    <i
+                                      className="fas fa-user"
+                                      style={{ fontSize: "16px" }}
+                                    ></i>{" "}
+                                    Create Seller Account
+                                  </Nav.Link>
+                                </div>
+                              </>
+                            )}
+                          </div>
+
                           <NavDropdown.Divider />
+
                           <Nav.Link
                             as={Link}
                             to="/settings"
@@ -266,13 +297,16 @@ function Header() {
                       </NavDropdown>
                     </div>
                   ) : (
-                    <NavDropdown 
-                    title={<i
-                        className="fa fa-user-circle"
-                        style={{ fontSize: "16px" }}
-                      ></i>}
-                    className="profile-dropdown custom-dropdown"
-                    align="end">
+                    <NavDropdown
+                      title={
+                        <i
+                          className="fa fa-user-circle"
+                          style={{ fontSize: "16px" }}
+                        ></i>
+                      }
+                      className="profile-dropdown custom-dropdown"
+                      align="end"
+                    >
                       <Nav.Link
                         as={Link}
                         to="/register"
@@ -485,7 +519,7 @@ export default Header;
 //                   {userInfo ? (
 //                     <>
 //                       <Nav.Link>
-                        
+
 //                         <img
 //                           src={profile.avatar}
 //                           alt="Avatar"
@@ -617,7 +651,7 @@ export default Header;
 //                         ) : (
 //                           <Nav.Link>
 //                             <>
-                              
+
 //                               <Nav.Link
 //                                 as={Link}
 //                                 to="/register"
@@ -633,12 +667,9 @@ export default Header;
 //                           </Nav.Link>
 //                         )}
 
-
-                        
 //                       </>
 
 //                     </NavDropdown>
-
 
 //                   </div>
 

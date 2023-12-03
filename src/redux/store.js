@@ -15,6 +15,27 @@ import {
 } from "./reducers/userReducers";
 
 import {
+  sellerAccountReducer,
+  getSellerAccountReducer,
+  createBusinessStatusReducer,
+getBusinessStatusReducer,
+updateBusinessStatusReducer,
+  updateSellerAccountReducer,
+  getBusinessOwnerDetailsReducer,
+updateBusinessOwnerDetailsReducer,
+getBankAccountReducer,
+updateBankAccountReducer,
+getSellerBvnReducer,
+updateSellerBvnReducer,
+getSellerPhotoReducer,
+updateSellerPhotoReducer,
+  businessOwnerDetailReducer,
+  sellerBankAccountReducer,
+  sellerBvnReducer,
+  sellerPhotoReducer,
+} from "./reducers/sellerReducers";
+
+import {
   fundAccountReducer,
   getUserAccountFundDebitsReducer,
   getAllAccountFundBalanceReducer,
@@ -106,6 +127,28 @@ const reducer = combineReducers({
 
   creditPointBal: creditPointBalanceReducer,
   creditPointRequestCreate: creditPointRequestCreateReducer,
+
+  createSellerAccountState: sellerAccountReducer,
+  getSellerAccountState: getSellerAccountReducer,
+  updateSellerAccountState: updateSellerAccountReducer,
+
+  createBusinessStatusState: createBusinessStatusReducer,
+getBusinessStatusState: getBusinessStatusReducer,
+updateBusinessStatusState: updateBusinessStatusReducer,
+
+  getBusinessOwnerDetailsState: getBusinessOwnerDetailsReducer,
+updateBusinessOwnerDetailsState: updateBusinessOwnerDetailsReducer,
+getBankAccountState: getBankAccountReducer,
+updateBankAccountState: updateBankAccountReducer,
+getSellerBvnState: getSellerBvnReducer,
+updateSellerBvnState: updateSellerBvnReducer,
+getSellerPhotoState: getSellerPhotoReducer,
+updateSellerPhotoState: updateSellerPhotoReducer,
+
+  businessOwnerDetailState: businessOwnerDetailReducer,
+  sellerBankAccountState: sellerBankAccountReducer,
+  sellerBvnState: sellerBvnReducer,
+  sellerPhotoState: sellerPhotoReducer,
 
   orderList: orderListReducer,
 });

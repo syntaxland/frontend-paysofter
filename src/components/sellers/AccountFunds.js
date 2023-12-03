@@ -1,18 +1,24 @@
-// AccountFunds.js
+// AccountFundDebits.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table } from "react-bootstrap";
-import { userAccountFundList } from "../../redux/actions/AccountFundActions"; 
+import { getUserAccountFundDebits } from "../../redux/actions/AccountFundActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
 
-function AccountFunds() {
+function AccountFundDebits() {
   const dispatch = useDispatch();
 
-  const userAccountFundListState = useSelector((state) => state.userAccountFundListState); 
-  const { loading, accountFunds, error } = userAccountFundListState;
-  console.log("AccountFunds:", accountFunds);
+  const getUserAccountFundDebitsState = useSelector(
+    (state) => state.getUserAccountFundDebitsState
+  );
+  const { loading, accountFunds, error } = getUserAccountFundDebitsState;
+  console.log("AccountFundDebits:", accountFunds);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  console.log("userInfo.access:", userInfo.access);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -21,17 +27,19 @@ function AccountFunds() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = accountFunds.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = accountFunds?.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
-    dispatch(userAccountFundList());
+    dispatch(getUserAccountFundDebits());
   }, [dispatch]);
 
   return (
     <div>
+      <hr />
       <h1 className="text-center py-3">
-        <i className="fas fa-credit-card"></i> Account Funds
+        <i className="fas fa-credit-card"></i> Account Fund Transactions
       </h1>
+      <hr />
       {loading ? (
         <Loader />
       ) : error ? (
@@ -39,34 +47,35 @@ function AccountFunds() {
       ) : (
         <>
           {currentItems.length === 0 ? (
-            <div className="text-center py-3">Account funds appear here.</div>
+            <div className="text-center py-3">
+              Account Fund Debits appear here.
+            </div>
           ) : (
             <Table striped bordered hover responsive className="table-sm">
               <thead>
                 <tr>
                   <th>SN</th>
-                  <th>Fund Account ID</th>
+                  <th>Debit Fund ID</th>
                   <th>User</th>
                   <th>Amount</th>
-                  <th>Currency</th>
                   <th>Payment Method</th>
-                  <th>Payment Provider</th>
+                  <th>Currency</th>
                   <th>Status</th>
-                  <th>Timestamp</th>
+                  <th>Payment Provider</th>
+                  <th>Created At</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((accountFund, index) => (
                   <tr key={accountFund.id}>
                     <td>{index + 1}</td>
-                    <td>{accountFund.fund_account_id}</td>
+                    <td>{accountFund.debit_account_id}</td>
                     <td>
-                      {/* <td>{accountFund.user_email}</td> */}
+                      <td>{accountFund.user_email}</td>
                     </td>
                     <td>{accountFund.amount}</td>
-                    <td>{accountFund.currency}</td>
                     <td>{accountFund.payment_method}</td>
-                    <td>{accountFund.payment_provider}</td>
+                    <td>{accountFund.currency}</td>
                     <td>
                       {accountFund.is_success ? (
                         <i
@@ -80,6 +89,7 @@ function AccountFunds() {
                         ></i>
                       )}
                     </td>
+                    <td>{accountFund.payment_provider}</td>
                     <td>
                       {new Date(accountFund.timestamp).toLocaleString("en-US", {
                         weekday: "long",
@@ -108,4 +118,4 @@ function AccountFunds() {
   );
 }
 
-export default AccountFunds;
+export default AccountFundDebits;
