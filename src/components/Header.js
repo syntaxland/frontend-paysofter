@@ -268,7 +268,7 @@ function Header() {
                                 <div>
                                   <Nav.Link
                                     as={Link}
-                                    to="/create-marketplace-seller"
+                                    to="/create-seller-account"
                                   >
                                     <i
                                       className="fas fa-user"

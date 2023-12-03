@@ -426,14 +426,14 @@ const userProfile = useSelector((state) => state.userProfile);
               <div className="mt-50 py-4 text-center">
                 {!profile.is_seller ? (
                   <div>
-                    <span>Don't have a Seller account? </span> 
+                    {/* <span>Don't have a Seller account?</span>  */}
                     <Button
                       size="sm"
                       className="py-2"
                       variant="outline-primary"
                       onClick={handleAddbusiness}
                     >
-                      <i className="fa fa-user-alt"></i> Create
+                      <i className="fa fa-user-alt"></i> Create Seller Account
                     </Button>
                   </div>
                 ) : (
@@ -454,7 +454,7 @@ const userProfile = useSelector((state) => state.userProfile);
 
 
 
-              <div>
+              {/* <div>
                 {userInfo.is_superuser || userInfo.is_staff ? (
                   <div>
                     <Button
@@ -472,7 +472,7 @@ const userProfile = useSelector((state) => state.userProfile);
                 ) : (
                   <> </>
                 )}
-              </div>
+              </div> */}
             </div>
           )}
         </Col>

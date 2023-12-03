@@ -5,6 +5,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { businessOwnerDetail } from "../../redux/actions/sellerActions";
 import Message from "../Message";
 import Loader from "../Loader";
+import LoaderButton from "../LoaderButton";
 
 function BusinessOwnerDetail({ history }) {
   const dispatch = useDispatch();
@@ -180,9 +181,9 @@ function BusinessOwnerDetail({ history }) {
           {loading && <Loader />}
 
           {success && (
-            <Message variant="success">Form submitted successfully.</Message>
+            <Message variant="success" fixed>Form submitted successfully.</Message>
           )}
-          {error && <Message variant="danger">{error}</Message>}
+          {error && <Message variant="danger" fixed>{error}</Message>}
 
           <Form>
             <Form.Group>
@@ -294,12 +295,8 @@ function BusinessOwnerDetail({ history }) {
               </Form.Text>
             </Form.Group>
 
-            {formError && <Message variant="danger">{formError}</Message>}
-            {loading && <Loader />}
-            {success && (
-              <Message variant="success">Form submitted successfully.</Message>
-            )}
-            {error && <Message variant="danger">{error}</Message>}
+            {formError && <Message variant="danger" fixed>{formError}</Message>}
+            
           </Form>
           <Button
             variant="primary"
@@ -307,7 +304,10 @@ function BusinessOwnerDetail({ history }) {
             className="rounded py-2 mb-2 text-center w-100"
             disabled={loading || success}
           >
-            Continue
+            <div className="d-flex justify-content-center">
+              <span className="py-1">Continue</span>
+              {loading && <LoaderButton />}
+            </div>
           </Button>
         </Col>
       </Row>

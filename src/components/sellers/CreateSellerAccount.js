@@ -5,6 +5,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { createSellerAccount } from "../../redux/actions/sellerActions";
 import Message from "../Message";
 import Loader from "../Loader";
+import LoaderButton from "../LoaderButton";
 
 function CreateSellerAccount({ history }) {
   const dispatch = useDispatch();
@@ -99,7 +100,7 @@ function CreateSellerAccount({ history }) {
   // const BUSINESS_TYPE_CHOICES = [
   //   ["Registered", "Registered"],
   //   ["Unregistered", "Unregistered"],
-  // ]; 
+  // ];
 
   const STAFF_SIZE_CHOICES = [
     ["Small", "Small (1-50 employees)"],
@@ -273,9 +274,21 @@ function CreateSellerAccount({ history }) {
           {loading && <Loader />}
 
           {success && (
-            <Message variant="success">Form submitted successfully.</Message>
+            <Message variant="success" fixed>
+              Form submitted successfully.
+            </Message>
           )}
-          {error && <Message variant="danger">{error}</Message>}
+          {error && (
+            <Message variant="danger" fixed>
+              {error}
+            </Message>
+          )}
+
+          {formError && (
+            <Message variant="danger" fixed>
+              {formError}
+            </Message>
+          )}
 
           <Form>
             <Form.Group>
@@ -471,7 +484,7 @@ function CreateSellerAccount({ history }) {
               <Form.Control
                 type="text"
                 value={businessWebsite}
-                onChange={(e) => setBusinessWebsite(e.target.value)} 
+                onChange={(e) => setBusinessWebsite(e.target.value)}
                 placeholder="Enter business description"
                 className="rounded py-2 mb-2"
                 maxLength={100}
@@ -510,13 +523,6 @@ function CreateSellerAccount({ history }) {
               />
               <Form.Text className="text-danger">{countryError}</Form.Text>
             </Form.Group>
-
-            {formError && <Message variant="danger">{formError}</Message>}
-            {loading && <Loader />}
-            {success && (
-              <Message variant="success">Form submitted successfully.</Message>
-            )}
-            {error && <Message variant="danger">{error}</Message>}
           </Form>
           <Button
             variant="primary"
@@ -524,7 +530,10 @@ function CreateSellerAccount({ history }) {
             className="rounded py-2 mb-2 text-center w-100"
             disabled={loading || success}
           >
-            Continue
+            <div className="d-flex justify-content-center">
+              <span className="py-1">Continue</span>
+              {loading && <LoaderButton />}
+            </div>
           </Button>
         </Col>
       </Row>
