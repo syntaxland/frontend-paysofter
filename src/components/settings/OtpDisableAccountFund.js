@@ -86,7 +86,6 @@ function OtpDisableAccountFund() {
                   className="rounded mt-2"
                   required
                   maxLength={100}
-                  disabled={identifier === "" || loading || success}
                 />
                 <Form.Text className="text-danger">{identifierError}</Form.Text>
               </Form.Group>
@@ -94,6 +93,7 @@ function OtpDisableAccountFund() {
                 variant="primary"
                 onClick={handleDeactivateAccountFund}
                 className="rounded mt-2 py-2 text-center w-100"
+                disabled={identifier === "" || loading || success}
               >
                 Deactivate Account Fund
               </Button>
