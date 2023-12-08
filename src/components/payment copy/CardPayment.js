@@ -4,20 +4,35 @@ import { Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fundUserAccount } from "../../redux/actions/AccountFundActions";
+import { clearCart } from "../../actions/cartActions";
+import {
+  createPayment,
+  createPaysofterPayment,
+} from "../../actions/paymentActions";
 import Message from "../Message";
 import Loader from "../Loader";
 
 function CardPayment({
-  amount,
-  currency,
+  promoTotalPrice,
+  paymentData,
+  reference,
   userEmail,
-
+  publicApiKey,
 }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const fundAccountState = useSelector((state) => state.fundAccountState);
-  const { loading, success, error } = fundAccountState;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
+  
+  const paysofterPayment = useSelector((state) => state.paysofterPayment);
+  const { loading, success, error } = paysofterPayment;
 
   const [cardType, setCardType] = useState("");
   const [paymentDetails, setPaymentDetails] = useState({
@@ -60,10 +75,11 @@ function CardPayment({
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const fundAccountData = {
+    const paysofterPaymentData = {
+      payment_id: reference,
       email: userEmail,
-      amount: amount,
-      currency: currency,
+      amount: promoTotalPrice,
+      public_api_key: publicApiKey,
       created_at: createdAt,
 
       card_number: paymentDetails.cardNumber,
@@ -71,18 +87,18 @@ function CardPayment({
       cvv: paymentDetails.cvv,
     };
 
-    dispatch(fundUserAccount(fundAccountData));
+    dispatch(createPaysofterPayment(paysofterPaymentData));
   };
 
   useEffect(() => {
     if (success) {
-      // dispatch(createPayment(paymentData));
-      // dispatch(clearCart());
+      dispatch(createPayment(paymentData));
+      dispatch(clearCart());
       const timer = setTimeout(() => {
-        history.push("/dashboard");
-        // window.location.href = "/dashboard";
         window.location.reload();
-      }, 3000);
+        // history.push("/dashboard");
+        window.location.href = "/dashboard";
+      }, 5000);
       return () => clearTimeout(timer);
     }
     // console.log('// eslint-disable-next-line')
@@ -165,7 +181,7 @@ function CardPayment({
             Pay{" "}
             <span>
               (NGN{" "}
-              {amount.toLocaleString(undefined, {
+              {promoTotalPrice.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
@@ -179,4 +195,3 @@ function CardPayment({
 }
 
 export default CardPayment;
- 

@@ -23,8 +23,6 @@ function OtpDisableAccountFund() {
     useState(false);
   const [identifierError, setIdentifierError] = useState("");
 
-  
-
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {

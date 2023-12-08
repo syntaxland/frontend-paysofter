@@ -1,4 +1,4 @@
-// Paysofter.js
+// // Paystack.js
 import React, { useEffect, useState } from "react";
 import { Button, Row, Col, ListGroup } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
@@ -6,21 +6,27 @@ import { PaystackButton } from "react-paystack";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader";
-import Message from "../Message"; 
+import Message from "../Message";
 import { clearCart } from "../../actions/cartActions";
 import { createPayment } from "../../actions/paymentActions";
 import ApplyPromoCode from "../ApplyPromoCode";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-function Paysofter() {
+function Paystack() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
 
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [publicKey, setPublicKey] = useState("");
+  const [paystackPublicKey, setPaystackPublicKey] = useState("");
   const [reference, setReference] = useState("");
   const userEmail = userInfo.email;
 
@@ -34,7 +40,7 @@ function Paysofter() {
   const applyPomoCodeState = useSelector((state) => state.applyPomoCodeState);
   const { promoDiscount, discountPercentage } = applyPomoCodeState;
   console.log(
-    "Paysofter promoDiscount:",
+    "Paystack promoDiscount:",
     promoDiscount,
     "discountPercentage:",
     discountPercentage
@@ -52,9 +58,11 @@ function Paysofter() {
 
   useEffect(() => {
     if (success) {
-      history.push("/");
+      dispatch(clearCart());
+      history.push("/dashboard");
+      window.location.reload();
     }
-  }, [success, history]);
+  }, [dispatch, success, history]);
 
   const itemsPrice = cartItems.reduce(
     (acc, item) => acc + item.qty * item.price,
@@ -69,7 +77,7 @@ function Paysofter() {
 
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
-  const promoTotalPrice = totalPrice - promoDiscount; 
+  const promoTotalPrice = totalPrice - promoDiscount;
   console.log(
     "totalPrice:",
     totalPrice,
@@ -79,12 +87,8 @@ function Paysofter() {
     promoTotalPrice
   );
 
-  const finalItemsPrice = itemsPrice - promoDiscount; 
-  console.log(
-    "finalItemsPrice:",
-    finalItemsPrice,
-   
-  );
+  const finalItemsPrice = itemsPrice - promoDiscount;
+  console.log("finalItemsPrice:", finalItemsPrice);
 
   const createdAt = new Date().toISOString();
 
@@ -99,7 +103,7 @@ function Paysofter() {
             },
           }
         );
-        setPublicKey(response.data.publicKey);
+        setPaystackPublicKey(response.data.paystackPublicKey);
         setReference(response.data.reference);
       } catch (error) {
         console.log(error);
@@ -120,7 +124,7 @@ function Paysofter() {
 
   const onClose = () => {
     console.log("Payment closed.");
-    history.push("/");
+    history.push("/payment");
   };
 
   const handlePayment = async (reference) => {
@@ -150,13 +154,11 @@ function Paysofter() {
   };
 
   const paymentObject = {
-    publicKey: publicKey,
+    publicKey: paystackPublicKey,
     email: userEmail,
     reference: reference,
     amount: promoTotalPrice * 100,
-    // amount: totalPrice * 100,
     currency: "NGN",
-    // order_id: order_id,
     onSuccess: onSuccess,
     onClose: onClose,
   };
@@ -165,8 +167,8 @@ function Paysofter() {
     <>
       <Row>
         <div className="d-flex justify-content-center ">
-          <Col >
-            <h1 className="text-center py-3">Paysofter Payment Option</h1>
+          <Col>
+            <h1 className="text-center py-3">Paystack Payment Option</h1>
             {loading && <Loader />}
             {error && <Message variant="danger">{error}</Message>}
             <ListGroup variant="flush">
@@ -250,14 +252,15 @@ function Paysofter() {
                 )}
               </ListGroup.Item>
               <ListGroup.Item>Timestamp: {createdAt}</ListGroup.Item>
-
             </ListGroup>
             <div className="text-center py-2">
               <ApplyPromoCode order_id={order_id} />
             </div>
             <div className="text-center py-2">
               <PaystackButton {...paymentObject}>
-                <Button className="w-100 rounded" variant="primary">Pay Now</Button>
+                <Button className="w-100 rounded" variant="dark">
+                  Pay Now
+                </Button>
               </PaystackButton>
             </div>
           </Col>
@@ -267,5 +270,4 @@ function Paysofter() {
   );
 }
 
-export default Paysofter;
-
+export default Paystack;

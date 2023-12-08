@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { setMaxWithdrawal } from "../../redux/actions/AccountFundActions";
+import { setMaxWithdrawal } from "../../redux/actions/AccountFundActions";  
 
 import Loader from "../Loader";
 import Message from "../Message";
