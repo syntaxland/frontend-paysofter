@@ -141,7 +141,7 @@ function PaysofterPromiseSeller({ history }) {
                                 variant="outline-link"
                                 size="sm"
                                 // onClick={() =>
-                                //   handleConfirmPromiseOpen(promise.promise_id)
+                                //   handleConfirmPromiseOpen(promise.promise_id) 
                                 // }
                               >
                                 {promise.promise_id}

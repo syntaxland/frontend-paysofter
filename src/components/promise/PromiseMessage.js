@@ -9,7 +9,7 @@ import {
   listPromiseMessages,
 } from "../../redux/actions/PromiseActions";
 import Loader from "../Loader";
-import Message from "../Message";
+import Message from "../Message"; 
 
 function PromiseMessage() {
   const dispatch = useDispatch();
