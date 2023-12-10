@@ -30,8 +30,8 @@ function UserDashboard() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   console.log("userInfo:", userInfo);
-  
-const userProfile = useSelector((state) => state.userProfile);
+
+  const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
   console.log("profile:", profile);
 
@@ -61,8 +61,6 @@ const userProfile = useSelector((state) => state.userProfile);
   const handleAdminDashboard = () => {
     history.push("/dashboard/admin");
   };
-
-
 
   const handleSettings = () => {
     history.push("/settings");
@@ -361,7 +359,7 @@ const userProfile = useSelector((state) => state.userProfile);
                   onClick={handleSettings}
                 >
                   <i className="fas fa-gear"></i> Settings
-                </Button> 
+                </Button>
               </div>
 
               {/* <div>
@@ -415,7 +413,8 @@ const userProfile = useSelector((state) => state.userProfile);
                       className="sidebar-link"
                       onClick={() => handleAdminDashboard()}
                     >
-                     <i className="fas fa-user-check"></i> Go to Admin Dashboard
+                      <i className="fas fa-user-check"></i> Go to Admin
+                      Dashboard
                     </Button>
                   </div>
                 ) : (
@@ -423,36 +422,35 @@ const userProfile = useSelector((state) => state.userProfile);
                 )}
               </div>
 
-              <div className="mt-50 py-4 text-center">
+              <div className="mt-2 py-2">
                 {!profile.is_seller ? (
                   <div>
                     {/* <span>Don't have a Seller account?</span>  */}
                     <Button
                       size="sm"
-                      className="py-2"
+                      className="sidebar-link py-2"
                       variant="outline-primary"
-                      onClick={handleAddbusiness}
+                      onClick={handleAddbusiness} 
                     >
                       <i className="fa fa-user-alt"></i> Create Seller Account
                     </Button>
                   </div>
                 ) : (
                   <>
-                  <div>
-                    <Button
-                      size="sm"
-                      className="py-2"
-                      variant="outline-primary"
-                      onClick={handleSellerDashboard}
-                    >
-                      <i className="fa fa-dashboard"></i> Go to Seller Dashboard
-                    </Button>
-                  </div>
+                    <div>
+                      <Button
+                        size="sm"
+                        className="sidebar-link"
+                        variant="outline-primary"
+                        onClick={handleSellerDashboard}
+                      >
+                        <i className="fa fa-dashboard"></i> Go to Seller
+                        Dashboard
+                      </Button>
+                    </div>
                   </>
                 )}
               </div>
-
-
 
               {/* <div>
                 {userInfo.is_superuser || userInfo.is_staff ? (
