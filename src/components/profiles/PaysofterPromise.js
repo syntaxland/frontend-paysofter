@@ -526,6 +526,7 @@ function PaysofterPromise({ history }) {
                             )}
                           </Modal.Body>
                         </Modal>
+                        
                       </tr>
                     ))}
                   </tbody>

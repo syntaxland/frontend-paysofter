@@ -119,7 +119,7 @@ function RegisterScreen({ location, history }) {
       password,
       phone_number: phoneNumber,
       referral_code: referralCode,
-      is_terms_conditions_read: isTermsConditionsRead,
+      is_terms_conditions_read: isTermsConditionsRead, 
     };
   }, [
     username,

@@ -80,7 +80,7 @@ function SellerConfirmPromise({ promiseId }) {
             <Button
               variant="primary"
               onClick={handleSellerConfirmPromise}
-              className="rounded mt-2 text-center w-100"
+              className="rounded mt-2 text-center w-100" 
             >
               Confirm Promise
             </Button>

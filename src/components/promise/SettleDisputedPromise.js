@@ -86,7 +86,7 @@ function SettleDisputedPromise({ promiseId }) {
           >
             Activate Resolve Conflict
           </Button>
-        </Col>
+        </Col> 
       </Row>
     </Container>
   );
