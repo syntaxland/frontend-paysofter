@@ -36,6 +36,16 @@
   max-width: 150px;
 }
 
+.main-content {
+  /* width: 100%; */
+  min-width: 150px;
+}
+
+.main-section {
+  /* width: 100%; */
+  min-width: 350px;
+}
+
 .sidebar-link:hover {
   background-color: #f0f0f0; /* Add a background color on hover */
 }

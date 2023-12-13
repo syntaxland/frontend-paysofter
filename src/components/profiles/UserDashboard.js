@@ -123,8 +123,8 @@ function UserDashboard() {
 
   return (
     <>
-      <Row>
-        <Col xs={sidebarOpen ? 3 : 1} className="sidebar">
+      <Row className="main-section">
+        <Col xs={sidebarOpen ? 4 : 1} className="sidebar">
           <Button
             variant="link"
             className="sidebar-toggle-button"
@@ -425,7 +425,7 @@ function UserDashboard() {
               <div className="mt-2 py-2">
                 {!profile.is_seller ? (
                   <div>
-                    {/* <span>Don't have a Seller account?</span>  */}
+                    {/* <span>Don't have a Seller account?</span>  */} 
                     <Button
                       size="sm"
                       className="sidebar-link py-2"
@@ -474,7 +474,7 @@ function UserDashboard() {
             </div>
           )}
         </Col>
-        <Col xs={sidebarOpen ? 9 : 11} className="main-content">
+        <Col xs={sidebarOpen ? 8 : 11} className="main-content">
           {renderTabContent()}
         </Col>
       </Row>
