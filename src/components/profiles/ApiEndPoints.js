@@ -11,6 +11,8 @@ function ApiEndPoints() {
   const { loading: profileLoading, error: profileError, profile } = userProfile;
   console.log("profile:", profile);
 
+  
+
   return (
     <Container Fluid>
       <Row>
@@ -34,6 +36,9 @@ function ApiEndPoints() {
                   <Col>Test Secret Key: {profile.test_api_secret_key}</Col>
                   <div className="text-center py-2">
                   </div>
+                  
+
+                  
                 </Row>
               </Accordion.Body>
             </Accordion.Item>
@@ -44,9 +49,19 @@ function ApiEndPoints() {
                 <Row>
                   <Col>Live API Public Key: {profile.live_api_key}</Col>
                   <Col>Live API Secret Key: {profile.live_api_secret_key}</Col>
+
+                  
                 </Row>
               </Accordion.Body>
             </Accordion.Item>
+
+
+
+
+            
+
+
+
           </Accordion>
         </Col>
       </Row>
