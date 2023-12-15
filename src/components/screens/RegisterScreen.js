@@ -342,7 +342,7 @@ function RegisterScreen({ location, history }) {
               maxLength={18}
               onChange={(value) => {
                 setPhoneNumber(value);
-                handleInputChange("phoneNumber", value);
+                handleInputChange("phoneNumber", value);  
               }}
               className={`form-control rounded ${
                 error && error.phone_number
@@ -465,7 +465,7 @@ function RegisterScreen({ location, history }) {
               <Button
                 className=" rounded w-100"
                 type="submit"
-                variant="success"
+                variant="success" 
                 block
               >
                 {loading && <Loader />}
