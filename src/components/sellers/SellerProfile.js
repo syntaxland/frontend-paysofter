@@ -10,7 +10,7 @@ import {
   updateBusinessOwnerDetails,
   getBusinessBankAccount,
   updateBusinessBankAccount,
-  getBvn,
+  getBvn, 
   updateBvn,
   getSellerPhoto,
   updateSellerPhoto,
@@ -1031,6 +1031,60 @@ function SellerProfile() {
                     <span className="d-flex justify-content-between">
                       {updateBankAccountLoading && <LoaderButton />}
                       Update Business Bank Account
+                    </span>
+                  </Button>
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
+
+            <Accordion.Item eventKey="3">
+              <Accordion.Header>USD Account</Accordion.Header>
+              <Accordion.Body>
+                <Form>
+                  <Form.Group>
+                    <Form.Label>Account Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="account_name"
+                      value={bankData.account_name}
+                      onChange={handleBankAccountInputChange}
+                    />
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>Bank Account Number</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="bank_account_number"
+                      value={bankData.bank_account_number}
+                      onChange={handleBankAccountInputChange}
+                    />
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>Bank Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="bank_name"
+                      value={bankData.bank_name}
+                      onChange={handleBankAccountInputChange}
+                    />
+                  </Form.Group>
+                </Form>
+                <div className="d-flex justify-content-end py-2">
+                  <Button
+                    className="rounded"
+                    variant="primary"
+                    onClick={handleUpdateBusinessBankAccount}
+                    disabled={
+                      !bankDataChanges ||
+                      updateBankAccountLoading ||
+                      updateBankAccountSuccess
+                    }
+                  >
+                    <span className="d-flex justify-content-between">
+                      {updateBankAccountLoading && <LoaderButton />}
+                      Update USD Account
                     </span>
                   </Button>
                 </div>

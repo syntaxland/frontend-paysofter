@@ -237,7 +237,7 @@ function ApiEndPoints() {
                             <i className="fa fa-copy"></i> Copy
                           </span>
                         )}
-                      </Button>
+                      </Button> 
                     </div>
                   </Form.Group>
                 </Row>
