@@ -18,6 +18,10 @@ function Footer() {
     setShowSetMaxFund(false);
   };
 
+  const softGlobalLink = () => {
+    window.location.href = "/softglobal.org";
+  };
+
   return (
     // <footer className="text-light footer custom-dark-blue">
     <footer className="bg-primary text-light footer custom-dark-blue">
@@ -106,7 +110,11 @@ function Footer() {
 
               <p>
                 Powered by{" "}
-                <Button variant="outline-transparent" size="sm">
+                <Button
+                  variant="outline-transparent"
+                  className="rounded"
+                  onClick={softGlobalLink}
+                >
                   SoftGlobal
                 </Button>{" "}
                 | +2349066167293
