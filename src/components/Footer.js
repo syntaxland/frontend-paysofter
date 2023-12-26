@@ -19,7 +19,7 @@ function Footer() {
   };
 
   const softGlobalLink = () => {
-    window.location.href = "/softglobal.org";
+    window.location.href = "http://softglobal.org";
   };
 
   return (
