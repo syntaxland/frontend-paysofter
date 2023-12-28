@@ -6,11 +6,13 @@ import { businessOwnerDetail } from "../../redux/actions/sellerActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import LoaderButton from "../LoaderButton";
+import DatePicker from "react-datepicker";
+// import { parseISO } from "date-fns";
 
 function BusinessOwnerDetail({ history }) {
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.userLogin); 
   const { userInfo } = userLogin;
 
   useEffect(() => {
@@ -87,7 +89,7 @@ function BusinessOwnerDetail({ history }) {
   };
 
   const ID_TYPE_CHOICES = [
-    ["NIN", "NIN"],
+    // ["NIN", "NIN"],
     ["Intl Passport", "Intl Passport"],
     ["Driving License", "Driving License"],
     ["Govt Issued ID", "Govt Issued ID"],
@@ -252,7 +254,7 @@ function BusinessOwnerDetail({ history }) {
 
             <Form.Group>
               <Form.Label>Date Of Birth</Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 type="text"
                 value={dob}
                 onChange={(e) => handleFieldChange("dob", e.target.value)}
@@ -260,7 +262,20 @@ function BusinessOwnerDetail({ history }) {
                 className="rounded py-2 mb-2"
                 maxLength={50}
                 required
-              />
+              /> */}
+              <div>
+                <DatePicker
+                  selected={dob ? new Date(dob) : null}
+                  onChange={(date) => setDob(date)}
+                  dateFormat="dd/MM/yyyy"
+                  className="rounded py-2 mb-2 form-control"
+                  placeholderText="Select date of birth"
+                  showYearDropdown
+                  scrollableYearDropdown
+                  yearDropdownItemNumber={100}
+                  scrollableMonthYearDropdown
+                />
+              </div>
               <Form.Text className="text-danger">{dobError}</Form.Text>
             </Form.Group>
 

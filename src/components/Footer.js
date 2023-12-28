@@ -24,10 +24,10 @@ function Footer() {
 
   return (
     // <footer className="text-light footer custom-dark-blue">
-    <footer className="bg-primary text-light footer custom-dark-blue">
+    <footer className="bg-primary text-light footer custom-dark-blue py-2">
       <Row>
         <Col>
-          <Row className="py-3">
+          {/* <Row className="py-3">
             <Col className="text-center">
               <h5>Company</h5>
               <ul className="list-unstyled">
@@ -49,9 +49,10 @@ function Footer() {
                 <li>Customer Service</li>
               </ul>
             </Col>
-          </Row>
+          </Row> */}
+
           <Row>
-            <Col className="text-muted py-1 text-center">
+            <Col className="text-muted py-2 text-center">
               <ul className="">
                 <strong>Offices:</strong> Lagos (<strong>Coming soon:</strong>{" "}
                 San Francisco, Ontario, London, Dubai, Mumbai, Accra,

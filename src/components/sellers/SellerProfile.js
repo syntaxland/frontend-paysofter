@@ -10,7 +10,7 @@ import {
   updateBusinessOwnerDetails,
   getBusinessBankAccount,
   updateBusinessBankAccount,
-  getBvn, 
+  getBvn,
   updateBvn,
   getSellerPhoto,
   updateSellerPhoto,
@@ -21,6 +21,8 @@ import { Form, Button, Row, Col, Container, Accordion } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
 import LoaderButton from "../LoaderButton";
+import DatePicker from "react-datepicker";
+// import { parseISO } from "date-fns";
 
 function SellerProfile() {
   const dispatch = useDispatch();
@@ -128,7 +130,7 @@ function SellerProfile() {
   }, [userInfo]);
 
   const ID_TYPE_CHOICES = [
-    ["NIN", "NIN"],
+    // ["NIN", "NIN"],
     ["Intl Passport", "Intl Passport"],
     ["Driving License", "Driving License"],
     ["Govt Issued ID", "Govt Issued ID"],
@@ -339,6 +341,11 @@ function SellerProfile() {
 
   const handleBusinessOwnerInputChange = (e) => {
     const { name, value, files } = e.target;
+
+    // if (name === "dob" && typeof value === "string") {
+    //   const parsedDate = parseISO(value);
+    //   setBusinessOwnerData({ ...businessOwnerData, [name]: parsedDate });
+    // } else 
     if (files) {
       setBusinessOwnerData({ ...businessOwnerData, [name]: files[0] });
     } else {
@@ -926,12 +933,31 @@ function SellerProfile() {
 
                   <Form.Group>
                     <Form.Label>Date of Birth</Form.Label>
-                    <Form.Control
+                    {/* <Form.Control
                       type="text"
                       name="dob"
                       value={businessOwnerData.dob}
                       onChange={handleBusinessOwnerInputChange}
-                    />
+                    /> */}
+                    <div>
+                      <DatePicker
+                        selected={
+                          businessOwnerData.dob ? new Date(businessOwnerData.dob) : null
+                        }
+                        onChange={(date) =>
+                          handleBusinessOwnerInputChange({
+                            target: { name: "dob", value: date },
+                          })
+                        }
+                        dateFormat="dd/MM/yyyy"
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        scrollableMonthYearDropdown
+                        className="rounded py-2 mb-2 form-control"
+                        placeholderText="Select date of birth"
+                      />
+                    </div>
                   </Form.Group>
 
                   <Form.Group>
