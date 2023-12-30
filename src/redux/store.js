@@ -40,6 +40,9 @@ import {
   getUserAccountFundDebitsReducer,
   getAllAccountFundBalanceReducer,
   activateAccountFundReducer,
+  getUserUsdAccountFundBalanceReducer,
+  toggleUsdAccountFundReducer,
+  fundUsdAccountReducer,
   getUserAccountFundCreditsReducer,
   toggleAccountFundReducer,
   disableAccountFundReducer,
@@ -107,6 +110,12 @@ const reducer = combineReducers({
   getUserAccountFundDebitsState: getUserAccountFundDebitsReducer,
   getAllAccountFundBalanceState: getAllAccountFundBalanceReducer,
   activateAccountFundState: activateAccountFundReducer,
+
+  getUserUsdAccountFundBalanceState: getUserUsdAccountFundBalanceReducer,
+  toggleUsdAccountFundState: toggleUsdAccountFundReducer,
+  fundUsdAccountState: fundUsdAccountReducer,
+
+  
   getUserAccountFundCreditsState: getUserAccountFundCreditsReducer,
   toggleAccountFundState: toggleAccountFundReducer,
   disableAccountFundState: disableAccountFundReducer,

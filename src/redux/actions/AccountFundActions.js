@@ -34,7 +34,140 @@ import {
   ADMIN_ACTIVATE_ACCCOUNT_FUND_REQUEST,
   ADMIN_ACTIVATE_ACCCOUNT_FUND_SUCCESS,
   ADMIN_ACTIVATE_ACCCOUNT_FUND_FAIL,
+
+  GET_USER_USD_ACCOUNT_FUND_BALANCE_REQUEST,
+GET_USER_USD_ACCOUNT_FUND_BALANCE_SUCCESS,
+GET_USER_USD_ACCOUNT_FUND_BALANCE_FAIL,
+
+TOGGLE_USD_ACCCOUNT_FUND_REQUEST,
+TOGGLE_USD_ACCCOUNT_FUND_SUCCESS,
+TOGGLE_USD_ACCCOUNT_FUND_FAIL,
+
+USER_FUND_USD_ACCOUNT_REQUEST,
+USER_FUND_USD_ACCOUNT_SUCCESS,
+USER_FUND_USD_ACCOUNT_FAIL,
 } from "../constants/AccountFundConstants";
+
+const API_URL = process.env.REACT_APP_API_URL;
+
+export const fundUserUsdAccount =
+  (fundData) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: USER_FUND_USD_ACCOUNT_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `${API_URL}/api/fund-user-usd-account/`,
+        fundData,
+        config
+      );
+
+      dispatch({
+        type: USER_FUND_USD_ACCOUNT_SUCCESS,
+        payload: data,
+      });
+      window.location.reload();
+      window.location.href = "/dashboard/users";
+    } catch (error) {
+      dispatch({
+        type: USER_FUND_USD_ACCOUNT_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+
+export const toggleUsdAccountFund = (toggleData) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TOGGLE_USD_ACCCOUNT_FUND_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `${API_URL}/api/toggle-usd-account/`,
+      toggleData,
+      config
+    );
+
+    dispatch({
+      type: TOGGLE_USD_ACCCOUNT_FUND_SUCCESS,
+      payload: data,
+    });
+    window.location.href = "/dashboard";
+    window.location.reload();
+  } catch (error) {
+    dispatch({
+      type: TOGGLE_USD_ACCCOUNT_FUND_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const getUserUsdAccountFundBalance = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_USER_USD_ACCOUNT_FUND_BALANCE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${API_URL}/api/get-user-usd-account_fund-balance/`,
+      config
+    );
+
+    dispatch({
+      type: GET_USER_USD_ACCOUNT_FUND_BALANCE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_USD_ACCOUNT_FUND_BALANCE_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const activateAccountFund =
   (fundAccountData) => async (dispatch, getState) => {
@@ -76,8 +209,6 @@ export const activateAccountFund =
       });
     }
   };
-
-const API_URL = process.env.REACT_APP_API_URL;
 
 export const getAllAccountFundBalance = () => async (dispatch, getState) => {
   try {

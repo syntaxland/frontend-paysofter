@@ -1,4 +1,4 @@
-// ToggleAccountSettings.js
+// ToggleUsdAccountSettings.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleAccountFund } from "../../redux/actions/AccountFundActions";
@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import Message from "../Message";
 import Loader from "../Loader";
 
-function ToggleAccountSettings() {
+function ToggleUsdAccountSettings() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -150,4 +150,4 @@ function ToggleAccountSettings() {
   );
 }
 
-export default ToggleAccountSettings;
+export default ToggleUsdAccountSettings;

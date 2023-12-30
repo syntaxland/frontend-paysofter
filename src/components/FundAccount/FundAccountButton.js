@@ -4,6 +4,7 @@ import { Button, Modal, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import CardPayment from "./CardPayment";
+import CardPaymentUsd from "./CardPaymentUsd";
 import UssdPayment from "./UssdPayment";
 import BankPayment from "./BankPayment";
 import TransferPayment from "./TransferPayment";
@@ -18,7 +19,7 @@ function FundAccountButton({
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const [selectedPaymentOption, setSelectedPaymentOption] = useState("card");
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
 
   const handlePaymentOptionChange = (option) => {
     setSelectedPaymentOption(option);
@@ -45,11 +46,11 @@ function FundAccountButton({
             <Modal.Title>Mock Payment (Test)</Modal.Title>
             <div>{userInfo.email}</div>
             <div>
-              NGN{" "}
               {amount.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              })}
+              })}{" "}
+              {currency}
             </div>
           </div>
         </Modal.Header>
@@ -61,7 +62,35 @@ function FundAccountButton({
               <div className="text-center">
                 <p>Options</p>
 
-                <div className="py-1">
+                {currency === "USD" && (
+                  <div className="py-1">
+                    <Button
+                      variant="primary"
+                      onClick={() => handlePaymentOptionChange("usd-card")}
+                      className={
+                        selectedPaymentOption === "usd-card" ? "active" : ""
+                      }
+                    >
+                      <i className="fas fa-credit-card"></i> Debit Card
+                    </Button>{" "}
+                  </div>
+                )}
+
+                {currency === "NGN" && (
+                  <div className="py-1">
+                    <Button
+                      variant="primary"
+                      onClick={() => handlePaymentOptionChange("card")}
+                      className={
+                        selectedPaymentOption === "card" ? "active" : ""
+                      }
+                    >
+                      <i className="fas fa-credit-card"></i> Debit Card
+                    </Button>{" "}
+                  </div>
+                )}
+
+                {/* <div className="py-1">
                   <Button
                     variant="primary"
                     onClick={() => handlePaymentOptionChange("card")}
@@ -70,6 +99,16 @@ function FundAccountButton({
                     <i className="fas fa-credit-card"></i> Debit Card
                   </Button>{" "}
                 </div>
+
+                <div className="py-1">
+                  <Button
+                    variant="primary"
+                    onClick={() => handlePaymentOptionChange("usd-card")}
+                    className={selectedPaymentOption === "usd-card" ? "active" : ""}
+                  >
+                    <i className="fas fa-credit-card"></i> USD Debit Card
+                  </Button>{" "}
+                </div> */}
 
                 <div className="py-1">
                   <Button
@@ -124,6 +163,15 @@ function FundAccountButton({
                   userEmail={userInfo.email}
                 />
               )}
+
+              {selectedPaymentOption === "usd-card" && (
+                <CardPaymentUsd
+                  amount={amount}
+                  currency={currency}
+                  userEmail={userInfo.email}
+                />
+              )}
+
               {selectedPaymentOption === "bank" && <BankPayment />}
               {selectedPaymentOption === "transfer" && <TransferPayment />}
               {selectedPaymentOption === "ussd" && <UssdPayment />}

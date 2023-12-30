@@ -1,18 +1,18 @@
-// CardPayment.js
+// CardPaymentUsd.js
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fundUserAccount } from "../../redux/actions/AccountFundActions";
+import { fundUserUsdAccount } from "../../redux/actions/AccountFundActions";
 import Message from "../Message";
 import Loader from "../Loader";
 
-function CardPayment({ amount, currency, userEmail }) {
+function CardPaymentUsd({ amount, currency, userEmail }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const fundAccountState = useSelector((state) => state.fundAccountState);
-  const { loading, success, error } = fundAccountState;
+  const fundUsdAccountState = useSelector((state) => state.fundUsdAccountState);
+  const { loading, success, error } = fundUsdAccountState;
 
   const [cardType, setCardType] = useState("");
   const [paymentDetails, setPaymentDetails] = useState({
@@ -53,7 +53,7 @@ function CardPayment({ amount, currency, userEmail }) {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const fundAccountData = {
+    const fundData = {
       email: userEmail,
       amount: amount,
       currency: currency,
@@ -64,7 +64,7 @@ function CardPayment({ amount, currency, userEmail }) {
       cvv: paymentDetails.cvv,
     };
 
-    dispatch(fundUserAccount(fundAccountData));
+    dispatch(fundUserUsdAccount(fundData));
   };
 
   useEffect(() => {
@@ -117,14 +117,7 @@ function CardPayment({ amount, currency, userEmail }) {
         <i className="fab fa-cc-visa"></i>
         <Form.Group>
           <Form.Label>Expiration Month/Year</Form.Label>
-          {/*<Form.Control
-            type="text" // You can change this to 'date' for separate month and year fields
-            name="expirationMonthYear"
-            value={paymentDetails.expirationMonthYear}
-            onChange={handlePaymentDetailsChange}
-            required
-            placeholder="MM/YY"
-          /> */}
+          
           <DatePicker
             selected={paymentDetails.expirationMonthYear}
             onChange={(date) => {
@@ -171,4 +164,4 @@ function CardPayment({ amount, currency, userEmail }) {
   );
 }
 
-export default CardPayment;
+export default CardPaymentUsd;

@@ -33,6 +33,18 @@ import {
   ADMIN_ACTIVATE_ACCCOUNT_FUND_REQUEST,
 ADMIN_ACTIVATE_ACCCOUNT_FUND_SUCCESS,
 ADMIN_ACTIVATE_ACCCOUNT_FUND_FAIL,
+
+GET_USER_USD_ACCOUNT_FUND_BALANCE_REQUEST,
+GET_USER_USD_ACCOUNT_FUND_BALANCE_SUCCESS,
+GET_USER_USD_ACCOUNT_FUND_BALANCE_FAIL,
+
+TOGGLE_USD_ACCCOUNT_FUND_REQUEST,
+TOGGLE_USD_ACCCOUNT_FUND_SUCCESS,
+TOGGLE_USD_ACCCOUNT_FUND_FAIL,
+
+USER_FUND_USD_ACCOUNT_REQUEST,
+USER_FUND_USD_ACCOUNT_SUCCESS,
+USER_FUND_USD_ACCOUNT_FAIL,
 } from "../constants/AccountFundConstants";
 
 const initialState = {
@@ -42,7 +54,60 @@ const initialState = {
   accountFunds: [],
   accountFund: [],
   accountFundBalance: [],
+  usdFundBalance: [],
   formattedEmail: [],
+};
+
+export const fundUsdAccountReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case USER_FUND_USD_ACCOUNT_REQUEST:
+      return { loading: true };
+    case USER_FUND_USD_ACCOUNT_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case USER_FUND_USD_ACCOUNT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const toggleUsdAccountFundReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case TOGGLE_USD_ACCCOUNT_FUND_REQUEST:
+      return { loading: true };
+    case TOGGLE_USD_ACCCOUNT_FUND_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case TOGGLE_USD_ACCCOUNT_FUND_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getUserUsdAccountFundBalanceReducer = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case GET_USER_USD_ACCOUNT_FUND_BALANCE_REQUEST:
+      return { loading: true };
+    case GET_USER_USD_ACCOUNT_FUND_BALANCE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        usdFundBalance: action.payload,
+      };
+    case GET_USER_USD_ACCOUNT_FUND_BALANCE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const activateAccountFundReducer = (

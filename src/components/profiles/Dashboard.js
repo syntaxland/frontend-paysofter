@@ -1,16 +1,14 @@
 // Dashboard.js
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Col, Row, Button, Modal } from "react-bootstrap";
+// import { useHistory } from "react-router-dom";
+import { Col, Row, Button } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
-import { getCreditPointBalance } from "../../redux/actions/creditPointActions";
 import { getUserTransactions } from "../../redux/actions/transactionActions";
-import { getUserAccountFundBalance } from "../../redux/actions/AccountFundActions";
 import { getUserPayouts } from "../../redux/actions/payoutActions";
 import { Line, Pie } from "react-chartjs-2";
-
+import Select from "react-select";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -23,7 +21,8 @@ import {
   PointElement,
   Title,
 } from "chart.js";
-import ToggleAccountSettings from "../settings/ToggleAccountSettings";
+import GetNgnAccountFundBalance from "../FundAccount/GetNgnAccountFundBalance";
+import GetUsdAccountFundBalance from "../FundAccount/GetUsdAccountFundBalance";
 
 ChartJS.register(
   ArcElement,
@@ -40,7 +39,7 @@ ChartJS.register(
 function Dashboard() {
   // const [creditPointEarning, setCreditPointEarning] = useState(0);
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -67,43 +66,19 @@ function Dashboard() {
   } = creditPointBal;
   console.log("Credit Point Balance:", creditPointBalance);
 
-  const userAccountBalanceState = useSelector(
-    (state) => state.userAccountBalanceState
-  );
-  const { loading, error, accountFundBalance } = userAccountBalanceState;
-  console.log("accountFundBalance:", accountFundBalance);
-
   const userPayouts = useSelector((state) => state.userPayouts);
   const { loading: payoutLoading, payouts, error: payoutError } = userPayouts;
   console.log("User Dashboard Payouts:", payouts);
 
-  const [showToggleAccountSettings, setShowToggleAccountSettings] =
-    useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
-  const [showDisableAccountSettings, setShowDisableAccountSettings] =
-    useState(false);
-
-  const handleToggleFundOpen = () => {
-    setShowToggleAccountSettings(true);
-  };
-
-  const handleDisableFundOpen = () => {
-    setShowDisableAccountSettings(true);
-  };
-
-  const handleDisableFundClose = () => {
-    setShowDisableAccountSettings(false);
-  };
-
-  const handleToggleFundClose = () => {
-    setShowToggleAccountSettings(false);
+  const handleCurrencyChange = (selectedOption) => {
+    setSelectedCurrency(selectedOption.value);
   };
 
   useEffect(() => {
-    dispatch(getCreditPointBalance());
     dispatch(getUserTransactions());
     dispatch(getUserPayouts());
-    dispatch(getUserAccountFundBalance());
   }, [dispatch]);
 
   const lineGraphData = {
@@ -151,32 +126,32 @@ function Dashboard() {
     return totalPayment;
   };
 
-  const creditPoints = creditPointBalance?.balance;
+  // const creditPoints = creditPointBalance?.balance;
   // const accountBalance = accountFundBalance?.balance;
 
-  const withdrawCreditPoints =
-    creditPoints >= 1000 ? (
-      <Link
-        to={{
-          pathname: "/credit-point-request",
-          search: `?creditPoints=${creditPoints}`,
-        }}
-      >
-        <Button variant="primary" className="rounded">
-          Withdraw Points
-        </Button>
-      </Link>
-    ) : (
-      <p>
-        <Button variant="danger" className="rounded" readOnly>
-          Maturity from NGN 1,000
-        </Button>
-      </p>
-    );
+  // const withdrawCreditPoints =
+  //   creditPoints >= 1000 ? (
+  //     <Link
+  //       to={{
+  //         pathname: "/credit-point-request",
+  //         search: `?creditPoints=${creditPoints}`,
+  //       }}
+  //     >
+  //       <Button variant="primary" className="rounded">
+  //         Withdraw Points
+  //       </Button>
+  //     </Link>
+  //   ) : (
+  //     <p>
+  //       <Button variant="danger" className="rounded" readOnly>
+  //         Maturity from NGN 1,000
+  //       </Button>
+  //     </p>
+  //   );
 
-  const handleFundAccount = () => {
-    history.push("/fund-account");
-  };
+  // const handleFundAccount = () => {
+  //   history.push("/fund-account");
+  // };
 
   // const handleFundAccountSettings = () => {
   //   history.push("/toggle-fund");
@@ -185,11 +160,13 @@ function Dashboard() {
   const paidPayoutRateData = {
     labels: [
       `Paid PayoutsPayouts (${(
-        (payouts?.filter((payout) => payout.is_paid)?.length / payouts?.length) *
+        (payouts?.filter((payout) => payout.is_paid)?.length /
+          payouts?.length) *
         100
       ).toFixed(1)}%)`,
       `Unpaid PayoutsPayouts (${(
-        (payouts?.filter((payout) => !payout.is_paid)?.length / payouts?.length) *
+        (payouts?.filter((payout) => !payout.is_paid)?.length /
+          payouts?.length) *
         100
       ).toFixed(1)}%)`,
     ],
@@ -233,25 +210,23 @@ function Dashboard() {
     maintainAspectRatio: false,
   };
 
+  const CURRENCY_CHOICES = [
+    ["USD", "USD"],
+    ["NGN", "NGN"],
+  ];
+
   return (
     <div className="justify-content-center text-center">
       <Row>
         <Col>
           <div>
-            {loading ||
-            creditPointBalanceLoading ||
+            {creditPointBalanceLoading ||
             transactionLoading ||
             payoutLoading ? (
               <Loader />
-            ) : error ||
-              creditPointBalanceError ||
-              transactionError ||
-              payoutError ? (
+            ) : creditPointBalanceError || transactionError || payoutError ? (
               <Message variant="danger">
-                {error ||
-                  creditPointBalanceError ||
-                  transactionError ||
-                  payoutError}
+                {creditPointBalanceError || transactionError || payoutError}
               </Message>
             ) : (
               <div>
@@ -260,8 +235,7 @@ function Dashboard() {
                     <div>
                       <div className="bar-chart">
                         <h2 className="py-2">
-                          <i className="	fas fa-money-bill"></i> Total
-                          Payments
+                          <i className="	fas fa-money-bill"></i> Total Payments
                         </h2>
                         <div className="bar"></div>
                         <strong>
@@ -274,128 +248,47 @@ function Dashboard() {
                       </div>
                     </div>
                   </Col>
-                  <Row className="py-2">
-                    <Col>
-                      <Row>
-                        <Col>
-                          <h2 className="py-2">
-                            <i className="fas fa-wallet"></i> Account Fund
-                            Wallet
-                          </h2>{" "}
-                          <strong>Staus:</strong>{" "}
-                          {accountFundBalance?.is_diabled ? (
-                            <>
-                              <span className="py-2">
-                                <Button
-                                  variant="outline-transparent"
-                                  onClick={handleDisableFundOpen}
-                                  className="rounded"
-                                  size="sm"
-                                  title="Account Fund is currently disabled. Please contact support."
-                                >
-                                  <i
-                                    className="fas fa-lock"
-                                    style={{ fontSize: "16px", color: "red" }}
-                                  ></i>{" "}
-                                  Disabled
-                                </Button>
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              <Button
-                                variant="outline-transparent"
-                                onClick={handleToggleFundOpen}
-                                className="rounded"
-                                size="sm"
-                                title="Set Account Fund active or locked."
-                              >
-                                {accountFundBalance?.is_active ? (
-                                  <>
-                                    <i
-                                      className="fas fa-lock-open"
-                                      style={{
-                                        fontSize: "16px",
-                                        color: "green",
-                                      }}
-                                    ></i>{" "}
-                                    Active
-                                  </>
-                                ) : (
-                                  <>
-                                    <i
-                                      className="fas fa-lock"
-                                      style={{
-                                        fontSize: "16px",
-                                        color: "yellow",
-                                      }}
-                                    ></i>{" "}
-                                    Locked
-                                  </>
-                                )}
-                              </Button>
-                            </>
-                          )}
-                        </Col>
 
-                        <Modal
-                          show={showToggleAccountSettings}
-                          onHide={handleToggleFundClose}
-                        >
-                          <Modal.Header closeButton>
-                            <Modal.Title className="text-center w-100 py-2">
-                              Toggle Account Fund Status
-                            </Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body>
-                            {showToggleAccountSettings && (
-                              <ToggleAccountSettings />
-                            )}
-                          </Modal.Body>
-                        </Modal>
-
-                        <Modal
-                          show={showDisableAccountSettings}
-                          onHide={handleDisableFundClose}
-                        >
-                          <Modal.Header closeButton>
-                            <Modal.Title className="text-center w-100 py-2">
-                              Account Fund Disabled
-                            </Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body>
-                            <p className="text-center  py-2">
-                              Account Fund is currently disabled. Please contact
-                              support for reactivation.
-                            </p>
-                          </Modal.Body>
-                        </Modal>
-                      </Row>
-
-                      <p>Account Fund Balance:</p>
-                      <strong>
-                        NGN{" "}
-                        {accountFundBalance?.balance?.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          }
-                        )}
-                      </strong>
-
-                      <div className="py-3">
-                        <Button
-                          variant="primary"
-                          onClick={handleFundAccount}
-                          className="rounded"
-                        >
-                          Fund Account
-                        </Button>
+                  <Row className="py-2 d-flex justify-content-center">
+                    <Col md={4}>
+                      <div>
+                        <Select
+                          options={CURRENCY_CHOICES.map(([value, label]) => ({
+                            value,
+                            label,
+                          }))}
+                          value={{
+                            value: selectedCurrency,
+                            label: selectedCurrency,
+                          }}
+                          onChange={handleCurrencyChange}
+                          placeholder="Currencies"
+                          className="rounded py-2 mb-2"
+                          required
+                        />
                       </div>
                     </Col>
+                  </Row>
 
-                    <Col>
+                  <Row className="py-2">
+                    {selectedCurrency === "NGN" && (
+                      <Row className="py-2">
+                        <Col>
+                          <GetNgnAccountFundBalance />
+                        </Col>
+                      </Row>
+                    )}
+
+                    {selectedCurrency === "USD" && (
+                      <Row className="py-2">
+                        <Col>
+                          <GetUsdAccountFundBalance />
+                        </Col>
+                      </Row>
+                    )}
+                    
+
+                    {/* <Col>
                       <h2 className="py-2">
                         <i className="far fa-money-bill-alt"></i> Credit Point
                         Wallet
@@ -409,7 +302,7 @@ function Dashboard() {
                         })}
                       </strong>
                       <div className="py-2">{withdrawCreditPoints}</div>
-                    </Col>
+                    </Col> */}
                   </Row>
 
                   <hr />
