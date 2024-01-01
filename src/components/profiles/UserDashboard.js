@@ -29,11 +29,11 @@ function UserDashboard() {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  console.log("userInfo:", userInfo);
+  // console.log("userInfo:", userInfo);
 
   const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
-  console.log("profile:", profile);
+  // console.log("profile:", profile?.is_usd_selected);
 
   useEffect(() => {
     if (userInfo) {

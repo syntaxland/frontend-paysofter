@@ -7,6 +7,8 @@ import Message from "../Message";
 import Loader from "../Loader";
 import { getUserTransactions } from "../../redux/actions/transactionActions";
 import { getUserPayouts } from "../../redux/actions/payoutActions";
+import { getUserProfile } from "../../redux/actions/userProfileActions";
+
 import { Line, Pie } from "react-chartjs-2";
 import Select from "react-select";
 import {
@@ -41,6 +43,10 @@ function Dashboard() {
   const dispatch = useDispatch();
   // const history = useHistory();
 
+  const userProfile = useSelector((state) => state.userProfile);
+  const { profile } = userProfile;
+  console.log("profile:", profile?.is_usd_selected);
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -49,6 +55,12 @@ function Dashboard() {
       window.location.href = "/login";
     }
   }, [userInfo]);
+
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(getUserProfile());
+    }
+  }, [dispatch, userInfo]);
 
   const userTransactions = useSelector((state) => state.userTransactions);
   const {
@@ -286,7 +298,6 @@ function Dashboard() {
                         </Col>
                       </Row>
                     )}
-                    
 
                     {/* <Col>
                       <h2 className="py-2">
