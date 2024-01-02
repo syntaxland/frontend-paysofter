@@ -33,7 +33,7 @@ function UserDashboard() {
 
   const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
-  // console.log("profile:", profile?.is_usd_selected);
+  // console.log("profile:", profile?.is_usd_selected); 
 
   useEffect(() => {
     if (userInfo) {

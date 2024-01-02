@@ -19,7 +19,7 @@ function FundAccountButton({
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState("card");
 
   const handlePaymentOptionChange = (option) => {
     setSelectedPaymentOption(option);
@@ -30,7 +30,7 @@ function FundAccountButton({
       <div className="text-center">
         <Button
           className="text-center rounded py-2"
-          variant="primary"
+          variant="outline-primary"
           onClick={() => setShowFundAccountButton(true)}
         >
           <span>Pay Now</span>
@@ -65,13 +65,13 @@ function FundAccountButton({
                 {currency === "USD" && (
                   <div className="py-1">
                     <Button
-                      variant="primary"
-                      onClick={() => handlePaymentOptionChange("usd-card")}
+                      variant="outline-primary"
+                      onClick={() => handlePaymentOptionChange("card")}
                       className={
-                        selectedPaymentOption === "usd-card" ? "active" : ""
+                        selectedPaymentOption === "card" ? "active" : ""
                       }
                     >
-                      <i className="fas fa-credit-card"></i> Debit Card
+                      <i className="fas fa-credit-card"></i> Debit Card (USD)
                     </Button>{" "}
                   </div>
                 )}
@@ -79,40 +79,21 @@ function FundAccountButton({
                 {currency === "NGN" && (
                   <div className="py-1">
                     <Button
-                      variant="primary"
+                      variant="outline-primary"
                       onClick={() => handlePaymentOptionChange("card")}
                       className={
                         selectedPaymentOption === "card" ? "active" : ""
                       }
                     >
-                      <i className="fas fa-credit-card"></i> Debit Card
+                      <i className="fas fa-credit-card"></i> Debit Card (NGN)
                     </Button>{" "}
                   </div>
                 )}
 
-                {/* <div className="py-1">
-                  <Button
-                    variant="primary"
-                    onClick={() => handlePaymentOptionChange("card")}
-                    className={selectedPaymentOption === "card" ? "active" : ""}
-                  >
-                    <i className="fas fa-credit-card"></i> Debit Card
-                  </Button>{" "}
-                </div>
-
                 <div className="py-1">
                   <Button
-                    variant="primary"
-                    onClick={() => handlePaymentOptionChange("usd-card")}
-                    className={selectedPaymentOption === "usd-card" ? "active" : ""}
-                  >
-                    <i className="fas fa-credit-card"></i> USD Debit Card
-                  </Button>{" "}
-                </div> */}
-
-                <div className="py-1">
-                  <Button
-                    variant="primary"
+                    disabled
+                    variant="outline-primary"
                     onClick={() => handlePaymentOptionChange("transfer")}
                     className={
                       selectedPaymentOption === "transfer" ? "active" : ""
@@ -124,7 +105,8 @@ function FundAccountButton({
 
                 <div className="py-1">
                   <Button
-                    variant="primary"
+                    disabled
+                    variant="outline-primary"
                     onClick={() => handlePaymentOptionChange("bank")}
                     className={selectedPaymentOption === "bank" ? "active" : ""}
                   >
@@ -134,7 +116,8 @@ function FundAccountButton({
 
                 <div className="py-1">
                   <Button
-                    variant="primary"
+                    disabled
+                    variant="outline-primary"
                     onClick={() => handlePaymentOptionChange("ussd")}
                     className={selectedPaymentOption === "ussd" ? "active" : ""}
                   >
@@ -144,7 +127,8 @@ function FundAccountButton({
 
                 <div className="py-1">
                   <Button
-                    variant="primary"
+                    disabled
+                    variant="outline-primary"
                     onClick={() => handlePaymentOptionChange("qr")}
                     className={selectedPaymentOption === "qr" ? "active" : ""}
                   >
@@ -156,20 +140,29 @@ function FundAccountButton({
             {/* Right column with selected payment option component */}
             <Col md={9}>
               {/* Conditionally render the selected payment option component */}
-              {selectedPaymentOption === "card" && (
-                <CardPayment
-                  amount={amount}
-                  currency={currency}
-                  userEmail={userInfo.email}
-                />
+
+              {currency === "USD" && (
+                <div>
+                  {selectedPaymentOption === "card" && (
+                    <CardPayment
+                      amount={amount}
+                      currency={currency}
+                      userEmail={userInfo.email}
+                    />
+                  )}
+                </div>
               )}
 
-              {selectedPaymentOption === "usd-card" && (
-                <CardPaymentUsd
-                  amount={amount}
-                  currency={currency}
-                  userEmail={userInfo.email}
-                />
+              {currency === "NGN" && (
+                <div>
+                  {selectedPaymentOption === "card" && (
+                    <CardPaymentUsd
+                      amount={amount}
+                      currency={currency}
+                      userEmail={userInfo.email}
+                    />
+                  )}
+                </div>
               )}
 
               {selectedPaymentOption === "bank" && <BankPayment />}

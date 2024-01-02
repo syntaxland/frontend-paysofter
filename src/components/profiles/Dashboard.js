@@ -45,7 +45,7 @@ function Dashboard() {
 
   const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
-  console.log("profile:", profile?.is_usd_selected);
+  console.log("is_usd_selected:", profile?.is_usd_selected);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -56,11 +56,11 @@ function Dashboard() {
     }
   }, [userInfo]);
 
-  useEffect(() => {
-    if (userInfo) {
-      dispatch(getUserProfile());
-    }
-  }, [dispatch, userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     dispatch(getUserProfile());
+  //   }
+  // }, [dispatch, userInfo]);
 
   const userTransactions = useSelector((state) => state.userTransactions);
   const {
@@ -86,9 +86,12 @@ function Dashboard() {
 
   const handleCurrencyChange = (selectedOption) => {
     setSelectedCurrency(selectedOption.value);
+    // setSelectedCurrency(profile?.is_usd_selected ? "USD" : "NGN");
   };
 
+
   useEffect(() => {
+    dispatch(getUserProfile());
     dispatch(getUserTransactions());
     dispatch(getUserPayouts());
   }, [dispatch]);

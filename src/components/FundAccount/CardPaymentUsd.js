@@ -84,7 +84,7 @@ function CardPaymentUsd({ amount, currency, userEmail }) {
 
   return (
     <div>
-      <h2 className="py-2 text-center">Debit Card ({currency})</h2>
+      <h2 className="py-2 text-center">Debit Card ({currency})</h2> 
       {success && (
         <Message variant="success">Payment made successfully.</Message>
       )}

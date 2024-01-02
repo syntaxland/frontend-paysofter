@@ -1,7 +1,7 @@
 // ToggleUsdAccountSettings.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleAccountFund } from "../../redux/actions/AccountFundActions";
+import { toggleUsdAccountFund } from "../../redux/actions/AccountFundActions";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Message from "../Message";
@@ -13,10 +13,10 @@ function ToggleUsdAccountSettings() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const toggleAccountFundState = useSelector(
-    (state) => state.toggleAccountFundState
+  const toggleUsdAccountFundState = useSelector(
+    (state) => state.toggleUsdAccountFundState
   );
-  const { success, error, loading } = toggleAccountFundState;
+  const { success, error, loading } = toggleUsdAccountFundState;
 
   const userAccountBalanceState = useSelector(
     (state) => state.userAccountBalanceState
@@ -46,7 +46,7 @@ function ToggleUsdAccountSettings() {
       setPasswordError("Password is required");
       return;
     }
-    dispatch(toggleAccountFund(toggleData));
+    dispatch(toggleUsdAccountFund(toggleData));
   };
 
   return (
@@ -57,7 +57,7 @@ function ToggleUsdAccountSettings() {
           {loading && <Loader />}
           {success && (
             <Message variant="success">
-              Account Fund status toggled successfully.
+              USD Account Fund status toggled successfully.
             </Message>
           )}
           {error && <Message variant="danger">{error}</Message>}
@@ -141,7 +141,7 @@ function ToggleUsdAccountSettings() {
               className="rounded mt-2 text-center w-100"
               disabled={loading || success}
               >
-              Toggle Account Fund Status
+              Toggle USD Account Fund Status
             </Button>
           </Form>
         </Col>
