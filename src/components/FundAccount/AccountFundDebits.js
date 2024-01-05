@@ -112,7 +112,7 @@ function AccountFundDebits() {
             currentPage={currentPage}
             paginate={paginate}
           />
-        </>
+        </> 
       )}
     </div>
   );

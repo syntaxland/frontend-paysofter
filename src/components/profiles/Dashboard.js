@@ -93,7 +93,7 @@ function Dashboard() {
   useEffect(() => {
     dispatch(getUserProfile());
     dispatch(getUserTransactions());
-    dispatch(getUserPayouts());
+    dispatch(getUserPayouts()); 
   }, [dispatch]);
 
   const lineGraphData = {

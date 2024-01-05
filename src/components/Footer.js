@@ -106,7 +106,8 @@ function Footer() {
             <Col className="text-center py-2">
               <p>
                 &copy; Paysofter Inc, {currentYear}.{" "}
-                <i>A payment solution for all humans...</i>
+                <i>For a softer payment experience...</i>
+                {/* <i>A payment solution for all humans...</i> */}
               </p>
 
               <p>
