@@ -78,7 +78,7 @@ function HomeScreen({ history }) {
               {/* While asleep, Paysofter actively works for you. Active with work?
               Paysofter passively earns on your behalf rewarding your past
               endeavours... */}
-              Even when you're in asleep, Paysofter is actively working for you.
+              Even when you're asleep, Paysofter is actively working for you.
               Engrossed in your daily tasks? Paysofter effortlessly generates
               earnings on your behalf, acknowledging your past accomplishments.{" "}
             </span>
