@@ -2,13 +2,16 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { useHistory } from "react-router-dom";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
 import { getCreditPointBalance } from "../../redux/actions/creditPointActions";
 import { getUserTransactions } from "../../redux/actions/transactionActions";
 import { getUserAccountFundBalance } from "../../redux/actions/AccountFundActions";
 import { getUserPayouts } from "../../redux/actions/payoutActions";
+
+import { getUserProfile } from "../../redux/actions/userProfileActions";
+
 import { Line, Pie } from "react-chartjs-2";
 
 import {
@@ -41,6 +44,18 @@ function SellerDashboard() {
   // const [creditPointEarning, setCreditPointEarning] = useState(0);
   const dispatch = useDispatch();
   // const history = useHistory();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
+
+  const userProfile = useSelector((state) => state.userProfile);
+  const { profile } = userProfile;
 
   const userTransactions = useSelector((state) => state.userTransactions);
   const {
@@ -95,6 +110,8 @@ function SellerDashboard() {
     dispatch(getUserTransactions());
     dispatch(getUserPayouts());
     dispatch(getUserAccountFundBalance());
+
+    dispatch(getUserProfile());
   }, [dispatch]);
 
   const lineGraphData = {
@@ -176,11 +193,13 @@ function SellerDashboard() {
   const paidPayoutRateData = {
     labels: [
       `Paid PayoutsPayouts (${(
-        (payouts?.filter((payout) => payout.is_paid)?.length / payouts?.length) *
+        (payouts?.filter((payout) => payout.is_paid)?.length /
+          payouts?.length) *
         100
       ).toFixed(1)}%)`,
       `Unpaid PayoutsPayouts (${(
-        (payouts?.filter((payout) => !payout.is_paid)?.length / payouts?.length) *
+        (payouts?.filter((payout) => !payout.is_paid)?.length /
+          payouts?.length) *
         100
       ).toFixed(1)}%)`,
     ],
@@ -250,6 +269,33 @@ function SellerDashboard() {
                   <Col>
                     <div>
                       <div className="bar-chart">
+                        <p className="d-flex justify-content-end">
+                          <Button
+                            variant="outline-transparent"
+                            // onClick={handleToggleFundOpen}
+                            className="rounded"
+                            size="sm"
+                            title="Toggle API key mode."
+                          >
+                            {profile?.is_api_key_live ? (
+                              <>
+                                <i
+                                  className="fa fa-toggle-off"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                <i>Live mode </i>
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fa fa-toggle-on"
+                                  style={{ fontSize: "16px", color: "red" }}
+                                ></i>{" "}
+                                <i>Test mode </i>
+                              </>
+                            )}
+                          </Button>
+                        </p>
                         <h2 className="py-2">
                           <i className="	fas fa-money-bill"></i> Total
                           Transactions (Seller Account)

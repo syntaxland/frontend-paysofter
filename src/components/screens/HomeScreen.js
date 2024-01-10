@@ -26,7 +26,7 @@ function HomeScreen({ history }) {
               payments, there's yet a SOFTER way of going about it. */}
               In the realm of SOFT ways of doing things, seamless transactions
               and convenient payments, there exists yet a SOFTER way of going
-              about it at a level of sophistication beyond the ordinary.{" "}
+              about them at a level of sophistication beyond the ordinary.{" "}
             </span>
             <Button
               variant="primary"
@@ -51,12 +51,12 @@ function HomeScreen({ history }) {
               escrowed or placed in custody until a specified condition between
               the buyer and seller is fulfilled.  */}
               Tired of the persistent uncertainty surrounding the 'pay on
-              delivery' scenario between sellers and buyers, coupled with the
+              delivery' scenarios between sellers and buyers, coupled with the
               resulting lack of trust? Paysofter Promise fills in this gap!
               Through the Paysofter Promise feature, payments made to a seller
-              (utilizing the buyer's funded Paysofter Account) are securely held
-              in escrow until specified conditions, agreed upon by both buyer
-              and seller, are met.
+              (utilizing the buyer's funded Paysofter Fund) are securely held in
+              escrow until specified conditions agreed upon by both buyer and
+              seller, are met.
             </span>
             <Button
               variant="primary"
@@ -80,7 +80,7 @@ function HomeScreen({ history }) {
               endeavours... */}
               Even when you're asleep, Paysofter is actively working for you.
               Engrossed in your daily tasks? Paysofter effortlessly generates
-              earnings on your behalf, acknowledging your past accomplishments.{" "}
+              earnings on your behalf, rewarding your past endeavours...{" "}
             </span>
             <Button
               variant="primary"
@@ -103,7 +103,7 @@ function HomeScreen({ history }) {
               transaction payment effort... Don't have a Paysofter account?
               You're just about 3 minutes away! Sign up for a much softer
               payment experience. A gateway built for all humans! */}
-              Here comes  a system that recognizes and awards credit points for
+              Here comes a system that recognizes and awards credit points for
               each transactional effort. Don't possess a Paysofter account yet?
               You're merely three minutes away! Embark on a journey towards a
               remarkably smoother payment experience. A gateway crafted for

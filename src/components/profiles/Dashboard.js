@@ -8,7 +8,6 @@ import Loader from "../Loader";
 import { getUserTransactions } from "../../redux/actions/transactionActions";
 import { getUserPayouts } from "../../redux/actions/payoutActions";
 import { getUserProfile } from "../../redux/actions/userProfileActions";
-
 import { Line, Pie } from "react-chartjs-2";
 import Select from "react-select";
 import {
@@ -83,17 +82,17 @@ function Dashboard() {
   console.log("User Dashboard Payouts:", payouts);
 
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  // const [liveMode, setLiveMode] = useState(false);
 
   const handleCurrencyChange = (selectedOption) => {
     setSelectedCurrency(selectedOption.value);
     // setSelectedCurrency(profile?.is_usd_selected ? "USD" : "NGN");
   };
 
-
   useEffect(() => {
     dispatch(getUserProfile());
     dispatch(getUserTransactions());
-    dispatch(getUserPayouts()); 
+    dispatch(getUserPayouts());
   }, [dispatch]);
 
   const lineGraphData = {
@@ -248,6 +247,7 @@ function Dashboard() {
                 <Row>
                   <Col>
                     <div>
+                      
                       <div className="bar-chart">
                         <h2 className="py-2">
                           <i className="	fas fa-money-bill"></i> Total Payments
