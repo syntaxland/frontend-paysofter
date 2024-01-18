@@ -106,7 +106,7 @@ function HomeScreen({ history }) {
               Here comes a system that recognizes and awards credit points for
               each transactional effort. Don't possess a Paysofter account yet?
               You're merely three minutes away! Embark on a journey towards a
-              remarkably smoother payment experience. A gateway crafted for
+              remarkably smoother and softer payment experience. A gateway crafted for
               every individual!"{" "}
             </span>
             <Button

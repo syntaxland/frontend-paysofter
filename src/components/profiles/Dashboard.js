@@ -42,7 +42,7 @@ function Dashboard() {
   const dispatch = useDispatch();
   // const history = useHistory();
 
-  const userProfile = useSelector((state) => state.userProfile);
+  const userProfile = useSelector((state) => state.userProfile); 
   const { profile } = userProfile;
   console.log("is_usd_selected:", profile?.is_usd_selected);
 
