@@ -105,21 +105,21 @@ function Footer() {
           <Row>
             <Col className="text-center py-2">
               <p>
-                &copy; Paysofter Inc, {currentYear}. | {" "}
+                &copy; Paysofter Inc, {currentYear}. |{" "}
                 <i>For a softer payment experience...</i>
                 {/* <i>A payment solution for all humans...</i> */}
               </p>
 
               <p>
-                Powered by{" "}
                 <Button
                   variant="outline-transparent"
                   className="rounded"
                   onClick={softGlobalLink}
                 >
-                  SoftGlobal
+                  <i style={{ fontSize: "12px", color: "white" }}>
+                    Powered by SoftGlobal
+                  </i>
                 </Button>{" "}
-                | +2349066167293
               </p>
             </Col>
           </Row>
