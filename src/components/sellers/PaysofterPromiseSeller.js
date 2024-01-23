@@ -10,6 +10,7 @@ import Pagination from "../Pagination";
 import Timer from "../Timer";
 import SellerConfirmPromise from "../promise/SellerConfirmPromise";
 import SettleDisputedPromise from "../promise/SettleDisputedPromise";
+import {formatAmount} from "../FormatAmount";
 
 function PaysofterPromiseSeller({ history }) {
   const dispatch = useDispatch();
@@ -153,10 +154,14 @@ function PaysofterPromiseSeller({ history }) {
                           {promise.buyer_promise_fulfilled ? (
                             <span style={{ fontSize: "16px", color: "green" }}>
                               {promise.currency}{" "}
-                              {promise.amount?.toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
+                              {formatAmount(promise.amount)
+                              
+                              // ?.toLocaleString(undefined, {
+                              //   minimumFractionDigits: 2,
+                              //   maximumFractionDigits: 2,
+                              // })
+                              
+                              }
                             </span>
                           ) : (
                             <>
@@ -167,10 +172,13 @@ function PaysofterPromiseSeller({ history }) {
                                     className="text-danger"
                                   >
                                     {promise.currency}{" "}
-                                    {promise.amount?.toLocaleString(undefined, {
-                                      minimumFractionDigits: 2,
-                                      maximumFractionDigits: 2,
-                                    })}
+                                    {formatAmount(promise.amount)
+                                    
+                                    // ?.toLocaleString(undefined, {
+                                    //   minimumFractionDigits: 2,
+                                    //   maximumFractionDigits: 2,
+                                    // })
+                                    }
                                   </span>
                                 </>
                               ) : (
@@ -179,10 +187,13 @@ function PaysofterPromiseSeller({ history }) {
                                   className="text-warning"
                                 >
                                   {promise.currency}{" "}
-                                  {promise.amount?.toLocaleString(undefined, {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                  })}
+                                  {formatAmount(promise.amount)
+                                  
+                                  // ?.toLocaleString(undefined, {
+                                  //   minimumFractionDigits: 2,
+                                  //   maximumFractionDigits: 2,
+                                  // })
+                                  }
                                 </span>
                               )}
                             </>

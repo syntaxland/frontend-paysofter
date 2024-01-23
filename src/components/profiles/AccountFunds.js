@@ -2,7 +2,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import AccountFundCredits from "../FundAccount/AccountFundCredits";
-import AccountFundDebits from "../FundAccount/AccountFundDebits";
+import AccountFundDebits from "../FundAccount/AccountFundDebits";  
 
 function AccountFunds() {
 
@@ -17,7 +17,7 @@ function AccountFunds() {
 
           <div className="text-center">
             <AccountFundDebits />
-          </div>
+          </div> 
 
           <hr />
         </Col>

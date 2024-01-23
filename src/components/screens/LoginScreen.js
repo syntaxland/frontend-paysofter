@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../FormContainer"; 
 import { login } from "../../redux/actions/userActions";
 // import GoogleLoginScreen from "./GoogleLoginScreen";
-
+ 
 function LoginScreen({ location }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -81,15 +81,15 @@ function LoginScreen({ location }) {
           {loading && <Loader />}
           <Form.Group controlId="email">
             <Form.Label>
-              <i className="fas fa-envelope"></i> Email Address
+              <i className="fas fa-envelope"></i> Email Address 
             </Form.Label>
             <Form.Control
               required
               type="email"
-              placeholder="Enter Email"
+              placeholder="Enter Email or Username"
               className="rounded w-100"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)} 
             />
           </Form.Group>
 

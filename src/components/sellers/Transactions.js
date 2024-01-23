@@ -6,6 +6,7 @@ import { getUserTransactions } from "../../redux/actions/transactionActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
+import {formatAmount} from "../FormatAmount";
 
 function Transactions() {
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ function Transactions() {
                       <td>{transaction.seller_email}</td>
                     </td>
                     <td>{transaction.buyer_email}</td>
-                    <td>{transaction.amount}</td>
+                    <td>{formatAmount(transaction.amount)}</td>
                     <td>{transaction.payment_method}</td>
                     <td>{transaction.currency}</td>
                     <td>

@@ -50,13 +50,20 @@ function HomeScreen({ history }) {
               seller (using the buyer's funded Paysofter Account Fund) is
               escrowed or placed in custody until a specified condition between
               the buyer and seller is fulfilled.  */}
-              Tired of the persistent uncertainty surrounding the 'pay on
+              {/* Tired of the persistent uncertainty surrounding the 'pay on
               delivery' scenarios between sellers and buyers, coupled with the
               resulting lack of trust? Paysofter Promise fills in this gap!
               Through the Paysofter Promise feature, payments made to a seller
               (utilizing the buyer's funded Paysofter Fund) are securely held in
               escrow until specified conditions agreed upon by both buyer and
-              seller, are met.
+              seller, are met. */}
+              Fade up with the persistent uncertainty surrounding the 'pay on
+              delivery' scenarios between sellers and buyers, coupled with the
+              resulting lack of trust? Paysofter Promise fills in this gap! With
+              Paysofter Promise, payments made to a seller (utilizing the
+              buyer's funded Paysofter Account Fund) are securely held in escrow
+              until specified conditions agreed upon by both the buyer and seller
+              are met.
             </span>
             <Button
               variant="primary"
@@ -106,8 +113,8 @@ function HomeScreen({ history }) {
               Here comes a system that recognizes and awards credit points for
               each transactional effort. Don't possess a Paysofter account yet?
               You're merely three minutes away! Embark on a journey towards a
-              remarkably smoother and softer payment experience. A gateway crafted for
-              every individual!"{" "}
+              remarkably smoother and softer payment experience. A gateway
+              crafted for every individual!"{" "}
             </span>
             <Button
               variant="primary"

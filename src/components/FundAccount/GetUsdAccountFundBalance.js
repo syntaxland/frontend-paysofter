@@ -8,6 +8,7 @@ import Loader from "../Loader";
 import { getUserUsdAccountFundBalance } from "../../redux/actions/AccountFundActions";
 import ToggleUsdAccountSettings from "../settings/ToggleUsdAccountSettings";
 import FundUsdAccount from "./FundUsdAccount";
+import {formatAmount} from "../FormatAmount";
 
 const GetUsdAccountFundBalance = () => {
   const dispatch = useDispatch();
@@ -166,10 +167,14 @@ const GetUsdAccountFundBalance = () => {
 
             <span>Balance: </span>
             <strong>
-              {usdFundBalance?.balance?.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{" "}
+              {formatAmount(usdFundBalance?.balance)
+              
+              // ?.toLocaleString(undefined, {
+              //   minimumFractionDigits: 2,
+              //   maximumFractionDigits: 2,
+              // })
+              
+              }{" "}
               USD
             </strong>
 

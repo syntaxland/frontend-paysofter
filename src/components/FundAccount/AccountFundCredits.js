@@ -6,6 +6,7 @@ import { getUserAccountFundCredits } from "../../redux/actions/AccountFundAction
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
+import {formatAmount} from "../FormatAmount";
 
 function AccountFundCredits() {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ function AccountFundCredits() {
                     <td>
                       <td>{accountFund.user_email}</td>
                     </td>
-                    <td>{accountFund.amount}</td>
+                    <td>{formatAmount(accountFund.amount)}</td>
                     <td>{accountFund.payment_method}</td>
                     <td>{accountFund.currency}</td>
                     <td>

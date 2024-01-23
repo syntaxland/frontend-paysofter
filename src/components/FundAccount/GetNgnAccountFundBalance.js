@@ -8,6 +8,7 @@ import Loader from "../Loader";
 import { getUserAccountFundBalance } from "../../redux/actions/AccountFundActions";
 import ToggleAccountSettings from "../settings/ToggleAccountSettings";
 import FundAccount from "./FundAccount";
+import {formatAmount} from "../FormatAmount";
 
 const GetNgnAccountFundBalance = () => {
   const dispatch = useDispatch();
@@ -165,10 +166,14 @@ const GetNgnAccountFundBalance = () => {
 
             <span>Balance: </span>
             <strong>
-              {accountFundBalance?.balance?.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{" "}
+              {formatAmount(accountFundBalance?.balance)
+              
+              // ?.toLocaleString(undefined, {
+              //   minimumFractionDigits: 2,
+              //   maximumFractionDigits: 2,
+              // })
+              
+              }{" "}
               NGN
             </strong>
 

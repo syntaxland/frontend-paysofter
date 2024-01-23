@@ -131,14 +131,14 @@ function Dashboard() {
     },
   };
 
-  const getTotalTransaction = () => {
-    let totalPayment = 0;
+  // const getTotalTransaction = () => {
+  //   let totalPayment = 0;
 
-    transactions.forEach((transaction) => {
-      totalPayment += parseFloat(transaction.amount);
-    });
-    return totalPayment;
-  };
+  //   transactions.forEach((transaction) => {
+  //     totalPayment += parseFloat(transaction.amount);
+  //   });
+  //   return totalPayment;
+  // };
 
   // const creditPoints = creditPointBalance?.balance;
   // const accountBalance = accountFundBalance?.balance;
@@ -248,7 +248,7 @@ function Dashboard() {
                   <Col>
                     <div>
                       
-                      <div className="bar-chart">
+                      {/* <div className="bar-chart">
                         <h2 className="py-2">
                           <i className="	fas fa-money-bill"></i> Total Payments
                         </h2>
@@ -260,7 +260,8 @@ function Dashboard() {
                             maximumFractionDigits: 2,
                           })}
                         </strong>
-                      </div>
+                      </div> */}
+
                     </div>
                   </Col>
 
@@ -424,7 +425,7 @@ function Dashboard() {
                   <hr />
 
                   <div className="line-graph">
-                    <h2 className="py-3">Payments</h2>
+                    <h2 className="py-3">Account Fund</h2>
                     <hr />
                     <Line data={lineGraphData} options={lineChartOptions} />
                   </div>

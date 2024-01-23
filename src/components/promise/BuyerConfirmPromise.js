@@ -7,7 +7,7 @@ import { createTransaction } from "../../redux/actions/transactionActions";
 import { useHistory } from "react-router-dom";
 import Message from "../Message";
 import Loader from "../Loader";
-
+ 
 function BuyerConfirmPromise({ promiseId, amount }) {
   const dispatch = useDispatch();
   const history = useHistory();

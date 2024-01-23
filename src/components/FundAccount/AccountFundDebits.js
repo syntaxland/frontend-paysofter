@@ -6,6 +6,7 @@ import { getUserAccountFundDebits } from "../../redux/actions/AccountFundActions
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
+import {formatAmount} from "../FormatAmount";
 
 function AccountFundDebits() {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ function AccountFundDebits() {
                     <td>
                       <td>{accountFund.user_email}</td>
                     </td>
-                    <td>{accountFund.amount}</td>
+                    <td>{formatAmount(accountFund.amount)}</td> 
                     <td>{accountFund.payment_method}</td>
                     <td>{accountFund.currency}</td>
                     <td>

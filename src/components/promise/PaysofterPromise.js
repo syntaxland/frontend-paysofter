@@ -6,6 +6,7 @@ import { debitPaysofterAccountFund } from "../../actions/paymentActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import VerifyAccountFundOtp from "./VerifyAccountFundOtp";
+import {formatAmount} from "../FormatAmount";
 
 const PaysofterAccountFund = ({
   history,
@@ -338,13 +339,16 @@ const PaysofterAccountFund = ({
                   Pay{" "}
                   <span>
                     (NGN{" "}
-                    {promoTotalPrice.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    {formatAmount(promoTotalPrice)
+                    
+                    // .toLocaleString(undefined, {
+                    //   minimumFractionDigits: 2,
+                    //   maximumFractionDigits: 2,
+                    // })
+                    }
                     )
                   </span>
-                </Button>
+                </Button> 
               </div>
             </Form>
           </Col>

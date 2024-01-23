@@ -159,10 +159,10 @@ function UserDashboard() {
                   className="sidebar-link"
                   onClick={() => handleTabChange("profile")}
                 >
-                  <i className="fas fa-user"></i> Profile
+                  <i className="fas fa-user"></i> User Profile
                 </Button>
               </div>
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "transactions" ? "primary" : "outline-primary"
@@ -172,7 +172,7 @@ function UserDashboard() {
                 >
                   <i className="fa fa-cart-arrow-down"></i> Payments
                 </Button>
-              </div>
+              </div> */}
               {/* <div>
                 <Button
                   variant={
@@ -208,7 +208,7 @@ function UserDashboard() {
                 </Button>
               </div>
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "credit-point" ? "primary" : "outline-primary"
@@ -218,7 +218,7 @@ function UserDashboard() {
                 >
                   <i className="fas fa-sack-dollar"></i> Credit Point
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button

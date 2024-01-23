@@ -6,6 +6,7 @@ import { getUserPayouts } from "../../redux/actions/payoutActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
+import {formatAmount} from "../FormatAmount";
 
 function Payouts() {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ function Payouts() {
                       <td>{payout.seller_email}</td>
                     </td>
                     {/* <td>{payout.buyer_email}</td> */}
-                    <td>{payout.amount}</td>
+                    <td>{formatAmount(payout.amount)}</td>
                     <td>{payout.payment_method}</td>
                     <td>{payout.currency}</td>
                     <td>
