@@ -61,7 +61,7 @@ function AccountFundCredits() {
                   <th>Amount</th>
                   <th>Payment Method</th>
                   {/* <th>Currency</th> */}
-                  <th>Status</th>
+                  <th>Success</th>
                   <th>Payment Provider</th>
                   <th>Created At</th>
                 </tr>
