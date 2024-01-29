@@ -74,14 +74,14 @@ function AccountFundCredits() {
                     <td>
                       <td>{accountFund.user_email}</td>
                     </td>
-                    <td>{formatAmount(accountFund.amount)} {accountFund.currency}</td>
+                    <td style={{color: "green" }} >{formatAmount(accountFund.amount)} {accountFund.currency}</td>
                     <td>{accountFund.payment_method}</td>
                     {/* <td>{accountFund.currency}</td> */}
                     <td>
                       {accountFund.is_success ? (
                         <i
                           className="fas fa-check-circle"
-                          style={{ fontSize: "16px", color: "green" }}
+                          style={{ fontSize: "16px", color: "green" }} 
                         ></i>
                       ) : (
                         <i

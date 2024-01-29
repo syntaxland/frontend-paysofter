@@ -74,7 +74,7 @@ function UsdAccountFundDebits() {
                     <td>
                       <td>{accountFund.user_email}</td>
                     </td>
-                    <td>{formatAmount(accountFund.amount)} {accountFund.currency}</td> 
+                    <td style={{color: "red" }} >{formatAmount(accountFund.amount)} {accountFund.currency}</td> 
                     <td>{accountFund.payment_method}</td>
                     {/* <td>{accountFund.currency}</td> */}
                     <td>
