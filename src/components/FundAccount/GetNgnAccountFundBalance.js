@@ -11,7 +11,7 @@ import FundAccount from "./FundAccount";
 import {formatAmount} from "../FormatAmount";
 
 const GetNgnAccountFundBalance = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   // const history = useHistory();
 
   const userAccountBalanceState = useSelector(
@@ -65,7 +65,7 @@ const GetNgnAccountFundBalance = () => {
             <Row>
               <Col>
                 <h2 className="py-2">
-                  <i className="fas fa-wallet"></i> NGN Account Fund Wallet
+                  <i className="fas fa-wallet"></i> Account Fund Wallet (NGN)
                 </h2>{" "}
                 <strong>Staus:</strong>{" "}
                 {accountFundBalance?.is_diabled ? (

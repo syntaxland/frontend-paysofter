@@ -50,6 +50,9 @@ import {
   setMaxFundReducer,
   getUserAccountBalanceReducer,
   userAccountFundListReducer,
+
+  getUserUsdAccountFundCreditsReducer,
+getUserUsdAccountFundDebitsReducer,
 } from "./reducers/AccountFundReducers";
 
 import {
@@ -114,6 +117,9 @@ const reducer = combineReducers({
   getUserUsdAccountFundBalanceState: getUserUsdAccountFundBalanceReducer,
   toggleUsdAccountFundState: toggleUsdAccountFundReducer,
   fundUsdAccountState: fundUsdAccountReducer,
+
+  getUserUsdAccountFundCreditsState: getUserUsdAccountFundCreditsReducer,
+getUserUsdAccountFundDebitsState: getUserUsdAccountFundDebitsReducer,
 
   
   getUserAccountFundCreditsState: getUserAccountFundCreditsReducer,

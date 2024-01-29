@@ -10,7 +10,7 @@ import ToggleUsdAccountSettings from "../settings/ToggleUsdAccountSettings";
 import FundUsdAccount from "./FundUsdAccount";
 import {formatAmount} from "../FormatAmount";
 
-const GetUsdAccountFundBalance = () => {
+const GetUsdAccountFundBalance = () => { 
   const dispatch = useDispatch();
   // const history = useHistory();
 
@@ -66,7 +66,7 @@ const GetUsdAccountFundBalance = () => {
             <Row>
               <Col>
                 <h2 className="py-2">
-                  <i className="fas fa-wallet"></i> USD Account Fund Wallet
+                  <i className="fas fa-wallet"></i> Account Fund Wallet (USD)
                 </h2>{" "}
                 <strong>Staus:</strong>{" "}
                 {usdFundBalance?.is_diabled ? (

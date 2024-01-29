@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table } from "react-bootstrap";
-import { getUserAccountFundCredits } from "../../redux/actions/AccountFundActions";
+import { getUserAccountFundCredits } from "../../redux/actions/AccountFundActions"; 
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
@@ -10,7 +10,7 @@ import {formatAmount} from "../FormatAmount";
 
 function AccountFundCredits() {
   const dispatch = useDispatch();
-
+  
   const getUserAccountFundCreditsState = useSelector(
     (state) => state.getUserAccountFundCreditsState
   );
@@ -38,7 +38,7 @@ function AccountFundCredits() {
     <div>
       <hr />
       <h1 className="text-center py-3">
-        <i className="fas fa-credit-card"></i> Account Fund Credits
+        <i className="fas fa-credit-card"></i> Account Fund Credits (NGN)
       </h1>
       <hr />
       {loading ? (
@@ -49,7 +49,7 @@ function AccountFundCredits() {
         <>
           {currentItems.length === 0 ? (
             <div className="text-center py-3">
-              Account Fund credits appear here.
+             NGN Account Fund credits appear here.
             </div>
           ) : (
             <Table striped bordered hover responsive className="table-sm">
@@ -60,7 +60,7 @@ function AccountFundCredits() {
                   <th>User</th>
                   <th>Amount</th>
                   <th>Payment Method</th>
-                  <th>Currency</th>
+                  {/* <th>Currency</th> */}
                   <th>Status</th>
                   <th>Payment Provider</th>
                   <th>Created At</th>
@@ -74,9 +74,9 @@ function AccountFundCredits() {
                     <td>
                       <td>{accountFund.user_email}</td>
                     </td>
-                    <td>{formatAmount(accountFund.amount)}</td>
+                    <td>{formatAmount(accountFund.amount)} {accountFund.currency}</td>
                     <td>{accountFund.payment_method}</td>
-                    <td>{accountFund.currency}</td>
+                    {/* <td>{accountFund.currency}</td> */}
                     <td>
                       {accountFund.is_success ? (
                         <i

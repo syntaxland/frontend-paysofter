@@ -9,7 +9,7 @@ import FundAccountButton from "./FundAccountButton";
 import Select from "react-select";
 
 const FundAccount = ({ history }) => {
-  const fundAccountState = useSelector((state) => state.fundAccountState);
+  const fundAccountState = useSelector((state) => state.fundAccountState); 
   const { loading, success, error } = fundAccountState;
   const [messsage, setMesssage] = useState("");
   const [currency, setCurrency] = useState("NGN");

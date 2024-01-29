@@ -1,20 +1,20 @@
-// AccountFundDebits.js
+// UsdAccountFundDebits.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table } from "react-bootstrap";
-import { getUserAccountFundDebits } from "../../redux/actions/AccountFundActions";
+import { getUserUsdAccountFundDebits } from "../../redux/actions/AccountFundActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
 import {formatAmount} from "../FormatAmount";
 
-function AccountFundDebits() {
+function UsdAccountFundDebits() {
   const dispatch = useDispatch(); 
 
-  const getUserAccountFundDebitsState = useSelector(
-    (state) => state.getUserAccountFundDebitsState
+  const getUserUsdAccountFundDebitsState = useSelector(
+    (state) => state.getUserUsdAccountFundDebitsState
   );
-  const { loading, accountFunds, error } = getUserAccountFundDebitsState;
+  const { loading, accountFunds, error } = getUserUsdAccountFundDebitsState;
   console.log("AccountFundDebits:", accountFunds);
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -31,14 +31,14 @@ function AccountFundDebits() {
   const currentItems = accountFunds?.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
-    dispatch(getUserAccountFundDebits());
+    dispatch(getUserUsdAccountFundDebits());
   }, [dispatch]);
 
   return (
     <div>
       <hr />
       <h1 className="text-center py-3">
-        <i className="fas fa-credit-card"></i> Account Fund Debits (NGN)
+        <i className="fas fa-credit-card"></i> Account Fund Debits (USD)
       </h1>
       <hr />
       {loading ? (
@@ -49,7 +49,7 @@ function AccountFundDebits() {
         <>
           {currentItems.length === 0 ? (
             <div className="text-center py-3">
-             NGN Account Fund Debits appear here.
+             USD Account Fund Debits appear here.
             </div>
           ) : (
             <Table striped bordered hover responsive className="table-sm">
@@ -119,4 +119,4 @@ function AccountFundDebits() {
   );
 }
 
-export default AccountFundDebits;
+export default UsdAccountFundDebits;

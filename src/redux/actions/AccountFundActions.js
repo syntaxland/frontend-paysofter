@@ -43,9 +43,80 @@ import {
   USER_FUND_USD_ACCOUNT_REQUEST,
   USER_FUND_USD_ACCOUNT_SUCCESS,
   USER_FUND_USD_ACCOUNT_FAIL,
+
+  GET_USER_USD_FUND_ACCOUNT_CREDITS_REQUEST,
+GET_USER_USD_FUND_ACCOUNT_CREDITS_SUCCESS,
+GET_USER_USD_FUND_ACCOUNT_CREDITS_FAIL,
+GET_USER_USD_FUND_ACCOUNT_DEBITS_REQUEST,
+GET_USER_USD_FUND_ACCOUNT_DEBITS_SUCCESS,
+GET_USER_USD_FUND_ACCOUNT_DEBITS_FAIL,
 } from "../constants/AccountFundConstants";
 
 const API_URL = process.env.REACT_APP_API_URL;
+
+export const getUserUsdAccountFundCredits = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: GET_USER_USD_FUND_ACCOUNT_CREDITS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${API_URL}/api/get-user-usd-account-fund-credits/`,
+      config
+    );
+
+    dispatch({ type: GET_USER_USD_FUND_ACCOUNT_CREDITS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_USD_FUND_ACCOUNT_CREDITS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const getUserUsdAccountFundDebits = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: GET_USER_USD_FUND_ACCOUNT_DEBITS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${API_URL}/api/get-user-usd-account-fund-debits/`,
+      config
+    );
+
+    dispatch({ type: GET_USER_USD_FUND_ACCOUNT_DEBITS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_USD_FUND_ACCOUNT_DEBITS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const fundUserUsdAccount = (fundData) => async (dispatch, getState) => {
   try {

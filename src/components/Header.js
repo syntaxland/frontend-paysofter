@@ -301,14 +301,14 @@ function Header() {
                       title={
                         <i
                           className="fa fa-user-circle"
-                          style={{ fontSize: "16px" }}
-                        ></i>
+                          style={{ fontSize: "16px" }}  
+                        ></i> 
                       }
-                      className="profile-dropdown custom-dropdown"
+                      className="profile-dropdown custom-dropdown" 
                       align="end"
                     >
                       <Nav.Link
-                        as={Link}
+                        as={Link} 
                         to="/register"
                         className="dropdown-item"
                       >

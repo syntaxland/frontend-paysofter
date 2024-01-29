@@ -9,8 +9,9 @@ import UssdPayment from "./UssdPayment";
 import BankPayment from "./BankPayment";
 import TransferPayment from "./TransferPayment";
 import QrPayment from "./QrPayment";
+import {formatAmount} from "../FormatAmount";
 
-function FundAccountButton({
+function FundAccountButton({ 
   amount,
   currency,
   showFundAccountButton,
@@ -46,10 +47,14 @@ function FundAccountButton({
             <Modal.Title>Mock Payment (Test)</Modal.Title>
             <div>{userInfo.email}</div>
             <div>
-              {amount.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{" "}
+              {formatAmount(amount)
+              
+              // .toLocaleString(undefined, {
+              //   minimumFractionDigits: 2,
+              //   maximumFractionDigits: 2,
+              // })
+              
+              }{" "}
               {currency}
             </div>
           </div>
@@ -141,7 +146,7 @@ function FundAccountButton({
             <Col md={9}>
               {/* Conditionally render the selected payment option component */}
 
-              {currency === "USD" && (
+              {currency === "NGN" && (
                 <div>
                   {selectedPaymentOption === "card" && (
                     <CardPayment
@@ -153,7 +158,7 @@ function FundAccountButton({
                 </div>
               )}
 
-              {currency === "NGN" && (
+              {currency === "USD" && (
                 <div>
                   {selectedPaymentOption === "card" && (
                     <CardPaymentUsd

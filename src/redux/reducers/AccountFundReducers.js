@@ -31,20 +31,23 @@ import {
   GET_All_ACCOUNT_FUND_BALANCE_SUCCESS,
   GET_All_ACCOUNT_FUND_BALANCE_FAIL,
   ADMIN_ACTIVATE_ACCCOUNT_FUND_REQUEST,
-ADMIN_ACTIVATE_ACCCOUNT_FUND_SUCCESS,
-ADMIN_ACTIVATE_ACCCOUNT_FUND_FAIL,
-
-GET_USER_USD_ACCOUNT_FUND_BALANCE_REQUEST,
-GET_USER_USD_ACCOUNT_FUND_BALANCE_SUCCESS,
-GET_USER_USD_ACCOUNT_FUND_BALANCE_FAIL,
-
-TOGGLE_USD_ACCCOUNT_FUND_REQUEST,
-TOGGLE_USD_ACCCOUNT_FUND_SUCCESS,
-TOGGLE_USD_ACCCOUNT_FUND_FAIL,
-
-USER_FUND_USD_ACCOUNT_REQUEST,
-USER_FUND_USD_ACCOUNT_SUCCESS,
-USER_FUND_USD_ACCOUNT_FAIL,
+  ADMIN_ACTIVATE_ACCCOUNT_FUND_SUCCESS,
+  ADMIN_ACTIVATE_ACCCOUNT_FUND_FAIL,
+  GET_USER_USD_ACCOUNT_FUND_BALANCE_REQUEST,
+  GET_USER_USD_ACCOUNT_FUND_BALANCE_SUCCESS,
+  GET_USER_USD_ACCOUNT_FUND_BALANCE_FAIL,
+  TOGGLE_USD_ACCCOUNT_FUND_REQUEST,
+  TOGGLE_USD_ACCCOUNT_FUND_SUCCESS,
+  TOGGLE_USD_ACCCOUNT_FUND_FAIL,
+  USER_FUND_USD_ACCOUNT_REQUEST,
+  USER_FUND_USD_ACCOUNT_SUCCESS,
+  USER_FUND_USD_ACCOUNT_FAIL,
+  GET_USER_USD_FUND_ACCOUNT_CREDITS_REQUEST,
+  GET_USER_USD_FUND_ACCOUNT_CREDITS_SUCCESS,
+  GET_USER_USD_FUND_ACCOUNT_CREDITS_FAIL,
+  GET_USER_USD_FUND_ACCOUNT_DEBITS_REQUEST,
+  GET_USER_USD_FUND_ACCOUNT_DEBITS_SUCCESS,
+  GET_USER_USD_FUND_ACCOUNT_DEBITS_FAIL,
 } from "../constants/AccountFundConstants";
 
 const initialState = {
@@ -56,6 +59,46 @@ const initialState = {
   accountFundBalance: [],
   usdFundBalance: [],
   formattedEmail: [],
+};
+
+export const getUserUsdAccountFundCreditsReducer = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case GET_USER_USD_FUND_ACCOUNT_CREDITS_REQUEST:
+      return { loading: true };
+    case GET_USER_USD_FUND_ACCOUNT_CREDITS_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        accountFunds: action.payload,
+      };
+    case GET_USER_USD_FUND_ACCOUNT_CREDITS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getUserUsdAccountFundDebitsReducer = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case GET_USER_USD_FUND_ACCOUNT_DEBITS_REQUEST:
+      return { loading: true };
+    case GET_USER_USD_FUND_ACCOUNT_DEBITS_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        accountFunds: action.payload,
+      };
+    case GET_USER_USD_FUND_ACCOUNT_DEBITS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const fundUsdAccountReducer = (state = initialState, action) => {
@@ -110,10 +153,7 @@ export const getUserUsdAccountFundBalanceReducer = (
   }
 };
 
-export const activateAccountFundReducer = (
-  state = initialState,
-  action
-) => {
+export const activateAccountFundReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADMIN_ACTIVATE_ACCCOUNT_FUND_REQUEST:
       return { loading: true };

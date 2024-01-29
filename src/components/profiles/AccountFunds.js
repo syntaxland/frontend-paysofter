@@ -4,8 +4,11 @@ import { Row, Col } from "react-bootstrap";
 import AccountFundCredits from "../FundAccount/AccountFundCredits";
 import AccountFundDebits from "../FundAccount/AccountFundDebits";  
 
-function AccountFunds() {
+import UsdAccountFundCredits from "../FundAccount/UsdAccountFundCredits";
+import UsdAccountFundDebits from "../FundAccount/UsdAccountFundDebits";
 
+function AccountFunds() {
+ 
   return (
     <div>
       <Row>
@@ -15,8 +18,16 @@ function AccountFunds() {
             <AccountFundCredits />
           </div>
 
+          <div>
+            <UsdAccountFundCredits />
+          </div>
+
           <div className="text-center">
             <AccountFundDebits />
+          </div> 
+
+          <div className="text-center">
+            <UsdAccountFundDebits />
           </div> 
 
           <hr />

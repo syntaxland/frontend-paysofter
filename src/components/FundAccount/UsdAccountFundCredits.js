@@ -1,21 +1,21 @@
-// AccountFundDebits.js
+// UsdAccountFundCredits.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table } from "react-bootstrap";
-import { getUserAccountFundDebits } from "../../redux/actions/AccountFundActions";
+import { getUserUsdAccountFundCredits } from "../../redux/actions/AccountFundActions"; 
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
 import {formatAmount} from "../FormatAmount";
 
-function AccountFundDebits() {
-  const dispatch = useDispatch(); 
-
-  const getUserAccountFundDebitsState = useSelector(
-    (state) => state.getUserAccountFundDebitsState
+function UsdAccountFundCredits() {
+  const dispatch = useDispatch();
+  
+  const getUserUsdAccountFundCreditsState = useSelector(
+    (state) => state.getUserUsdAccountFundCreditsState
   );
-  const { loading, accountFunds, error } = getUserAccountFundDebitsState;
-  console.log("AccountFundDebits:", accountFunds);
+  const { loading, accountFunds, error } = getUserUsdAccountFundCreditsState;
+  console.log("AccountFundCredits:", accountFunds);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -31,14 +31,14 @@ function AccountFundDebits() {
   const currentItems = accountFunds?.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
-    dispatch(getUserAccountFundDebits());
+    dispatch(getUserUsdAccountFundCredits());
   }, [dispatch]);
 
   return (
     <div>
       <hr />
       <h1 className="text-center py-3">
-        <i className="fas fa-credit-card"></i> Account Fund Debits (NGN)
+        <i className="fas fa-credit-card"></i> Account Fund Credits (USD)
       </h1>
       <hr />
       {loading ? (
@@ -49,14 +49,14 @@ function AccountFundDebits() {
         <>
           {currentItems.length === 0 ? (
             <div className="text-center py-3">
-             NGN Account Fund Debits appear here.
+             USD Account Fund credits appear here.
             </div>
           ) : (
             <Table striped bordered hover responsive className="table-sm">
               <thead>
                 <tr>
                   <th>SN</th>
-                  <th>Debit Fund ID</th>
+                  <th>Account Fund ID</th>
                   <th>User</th>
                   <th>Amount</th>
                   <th>Payment Method</th>
@@ -70,11 +70,11 @@ function AccountFundDebits() {
                 {currentItems.map((accountFund, index) => (
                   <tr key={accountFund.id}>
                     <td>{index + 1}</td>
-                    <td>{accountFund.debit_account_id}</td>
+                    <td>{accountFund.fund_account_id}</td>
                     <td>
                       <td>{accountFund.user_email}</td>
                     </td>
-                    <td>{formatAmount(accountFund.amount)} {accountFund.currency}</td> 
+                    <td>{formatAmount(accountFund.amount)} {accountFund.currency}</td>
                     <td>{accountFund.payment_method}</td>
                     {/* <td>{accountFund.currency}</td> */}
                     <td>
@@ -113,10 +113,10 @@ function AccountFundDebits() {
             currentPage={currentPage}
             paginate={paginate}
           />
-        </> 
+        </>
       )}
     </div>
   );
 }
 
-export default AccountFundDebits;
+export default UsdAccountFundCredits;

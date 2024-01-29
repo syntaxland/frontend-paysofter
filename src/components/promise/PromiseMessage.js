@@ -8,7 +8,7 @@ import {
   createPromiseMessages,
   listPromiseMessages,
 } from "../../redux/actions/PromiseActions";
-import Loader from "../Loader";
+import Loader from "../Loader"; 
 import Message from "../Message"; 
 
 function PromiseMessage() {
@@ -25,13 +25,13 @@ function PromiseMessage() {
   const listPromiseMessageState = useSelector(
     (state) => state.listPromiseMessageState
   );
-  const { promiseMessages } = listPromiseMessageState;
+  const { promiseMessages } = listPromiseMessageState;  
   console.log("promiseMessages:", promiseMessages);
 
   useEffect(() => {
     const promiseId = id;
     dispatch(listPromiseMessages(promiseId));
-  }, [dispatch, id]);
+  }, [dispatch, id]);  
 
   const handleSubmitReply = (e) => {
     e.preventDefault();

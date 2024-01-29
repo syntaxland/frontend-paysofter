@@ -22,7 +22,7 @@ import {
   PointElement,
   Title,
 } from "chart.js";
-import GetNgnAccountFundBalance from "../FundAccount/GetNgnAccountFundBalance";
+import GetNgnAccountFundBalance from "../FundAccount/GetNgnAccountFundBalance"; 
 import GetUsdAccountFundBalance from "../FundAccount/GetUsdAccountFundBalance";
 
 ChartJS.register(

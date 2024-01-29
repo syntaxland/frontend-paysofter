@@ -11,7 +11,7 @@ const FundUsdAccount = ({ history }) => {
   const { loading, success, error } = fundAccountState;
   const [messsage, setMesssage] = useState("");
   const [currency, setCurrency] = useState("USD");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(0); 
   const [showFundAccountButton, setShowFundAccountButton] = useState(false);
 
   const submitHandler = (e) => {

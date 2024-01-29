@@ -7,11 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fundUserAccount } from "../../redux/actions/AccountFundActions";
 import Message from "../Message";
 import Loader from "../Loader";
+import {formatAmount} from "../FormatAmount"; 
 
 function CardPayment({ amount, currency, userEmail }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const fundAccountState = useSelector((state) => state.fundAccountState);
+  const fundAccountState = useSelector((state) => state.fundAccountState); 
   const { loading, success, error } = fundAccountState;
 
   const [cardType, setCardType] = useState("");
@@ -158,10 +159,13 @@ function CardPayment({ amount, currency, userEmail }) {
             Pay{" "}
             <span>
               (
-              {amount.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{" "}
+              {formatAmount(amount)
+              
+              // .toLocaleString(undefined, {
+              //   minimumFractionDigits: 2,
+              //   maximumFractionDigits: 2,
+              // })
+              }{" "}
               {currency})
             </span>
           </Button>
