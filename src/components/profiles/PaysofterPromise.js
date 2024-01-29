@@ -257,7 +257,7 @@ function PaysofterPromise({ history }) {
                               <i
                                 className="fas fa-check-circle"
                                 style={{ fontSize: "16px", color: "green" }}
-                              ></i>{" "}
+                              ></i>{" "} 
                               Yes
                             </>
                           ) : (

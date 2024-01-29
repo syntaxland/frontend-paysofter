@@ -8,10 +8,10 @@ import Loader from "../Loader";
 import { getUserAccountFundBalance } from "../../redux/actions/AccountFundActions";
 import ToggleAccountSettings from "../settings/ToggleAccountSettings";
 import FundAccount from "./FundAccount";
-import {formatAmount} from "../FormatAmount";
+import { formatAmount } from "../FormatAmount";
 
 const GetNgnAccountFundBalance = () => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   // const history = useHistory();
 
   const userAccountBalanceState = useSelector(
@@ -109,10 +109,10 @@ const GetNgnAccountFundBalance = () => {
                       ) : (
                         <>
                           <i
-                            className="fas fa-lock"
+                            className="fas fa-lock text-warning"
                             style={{
                               fontSize: "16px",
-                              color: "yellow",
+                              // color: "yellow",
                             }}
                           ></i>{" "}
                           Locked
@@ -126,7 +126,7 @@ const GetNgnAccountFundBalance = () => {
               <Modal show={showFundAccount} onHide={handleFundAccountClose}>
                 <Modal.Header closeButton>
                   <Modal.Title className="text-center w-100 py-2">
-                  Fund Account
+                    Fund Account
                   </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{showFundAccount && <FundAccount />}</Modal.Body>
@@ -166,13 +166,13 @@ const GetNgnAccountFundBalance = () => {
 
             <span>Balance: </span>
             <strong>
-              {formatAmount(accountFundBalance?.balance)
-              
-              // ?.toLocaleString(undefined, {
-              //   minimumFractionDigits: 2,
-              //   maximumFractionDigits: 2,
-              // })
-              
+              {
+                formatAmount(accountFundBalance?.balance)
+
+                // ?.toLocaleString(undefined, {
+                //   minimumFractionDigits: 2,
+                //   maximumFractionDigits: 2,
+                // })
               }{" "}
               NGN
             </strong>

@@ -99,10 +99,10 @@ function ToggleAccountSettings() {
                   ) : (
                     <>
                       <i
-                        className="fas fa-lock"
+                        className="fas fa-lock text-warning"
                         style={{
                           fontSize: "16px",
-                          color: "yellow",
+                          // color: "yellow",
                         }}
                       ></i>{" "}
                       Locked
