@@ -69,10 +69,12 @@ function BuyerConfirmPromise({ promiseId, amount }) {
 
           <p className="rounded mt-2 py-1 text-center">
             <i
-              className="fa fa-warning"
-              style={{ fontSize: "18px", color: "yellow" }}
+              className="fa fa-warning text-warning"
+              style={{ fontSize: "18px", 
+              // color: "yellow"
+             }}
             ></i>{" "}
-            Warning! This action will confirm that your promise order from this
+            Warning! This action will confirm that your promise order from this 
             seller is fulfilled and will transfer the promise amount from your
             account to the seller's. Please enter the password for your account
             email <strong>({userInfo.email}</strong>):{" "}

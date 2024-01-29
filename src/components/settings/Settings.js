@@ -151,8 +151,10 @@ function Settings() {
                         ) : (
                           <>
                             <i
-                              className="fas fa-lock"
-                              style={{ fontSize: "16px", color: "yellow" }}
+                              className="fas fa-lock text-warning"
+                              style={{ fontSize: "16px", 
+                              // color: "yellow"
+                             }}
                             ></i>{" "}
                             Locked
                           </>

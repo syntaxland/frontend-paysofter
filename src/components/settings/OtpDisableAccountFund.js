@@ -65,8 +65,10 @@ function OtpDisableAccountFund() {
 
             <p className="rounded text-center">
               <i
-                className="fa fa-warning"
-                style={{ fontSize: "18px", color: "yellow" }}
+                className="fa fa-warning text-warning"
+                style={{ fontSize: "18px", 
+                // color: "yellow"
+               }}
               ></i>{" "}
               Warning! This action will disable all transaction withdrawals from
               your account fund and can only be reactivated by contacting

@@ -55,8 +55,10 @@ function SettleDisputedPromise({ promiseId }) {
 
           <p className="rounded mt-2 py-1 text-center">
             <i
-              className="fa fa-warning"
-              style={{ fontSize: "18px", color: "yellow" }}
+              className="fa fa-warning text-warning"
+              style={{ fontSize: "18px",
+              //  color: "yellow" 
+            }}
             ></i>{" "}
             Warning! This action will open a support ticket for this Promise ID
             to resolve whatever conflict arising from this promise order

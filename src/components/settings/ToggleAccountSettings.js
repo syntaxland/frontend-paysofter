@@ -114,8 +114,10 @@ function ToggleAccountSettings() {
           </div>
           <p className="rounded mt-2 py-1 text-center">
             <i
-              className="fa fa-warning"
-              style={{ fontSize: "18px", color: "yellow" }}
+              className="fa fa-warning text-warning"
+              style={{ fontSize: "18px", 
+              // color: "yellow"
+             }}
             ></i>{" "}
             Warning! This action will block or enable all transaction
             withdrawals from this account. Enter password for your account email{" "}
