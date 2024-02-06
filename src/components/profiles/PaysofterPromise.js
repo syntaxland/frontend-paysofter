@@ -312,7 +312,7 @@ function PaysofterPromise({ history }) {
                               {promise.buyer_promise_fulfilled ? (
                                 <>
                                   <Button
-                                    variant="outline-primary"
+                                    variant="outline-success"
                                     size="sm"
                                     className="py-2 mt-2"
                                     disabled
@@ -449,7 +449,7 @@ function PaysofterPromise({ history }) {
                             <>
                               {promise.buyer_promise_fulfilled ? (
                                 <>
-                                  <Button variant="outline-primary" size="sm" disabled>
+                                  <Button variant="outline-success" size="sm" disabled>
                                     Promise Confirmed
                                   </Button>
                                 </>

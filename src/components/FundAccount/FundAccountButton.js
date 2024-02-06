@@ -67,11 +67,11 @@ function FundAccountButton({
               <div className="text-center">
                 <p>Options</p>
 
-                {currency === "USD" && (
+                {currency === "USD" && ( 
                   <div className="py-1">
                     <Button
                       variant="outline-primary"
-                      onClick={() => handlePaymentOptionChange("card")}
+                      onClick={() => handlePaymentOptionChange("card")} 
                       className={
                         selectedPaymentOption === "card" ? "active" : ""
                       }

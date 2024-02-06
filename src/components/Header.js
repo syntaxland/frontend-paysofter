@@ -13,7 +13,7 @@ import {
   Col,
 } from "react-bootstrap";
 import { getUserProfile } from "../redux/actions/userProfileActions";
-import { logout } from "../redux/actions/userActions";
+import { logout } from "../redux/actions/userActions"; 
 import "./Header.css";
 
 function Header() {

@@ -59,10 +59,12 @@ function UsdAccountFundDebits() {
                   <th>Debit Fund ID</th>
                   <th>User</th>
                   <th>Amount</th>
+                  <th>Old Balance</th> 
+                  <th>New Balance</th> 
                   <th>Payment Method</th>
                   {/* <th>Currency</th> */}
                   <th>Success</th>
-                  <th>Payment Provider</th>
+                  {/* <th>Payment Provider</th> */}
                   <th>Created At</th>
                 </tr>
               </thead>
@@ -75,6 +77,8 @@ function UsdAccountFundDebits() {
                       <td>{accountFund.user_email}</td>
                     </td>
                     <td style={{color: "red" }} >{formatAmount(accountFund.amount)} {accountFund.currency}</td> 
+                    <td>{formatAmount(accountFund.old_bal)}</td>
+                    <td>{formatAmount(accountFund.new_bal)}</td>
                     <td>{accountFund.payment_method}</td>
                     {/* <td>{accountFund.currency}</td> */}
                     <td>
@@ -90,7 +94,7 @@ function UsdAccountFundDebits() {
                         ></i>
                       )}
                     </td>
-                    <td>{accountFund.payment_provider}</td>
+                    {/* <td>{accountFund.payment_provider}</td> */}
                     <td>
                       {new Date(accountFund.timestamp).toLocaleString("en-US", {
                         weekday: "long",

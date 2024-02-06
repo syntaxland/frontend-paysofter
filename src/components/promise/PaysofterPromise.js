@@ -1,361 +1,559 @@
-// PaysofterAccountFund.js
-import React, { useState, useEffect } from "react";
+// PaysofterPromise.js
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Form, Button, Modal } from "react-bootstrap";
-import { debitPaysofterAccountFund } from "../../actions/paymentActions";
+import { Link } from "react-router-dom";
+import { Table, Button, Row, Col, Modal, Container } from "react-bootstrap";
+import { getBuyerPromises } from "../../redux/actions/PromiseActions";
 import Message from "../Message";
 import Loader from "../Loader";
-import VerifyAccountFundOtp from "./VerifyAccountFundOtp";
+import Timer from "../Timer";
+import Pagination from "../Pagination";
+import BuyerConfirmPromise from "../promise/BuyerConfirmPromise";
+import SettleDisputedPromise from "../promise/SettleDisputedPromise";
 import {formatAmount} from "../FormatAmount";
 
-const PaysofterAccountFund = ({
-  history,
-  promoTotalPrice,
-  paymentData,
-  reference,
-  userEmail,
-  publicApiKey,
-}) => {
+function PaysofterPromise({ history }) {
   const dispatch = useDispatch();
 
-  const debitPaysofterAccountState = useSelector(
-    (state) => state.debitPaysofterAccountState
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
+
+  const getBuyerPromiseState = useSelector(
+    (state) => state.getBuyerPromiseState
   );
-  const {
-    loading,
-    success,
-    formattedPayerEmail,
-    error,
-  } = debitPaysofterAccountState;
-  console.log("formattedPayerEmail:", formattedPayerEmail);
+  const { loading, promises, error } = getBuyerPromiseState;
+  console.log("Promises:", promises);
 
-  const [accountId, setAccountId] = useState("");
-  const [securityCode, setSecurityCode] = useState("");
-  // const [currency, setCurrency] = useState("");
+  const [showConfirmPromise, setShowConfirmPromise] = useState(false);
+  const [showSettleDispute, setShowSettleDispute] = useState(false);
+  const [selectedPromise, setSelectedPromise] = useState(null);
 
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [showAccountInfoModal, setShowAccountInfoModal] = useState(false);
-  const [showSecurityCodeModal, setShowSecurityCodeModal] = useState(false);
-  const [showVerifyAccountFundOtp, setShowVerifyAccountFundOtp] = useState(
-    false
-  );
-  const [securityCodeVisible, setSecurityCodeVisible] = useState(false);
-
-  const handleAccountInfoModalShow = () => {
-    setShowAccountInfoModal(true);
+  const handleConfirmPromiseOpen = (promise) => {
+    setSelectedPromise(promise);
+    setShowConfirmPromise(true);
   };
 
-  const handleAccountInfoModalClose = () => {
-    setShowAccountInfoModal(false);
+  const handleConfirmPromiseClose = () => {
+    setShowConfirmPromise(false);
   };
 
-  const handleSecurityCodeModalShow = () => {
-    setShowSecurityCodeModal(true);
-  };
-  
-  const handleSecurityCodeModalClose = () => {
-    setShowSecurityCodeModal(false);
+  const handleSettleDisputeOpen = (promise) => {
+    setSelectedPromise(promise);
+    setShowSettleDispute(true);
   };
 
-  const toggleSecurityCodeVisibility = () => {
-    setSecurityCodeVisible(!securityCodeVisible);
+  const handleSettleDisputeClose = () => {
+    setShowSettleDispute(false);
   };
 
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  const handleInfoModalShow = () => {
-    setShowInfoModal(true);
-  };
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleInfoModalClose = () => {
-    setShowInfoModal(false);
-  };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = promises?.slice(indexOfFirstItem, indexOfLastItem);
 
-  const debitAccountData = {
-    account_id: accountId,
-    security_code: securityCode,
-    amount: promoTotalPrice,
-  };
+  const formatAccountId = (accountId) => {
+    const accountIdStr = String(accountId);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    try {
-      localStorage.setItem(
-        "debitAccountData",
-        JSON.stringify(debitAccountData)
-      );
-      dispatch(debitPaysofterAccountFund(debitAccountData));
-    } catch (error) {
-      console.log(error);
+    if (accountIdStr.length < 8) {
+      return accountIdStr;
+    } else {
+      const maskedPart =
+        "*".repeat(accountIdStr.length - 4) + accountIdStr.slice(-4);
+      return maskedPart;
     }
   };
 
   useEffect(() => {
-    if (success) {
-      const timer = setTimeout(() => {
-        setShowVerifyAccountFundOtp(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-    // eslint-disable-next-line
-  }, [dispatch, success, history]);
+    dispatch(getBuyerPromises());
+  }, [dispatch]);
 
   return (
-    <>
-      {showVerifyAccountFundOtp ? (
-        <VerifyAccountFundOtp
-          promoTotalPrice={promoTotalPrice}
-          paymentData={paymentData}
-          reference={reference}
-          // currency={currency}
-          userEmail={userEmail}
-          publicApiKey={publicApiKey}
-          securityCode={securityCode}
-          accountId={accountId}
-          formattedPayerEmail={formattedPayerEmail}
-        />
-      ) : (
-        <Row className="justify-content-center">
-          <Col>
-            <Row className="text-center py-2">
-              <Col md={10}>
-                <h2 className="py-2 text-center">Paysofter Account Fund</h2>
-              </Col>
-              <Col md={2}>
-                <Button
-                  variant="outline"
-                  onClick={handleAccountInfoModalShow}
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Paysofter Account Fund option settles payments using the user's funded Paysofter Account Fund."
+    <Container>
+      <Row>
+        <Col>
+          <h1 className="text-center py-3">
+            <i className="fas fa-money-bill-wave"></i> Promises (Buyer)
+          </h1>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : (
+            <>
+              {currentItems.length === 0 ? (
+                <div className="text-center py-3">Promises appear here.</div>
+              ) : (
+                <Table
+                  striped
+                  bordered
+                  hover
+                  responsive
+                  className="table-sm py-2 rounded"
                 >
-                  <i className="fa fa-info-circle"> </i>
-                </Button>
-
-                <Modal
-                  show={showAccountInfoModal}
-                  onHide={handleAccountInfoModalClose}
-                >
-                  <Modal.Header closeButton>
-                    <Modal.Title className="text-center w-100 py-2">
-                      Paysofter Account Fund
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p className="text-center">
-                      Paysofter Account Fund option settles payments using the
-                      payer's funded Paysofter Account Fund.{" "}
-                      <a
-                        href="https://paysofter.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {" "}
-                        <span>
-                          <Button
-                            variant="primary"
-                            size="sm"
-                            className="text-center py-2"
-                          >
-                            Learn more
-                          </Button>
-                        </span>
-                      </a>
-                    </p>
-                  </Modal.Body>
-                </Modal>
-              </Col>
-            </Row>
-
-            {success && (
-              <Message variant="success">
-                OTP sent to: {formattedPayerEmail} successfully.
-              </Message>
-            )}
-
-            {error && <Message variant="danger">{error}</Message>}
-            {loading && <Loader />}
-
-            <Form onSubmit={submitHandler}>
-              {/* <Form.Group controlId="currency">
-                <Form.Label>Currency</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                  disabled
-                >
-                  <option value="NGN">NGN</option>
-                  <option value="USD">USD</option>
-                </Form.Control>
-              </Form.Group> */}
-
-              <Form.Group controlId="accountId">
-                <Form.Label>Account ID</Form.Label>
-
-                <Row className="text-center py-2">
-                  <Col md={10}>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Paysofter Account ID"
-                      value={accountId}
-                      onChange={(e) => setAccountId(e.target.value)}
-                      required
-                      maxLength={12}
-                    />
-                  </Col>
-                  <Col md={2}>
-                    <Button
-                      variant="outline"
-                      onClick={handleInfoModalShow}
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="A unqiuely assigned 12-digit Paysofter Account ID. Don't have a Paysofter account? Click here."
-                    >
-                      <i className="fa fa-info-circle"> </i>
-                    </Button>
-
-                    <Modal show={showInfoModal} onHide={handleInfoModalClose}>
-                      <Modal.Header closeButton>
-                        <Modal.Title className="text-center w-100 py-2">
-                          Paysofter Account ID
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <p className="text-center">
-                          A unqiuely assigned 12-digit Paysofter Account ID.
-                          Don't have a Paysofter account? You're just about 3
-                          minutes away!{" "}
-                          <a
-                            href="https://paysofter.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {" "}
-                            <span>
-                              <Button
-                                variant="primary"
-                                size="sm"
-                                className="text-center py-2"
-                              >
-                                Create A Free Account
+                  <thead>
+                    <tr>
+                      <th>SN</th>
+                      <th>Promise ID</th>
+                      <th>Amount</th>
+                      <th>Seller Account ID</th>
+                      {/* <th>Seller Email</th> */}
+                      <th>Buyer Account ID</th>
+                      {/* <th>Buyer Email</th> */}
+                      <th>Seller Fulfilled Promise</th>
+                      <th>Buyer Promise Fulfilled</th>
+                      <th>Status</th>
+                      <th>Success</th>
+                      <th>Active</th>
+                      <th>Expected Settlement Duration</th>
+                      <th>Settle Conflict Activated</th>
+                      <th>Conflict Settlement Charges</th>
+                      <th>Promise Delivered</th>
+                      <th>Promise Cancelled</th>
+                      <th>Payment Method</th>
+                      <th>Payment Provider</th>
+                      <th>Promise Made At</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentItems.map((promise, index) => (
+                      <tr key={promise.id} className="rounded">
+                        <td>{index + 1}</td>
+                        <td>
+                          {promise.buyer_promise_fulfilled ? (
+                            <>
+                              <Button variant="outline-link" size="sm" disabled>
+                                {promise.promise_id}
                               </Button>
-                            </span>
-                          </a>
-                        </p>
-                      </Modal.Body>
-                    </Modal>
-                  </Col>
-                </Row>
-              </Form.Group>
-
-              <Form.Group controlId="securityCode">
-                <Form.Label>Security Code</Form.Label>
-                <Row className="text-center py-2">
-                  <Col md={10}>
-                    <Form.Control
-                      // type="password"
-                      type={securityCodeVisible ? "text" : "password"}
-                      placeholder="Enter Account Security Code"
-                      value={securityCode}
-                      onChange={(e) => setSecurityCode(e.target.value)}
-                      required
-                      maxLength={4}
-                    />
-                  </Col>
-                  <Col md={2}>
-                    <Button
-                      variant="outline"
-                      onClick={handleSecurityCodeModalShow}
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="A 4-digit randomly generated Paysofter Account Security Code that expires at a given time  (e.g. every hour). Having issue applying the security code? Refresh your paysofter account page, logout and login or clear browsing data."
-                    >
-                      <i className="fa fa-info-circle"> </i>
-                    </Button>
-
-                    <Modal
-                      show={showSecurityCodeModal}
-                      onHide={handleSecurityCodeModalClose}
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title className="text-center w-100 py-2">
-                          Paysofter Account Security Code
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <p className="text-center">
-                          A 4-digit randomly generated Paysofter Account Security Code that expires
-                          at a given time (e.g. every hour). Having issue
-                          applying the security code? Refresh your paysofter
-                          account page, logout and login or clear browsing data.{" "}
-                          <a
-                            href="https://paysofter.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {" "}
-                            <span>
+                            </>
+                          ) : (
+                            <>
                               <Button
-                                variant="primary"
+                                variant="outline-link"
                                 size="sm"
-                                className="text-center py-2"
+                                // onClick={() =>
+                                //   handleConfirmPromiseOpen({
+                                //     promise_id: promise.promise_id,
+                                //     amount: promise.amount,
+                                //   })
+                                // }
                               >
-                                Learn More
+                                {promise.promise_id}
                               </Button>
-                            </span>
-                          </a>
-                        </p>
-                      </Modal.Body>
-                    </Modal>
-                  </Col>
-                  <span className="d-flex justify-content-left">
-                    <Button
-                      variant="outline"
-                      className="rounded"
-                      size="sm"
-                      onClick={toggleSecurityCodeVisibility}
-                    >
-                      {securityCodeVisible ? (
-                        <span>
-                          <i className="fa fa-eye-slash"></i> Hide
-                        </span>
-                      ) : (
-                        <span>
-                          <i className="fa fa-eye"></i> Show
-                        </span>
-                      )}
-                    </Button>
-                  </span>
-                </Row>
-              </Form.Group>
+                            </>
+                          )}
+                        </td>
 
-              <div className="py-3 text-center">
-                <Button
-                  className="w-100 rounded"
-                  type="submit"
-                  variant="primary"
-                >
-                  Pay{" "}
-                  <span>
-                    (NGN{" "}
-                    {formatAmount(promoTotalPrice)
-                    
-                    // .toLocaleString(undefined, {
-                    //   minimumFractionDigits: 2,
-                    //   maximumFractionDigits: 2,
-                    // })
-                    }
-                    )
-                  </span>
-                </Button> 
-              </div>
-            </Form>
-          </Col>
-        </Row>
-      )}
-    </>
+                        <td>
+                          {promise.buyer_promise_fulfilled ? (
+                            <span style={{ fontSize: "16px", color: "green" }}>
+                              {promise.currency}{" "}
+                              {formatAmount(promise.amount)
+                              
+                              // ?.toLocaleString(undefined, {
+                              //   minimumFractionDigits: 2,
+                              //   maximumFractionDigits: 2,
+                              // })
+                              }
+                            </span>
+                          ) : (
+                            <>
+                              {promise.is_cancelled ? (
+                                <>
+                                  <span
+                                    style={{ fontSize: "16px" }}
+                                    className="text-danger"
+                                  >
+                                    {promise.currency}{" "}
+                                    {formatAmount(promise.amount)
+                                    
+                                    // ?.toLocaleString(undefined, {
+                                    //   minimumFractionDigits: 2,
+                                    //   maximumFractionDigits: 2,
+                                    // })
+                                    }
+                                  </span>
+                                </>
+                              ) : (
+                                <span
+                                  style={{ fontSize: "16px" }}
+                                  className="text-warning"
+                                >
+                                  {promise.currency}{" "}
+                                  {formatAmount(promise.amount)
+                                  
+                                  // ?.toLocaleString(undefined, {
+                                  //   minimumFractionDigits: 2,
+                                  //   maximumFractionDigits: 2,
+                                  // })
+                                  }
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </td>
+                        <td>{formatAccountId(promise.seller_account_id)}</td>
+                        {/* <td>{promise.seller_email}</td> */}
+                        <td>{formatAccountId(promise.buyer_account_id)}</td>
+                        {/* <td>{promise.buyer_email}</td> */}
+
+                        <td>
+                          <>
+                            {promise.seller_fulfilled_promise ? (
+                              <>
+                                <i
+                                  className="fas fa-check-circle"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                Yes
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fas fa-times-circle"
+                                  style={{ fontSize: "16px", color: "red" }}
+                                ></i>{" "}
+                                No
+                              </>
+                            )}
+                          </>
+                        </td>
+
+                        <td>
+                          <>
+                            {promise.buyer_promise_fulfilled ? (
+                              <>
+                                <i
+                                  className="fas fa-check-circle"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                Yes
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fas fa-times-circle"
+                                  style={{ fontSize: "16px", color: "red" }}
+                                ></i>{" "}
+                                No
+                              </>
+                            )}
+                          </>
+                        </td>
+
+                        <td>{promise.status}</td>
+                        <td>
+                          {promise.is_success ? (
+                            <>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "} 
+                              Yes
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          <>
+                            {promise.is_active ? (
+                              <>
+                                <i
+                                  className="fas fa-check-circle"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                Yes
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fas fa-times-circle"
+                                  style={{ fontSize: "16px", color: "red" }}
+                                ></i>{" "}
+                                No
+                              </>
+                            )}
+                          </>
+                        </td>
+                        <td className="text-center">
+                          {promise.duration}
+                          {promise.is_active ? (
+                            <>
+                              <Button
+                                variant="outline-primary"
+                                size="sm"
+                                className="py-2 mt-2"
+                                disabled
+                              >
+                                Timer:{" "}
+                                <Timer
+                                  expirationDate={promise?.expiration_date}
+                                />
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              {promise.buyer_promise_fulfilled ? (
+                                <>
+                                  <Button
+                                    variant="outline-success"
+                                    size="sm"
+                                    className="py-2 mt-2"
+                                    disabled
+                                  >
+                                    Promise Settled
+                                  </Button>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          )}
+                          {new Date(promise.expiration_date) < new Date() &&
+                          !promise.buyer_promise_fulfilled ? (
+                            <>
+                              <Button
+                                variant="outline-danger"
+                                size="sm"
+                                className="py-2 mt-2"
+                                onClick={() =>
+                                  handleSettleDisputeOpen({
+                                    promise_id: promise.promise_id,
+                                  })
+                                }
+                              >
+                                Settle Dispute
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              {promise.is_settle_conflict_activated ? (
+                                <>
+                                  <Button
+                                    variant="danger"
+                                    size="sm"
+                                    className="py-2 mt-2"
+                                    disabled
+                                  >
+                                    Settle Conflict Activated
+                                  </Button>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          {promise.is_settle_conflict_activated ? (
+                            <>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Yes
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          {promise.currency} {promise.settle_conflict_charges}
+                        </td>
+                        <td>
+                          {promise.is_delivered ? (
+                            <>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Yes
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          {promise.is_cancelled ? (
+                            <>
+                              <i
+                                className="fas fa-check-circle"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Yes
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fas fa-times-circle"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              No
+                            </>
+                          )}
+                        </td>
+                        <td>{promise.payment_method}</td>
+                        <td>{promise.payment_provider}</td>
+                        <td>
+                          {new Date(promise.timestamp).toLocaleString("en-US", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric",
+                          })}
+                        </td>
+
+                        <td>
+                          {promise.is_cancelled ? (
+                            <>
+                              <Button
+                                variant="danger"
+                                size="sm"
+                                disabled
+                              >
+                                Promise Cancelled
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              {promise.buyer_promise_fulfilled ? (
+                                <>
+                                  <Button variant="outline-success" size="sm" disabled>
+                                    Promise Confirmed
+                                  </Button>
+                                </>
+                              ) : (
+                                <Button
+                                  variant="outline-primary"
+                                  size="sm"
+                                  onClick={() =>
+                                    handleConfirmPromiseOpen({
+                                      promise_id: promise.promise_id,
+                                      amount: promise.amount,
+                                    })
+                                  }
+                                >
+                                  Confirm Promise
+                                </Button>
+                              )}
+                            </>
+                          )}
+                        </td>
+
+                        <td>
+                          <>
+                            {promise.is_cancelled ? (
+                              <>
+                                <Button variant="outline-primary" size="sm">
+                                  <Link
+                                    to={`/promise/message/${promise.promise_id}`}
+                                    style={{ textDecoration: "none" }}
+                                  >
+                                    Message Seller
+                                  </Link>
+                                </Button>
+                              </>
+                            ) : (
+                              <Button variant="outline-primary" size="sm">
+                                <Link
+                                  to={`/promise/message/${promise.promise_id}`}
+                                  style={{ textDecoration: "none" }}
+                                >
+                                  Message Seller
+                                </Link>
+                              </Button>
+                            )}
+                          </>
+                        </td>
+
+                        <Modal
+                          show={showConfirmPromise}
+                          onHide={handleConfirmPromiseClose}
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title className="text-center w-100 py-2">
+                              Confirm Promise
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            {showConfirmPromise && (
+                              <BuyerConfirmPromise
+                                promiseId={selectedPromise?.promise_id}
+                                amount={selectedPromise?.amount}
+                                onClose={handleConfirmPromiseClose}
+                              />
+                            )}
+                          </Modal.Body>
+                        </Modal>
+
+                        <Modal
+                          show={showSettleDispute}
+                          onHide={handleSettleDisputeClose}
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title className="text-center w-100 py-2">
+                              Settle Disputed Promise
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            {showSettleDispute && (
+                              <SettleDisputedPromise
+                                promiseId={selectedPromise?.promise_id}
+                                amount={selectedPromise?.amount}
+                                onClose={handleConfirmPromiseClose}
+                              />
+                            )}
+                          </Modal.Body>
+                        </Modal>
+                        
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+              <Pagination
+                itemsPerPage={itemsPerPage}
+                totalItems={promises.length}
+                currentPage={currentPage}
+                paginate={paginate}
+              />
+            </>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
-};
+}
 
-export default PaysofterAccountFund;
+export default PaysofterPromise;
