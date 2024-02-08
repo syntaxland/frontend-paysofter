@@ -447,7 +447,7 @@ function PaysofterPromiseSeller({ history }) {
                             <>
                               {promise.seller_fulfilled_promise  ? (
                                 <>
-                                  <Button variant="outline-success" size="sm" disabled>
+                                  <Button variant="outline-success" size="sm" disabled> 
                                     Promise Confirmed
                                   </Button>
                                 </>
