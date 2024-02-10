@@ -48,6 +48,9 @@ import {
   GET_USER_USD_FUND_ACCOUNT_DEBITS_REQUEST,
   GET_USER_USD_FUND_ACCOUNT_DEBITS_SUCCESS,
   GET_USER_USD_FUND_ACCOUNT_DEBITS_FAIL,
+  SET_MAX_USD_FUND_WITHDRAWAL_REQUEST,
+SET_MAX_USD_FUND_WITHDRAWAL_SUCCESS,
+SET_MAX_USD_FUND_WITHDRAWAL_FAIL,
 } from "../constants/AccountFundConstants";
 
 const initialState = {
@@ -59,6 +62,22 @@ const initialState = {
   accountFundBalance: [],
   usdFundBalance: [],
   formattedEmail: [],
+};
+
+export const setMaxUsdFundReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_MAX_USD_FUND_WITHDRAWAL_REQUEST:
+      return { loading: true };
+    case SET_MAX_USD_FUND_WITHDRAWAL_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case SET_MAX_USD_FUND_WITHDRAWAL_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const getUserUsdAccountFundCreditsReducer = (

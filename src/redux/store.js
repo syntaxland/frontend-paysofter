@@ -15,20 +15,25 @@ import {
 } from "./reducers/userReducers";
 
 import {
+  selecteCurrencyReducer,
+  getSelectedCurrencyReducer,
+} from "./reducers/settingsReducers";
+
+import {
   sellerAccountReducer,
   getSellerAccountReducer,
   createBusinessStatusReducer,
-getBusinessStatusReducer,
-updateBusinessStatusReducer,
+  getBusinessStatusReducer,
+  updateBusinessStatusReducer,
   updateSellerAccountReducer,
   getBusinessOwnerDetailsReducer,
-updateBusinessOwnerDetailsReducer,
-getBankAccountReducer,
-updateBankAccountReducer,
-getSellerBvnReducer,
-updateSellerBvnReducer,
-getSellerPhotoReducer,
-updateSellerPhotoReducer,
+  updateBusinessOwnerDetailsReducer,
+  getBankAccountReducer,
+  updateBankAccountReducer,
+  getSellerBvnReducer,
+  updateSellerBvnReducer,
+  getSellerPhotoReducer,
+  updateSellerPhotoReducer,
   businessOwnerDetailReducer,
   sellerBankAccountReducer,
   sellerBvnReducer,
@@ -48,11 +53,11 @@ import {
   disableAccountFundReducer,
   verifyOtpAccountFundReducer,
   setMaxFundReducer,
+  setMaxUsdFundReducer,
   getUserAccountBalanceReducer,
   userAccountFundListReducer,
-
   getUserUsdAccountFundCreditsReducer,
-getUserUsdAccountFundDebitsReducer,
+  getUserUsdAccountFundDebitsReducer,
 } from "./reducers/AccountFundReducers";
 
 import {
@@ -119,14 +124,14 @@ const reducer = combineReducers({
   fundUsdAccountState: fundUsdAccountReducer,
 
   getUserUsdAccountFundCreditsState: getUserUsdAccountFundCreditsReducer,
-getUserUsdAccountFundDebitsState: getUserUsdAccountFundDebitsReducer,
+  getUserUsdAccountFundDebitsState: getUserUsdAccountFundDebitsReducer,
 
-  
   getUserAccountFundCreditsState: getUserAccountFundCreditsReducer,
   toggleAccountFundState: toggleAccountFundReducer,
   disableAccountFundState: disableAccountFundReducer,
   verifyOtpAccountFundState: verifyOtpAccountFundReducer,
   setMaxFundState: setMaxFundReducer,
+  setMaxUsdFundState: setMaxUsdFundReducer,
   userAccountBalanceState: getUserAccountBalanceReducer,
   userAccountFundListState: userAccountFundListReducer,
   getBuyerPromiseState: getBuyerpromiseReducer,
@@ -148,17 +153,17 @@ getUserUsdAccountFundDebitsState: getUserUsdAccountFundDebitsReducer,
   updateSellerAccountState: updateSellerAccountReducer,
 
   createBusinessStatusState: createBusinessStatusReducer,
-getBusinessStatusState: getBusinessStatusReducer,
-updateBusinessStatusState: updateBusinessStatusReducer,
+  getBusinessStatusState: getBusinessStatusReducer,
+  updateBusinessStatusState: updateBusinessStatusReducer,
 
   getBusinessOwnerDetailsState: getBusinessOwnerDetailsReducer,
-updateBusinessOwnerDetailsState: updateBusinessOwnerDetailsReducer,
-getBankAccountState: getBankAccountReducer,
-updateBankAccountState: updateBankAccountReducer,
-getSellerBvnState: getSellerBvnReducer,
-updateSellerBvnState: updateSellerBvnReducer,
-getSellerPhotoState: getSellerPhotoReducer,
-updateSellerPhotoState: updateSellerPhotoReducer,
+  updateBusinessOwnerDetailsState: updateBusinessOwnerDetailsReducer,
+  getBankAccountState: getBankAccountReducer,
+  updateBankAccountState: updateBankAccountReducer,
+  getSellerBvnState: getSellerBvnReducer,
+  updateSellerBvnState: updateSellerBvnReducer,
+  getSellerPhotoState: getSellerPhotoReducer,
+  updateSellerPhotoState: updateSellerPhotoReducer,
 
   businessOwnerDetailState: businessOwnerDetailReducer,
   sellerBankAccountState: sellerBankAccountReducer,
@@ -166,6 +171,9 @@ updateSellerPhotoState: updateSellerPhotoReducer,
   sellerPhotoState: sellerPhotoReducer,
 
   orderList: orderListReducer,
+
+  selecteCurrencyState: selecteCurrencyReducer,
+  getSelectedCurrencyState: getSelectedCurrencyReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

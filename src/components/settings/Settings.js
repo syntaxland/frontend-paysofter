@@ -8,11 +8,13 @@ import {
   faSun,
   faMoon,
 } from "@fortawesome/free-solid-svg-icons";
-import // getUserProfile,
-// updateUserAvatar,
-"../../redux/actions/userProfileActions";
 
-import { getUserAccountFundBalance } from "../../redux/actions/AccountFundActions";
+import { getUserProfile } from "../../redux/actions/userProfileActions";
+
+import {
+  getUserAccountFundBalance,
+  getUserUsdAccountFundBalance,
+} from "../../redux/actions/AccountFundActions";
 
 import {
   Form,
@@ -29,14 +31,11 @@ import Loader from "../Loader";
 import ToggleAccountSettings from "./ToggleAccountSettings";
 import MaxWithdrawalSettings from "./MaxWithdrawalSettings";
 
-// import { lightTheme, darkTheme, GlobalStyle } from "./Themes";
-// import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import SetMaxUsdWithdrawal from "./SetMaxUsdWithdrawal";
+import ToggleUsdAccountSettings from "./ToggleUsdAccountSettings";
 
 function Settings() {
   const dispatch = useDispatch();
-  // const userProfile = useSelector((state) => state.userProfile);
-  // const { loading: profileLoading, error: profileError, profile } = userProfile;
-  // console.log("userProfile:", userProfile, "profile:", profile);
 
   const updateProfile = useSelector((state) => state.updateProfile);
   const { loading, error } = updateProfile;
@@ -47,8 +46,20 @@ function Settings() {
   const { accountFundBalance } = userAccountBalanceState;
   console.log("accountFundBalance:", accountFundBalance);
 
+  const getUserUsdAccountFundBalanceState = useSelector(
+    (state) => state.getUserUsdAccountFundBalanceState
+  );
+  const { usdFundBalance } = getUserUsdAccountFundBalanceState;
+  console.log("usdFundBalance:", usdFundBalance);
+
   // const userLogin = useSelector((state) => state.userLogin);
   // const { userInfo } = userLogin;
+
+  const userProfile = useSelector((state) => state.userProfile);
+  const { profile } = userProfile;
+
+  const selectedCurrency = profile?.selected_currency;
+  console.log("selected_currency:", profile?.selected_currency);
 
   // const [successMessage, setSuccessMessage] = useState("");
   const history = useHistory();
@@ -57,10 +68,10 @@ function Settings() {
   const [showSetMaxFund, setShowSetMaxFund] = useState(false);
   const [showToggleAccountSettings, setShowToggleAccountSettings] =
     useState(false);
-    const [showDisableAccountSettings, setShowDisableAccountSettings] =
+  const [showDisableAccountSettings, setShowDisableAccountSettings] =
     useState(false);
 
- const handleDisableFundOpen = () => {
+  const handleDisableFundOpen = () => {
     setShowDisableAccountSettings(true);
   };
   const handleDisableFundClose = () => {
@@ -92,7 +103,9 @@ function Settings() {
   };
 
   useEffect(() => {
+    dispatch(getUserProfile());
     dispatch(getUserAccountFundBalance());
+    dispatch(getUserUsdAccountFundBalance());
   }, [dispatch]);
 
   return (
@@ -107,170 +120,355 @@ function Settings() {
 
         <Col>
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>
-                <div>
-                  <span>Account Fund</span>{" "}
-                  {accountFundBalance?.is_diabled ? (
-                    <>
-                      {" "}
-                      <span className="py-2">
-                        <Button
-                          variant="outline"
-                          onClick={handleDisableFundOpen}
-                          className="rounded"
-                          size="sm"
-                          title="Account Fund is currently disabled. Please contact support."
-                        >
-                          <i
-                            className="fas fa-lock"
-                            style={{ fontSize: "16px", color: "red" }}
-                          ></i>{" "}
-                          Disabled
-                        </Button>
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      {" "}
-                      <Button
-                        variant="outline"
-                        onClick={handleToggleFundOpen}
-                        className="rounded"
-                        size="sm"
-                        title="Set Account Fund active or locked."
-                      >
-                        {accountFundBalance?.is_active ? (
-                          <>
-                            <i
-                              className="fas fa-lock-open"
-                              style={{ fontSize: "16px", color: "green" }}
-                            ></i>{" "}
-                            Active
-                          </>
-                        ) : (
-                          <>
-                            <i
-                              className="fas fa-lock text-warning"
-                              style={{ fontSize: "16px", 
-                              // color: "yellow"
-                             }}
-                            ></i>{" "}
-                            Locked
-                          </>
-                        )}
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </Accordion.Header>
-              <Accordion.Body>
-                <div>
-                  <h3 className="py-2">Toggle Account Fund Status</h3>
-                  <p>
-                    Enable or disable Account Fund. Note that this action will
-                    block or enable all transaction withdrawals from this
-                    account.{" "}
-                    <Button
-                      variant="outline-primary"
-                      onClick={handleToggleFundOpen}
-                      className="rounded"
-                      size="sm"
-                      title="Set Account Fund active or locked."
-                    >
-                      {accountFundBalance?.is_active ? (
+            {selectedCurrency === "NGN" && (
+              <div>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>
+                    <div>
+                      <span>Account Fund ({selectedCurrency})</span>{" "}
+                      {accountFundBalance?.is_diabled ? (
                         <>
-                          <i
-                            className="fa fa-toggle-off"
-                            style={{ fontSize: "16px", color: "red" }}
-                          ></i>{" "}
-                          Disable{" "}
+                          {" "}
+                          <span className="py-2">
+                            <Button
+                              variant="outline"
+                              onClick={handleDisableFundOpen}
+                              className="rounded"
+                              size="sm"
+                              title="Account Fund is currently disabled. Please contact support."
+                            >
+                              <i
+                                className="fas fa-lock"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              Disabled
+                            </Button>
+                          </span>
                         </>
                       ) : (
                         <>
-                          <i
-                            className="fa fa-toggle-on"
-                            style={{ fontSize: "16px", color: "green" }}
-                          ></i>{" "}
-                          Enable{" "}
+                          {" "}
+                          <Button
+                            variant="outline"
+                            onClick={handleToggleFundOpen}
+                            className="rounded"
+                            size="sm"
+                            title="Set Account Fund active or locked."
+                          >
+                            {accountFundBalance?.is_active ? (
+                              <>
+                                <i
+                                  className="fas fa-lock-open"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                Active
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fas fa-lock text-warning"
+                                  style={{
+                                    fontSize: "16px",
+                                    // color: "yellow"
+                                  }}
+                                ></i>{" "}
+                                Locked
+                              </>
+                            )}
+                          </Button>
                         </>
                       )}
-                    </Button>
-                  </p>
+                    </div>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <div>
+                      <h3 className="py-2">Toggle Account Fund Status</h3>
+                      <p>
+                        Enable or disable Account Fund. Note that this action
+                        will block or enable all transaction withdrawals from
+                        this account.{" "}
+                        <Button
+                          variant="outline-primary"
+                          onClick={handleToggleFundOpen}
+                          className="rounded"
+                          size="sm"
+                          title="Set Account Fund active or locked."
+                        >
+                          {accountFundBalance?.is_active ? (
+                            <>
+                              <i
+                                className="fa fa-toggle-off"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              Disable{" "}
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fa fa-toggle-on"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Enable{" "}
+                            </>
+                          )}
+                        </Button>
+                      </p>
 
-                  <Modal
-                    show={showToggleAccountSettings}
-                    onHide={handleToggleFundClose}
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title className="text-center w-100 py-2">
-                        Toggle Account Fund Status
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      {showToggleAccountSettings && <ToggleAccountSettings />} 
-                    </Modal.Body>
-                  </Modal>
+                      <Modal
+                        show={showToggleAccountSettings}
+                        onHide={handleToggleFundClose}
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title className="text-center w-100 py-2">
+                            Toggle Account Fund Status
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          {showToggleAccountSettings && (
+                            <ToggleAccountSettings />
+                          )}
+                        </Modal.Body>
+                      </Modal>
 
-                  <Modal
-                      show={showDisableAccountSettings}
-                      onHide={handleDisableFundClose}
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title className="text-center w-100 py-2">
-                          Account Fund Disabled
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <p className="text-center  py-2">
-                          Account Fund is currently disabled. Please contact
-                          support for reactivation.
-                        </p>
-                      </Modal.Body>
-                    </Modal>
-                </div>
+                      <Modal
+                        show={showDisableAccountSettings}
+                        onHide={handleDisableFundClose}
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title className="text-center w-100 py-2">
+                            Account Fund Disabled
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <p className="text-center  py-2">
+                            Account Fund is currently disabled. Please contact
+                            support for reactivation.
+                          </p>
+                        </Modal.Body>
+                      </Modal>
+                    </div>
 
-                <div>
-                  <h3 className="py-2">Set Maximum Withdrawal</h3>
-                  <strong className="py-2 mb-2">
-                    Current Limit: NGN{" "}
-                    {accountFundBalance?.max_withdrawal?.toLocaleString(
-                      undefined,
-                      {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }
-                    )}
-                  </strong>
-                  <p>
-                    The maximum amount that can be withdrawn from this fund
-                    account can be set.
-                    <Button
-                      variant="outline-primary"
-                      onClick={handleSetMaxFundOpen}
-                      title="Set Account Fund active or locked."
-                    >
-                      <i
-                        className="fas fa-sack-dollar"
-                        style={{ fontSize: "18px", color: "green" }}
-                      ></i>{" "}
-                      Set Limit
-                    </Button>
-                  </p>
+                    <div>
+                      <h3 className="py-2">Set Maximum Withdrawal</h3>
+                      <strong className="py-2 mb-2">
+                        Current Limit: {selectedCurrency}{" "}
+                        {accountFundBalance?.max_withdrawal?.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }
+                        )}
+                      </strong>
+                      <p>
+                        The maximum amount that can be withdrawn from this fund
+                        account can be set.
+                        <Button
+                          variant="outline-primary"
+                          onClick={handleSetMaxFundOpen}
+                          title="Set Account Fund active or locked."
+                        >
+                          <i
+                            className="fas fa-sack-dollar"
+                            style={{ fontSize: "18px", color: "green" }}
+                          ></i>{" "}
+                          Set Limit
+                        </Button>
+                      </p>
 
-                  <Modal show={showSetMaxFund} onHide={handleSetMaxFundClose}>
-                    <Modal.Header closeButton>
-                      <Modal.Title className="text-center w-100 py-2">
-                        Set Maximum Withdrawal Account
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      {showSetMaxFund && <MaxWithdrawalSettings />}
-                    </Modal.Body>
-                  </Modal>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
+                      <Modal
+                        show={showSetMaxFund}
+                        onHide={handleSetMaxFundClose}
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title className="text-center w-100 py-2">
+                            Set Maximum Withdrawal Account
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          {showSetMaxFund && <MaxWithdrawalSettings />}
+                        </Modal.Body>
+                      </Modal>
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </div>
+            )}
+
+            {selectedCurrency === "USD" && (
+              <div>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>
+                    <div>
+                      <span>Account Fund ({selectedCurrency})</span>{" "}
+                      {usdFundBalance?.is_diabled ? (
+                        <>
+                          {" "}
+                          <span className="py-2">
+                            <Button
+                              variant="outline"
+                              onClick={handleDisableFundOpen}
+                              className="rounded"
+                              size="sm"
+                              title="Account Fund is currently disabled. Please contact support."
+                            >
+                              <i
+                                className="fas fa-lock"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              Disabled
+                            </Button>
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <Button
+                            variant="outline"
+                            onClick={handleToggleFundOpen}
+                            className="rounded"
+                            size="sm"
+                            title="Set Account Fund active or locked."
+                          >
+                            {usdFundBalance?.is_active ? (
+                              <>
+                                <i
+                                  className="fas fa-lock-open"
+                                  style={{ fontSize: "16px", color: "green" }}
+                                ></i>{" "}
+                                Active
+                              </>
+                            ) : (
+                              <>
+                                <i
+                                  className="fas fa-lock text-warning"
+                                  style={{
+                                    fontSize: "16px",
+                                    // color: "yellow"
+                                  }}
+                                ></i>{" "}
+                                Locked
+                              </>
+                            )}
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <div>
+                      <h3 className="py-2">Toggle Account Fund Status</h3>
+                      <p>
+                        Enable or disable Account Fund. Note that this action
+                        will block or enable all transaction withdrawals from
+                        this account.{" "}
+                        <Button
+                          variant="outline-primary"
+                          onClick={handleToggleFundOpen}
+                          className="rounded"
+                          size="sm"
+                          title="Set Account Fund active or locked."
+                        >
+                          {usdFundBalance?.is_active ? (
+                            <>
+                              <i
+                                className="fa fa-toggle-off"
+                                style={{ fontSize: "16px", color: "red" }}
+                              ></i>{" "}
+                              Disable{" "}
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className="fa fa-toggle-on"
+                                style={{ fontSize: "16px", color: "green" }}
+                              ></i>{" "}
+                              Enable{" "}
+                            </>
+                          )}
+                        </Button>
+                      </p>
+
+                      <Modal
+                        show={showToggleAccountSettings}
+                        onHide={handleToggleFundClose}
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title className="text-center w-100 py-2">
+                            Toggle Account Fund Status
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          {showToggleAccountSettings && (
+                            <ToggleUsdAccountSettings />
+                          )}
+                        </Modal.Body>
+                      </Modal>
+
+                      <Modal
+                        show={showDisableAccountSettings}
+                        onHide={handleDisableFundClose}
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title className="text-center w-100 py-2">
+                            Account Fund Disabled
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <p className="text-center  py-2">
+                            Account Fund is currently disabled. Please contact
+                            support for reactivation.
+                          </p>
+                        </Modal.Body>
+                      </Modal>
+                    </div>
+
+                    <div>
+                      <h3 className="py-2">Set Maximum Withdrawal</h3>
+                      <strong className="py-2 mb-2">
+                        Current Limit: {selectedCurrency}{" "}
+                        {usdFundBalance?.max_withdrawal?.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }
+                        )}
+                      </strong>
+                      <p>
+                        The maximum amount that can be withdrawn from this fund
+                        account can be set.
+                        <Button
+                          variant="outline-primary"
+                          onClick={handleSetMaxFundOpen}
+                          title="Set Account Fund active or locked."
+                        >
+                          <i
+                            className="fas fa-sack-dollar"
+                            style={{ fontSize: "18px", color: "green" }}
+                          ></i>{" "}
+                          Set Limit
+                        </Button>
+                      </p>
+
+                      <Modal
+                        show={showSetMaxFund}
+                        onHide={handleSetMaxFundClose}
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title className="text-center w-100 py-2">
+                            Set Maximum Withdrawal Account
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          {showSetMaxFund && <SetMaxUsdWithdrawal />}
+                        </Modal.Body>
+                      </Modal>
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </div>
+            )}
 
             <Accordion.Item eventKey="1">
               <Accordion.Header>Change Password</Accordion.Header>

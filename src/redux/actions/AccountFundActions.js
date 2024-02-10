@@ -50,9 +50,53 @@ GET_USER_USD_FUND_ACCOUNT_CREDITS_FAIL,
 GET_USER_USD_FUND_ACCOUNT_DEBITS_REQUEST,
 GET_USER_USD_FUND_ACCOUNT_DEBITS_SUCCESS,
 GET_USER_USD_FUND_ACCOUNT_DEBITS_FAIL,
+
+SET_MAX_USD_FUND_WITHDRAWAL_REQUEST,
+SET_MAX_USD_FUND_WITHDRAWAL_SUCCESS,
+SET_MAX_USD_FUND_WITHDRAWAL_FAIL,
 } from "../constants/AccountFundConstants";
 
 const API_URL = process.env.REACT_APP_API_URL;
+
+export const setMaxUsdWithdrawal = (amountData) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SET_MAX_USD_FUND_WITHDRAWAL_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `${API_URL}/api/set-maximum-usd-withdrawal/`,
+      amountData,
+      config
+    );
+
+    dispatch({
+      type: SET_MAX_USD_FUND_WITHDRAWAL_SUCCESS,
+      payload: data,
+    });
+    // window.location.reload();
+    // window.location.href = "/dashboard/users";
+  } catch (error) {
+    dispatch({
+      type: SET_MAX_USD_FUND_WITHDRAWAL_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const getUserUsdAccountFundCredits = () => async (dispatch, getState) => {
   try {

@@ -1,5 +1,8 @@
 // Dashboard.js
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  // useState
+} from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { useHistory } from "react-router-dom";
 import { Col, Row, Button } from "react-bootstrap";
@@ -9,7 +12,7 @@ import { getUserTransactions } from "../../redux/actions/transactionActions";
 import { getUserPayouts } from "../../redux/actions/payoutActions";
 import { getUserProfile } from "../../redux/actions/userProfileActions";
 import { Line, Pie } from "react-chartjs-2";
-import Select from "react-select";
+// import Select from "react-select";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -22,8 +25,9 @@ import {
   PointElement,
   Title,
 } from "chart.js";
-import GetNgnAccountFundBalance from "../FundAccount/GetNgnAccountFundBalance"; 
+import GetNgnAccountFundBalance from "../FundAccount/GetNgnAccountFundBalance";
 import GetUsdAccountFundBalance from "../FundAccount/GetUsdAccountFundBalance";
+import SelectCurrency from "../settings/SelectCurrency";
 
 ChartJS.register(
   ArcElement,
@@ -42,9 +46,9 @@ function Dashboard() {
   const dispatch = useDispatch();
   // const history = useHistory();
 
-  const userProfile = useSelector((state) => state.userProfile); 
+  const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
-  console.log("is_usd_selected:", profile?.is_usd_selected);
+  // console.log("is_usd_selected:", profile?.is_usd_selected);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -81,13 +85,18 @@ function Dashboard() {
   const { loading: payoutLoading, payouts, error: payoutError } = userPayouts;
   console.log("User Dashboard Payouts:", payouts);
 
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const selectedCurrency = profile?.selected_currency;
+  console.log("selected_currency:", profile?.selected_currency);
+
+  // const [selectedCurrency] = useState(profile?.selected_currency);
+
+  // const [selectedCurrency, setSelectedCurrency] = useState(profile?.selected_currency);
   // const [liveMode, setLiveMode] = useState(false);
 
-  const handleCurrencyChange = (selectedOption) => {
-    setSelectedCurrency(selectedOption.value);
-    // setSelectedCurrency(profile?.is_usd_selected ? "USD" : "NGN");
-  };
+  // const handleCurrencyChange = (selectedOption) => {
+  //   setSelectedCurrency(selectedOption.value);
+  //   // setSelectedCurrency(profile?.is_usd_selected ? "USD" : "NGN");
+  // };
 
   useEffect(() => {
     dispatch(getUserProfile());
@@ -224,10 +233,10 @@ function Dashboard() {
     maintainAspectRatio: false,
   };
 
-  const CURRENCY_CHOICES = [
-    ["USD", "USD"],
-    ["NGN", "NGN"],
-  ];
+  // const CURRENCY_CHOICES = [
+  //   ["USD", "USD"],
+  //   ["NGN", "NGN"],
+  // ];
 
   return (
     <div className="justify-content-center text-center">
@@ -247,7 +256,6 @@ function Dashboard() {
                 <Row>
                   <Col>
                     <div>
-                      
                       {/* <div className="bar-chart">
                         <h2 className="py-2">
                           <i className="	fas fa-money-bill"></i> Total Payments
@@ -261,13 +269,18 @@ function Dashboard() {
                           })}
                         </strong>
                       </div> */}
-
                     </div>
                   </Col>
 
                   <Row className="py-2 d-flex justify-content-center">
                     <Col md={4}>
                       <div>
+                        <SelectCurrency
+                        // selectedCurrency={selectedCurrency}
+                        // handleCurrencyChange={handleCurrencyChange}
+                        />
+                      </div>
+                      {/* <div>
                         <Select
                           options={CURRENCY_CHOICES.map(([value, label]) => ({
                             value,
@@ -282,7 +295,7 @@ function Dashboard() {
                           className="rounded py-2 mb-2"
                           required
                         />
-                      </div>
+                      </div> */}
                     </Col>
                   </Row>
 
