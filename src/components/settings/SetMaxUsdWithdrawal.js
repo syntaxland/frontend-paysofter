@@ -80,9 +80,9 @@ function SetMaxUsdWithdrawal({ history }) {
                 <option value="500">Less than 500 USD</option>
                 <option value="1000">Less than 1,000 USD</option>
                 <option value="2000">Less than 2,000 USD</option>
+                <option value="3000">Less than 3,000 USD</option>
                 <option value="5000">Less than 5,000 USD</option>
-                <option value="10000">Less than 10,000 USD</option>
-                <option value="1000000">More than 10,000 USD</option>
+                <option value="10000">More than 10,000 USD</option>
               </Form.Control>
             </Form.Group>
 

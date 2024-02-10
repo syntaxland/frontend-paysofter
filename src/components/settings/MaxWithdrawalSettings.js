@@ -79,8 +79,8 @@ function MaxWithdrawalSettings({ history }) {
                 <option value="500000">Less than 500,000 NGN</option>
                 <option value="1000000">Less than 1,000,000 NGN</option>
                 <option value="2000000">Less than 2,000,000 NGN</option>
+                <option value="3000000">Less than 3,000,000 NGN</option>
                 <option value="5000000">Less than 5,000,000 NGN</option>
-                <option value="10000000">Less than 10,000,000 NGN</option>
                 <option value="1000000000">More than 10,000,000 NGN</option>
               </Form.Control>
             </Form.Group>
