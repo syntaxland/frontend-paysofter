@@ -15,6 +15,7 @@ import Dashboard from "./Dashboard";
 // import CreditPoint from "./CreditPoint";
 // import SetPromoCode from "./SetPromoCode";
 // import PromoTimer from "./ApplyPromoCode";
+import SupportTicket from "./SupportTicket";
 
 function AdminDashboard({ history }) {
   const [activeTab, setActiveTab] = useState("admin-dashboard");
@@ -71,6 +72,9 @@ function AdminDashboard({ history }) {
       // case "set-promo-code":
       //   return <SetPromoCode />;
 
+      case "support-ticket":
+        return <SupportTicket />;
+
       default:
         return <Dashboard />;
     }
@@ -94,17 +98,19 @@ function AdminDashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "admin-dashboard" ? "info" : "outline-info"
+                    activeTab === "admin-dashboard" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
-                  onClick={() => handleTabChange("admin-dashboard")} 
+                  onClick={() => handleTabChange("admin-dashboard")}
                 >
                   <i className="fa fa-dashboard"></i> Admin Dashboard
                 </Button>
               </div>
               <div>
                 <Button
-                  variant={activeTab === "all-promises" ? "info" : "outline-info"}
+                  variant={
+                    activeTab === "all-promises" ? "primary" : "outline-primary"
+                  }
                   className="sidebar-link"
                   onClick={() => handleTabChange("all-promises")}
                 >
@@ -113,18 +119,22 @@ function AdminDashboard({ history }) {
               </div>
               <div>
                 <Button
-                  variant={activeTab === "account-fund-balances" ? "info" : "outline-info"}
+                  variant={
+                    activeTab === "account-fund-balances"
+                      ? "primary"
+                      : "outline-primary"
+                  }
                   className="sidebar-link"
                   onClick={() => handleTabChange("account-fund-balances")}
                 >
                   <i className="fas fa-credit-card"></i> Account Fund
                 </Button>
               </div>
-              
+
               {/* <div>
                 <Button
                   variant={
-                    activeTab === "order-shipment" ? "info" : "outline-info"
+                    activeTab === "order-shipment" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("order-shipment")}
@@ -136,7 +146,7 @@ function AdminDashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "send-message" ? "info" : "outline-info"
+                    activeTab === "send-message" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("send-message")}
@@ -147,7 +157,7 @@ function AdminDashboard({ history }) {
 
               <div>
                 <Button
-                  variant={activeTab === "send-email" ? "info" : "outline-info"}
+                  variant={activeTab === "send-email" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("send-email")}
                 >
@@ -158,7 +168,7 @@ function AdminDashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "message-inbox" ? "info" : "outline-info"
+                    activeTab === "message-inbox" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("message-inbox")}
@@ -171,8 +181,8 @@ function AdminDashboard({ history }) {
                 <Button
                   variant={
                     activeTab === "credit-point-requests"
-                      ? "info"
-                      : "outline-info"
+                      ? "primary"
+                      : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("credit-point-requests")}
@@ -184,7 +194,7 @@ function AdminDashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "set-promo-code" ? "info" : "outline-info"
+                    activeTab === "set-promo-code" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("set-promo-code")}
@@ -195,7 +205,7 @@ function AdminDashboard({ history }) {
 
               {/* <div>
                 <Button
-                  variant={activeTab === "promo-code" ? "info" : "outline-info"}
+                  variant={activeTab === "promo-code" ? "primary" : "outline-primary"}
                   className="sidebar-link"
                   onClick={() => handleTabChange("promo-code")}
                 >
@@ -206,7 +216,21 @@ function AdminDashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "admin-dashboard" ? "info" : "outline-info"
+                    activeTab === "support-ticket"
+                      ? "primary"
+                      : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("support-ticket")}
+                >
+                  <i className="fa fa-ticket"></i> Support Tickets
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "admin-dashboard" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleUserDashboard()}

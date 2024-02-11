@@ -54,6 +54,9 @@ import SellerPhoto from "./components/sellers/SellerPhoto";
 
 import PromiseMessage from "./components/promise/PromiseMessage";
 
+import CreateSupportTicket from "./components/support/CreateSupportTicket";
+import SupportTicketDetails from "./components/support/SupportTicketDetails";
+
 function App() {
   // const userLogin = useSelector((state) => state.userLogin);
   // const { userInfo } = userLogin;
@@ -94,6 +97,9 @@ function App() {
           <Route path="/dashboard/users/" component={UserDashboard} />
           <Route path="/dashboard/sellers" component={SellerDashboard} />
           <Route path="/dashboard/admin" component={AdminDashboard} /> 
+          
+          <Route path="/create-support-ticket" component={CreateSupportTicket} /> 
+                    <Route path="/support/ticket/:id" component={SupportTicketDetails} />
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
           <Route path="/checkout" component={CheckoutScreen} />

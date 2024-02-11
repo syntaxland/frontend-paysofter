@@ -13,7 +13,7 @@ import {
   Col,
 } from "react-bootstrap";
 import { getUserProfile } from "../redux/actions/userProfileActions";
-import { logout } from "../redux/actions/userActions"; 
+import { logout } from "../redux/actions/userActions";
 import "./Header.css";
 
 function Header() {
@@ -89,7 +89,7 @@ function Header() {
       <Row>
         <Col>
           <Navbar
-            bg="primary" 
+            bg="primary"
             variant="dark"
             className="custom-dark-blue"
             expand="md"
@@ -293,6 +293,23 @@ function Header() {
                             <span>Settings</span>
                           </Nav.Link>
                           <NavDropdown.Divider />
+
+                          <div>
+                            {userInfo ? (
+                              <>
+                                <Nav.Link as={Link} to="/create-support-ticket">
+                                  <i
+                                    className="fas fa-question-circle"
+                                    style={{ fontSize: "16px" }}
+                                  ></i>{" "}
+                                  Support 
+                                </Nav.Link>
+                              </> 
+                            ) : (
+                              <></>
+                            )}
+                          </div>
+                          <NavDropdown.Divider />
                         </>
                       </NavDropdown>
                     </div>
@@ -301,14 +318,14 @@ function Header() {
                       title={
                         <i
                           className="fa fa-user-circle"
-                          style={{ fontSize: "16px" }}  
-                        ></i> 
+                          style={{ fontSize: "16px" }}
+                        ></i>
                       }
-                      className="profile-dropdown custom-dropdown" 
+                      className="profile-dropdown custom-dropdown"
                       align="end"
                     >
                       <Nav.Link
-                        as={Link} 
+                        as={Link}
                         to="/register"
                         className="dropdown-item"
                       >

@@ -146,7 +146,7 @@ function AccountFund({history}) {
                                     })
                                   }
                                 >
-                                  Activate Account Fund
+                                  Enable Account Fund
                                 </Button>
                               </>
                             ) : (
@@ -176,7 +176,7 @@ function AccountFund({history}) {
                         >
                           <Modal.Header closeButton>
                             <Modal.Title className="text-center w-100 py-2">
-                              Activate Account Fund
+                            Enable Account Fund
                             </Modal.Title>
                           </Modal.Header>
                           <Modal.Body>

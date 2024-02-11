@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 // import { login } from "../../redux/actions/userActions";
 
-import { getUserProfile } from "../../redux/actions/userProfileActions";
+import { getUserProfile } from "../../redux/actions/userProfileActions"; 
 
 import UserProfile from "./UserProfile";
 // import Transactions from "./Transactions";
@@ -22,6 +22,7 @@ import AccountFunds from "./AccountFunds";
 // import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
 import PaysofterPromise from "./PaysofterPromise";
+import SupportTicket from "../support/SupportTicket";
 
 function UserDashboard() {
   const dispatch = useDispatch();
@@ -115,6 +116,9 @@ function UserDashboard() {
 
       // case "referrals":
       //   return <Referrals />;
+
+      case "support-ticket":
+        return <SupportTicket />;
 
       default:
         return <Dashboard />;
@@ -328,11 +332,11 @@ function UserDashboard() {
               <div>
                 <Button
                   variant={
-                    activeTab === "ticket" ? "primary" : "outline-primary"
+                    activeTab === "support-ticket" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
-                  onClick={() => handleTabChange("ticket")}
-                >
+                  onClick={() => handleTabChange("support-ticket")}
+                >  
                   <i className="fa fa-ticket"></i> Support Ticket
                 </Button>
               </div>

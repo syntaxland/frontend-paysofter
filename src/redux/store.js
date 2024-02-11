@@ -92,6 +92,18 @@ import {
   creditPointRequestCreateReducer,
 } from "./reducers/creditPointReducers";
 
+import {
+  createSupportTicketReducer,
+  createSupportMessageReducer,
+  listSupportTicketReducer,
+  listSupportMessageReducer,
+  replySupportTicketReducer,
+  listSupportTicketReplyReducer,
+  ticketDetailListReducer,
+  allTicketListReducer,
+  allTicketResponseReducer,
+} from "./reducers/supportReducers";
+
 import { referralReducer } from "./reducers/promoReducer";
 import { orderListReducer } from "./reducers/orderReducers";
 const reducer = combineReducers({
@@ -174,6 +186,16 @@ const reducer = combineReducers({
 
   selecteCurrencyState: selecteCurrencyReducer,
   getSelectedCurrencyState: getSelectedCurrencyReducer,
+
+  createSupportTicketState: createSupportTicketReducer,
+  createSupportMessageState: createSupportMessageReducer,
+  listSupportTicketState: listSupportTicketReducer,
+  listSupportMessageState: listSupportMessageReducer,
+  replySupportTicketState: replySupportTicketReducer,
+  listSupportTicketReplyState: listSupportTicketReplyReducer,
+  ticketDetailList: ticketDetailListReducer,
+  allTicketList: allTicketListReducer,
+  allTicketResponse: allTicketResponseReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

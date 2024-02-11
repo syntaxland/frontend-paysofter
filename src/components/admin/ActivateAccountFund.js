@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import Message from "../Message";
 import Loader from "../Loader";
 
-function ActivateAccountFund({ accountId }) {
+function ActivateAccountFund({ accountId }) { 
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -30,7 +30,7 @@ function ActivateAccountFund({ accountId }) {
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {
-        history.push("/");
+        // history.push("/");
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -143,7 +143,7 @@ function ActivateAccountFund({ accountId }) {
               className="rounded mt-2 text-center w-100"
               disabled={loading || success}
             >
-              Activate Account Fund
+              Enable  
             </Button>
           </Form>
         </Col>
