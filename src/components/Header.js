@@ -283,15 +283,16 @@ function Header() {
 
                           <NavDropdown.Divider />
 
-                          <Nav.Link
-                            as={Link}
-                            to="/settings"
-                            className="dropdown-item"
-                          >
-                            {" "}
-                            <i className="fas fa-gear"></i>{" "}
-                            <span>Settings</span>
-                          </Nav.Link>
+                          <div>
+                            <Nav.Link
+                              as={Link}
+                              to="/settings"
+                              // className="dropdown-item"
+                            >
+                              {" "}
+                              <i className="fas fa-gear"></i> Settings
+                            </Nav.Link>
+                          </div>
                           <NavDropdown.Divider />
 
                           <div>
@@ -302,9 +303,9 @@ function Header() {
                                     className="fas fa-question-circle"
                                     style={{ fontSize: "16px" }}
                                   ></i>{" "}
-                                  Support 
+                                  Support
                                 </Nav.Link>
-                              </> 
+                              </>
                             ) : (
                               <></>
                             )}
