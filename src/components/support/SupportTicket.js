@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Container } from "react-bootstrap";
 import {
   listSupportTicket,
   // listSupportMessage,
@@ -57,7 +57,7 @@ function SupportTicket() {
   };
 
   return (
-    <div>
+    <Container>
       <h1 className="text-center py-3">
         <i className="fas fa-ticket"></i> Support Ticket
       </h1>
@@ -153,7 +153,7 @@ function SupportTicket() {
           Create A New Support Ticket
         </Button>
       </div>
-    </div>
+    </Container>
   ); 
 }
 

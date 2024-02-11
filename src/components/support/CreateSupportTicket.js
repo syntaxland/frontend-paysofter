@@ -44,7 +44,7 @@ function CreateSupportTicket({ history }) {
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {
-        history.push("/dashboard/users");
+        history.push("/support/tickets/");
         window.location.reload();
       }, 1000);
       return () => clearTimeout(timer);
@@ -53,9 +53,9 @@ function CreateSupportTicket({ history }) {
 
   return (
     <div>
-      <Row className="justify-content-center">
+      <Row className="d-flex justify-content-center">
         <Col xs={12} md={6}>
-          <h2 className="text-center">Create A New Support Ticket</h2>
+          <h2 className="text-center py-2">Create A New Support Ticket</h2>
           {loading && <Loader />}
           {error && <Message variant="danger">{error}</Message>}
           {success && (
@@ -70,16 +70,16 @@ function CreateSupportTicket({ history }) {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
-                <option value="support">Support</option>
-                <option value="payments">Account Fund</option>
+                <option value="Support">Support</option>
+                <option value="Account Fund">Account Fund</option>
                 <option value="billing">Billing</option>
-                <option value="abuse">Abuse</option>
-                <option value="otp">OTP</option>
-                <option value="payments">Payments</option>
-                <option value="services">Services</option>
-                <option value="credit_points">Credit Points</option>
-                <option value="referrals">Referrals</option>
-                <option value="others">Others</option>
+                <option value="Abuse">Abuse</option>
+                <option value="OTP">OTP</option>
+                <option value="Payments">Payments</option>
+                <option value="Services">Services</option>
+                <option value="Credit Points">Credit Points</option>
+                <option value="Referrals">Referrals</option>
+                <option value="Others">Others</option>
               </Form.Control>
             </Form.Group>
 
@@ -90,6 +90,7 @@ function CreateSupportTicket({ history }) {
                 type="text"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
+                placeholder="Enter subject"
                 maxLength={80}
               ></Form.Control>
             </Form.Group>
@@ -101,6 +102,7 @@ function CreateSupportTicket({ history }) {
                 as="textarea"
                 rows={4}
                 value={message}
+                placeholder="Enter message"
                 maxLength={1000}
                 onChange={(e) => setMessage(e.target.value)}
               ></Form.Control>

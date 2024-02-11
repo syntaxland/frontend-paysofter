@@ -298,7 +298,7 @@ function Header() {
                           <div>
                             {userInfo ? (
                               <>
-                                <Nav.Link as={Link} to="/create-support-ticket">
+                                <Nav.Link as={Link} to="/support/tickets/">
                                   <i
                                     className="fas fa-question-circle"
                                     style={{ fontSize: "16px" }}

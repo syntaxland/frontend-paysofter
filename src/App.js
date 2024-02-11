@@ -55,6 +55,7 @@ import SellerPhoto from "./components/sellers/SellerPhoto";
 import PromiseMessage from "./components/promise/PromiseMessage";
 
 import CreateSupportTicket from "./components/support/CreateSupportTicket";
+import SupportTicket from "./components/support/SupportTicket";
 import SupportTicketDetails from "./components/support/SupportTicketDetails";
 
 function App() {
@@ -77,7 +78,10 @@ function App() {
             path="/credit-point-request/"
             component={CreditPointRequestScreen}
           />
-          <Route path="/terms-and-conditions" component={TermsAndConditionScreen} />
+          <Route
+            path="/terms-and-conditions"
+            component={TermsAndConditionScreen}
+          />
 
           <Route path="/settings" component={Settings} />
           <Route path="/set-max-fund" component={MaxWithdrawalSettings} />
@@ -85,8 +89,14 @@ function App() {
 
           <Route path="/promise/buyer" component={PaysofterPromise} />
           <Route path="/promise/seller/" component={PaysofterPromiseSeller} />
-          <Route path="/create-seller-account/" component={CreateSellerAccount} />
-          <Route path="/create-business-status/" component={CreateBusinessStatus} />
+          <Route
+            path="/create-seller-account/"
+            component={CreateSellerAccount}
+          />
+          <Route
+            path="/create-business-status/"
+            component={CreateBusinessStatus}
+          />
           <Route path="/seller/details/" component={BusinessOwnerDetail} />
           <Route path="/seller/bank/" component={SellerBankAccount} />
           <Route path="/seller/bvn/" component={SellerBvn} />
@@ -96,10 +106,14 @@ function App() {
 
           <Route path="/dashboard/users/" component={UserDashboard} />
           <Route path="/dashboard/sellers" component={SellerDashboard} />
-          <Route path="/dashboard/admin" component={AdminDashboard} /> 
-          
-          <Route path="/create-support-ticket" component={CreateSupportTicket} /> 
-                    <Route path="/support/ticket/:id" component={SupportTicketDetails} />
+          <Route path="/dashboard/admin" component={AdminDashboard} />
+
+          <Route
+            path="/create-support-ticket"
+            component={CreateSupportTicket}
+          />
+          <Route path="/support/ticket/:id" component={SupportTicketDetails} />
+          <Route path="/support/tickets/" component={SupportTicket} />
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
           <Route path="/checkout" component={CheckoutScreen} />
