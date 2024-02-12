@@ -31,6 +31,7 @@ function ActivateAccountFund({ accountId }) {
     if (success) {
       const timer = setTimeout(() => {
         // history.push("/");
+        window.location.reload();
       }, 3000);
       return () => clearTimeout(timer);
     }

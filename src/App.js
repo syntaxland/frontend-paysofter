@@ -58,6 +58,8 @@ import CreateSupportTicket from "./components/support/CreateSupportTicket";
 import SupportTicket from "./components/support/SupportTicket";
 import SupportTicketDetails from "./components/support/SupportTicketDetails";
 
+import CreateFeedback from "./components/feedback/CreateFeedback";
+
 function App() {
   // const userLogin = useSelector((state) => state.userLogin);
   // const { userInfo } = userLogin;
@@ -114,6 +116,9 @@ function App() {
           />
           <Route path="/support/ticket/:id" component={SupportTicketDetails} />
           <Route path="/support/tickets/" component={SupportTicket} />
+          <Route path="/create-feedback/" component={CreateFeedback} />
+
+
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
           <Route path="/checkout" component={CheckoutScreen} />

@@ -311,6 +311,42 @@ function Header() {
                             )}
                           </div>
                           <NavDropdown.Divider />
+
+                          <div>
+                            {userInfo ? (
+                              <>
+                                <Nav.Link as={Link} to="/create-feedback/">
+                                  <i
+                                    className="fas fa-comment-dots"
+                                    style={{ fontSize: "16px" }}
+                                  ></i>{" "}
+                                  Feedback
+                                </Nav.Link>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </div>
+                          <NavDropdown.Divider />
+
+                          <div>
+                            {profile.is_superuser || profile.is_staff ? (
+                              <>
+                                <Nav.Link as={Link} to="/dashboard/admin">
+                                  <i
+                                    className="fas fa-dashboard"
+                                    style={{ fontSize: "16px" }}
+                                  ></i>{" "}
+                                 Admin 
+                                </Nav.Link>
+                              </>
+                            ) : (
+                              <>
+                                
+                              </>
+                            )}
+                          </div>
+                          <NavDropdown.Divider />
                         </>
                       </NavDropdown>
                     </div>

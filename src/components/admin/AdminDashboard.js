@@ -14,7 +14,7 @@ import AccountFund from "./AccountFund";
 import Dashboard from "./Dashboard";
 // import CreditPoint from "./CreditPoint";
 // import SetPromoCode from "./SetPromoCode";
-// import PromoTimer from "./ApplyPromoCode";
+import Feedbacks from "./Feedbacks";
 import SupportTicket from "./SupportTicket";
 
 function AdminDashboard({ history }) {
@@ -69,8 +69,8 @@ function AdminDashboard({ history }) {
       // case "promo-code":
       //   return <PromoTimer />;
 
-      // case "set-promo-code":
-      //   return <SetPromoCode />;
+      case "feedbacks":
+        return <Feedbacks />;
 
       case "support-ticket":
         return <SupportTicket />;
@@ -224,6 +224,20 @@ function AdminDashboard({ history }) {
                   onClick={() => handleTabChange("support-ticket")}
                 >
                   <i className="fa fa-ticket"></i> Support Tickets
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "feedbacks"
+                      ? "primary"
+                      : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("feedbacks")}
+                >
+                  <i className="fa fa-ticket"></i> Feedbacks
                 </Button>
               </div>
 

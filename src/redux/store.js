@@ -104,6 +104,11 @@ import {
   allTicketResponseReducer,
 } from "./reducers/supportReducers";
 
+import {
+  feedbackCreateReducer,
+  feedbackListReducer,
+} from "./reducers/feedbackReducers";
+
 import { referralReducer } from "./reducers/promoReducer";
 import { orderListReducer } from "./reducers/orderReducers";
 const reducer = combineReducers({
@@ -196,6 +201,9 @@ const reducer = combineReducers({
   ticketDetailList: ticketDetailListReducer,
   allTicketList: allTicketListReducer,
   allTicketResponse: allTicketResponseReducer,
+
+  feedbackCreate: feedbackCreateReducer,
+  feedbackList: feedbackListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

@@ -23,6 +23,7 @@ import AccountFunds from "./AccountFunds";
 import Subscriptions from "./Subscriptions";
 import PaysofterPromise from "./PaysofterPromise";
 import SupportTicket from "../support/SupportTicket";
+import CreateFeedback from "../feedback/CreateFeedback";
 
 function UserDashboard() {
   const dispatch = useDispatch();
@@ -108,8 +109,8 @@ function UserDashboard() {
       // case "credit-point":
       //   return <CreditPoint />;
 
-      // case "recommended-products":
-      //   return <RecommendedProducts />;
+      case "create-feedback":
+        return <CreateFeedback />;
 
       case "account-funds":
         return <AccountFunds />;
@@ -344,10 +345,10 @@ function UserDashboard() {
               <div>
                 <Button
                   variant={
-                    activeTab === "feedback" ? "primary" : "outline-primary"
+                    activeTab === "create-feedback" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
-                  onClick={() => handleTabChange("feedback")}
+                  onClick={() => handleTabChange("create-feedback")}
                 >
                   <i className="fa fa-comment-dots"></i> Feedback
                 </Button>
