@@ -71,6 +71,8 @@ function SupportTicket() {
                   <th>SN</th>
                   <th>Ticket ID</th>
                   <th>User</th>
+                  <th>Account ID</th>
+                  <th>username</th>
                   <th>Subject</th>
                   <th>Category</th>
                   <th>Message</th>
@@ -89,6 +91,8 @@ function SupportTicket() {
                       </Link> 
                     </td>
                     <td>{ticket.email}</td>
+                    <td>{ticket.account_id}</td>
+                    <td>{ticket.username}</td>
                     <td>{ticket.subject}</td>
                     <td>{ticket.category}</td>
                     <td>{ticket.message}</td>
