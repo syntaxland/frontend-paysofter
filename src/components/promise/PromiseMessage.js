@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import {
   createPromiseMessages,
-  listPromiseMessages,
+  listPromiseMessages, 
 } from "../../redux/actions/PromiseActions";
 import Loader from "../Loader"; 
 import Message from "../Message"; 

@@ -487,7 +487,7 @@ function PaysofterPromise({ history }) {
                             ) : (
                               <Button variant="outline-primary" size="sm">
                                 <Link
-                                  to={`/promise/message/${promise.promise_id}`}
+                                  to={`/promise/message/${promise.promise_id}`} 
                                   style={{ textDecoration: "none" }}
                                 >
                                   Message Seller

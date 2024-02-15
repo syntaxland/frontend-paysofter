@@ -118,7 +118,6 @@ function App() {
           <Route path="/support/tickets/" component={SupportTicket} />
           <Route path="/create-feedback/" component={CreateFeedback} />
 
-
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
           <Route path="/checkout" component={CheckoutScreen} />
