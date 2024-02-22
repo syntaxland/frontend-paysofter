@@ -4,7 +4,7 @@ import {
   GET_BUYER_PROMISE_REQUEST,
   GET_BUYER_PROMISE_SUCCESS,
   GET_BUYER_PROMISE_FAIL,
-  GET_SELLER_PROMISE_REQUEST, 
+  GET_SELLER_PROMISE_REQUEST,
   GET_SELLER_PROMISE_SUCCESS,
   GET_SELLER_PROMISE_FAIL,
   BUYER_CONFIRM_PROMISE_REQUEST,
@@ -13,12 +13,12 @@ import {
   SELLER_CONFIRM_PROMISE_REQUEST,
   SELLER_CONFIRM_PROMISE_SUCCESS,
   SELLER_CONFIRM_PROMISE_FAIL,
-  CREATE_PROMISE_MESSAGE_REQUEST,
-  CREATE_PROMISE_MESSAGE_SUCCESS,
-  CREATE_PROMISE_MESSAGE_FAIL,
-  LIST_PROMISE_MESSAGE_REQUEST,
-  LIST_PROMISE_MESSAGE_SUCCESS,
-  LIST_PROMISE_MESSAGE_FAIL,
+  // CREATE_PROMISE_MESSAGE_REQUEST,
+  // CREATE_PROMISE_MESSAGE_SUCCESS,
+  // CREATE_PROMISE_MESSAGE_FAIL,
+  // LIST_PROMISE_MESSAGE_REQUEST,
+  // LIST_PROMISE_MESSAGE_SUCCESS,
+  // LIST_PROMISE_MESSAGE_FAIL,
   SETTLE_DISPUTED_PROMISE_REQUEST,
   SETTLE_DISPUTED_PROMISE_SUCCESS,
   SETTLE_DISPUTED_PROMISE_FAIL,
@@ -28,9 +28,290 @@ import {
   CANCEL_PROMISE_REQUEST,
   CANCEL_PROMISE_SUCCESS,
   CANCEL_PROMISE_FAIL,
+  BUYER_CREATE_PROMISE_MESSAGE_REQUEST,
+  BUYER_CREATE_PROMISE_MESSAGE_SUCCESS,
+  BUYER_CREATE_PROMISE_MESSAGE_FAIL,
+  SELLER_CREATE_PROMISE_MESSAGE_REQUEST,
+  SELLER_CREATE_PROMISE_MESSAGE_SUCCESS,
+  SELLER_CREATE_PROMISE_MESSAGE_FAIL,
+  LIST_BUYER_PROMISE_MESSAGE_REQUEST,
+  LIST_BUYER_PROMISE_MESSAGE_SUCCESS,
+  LIST_BUYER_PROMISE_MESSAGE_FAIL,
+  LIST_SELLER_PROMISE_MESSAGE_REQUEST,
+  LIST_SELLER_PROMISE_MESSAGE_SUCCESS,
+  LIST_SELLER_PROMISE_MESSAGE_FAIL,
+  CLEAR_BUYER_PROMISE_MESSAGE_COUNTER_REQUEST,
+  CLEAR_BUYER_PROMISE_MESSAGE_COUNTER_SUCCESS,
+  CLEAR_BUYER_PROMISE_MESSAGE_COUNTER_FAIL,
+  CLEAR_SELLEE_PROMISE_MESSAG_COUNTERE_REQUEST,
+  CLEAR_SELLEE_PROMISE_MESSAG_COUNTERE_SUCCESS,
+  CLEAR_SELLEE_PROMISE_MESSAG_COUNTERE_FAIL,
 } from "../constants/PromiseConstants";
 
 const API_URL = process.env.REACT_APP_API_URL;
+
+export const listBuyerPromiseMessages =
+  (promiseId) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: LIST_BUYER_PROMISE_MESSAGE_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `${API_URL}/api/list-buyer-promise-messages/${promiseId}/`,
+        config
+      );
+
+      dispatch({ type: LIST_BUYER_PROMISE_MESSAGE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: LIST_BUYER_PROMISE_MESSAGE_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+export const listSellerPromiseMessages =
+  (promiseId) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: LIST_SELLER_PROMISE_MESSAGE_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `${API_URL}/api/list-seller-promise-messages/${promiseId}/`,
+        config
+      );
+
+      dispatch({ type: LIST_SELLER_PROMISE_MESSAGE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: LIST_SELLER_PROMISE_MESSAGE_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+export const clearBuyerMessageCounter =
+  (promiseMessageData) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: CLEAR_BUYER_PROMISE_MESSAGE_COUNTER_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `${API_URL}/api/clear-buyer-promise-message-counter/`,
+        promiseMessageData,
+        config
+      );
+
+      dispatch({
+        type: CLEAR_BUYER_PROMISE_MESSAGE_COUNTER_SUCCESS,
+        payload: data,
+      });
+      // window.location.href = "/promise";
+      // window.location.reload();
+    } catch (error) {
+      dispatch({
+        type: CLEAR_BUYER_PROMISE_MESSAGE_COUNTER_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+export const clearSellerMessageCounter =
+  (promiseMessageData) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: CLEAR_SELLEE_PROMISE_MESSAG_COUNTERE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `${API_URL}/api/clear-seller-promise-message-counter/`,
+        promiseMessageData,
+        config
+      );
+
+      dispatch({
+        type: CLEAR_SELLEE_PROMISE_MESSAG_COUNTERE_SUCCESS,
+        payload: data,
+      });
+      // window.location.href = "/promise";
+      // window.location.reload();
+    } catch (error) {
+      dispatch({
+        type: CLEAR_SELLEE_PROMISE_MESSAG_COUNTERE_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+// export const listPromiseMessages =
+//   (promiseId) => async (dispatch, getState) => {
+//     try {
+//       dispatch({ type: LIST_PROMISE_MESSAGE_REQUEST });
+
+//       const {
+//         userLogin: { userInfo },
+//       } = getState();
+
+//       const config = {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${userInfo.access}`,
+//         },
+//       };
+
+//       const { data } = await axios.get(
+//         `${API_URL}/api/list-promise-messages/${promiseId}/`,
+//         config
+//       );
+
+//       dispatch({ type: LIST_PROMISE_MESSAGE_SUCCESS, payload: data });
+//     } catch (error) {
+//       dispatch({
+//         type: LIST_PROMISE_MESSAGE_FAIL,
+//         payload:
+//           error.response && error.response.data.detail
+//             ? error.response.data.detail
+//             : error.message,
+//       });
+//     }
+//   };
+
+export const buyerCreatePromiseMessage =
+  (promiseMessageData) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: BUYER_CREATE_PROMISE_MESSAGE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `${API_URL}/api/buyer-create-promise-message/`,
+        promiseMessageData,
+        config
+      );
+
+      dispatch({
+        type: BUYER_CREATE_PROMISE_MESSAGE_SUCCESS,
+        payload: data,
+      });
+      // window.location.href = "/promise";
+      // window.location.reload();
+    } catch (error) {
+      dispatch({
+        type: BUYER_CREATE_PROMISE_MESSAGE_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+export const sellerCreatePromiseMessage =
+  (promiseMessageData) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: SELLER_CREATE_PROMISE_MESSAGE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `${API_URL}/api/seller-create-promise-message/`,
+        promiseMessageData,
+        config
+      );
+
+      dispatch({
+        type: SELLER_CREATE_PROMISE_MESSAGE_SUCCESS,
+        payload: data,
+      });
+      // window.location.href = "/promise";
+      // window.location.reload();
+    } catch (error) {
+      dispatch({
+        type: SELLER_CREATE_PROMISE_MESSAGE_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
 
 export const cancelPromise = (promiseData) => async (dispatch, getState) => {
   try {
@@ -146,79 +427,46 @@ export const settleDisputedPromise =
     }
   };
 
-export const createPromiseMessages =
-  (promiseMessageData) => async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: CREATE_PROMISE_MESSAGE_REQUEST,
-      });
+// export const createPromiseMessages =
+//   (promiseMessageData) => async (dispatch, getState) => {
+//     try {
+//       dispatch({
+//         type: CREATE_PROMISE_MESSAGE_REQUEST,
+//       });
 
-      const {
-        userLogin: { userInfo },
-      } = getState();
+//       const {
+//         userLogin: { userInfo },
+//       } = getState();
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.access}`,
-        },
-      };
+//       const config = {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${userInfo.access}`,
+//         },
+//       };
 
-      const { data } = await axios.post(
-        `${API_URL}/api/create-promise-messages/`,
-        promiseMessageData,
-        config
-      );
+//       const { data } = await axios.post(
+//         `${API_URL}/api/create-promise-messages/`,
+//         promiseMessageData,
+//         config
+//       );
 
-      dispatch({
-        type: CREATE_PROMISE_MESSAGE_SUCCESS,
-        payload: data,
-      });
-      // window.location.href = "/promise";
-      // window.location.reload();
-    } catch (error) {
-      dispatch({
-        type: CREATE_PROMISE_MESSAGE_FAIL,
-        payload:
-          error.response && error.response.data.detail
-            ? error.response.data.detail
-            : error.message,
-      });
-    }
-  };
-
-export const listPromiseMessages =
-  (promiseId) => async (dispatch, getState) => {
-    try {
-      dispatch({ type: LIST_PROMISE_MESSAGE_REQUEST });
-
-      const {
-        userLogin: { userInfo },
-      } = getState();
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.access}`,
-        },
-      };
-
-      const { data } = await axios.get(
-        `${API_URL}/api/list-promise-messages/${promiseId}/`,
-        config
-      );
-
-      dispatch({ type: LIST_PROMISE_MESSAGE_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({
-        type: LIST_PROMISE_MESSAGE_FAIL,
-        payload:
-          error.response && error.response.data.detail
-            ? error.response.data.detail
-            : error.message,
-      });
-    }
-  };
+//       dispatch({
+//         type: CREATE_PROMISE_MESSAGE_SUCCESS,
+//         payload: data,
+//       });
+//       // window.location.href = "/promise";
+//       // window.location.reload();
+//     } catch (error) {
+//       dispatch({
+//         type: CREATE_PROMISE_MESSAGE_FAIL,
+//         payload:
+//           error.response && error.response.data.detail
+//             ? error.response.data.detail
+//             : error.message,
+//       });
+//     }
+//   };
 
 export const getSellerPromises = () => async (dispatch, getState) => {
   try {

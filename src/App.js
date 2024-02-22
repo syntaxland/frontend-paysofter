@@ -34,7 +34,7 @@ import TermsAndConditionScreen from "./components/screens/TermsAndConditionScree
 // import ResetPassword from "./components/profiles/ResetPassword";
 // import Orders from "./components/profiles/Orders";
 // import Payments from "./components/profiles/Payments";
-import PaysofterPromise from "./components/profiles/PaysofterPromise";
+import PaysofterPromise from "./components/profiles/PaysofterPromiseBuyer";
 
 import ToggleAccountSettings from "./components/settings/ToggleAccountSettings";
 import MaxWithdrawalSettings from "./components/settings/MaxWithdrawalSettings";
@@ -52,7 +52,9 @@ import SellerBankAccount from "./components/sellers/SellerBankAccount";
 import SellerBvn from "./components/sellers/SellerBvn";
 import SellerPhoto from "./components/sellers/SellerPhoto";
 
-import PromiseMessage from "./components/promise/PromiseMessage";
+// import PromiseMessage from "./components/promise/PromiseMessage";
+import SellerPromiseMessage from "./components/promise/SellerPromiseMessage";
+import BuyerPromiseMessage from "./components/promise/BuyerPromiseMessage";
 
 import CreateSupportTicket from "./components/support/CreateSupportTicket";
 import SupportTicket from "./components/support/SupportTicket";
@@ -104,7 +106,16 @@ function App() {
           <Route path="/seller/bvn/" component={SellerBvn} />
           <Route path="/seller/photo/" component={SellerPhoto} />
 
-          <Route path="/promise/message/:id" component={PromiseMessage} />
+          {/* <Route path="/promise/message/:id" component={PromiseMessage} /> */}
+
+          <Route
+            path="/seller/promise/message/:id"
+            component={SellerPromiseMessage}
+          />
+          <Route
+            path="/buyer/promise/message/:id"
+            component={BuyerPromiseMessage}
+          />
 
           <Route path="/dashboard/users/" component={UserDashboard} />
           <Route path="/dashboard/sellers" component={SellerDashboard} />

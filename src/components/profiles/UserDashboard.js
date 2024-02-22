@@ -21,7 +21,7 @@ import AccountFunds from "./AccountFunds";
 // import Webhoks from "./Webhooks";
 // import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
-import PaysofterPromise from "./PaysofterPromise";
+import PaysofterPromise from "./PaysofterPromiseBuyer";
 import SupportTicket from "../support/SupportTicket";
 import CreateFeedback from "../feedback/CreateFeedback";
 
@@ -249,6 +249,18 @@ function UserDashboard() {
                   onClick={handlePaysofterPromise}
                 >
                   <i className="fa fa-credit-card"></i> Paysofter Promise
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
+                    activeTab === "across" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("across")}
+                >
+                  <i className="fa fa-credit-card"></i> Paysofter Across
                 </Button>
               </div>
 

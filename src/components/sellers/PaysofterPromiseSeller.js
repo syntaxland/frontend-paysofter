@@ -3,14 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Table, Button, Row, Col, Modal, Container } from "react-bootstrap";
-import { getSellerPromises } from "../../redux/actions/PromiseActions";
+import {
+  getSellerPromises,
+  clearSellerMessageCounter,
+} from "../../redux/actions/PromiseActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
 import Timer from "../Timer";
 import SellerConfirmPromise from "../promise/SellerConfirmPromise";
 import SettleDisputedPromise from "../promise/SettleDisputedPromise";
-import {formatAmount} from "../FormatAmount";
+import { formatAmount } from "../FormatAmount";
 
 function PaysofterPromiseSeller({ history }) {
   const dispatch = useDispatch();
@@ -72,6 +75,13 @@ function PaysofterPromiseSeller({ history }) {
         "*".repeat(accountIdStr.length - 4) + accountIdStr.slice(-4);
       return maskedPart;
     }
+  };
+
+  const clearMessageCounter = (promiseId) => {
+    const promiseMessageData = {
+      promise_id: promiseId,
+    };
+    dispatch(clearSellerMessageCounter(promiseMessageData));
   };
 
   useEffect(() => {
@@ -142,7 +152,7 @@ function PaysofterPromiseSeller({ history }) {
                                 variant="outline-link"
                                 size="sm"
                                 // onClick={() =>
-                                //   handleConfirmPromiseOpen(promise.promise_id) 
+                                //   handleConfirmPromiseOpen(promise.promise_id)
                                 // }
                               >
                                 {promise.promise_id}
@@ -154,13 +164,13 @@ function PaysofterPromiseSeller({ history }) {
                           {promise.buyer_promise_fulfilled ? (
                             <span style={{ fontSize: "16px", color: "green" }}>
                               {promise.currency}{" "}
-                              {formatAmount(promise.amount)
-                              
-                              // ?.toLocaleString(undefined, {
-                              //   minimumFractionDigits: 2,
-                              //   maximumFractionDigits: 2,
-                              // })
-                              
+                              {
+                                formatAmount(promise.amount)
+
+                                // ?.toLocaleString(undefined, {
+                                //   minimumFractionDigits: 2,
+                                //   maximumFractionDigits: 2,
+                                // })
                               }
                             </span>
                           ) : (
@@ -172,12 +182,13 @@ function PaysofterPromiseSeller({ history }) {
                                     className="text-danger"
                                   >
                                     {promise.currency}{" "}
-                                    {formatAmount(promise.amount)
-                                    
-                                    // ?.toLocaleString(undefined, {
-                                    //   minimumFractionDigits: 2,
-                                    //   maximumFractionDigits: 2,
-                                    // })
+                                    {
+                                      formatAmount(promise.amount)
+
+                                      // ?.toLocaleString(undefined, {
+                                      //   minimumFractionDigits: 2,
+                                      //   maximumFractionDigits: 2,
+                                      // })
                                     }
                                   </span>
                                 </>
@@ -187,12 +198,13 @@ function PaysofterPromiseSeller({ history }) {
                                   className="text-warning"
                                 >
                                   {promise.currency}{" "}
-                                  {formatAmount(promise.amount)
-                                  
-                                  // ?.toLocaleString(undefined, {
-                                  //   minimumFractionDigits: 2,
-                                  //   maximumFractionDigits: 2,
-                                  // })
+                                  {
+                                    formatAmount(promise.amount)
+
+                                    // ?.toLocaleString(undefined, {
+                                    //   minimumFractionDigits: 2,
+                                    //   maximumFractionDigits: 2,
+                                    // })
                                   }
                                 </span>
                               )}
@@ -435,19 +447,19 @@ function PaysofterPromiseSeller({ history }) {
                         <td>
                           {promise.is_cancelled ? (
                             <>
-                              <Button
-                                variant="danger"
-                                size="sm"
-                                disabled
-                              >
-                                Promise Cancelled 
+                              <Button variant="danger" size="sm" disabled>
+                                Promise Cancelled
                               </Button>
                             </>
                           ) : (
                             <>
-                              {promise.seller_fulfilled_promise  ? (
+                              {promise.seller_fulfilled_promise ? (
                                 <>
-                                  <Button variant="outline-success" size="sm" disabled> 
+                                  <Button
+                                    variant="outline-success"
+                                    size="sm"
+                                    disabled
+                                  >
                                     Promise Confirmed
                                   </Button>
                                 </>
@@ -467,6 +479,28 @@ function PaysofterPromiseSeller({ history }) {
                         </td>
 
                         <td>
+                          <Button
+                            variant="outline-primary"
+                            size="sm"
+                            onClick={() =>
+                              clearMessageCounter(promise.promise_id)
+                            }
+                          >
+                            <Link
+                              to={`/seller/promise/message/${promise.promise_id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              Message Buyer
+                              {promise?.seller_msg_count > 0 && (
+                                <span className="msg-counter">
+                                  {promise?.seller_msg_count}
+                                </span>
+                              )}
+                            </Link>
+                          </Button>
+                        </td>
+
+                        {/* <td>
                           <>
                             {promise.is_cancelled ? (
                               <>
@@ -486,11 +520,16 @@ function PaysofterPromiseSeller({ history }) {
                                   style={{ textDecoration: "none" }}
                                 >
                                   Message Buyer
+                                  {promise?.buyer_msg_count > 0 && (
+                                <span className="msg-counter">
+                                  {promise?.buyer_msg_count}
+                                </span>
+                              )}
                                 </Link>
                               </Button>
                             )}
                           </>
-                        </td>
+                        </td> */}
 
                         <Modal
                           show={showConfirmPromise}

@@ -10,7 +10,7 @@ import Timer from "../Timer";
 import Pagination from "../Pagination";
 import BuyerConfirmPromise from "../promise/BuyerConfirmPromise";
 import SettleDisputedPromise from "../promise/SettleDisputedPromise";
-import {formatAmount} from "../FormatAmount";
+import { formatAmount } from "../FormatAmount";
 
 function PaysofterPromise({ history }) {
   const dispatch = useDispatch();
@@ -157,12 +157,13 @@ function PaysofterPromise({ history }) {
                           {promise.buyer_promise_fulfilled ? (
                             <span style={{ fontSize: "16px", color: "green" }}>
                               {promise.currency}{" "}
-                              {formatAmount(promise.amount)
-                              
-                              // ?.toLocaleString(undefined, {
-                              //   minimumFractionDigits: 2,
-                              //   maximumFractionDigits: 2,
-                              // })
+                              {
+                                formatAmount(promise.amount)
+
+                                // ?.toLocaleString(undefined, {
+                                //   minimumFractionDigits: 2,
+                                //   maximumFractionDigits: 2,
+                                // })
                               }
                             </span>
                           ) : (
@@ -174,12 +175,13 @@ function PaysofterPromise({ history }) {
                                     className="text-danger"
                                   >
                                     {promise.currency}{" "}
-                                    {formatAmount(promise.amount)
-                                    
-                                    // ?.toLocaleString(undefined, {
-                                    //   minimumFractionDigits: 2,
-                                    //   maximumFractionDigits: 2,
-                                    // })
+                                    {
+                                      formatAmount(promise.amount)
+
+                                      // ?.toLocaleString(undefined, {
+                                      //   minimumFractionDigits: 2,
+                                      //   maximumFractionDigits: 2,
+                                      // })
                                     }
                                   </span>
                                 </>
@@ -189,12 +191,13 @@ function PaysofterPromise({ history }) {
                                   className="text-warning"
                                 >
                                   {promise.currency}{" "}
-                                  {formatAmount(promise.amount)
-                                  
-                                  // ?.toLocaleString(undefined, {
-                                  //   minimumFractionDigits: 2,
-                                  //   maximumFractionDigits: 2,
-                                  // })
+                                  {
+                                    formatAmount(promise.amount)
+
+                                    // ?.toLocaleString(undefined, {
+                                    //   minimumFractionDigits: 2,
+                                    //   maximumFractionDigits: 2,
+                                    // })
                                   }
                                 </span>
                               )}
@@ -257,7 +260,7 @@ function PaysofterPromise({ history }) {
                               <i
                                 className="fas fa-check-circle"
                                 style={{ fontSize: "16px", color: "green" }}
-                              ></i>{" "} 
+                              ></i>{" "}
                               Yes
                             </>
                           ) : (
@@ -437,11 +440,7 @@ function PaysofterPromise({ history }) {
                         <td>
                           {promise.is_cancelled ? (
                             <>
-                              <Button
-                                variant="danger"
-                                size="sm"
-                                disabled
-                              >
+                              <Button variant="danger" size="sm" disabled>
                                 Promise Cancelled
                               </Button>
                             </>
@@ -449,7 +448,11 @@ function PaysofterPromise({ history }) {
                             <>
                               {promise.buyer_promise_fulfilled ? (
                                 <>
-                                  <Button variant="outline-success" size="sm" disabled>
+                                  <Button
+                                    variant="outline-success"
+                                    size="sm"
+                                    disabled
+                                  >
                                     Promise Confirmed
                                   </Button>
                                 </>
@@ -472,6 +475,22 @@ function PaysofterPromise({ history }) {
                         </td>
 
                         <td>
+                          <Button variant="outline-primary" size="sm">
+                            <Link
+                              to={`/promise/message/${promise.promise_id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              Message Seller
+                              {promise?.seller_msg_count > 0 && (
+                                <span className="msg-count">
+                                  {promise?.seller_msg_count}
+                                </span>
+                              )}
+                            </Link>
+                          </Button>
+                        </td>
+ 
+                        {/* <td>
                           <>
                             {promise.is_cancelled ? (
                               <>
@@ -481,21 +500,27 @@ function PaysofterPromise({ history }) {
                                     style={{ textDecoration: "none" }}
                                   >
                                     Message Seller
+
                                   </Link>
                                 </Button>
                               </>
                             ) : (
                               <Button variant="outline-primary" size="sm">
                                 <Link
-                                  to={`/promise/message/${promise.promise_id}`} 
+                                  to={`/promise/message/${promise.promise_id}`}
                                   style={{ textDecoration: "none" }}
                                 >
                                   Message Seller
+                                  {promise?.seller_msg_count > 0 && (
+                                    <span className="msg-count">
+                                      {promise?.seller_msg_count}
+                                    </span>
+                                  )}
                                 </Link>
                               </Button>
                             )}
                           </>
-                        </td>
+                        </td> */}
 
                         <Modal
                           show={showConfirmPromise}
@@ -536,7 +561,6 @@ function PaysofterPromise({ history }) {
                             )}
                           </Modal.Body>
                         </Modal>
-                        
                       </tr>
                     ))}
                   </tbody>

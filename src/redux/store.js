@@ -68,8 +68,14 @@ import {
   getSellerPromiseReducer,
   buyerConfirmPromiseReducer,
   sellerConfirmPromiseReducer,
-  createPromiseMessagesReducer,
-  listPromiseMessagesReducer,
+  // createPromiseMessagesReducer,
+  buyerCreatePromiseMessageReducer,
+sellerCreatePromiseMessageReducer,
+  // listPromiseMessagesReducer,
+  listBuyerPromiseMessagesReducer,
+listSellerPromiseMessagesReducer,
+buyerClearPromiseMessageReducer,
+sellerClearPromiseMessageReducer,
 } from "./reducers/PromiseReducers";
 
 import {
@@ -159,8 +165,15 @@ const reducer = combineReducers({
   cancelPromiseState: cancelPromiseReducer,
   getAllPromiseState: getAllPromiseReducer,
   settleDisputedPromiseState: settleDisputedPromiseReducer,
-  createPromiseMessageState: createPromiseMessagesReducer,
-  listPromiseMessageState: listPromiseMessagesReducer,
+  // createPromiseMessageState: createPromiseMessagesReducer,
+  buyerCreatePromiseMessageState: buyerCreatePromiseMessageReducer,
+sellerCreatePromiseMessageState: sellerCreatePromiseMessageReducer,
+  // listPromiseMessageState: listPromiseMessagesReducer,
+
+  listBuyerPromiseMessagesState: listBuyerPromiseMessagesReducer,
+listSellerPromiseMessagesState: listSellerPromiseMessagesReducer,
+buyerClearPromiseMessageState: buyerClearPromiseMessageReducer,
+sellerClearPromiseMessageState: sellerClearPromiseMessageReducer,
 
   creditPointBal: creditPointBalanceReducer,
   creditPointRequestCreate: creditPointRequestCreateReducer,
