@@ -13,6 +13,9 @@ import {
   Col,
 } from "react-bootstrap";
 import { getUserProfile } from "../redux/actions/userProfileActions";
+
+
+import { getUserMessages } from "../redux/actions/messagingActions";
 import { logout } from "../redux/actions/userActions";
 import "./Header.css";
 
@@ -22,6 +25,10 @@ function Header() {
 
   const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
+
+  const getUserMessagesState = useSelector((state) => state.getUserMessagesState);
+  const { messages } = getUserMessagesState;
+  console.log("messages:", messages);
 
   const [keyword, setKeyword] = useState("");
   const [greeting, setGreeting] = useState("");
@@ -81,8 +88,15 @@ function Header() {
     // Fetch user profile if userInfo is available
     if (userInfo) {
       dispatch(getUserProfile());
+      dispatch(getUserMessages());
     }
   }, [dispatch, userInfo]);
+
+  const msgCounted = messages?.reduce(
+    (total, userMessages) => total + userMessages.msg_count,
+    0
+  );
+  // console.log("msgCounted:", msgCounted);
 
   return (
     <header>
@@ -282,6 +296,26 @@ function Header() {
                           </div>
 
                           <NavDropdown.Divider />
+
+                          <div>
+                      {userInfo ? (
+                        <>
+                          <Nav.Link as={Link} to="/inbox">
+                            <i
+                              className="fas fa-message"
+                              style={{ fontSize: "16px" }}
+                            ></i>{" "}
+                            Inbox{" "}
+                            {msgCounted > 0 && (
+                              <span className="msg-counter">{msgCounted}</span>
+                            )}
+                          </Nav.Link>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <NavDropdown.Divider />
 
                           <div>
                             <Nav.Link

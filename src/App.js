@@ -35,6 +35,7 @@ import TermsAndConditionScreen from "./components/screens/TermsAndConditionScree
 // import Orders from "./components/profiles/Orders";
 // import Payments from "./components/profiles/Payments";
 import PaysofterPromise from "./components/profiles/PaysofterPromiseBuyer";
+import MessageInbox from "./components/profiles/MessageInbox";
 
 import ToggleAccountSettings from "./components/settings/ToggleAccountSettings";
 import MaxWithdrawalSettings from "./components/settings/MaxWithdrawalSettings";
@@ -129,6 +130,7 @@ function App() {
           <Route path="/support/tickets/" component={SupportTicket} />
           <Route path="/create-feedback/" component={CreateFeedback} />
 
+          <Route path="/inbox" component={MessageInbox} />
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
           <Route path="/checkout" component={CheckoutScreen} />

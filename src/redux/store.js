@@ -20,6 +20,13 @@ import {
 } from "./reducers/settingsReducers";
 
 import {
+  messagingReducer,
+  sendEmailReducer,
+  clearMessageCounterReducer,
+  getUserMessagesReducer,
+} from "./reducers/messagingReducers";
+
+import {
   sellerAccountReducer,
   getSellerAccountReducer,
   createBusinessStatusReducer,
@@ -217,6 +224,11 @@ sellerClearPromiseMessageState: sellerClearPromiseMessageReducer,
 
   feedbackCreate: feedbackCreateReducer,
   feedbackList: feedbackListReducer,
+
+  messagingState: messagingReducer,
+  sendEmailState: sendEmailReducer,
+  clearMessageCounterState: clearMessageCounterReducer,
+  getUserMessagesState: getUserMessagesReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

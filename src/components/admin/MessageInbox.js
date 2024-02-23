@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ListGroup, Button } from "react-bootstrap";
-import { getMessages } from "../../actions/messagingActions";
+import { getMessages } from "../../redux/actions/messagingActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import DOMPurify from "dompurify";

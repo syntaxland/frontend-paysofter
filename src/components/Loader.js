@@ -1,20 +1,20 @@
 import React from "react";
 // import { Spinner } from "react-bootstrap";
 import {
-    BeatLoader,
-  //   CircleLoader,
-  //   BounceLoader,
-  //   ClipLoader,
+    CircleLoader,
+    // BeatLoader,
+    // BounceLoader,
+    // ClipLoader,
   // FadeLoader,
-  //   GridLoader,
+    // GridLoader,
   //   HashLoader, 
   //   PropagateLoader,
   //   PulseLoader,
-  //   RingLoader,
+    // RingLoader,
   //   RiseLoader,
   //   ScaleLoader,
-  //   SyncLoader,
-  //   RotateLoader,
+    // SyncLoader,
+    // RotateLoader,
 } from "react-spinners";
 function Loader() {
   return (
@@ -26,23 +26,24 @@ function Loader() {
         {/* <Spinner annimation='border' variant='primary' size='lg' />  */}
 
         {/* from react-spinners */}
-        <BeatLoader color="blue" size={50} />
+        <CircleLoader color="blue" size={50} />
+      {/* <BounceLoader color="blue" size={50} /> */}
+        {/* <BeatLoader color="blue" size={50} /> */}
+        {/* <ClipLoader color="blue" size={50} />  */}
 
-        {/* 
-      <p>BeatLoader...<BeatLoader color="#ff0000" size={20} /></p><br />
-      <CircleLoader color="#0000ff" size={20} />
-      <BounceLoader color="#00ff00" size={20} />
-      <RotateLoader color="#ff0000" size={20} />
-      <SyncLoader color="#ff0000" size={20} />
-      <ScaleLoader color="#ff0000" size={20} />
-      <RiseLoader color="#ff0000" size={20} />
-      <RingLoader color="#ff0000" size={20} />
-      <PulseLoader color="#ff0000" size={20} />
-      <PropagateLoader color="#ff0000" size={20} />
-      <HashLoader color="#ff0000" size={20} />
-      <GridLoader color="#ff0000" size={20} />
-      <FadeLoader color="#ff0000" size={20} />
-      <ClipLoader color="#ff0000" size={20} /> */}
+        
+      {/* <p>BeatLoader...<BeatLoader color="#ff0000" size={50} /></p><br /> */}
+      {/* <RotateLoader color="#ff0000" size={50} /> */}
+      {/* <SyncLoader color="blue" size={50} /> */}
+      {/* <ScaleLoader color="#ff0000" size={50} /> */}
+      {/* <RiseLoader color="#ff0000" size={50} /> */}
+      {/* <RingLoader color="#ff0000" size={50} /> */}
+      {/* <PulseLoader color="#ff0000" size={50} /> */}
+      {/* <PropagateLoader color="#ff0000" size={50} /> */}
+      {/* <HashLoader color="#ff0000" size={50} /> */}
+      {/* <GridLoader color="#ff0000" size={50} /> */}
+      {/* <FadeLoader color="#ff0000" size={50} />
+      */}
       </div>
     </>
   );

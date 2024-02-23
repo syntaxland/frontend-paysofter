@@ -8,9 +8,9 @@ import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import PaysofterPromise from "./PaysofterPromise";
 import AccountFund from "./AccountFund";
 // import OrderShipment from "./OrderShipment";
-// import SendMessage from "./SendMessage";
-// import MessageInbox from "./MessageInbox";
-// import SendEmail from "./SendEmail";
+import SendMessage from "./SendMessage";
+import MessageInbox from "./MessageInbox";
+import SendEmail from "./SendEmail";
 import Dashboard from "./Dashboard";
 // import CreditPoint from "./CreditPoint";
 // import SetPromoCode from "./SetPromoCode";
@@ -54,14 +54,14 @@ function AdminDashboard({ history }) {
       // case "order-shipment":
       //   return <OrderShipment />;
 
-      // case "send-message":
-      //   return <SendMessage />;
+      case "send-message":
+        return <SendMessage />;
 
-      // case "message-inbox":
-      //   return <MessageInbox />;
+      case "message-inbox":
+        return <MessageInbox />;
 
-      // case "send-email":
-      //   return <SendEmail />;
+      case "send-email":
+        return <SendEmail />;
 
       // case "credit-point-requests":
       //   return <CreditPoint />;

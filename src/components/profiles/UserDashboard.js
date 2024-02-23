@@ -8,13 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 // import { login } from "../../redux/actions/userActions";
 
-import { getUserProfile } from "../../redux/actions/userProfileActions"; 
+import { getUserProfile } from "../../redux/actions/userProfileActions";
+
+import { getUserMessages } from "../../redux/actions/messagingActions";
 
 import UserProfile from "./UserProfile";
 // import Transactions from "./Transactions";
 // import Payouts from "./Payouts";
 import Dashboard from "./Dashboard";
-// import MessageInbox from "./MessageInbox";
+import MessageInbox from "./MessageInbox";
 // import CreditPoint from "./CreditPoint";
 import AccountFunds from "./AccountFunds";
 // import Referraols from "./Referrals";
@@ -33,13 +35,20 @@ function UserDashboard() {
   const { userInfo } = userLogin;
   // console.log("userInfo:", userInfo);
 
+  const getUserMessagesState = useSelector(
+    (state) => state.getUserMessagesState
+  );
+  const { messages } = getUserMessagesState;
+  console.log("messages:", messages);
+
   const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
-  // console.log("profile:", profile?.is_usd_selected); 
+  // console.log("profile:", profile?.is_usd_selected);
 
   useEffect(() => {
     if (userInfo) {
       dispatch(getUserProfile());
+      dispatch(getUserMessages()); 
     }
   }, [dispatch, userInfo]);
 
@@ -80,6 +89,12 @@ function UserDashboard() {
     history.push("/dashboard/sellers");
   };
 
+  const msgCounted = messages?.reduce(
+    (total, userMessages) => total + userMessages.msg_count,
+    0
+  );
+  console.log("msgCounted:", msgCounted);
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "profile":
@@ -103,8 +118,8 @@ function UserDashboard() {
       case "promise":
         return <PaysofterPromise />;
 
-      // case "message-inbox":
-      //   return <MessageInbox />;
+      case "message-inbox":
+        return <MessageInbox />;
 
       // case "credit-point":
       //   return <CreditPoint />;
@@ -274,7 +289,10 @@ function UserDashboard() {
                   className="sidebar-link"
                   onClick={() => handleTabChange("message-inbox")}
                 >
-                  <i className="fa fa-message"></i> Inbox
+                  <i className="fa fa-message"></i> Inbox{" "}
+                  {msgCounted > 0 && (
+                    <span className="msg-counter">{msgCounted}</span>
+                  )}
                 </Button>
               </div>
 
@@ -345,11 +363,13 @@ function UserDashboard() {
               <div>
                 <Button
                   variant={
-                    activeTab === "support-ticket" ? "primary" : "outline-primary"
+                    activeTab === "support-ticket"
+                      ? "primary"
+                      : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("support-ticket")}
-                >  
+                >
                   <i className="fa fa-ticket"></i> Support Ticket
                 </Button>
               </div>
@@ -357,7 +377,9 @@ function UserDashboard() {
               <div>
                 <Button
                   variant={
-                    activeTab === "create-feedback" ? "primary" : "outline-primary"
+                    activeTab === "create-feedback"
+                      ? "primary"
+                      : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("create-feedback")}
@@ -442,12 +464,12 @@ function UserDashboard() {
               <div className="mt-2 py-2">
                 {!profile.is_seller ? (
                   <div>
-                    {/* <span>Don't have a Seller account?</span>  */} 
+                    {/* <span>Don't have a Seller account?</span>  */}
                     <Button
                       size="sm"
                       className="sidebar-link py-2"
                       variant="outline-primary"
-                      onClick={handleAddbusiness} 
+                      onClick={handleAddbusiness}
                     >
                       <i className="fa fa-user-alt"></i> Create Seller Account
                     </Button>
