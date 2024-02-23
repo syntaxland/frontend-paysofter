@@ -1,10 +1,10 @@
 import React from "react";
 // import { Spinner } from "react-bootstrap";
 import {
-    CircleLoader,
+    // CircleLoader,
     // BeatLoader,
     // BounceLoader,
-    // ClipLoader,
+    ClipLoader,
   // FadeLoader,
     // GridLoader,
   //   HashLoader, 
@@ -26,10 +26,10 @@ function Loader() {
         {/* <Spinner annimation='border' variant='primary' size='lg' />  */}
 
         {/* from react-spinners */}
-        <CircleLoader color="blue" size={50} />
+        {/* <CircleLoader color="blue" size={50} /> */}
       {/* <BounceLoader color="blue" size={50} /> */}
         {/* <BeatLoader color="blue" size={50} /> */}
-        {/* <ClipLoader color="blue" size={50} />  */}
+        <ClipLoader color="blue" size={50} /> 
 
         
       {/* <p>BeatLoader...<BeatLoader color="#ff0000" size={50} /></p><br /> */}
