@@ -107,8 +107,6 @@ function App() {
           <Route path="/seller/bvn/" component={SellerBvn} />
           <Route path="/seller/photo/" component={SellerPhoto} />
 
-          {/* <Route path="/promise/message/:id" component={PromiseMessage} /> */}
-
           <Route
             path="/seller/promise/message/:id"
             component={SellerPromiseMessage}
@@ -122,16 +120,11 @@ function App() {
           <Route path="/dashboard/sellers" component={SellerDashboard} />
           <Route path="/dashboard/admin" component={AdminDashboard} />
 
-          <Route
-            path="/create-support-ticket"
-            component={CreateSupportTicket}
-          />
+          <Route path="/create-support-ticket" component={CreateSupportTicket} />
           <Route path="/support/ticket/:id" component={SupportTicketDetails} />
-import SupportTicket from "./components/support/SupportTicket";
-
           <Route path="/support/tickets/" component={SupportTicket} />
-          <Route path="/create-feedback/" component={CreateFeedback} />
 
+          <Route path="/create-feedback/" component={CreateFeedback} />
           <Route path="/inbox" component={MessageInbox} />
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
