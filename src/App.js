@@ -127,6 +127,8 @@ function App() {
             component={CreateSupportTicket}
           />
           <Route path="/support/ticket/:id" component={SupportTicketDetails} />
+import SupportTicket from "./components/support/SupportTicket";
+
           <Route path="/support/tickets/" component={SupportTicket} />
           <Route path="/create-feedback/" component={CreateFeedback} />
 

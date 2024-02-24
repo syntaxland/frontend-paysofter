@@ -2,21 +2,23 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import {
   createSupportTicket,
 } from "../../redux/actions/supportActions";  
 import Loader from "../Loader"; 
 import Message from "../Message";
  
-function CreateSupportTicket({ history }) { 
+function CreateSupportTicket() { 
   const dispatch = useDispatch();
+    const history = useHistory();
   
   const [subject, setSubject] = useState(""); 
   const [category, setCategory] = useState("support");
   const [message, setMessage] = useState("");
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { userInfo } = userLogin; 
 
   useEffect(() => {
     if (!userInfo) {
