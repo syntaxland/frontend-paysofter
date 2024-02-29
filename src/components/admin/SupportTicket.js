@@ -15,6 +15,7 @@ import Pagination from "../Pagination";
 function SupportTicket() {
   const dispatch = useDispatch();
   // const history = useHistory();
+  
   const allTicketList = useSelector(
     (state) => state.allTicketList
   );

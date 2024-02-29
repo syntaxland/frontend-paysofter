@@ -14,6 +14,16 @@ import Pagination from "../Pagination";
 function SupportTicket() { 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin; 
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
+
   const listSupportTicketState = useSelector( 
     (state) => state.listSupportTicketState
   );

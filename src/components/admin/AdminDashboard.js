@@ -5,6 +5,7 @@ import { Row, Col, Container, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router-dom";
 import PaysofterPromise from "./PaysofterPromise";
 import AccountFund from "./AccountFund";
 // import OrderShipment from "./OrderShipment";
@@ -17,7 +18,9 @@ import Dashboard from "./Dashboard";
 import Feedbacks from "./Feedbacks";
 import SupportTicket from "./SupportTicket";
 
-function AdminDashboard({ history }) {
+function AdminDashboard() {
+  const history = useHistory();
+
   const [activeTab, setActiveTab] = useState("admin-dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 

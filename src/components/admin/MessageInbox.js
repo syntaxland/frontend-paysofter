@@ -7,7 +7,7 @@ import Message from "../Message";
 import Loader from "../Loader";
 import DOMPurify from "dompurify";
 
-const MessageInbox = () => {
+const MessageInbox = () => { 
   const dispatch = useDispatch();
 
   const messaging = useSelector((state) => state.messaging);
