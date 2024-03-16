@@ -7,7 +7,7 @@ import {
   getBuyerPromises,
   clearBuyerMessageCounter,
 } from "../../redux/actions/PromiseActions";
-import Message from "../Message";
+import Message from "../Message"; 
 import Loader from "../Loader";
 import Timer from "../Timer";
 import Pagination from "../Pagination";
