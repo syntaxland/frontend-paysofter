@@ -54,12 +54,117 @@ function SellerPromiseMessage() {
     }
   }, [success, history]);
 
+  // Function to format the timestamp
+  const formatTimestamp = (timestamp) => {
+    const messageDate = new Date(timestamp);
+    return messageDate.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+// Function to determine if a message is the first of the day
+const isFirstMessageOfDay = (currentIndex, messages) => {
+  if (currentIndex === 0) return true;
+
+  const currentDate = new Date(messages[currentIndex].timestamp);
+  const prevDate = new Date(messages[currentIndex - 1].timestamp);
+
+  // Get the current date and the previous date
+  const today = new Date();
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  // Check if the current message was sent today
+  if (
+    currentDate.getDate() === today.getDate() &&
+    currentDate.getMonth() === today.getMonth() &&
+    currentDate.getFullYear() === today.getFullYear()
+  ) {
+    // Return "Today" if the message was sent today
+    if (
+      prevDate.getDate() === today.getDate() &&
+      prevDate.getMonth() === today.getMonth() &&
+      prevDate.getFullYear() === today.getFullYear()
+    ) {
+      return null; // If the previous message was also sent today, don't display the date again
+    }
+    return "Today";
+  }
+
+  // Check if the current message was sent yesterday
+  if (
+    currentDate.getDate() === yesterday.getDate() &&
+    currentDate.getMonth() === yesterday.getMonth() &&
+    currentDate.getFullYear() === yesterday.getFullYear()
+  ) {
+    // Return "Yesterday" if the message was sent yesterday
+    if (
+      prevDate.getDate() === yesterday.getDate() &&
+      prevDate.getMonth() === yesterday.getMonth() &&
+      prevDate.getFullYear() === yesterday.getFullYear()
+    ) {
+      return null; // If the previous message was also sent yesterday, don't display the date again
+    }
+    return "Yesterday";
+  }
+
+  // If the message was not sent today or yesterday, return the full date
+  return currentDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
+
+
+//  // Function to determine if a message is the first of the day
+// const isFirstMessageOfDay = (currentIndex, messages) => {
+//   if (currentIndex === 0) return true;
+
+//   const currentDate = new Date(messages[currentIndex].timestamp);
+//   const prevDate = new Date(messages[currentIndex - 1].timestamp);
+
+//   // Check if the messages were sent on different dates
+//   if (currentDate.toLocaleDateString() !== prevDate.toLocaleDateString()) {
+//     const today = new Date();
+//     const yesterday = new Date(today);
+//     yesterday.setDate(yesterday.getDate() - 1);
+
+//     // Check if the current message was sent today
+//     if (currentDate.toLocaleDateString() === today.toLocaleDateString()) {
+//       return "Today";
+//     }
+//     // Check if the current message was sent yesterday
+//     else if (
+//       currentDate.toLocaleDateString() === yesterday.toLocaleDateString()
+//     ) {
+//       return "Yesterday";
+//     } else {
+//       // If it's beyond yesterday, return the full date
+//       return currentDate.toLocaleDateString("en-US", {
+//         weekday: "long",
+//         year: "numeric",
+//         month: "long",
+//         day: "numeric",
+//       });
+//     }
+//   }
+
+//   return false; // Return false when the dates are the same
+// };
+
+
+
+
+
   return (
     <div>
       <div>
         <Row className="d-flex justify-content-center">
-          <Col className="border rounded p-4 bg-dark" xs={10} md={10}>
-            {/* <h1 className="text-center py-3"> Promise Messages</h1> */}
+          <Col className="border rounded p-4 bg-secondary" xs={10} md={10}>
             {loading && <Loader />}
             {error && <Message variant="danger">{error}</Message>}
             {/* {success && (
@@ -70,24 +175,28 @@ function SellerPromiseMessage() {
               Promise ID: {id}
             </h2>
 
-            {sellerPromiseMessages?.map((message) => (
-              <div
-                className={`${
-                  message.buyer
-                    ? "d-flex justify-content-left"
-                    : "d-flex justify-content-end"
-                }`}
-                style={{ maxWidth: "75%" }}
-              >
-                <div>
-                  <div key={message.id}>
+            {sellerPromiseMessages?.map((message, index) => (
+              <div key={message.id}>
+                {isFirstMessageOfDay(index, sellerPromiseMessages) && (
+                  <p className="text-center mb-0 mt-3">
+                    {isFirstMessageOfDay(index, sellerPromiseMessages)}
+                  </p>
+                )}
+                <div
+                  className={`${
+                    message.buyer
+                      ? "d-flex justify-content-left"
+                      : "d-flex justify-content-end"
+                  }`}
+                  style={{ maxWidth: "75%" }}
+                >
+                  <div>
                     <div
                       className={`border rounded p-3 my-2 ${
                         message.buyer
                           ? "bg-light"
                           : "bg-success justify-content-end"
                       }`}
-                      // style={{ maxWidth: "75%" }}
                     >
                       <p>
                         User:{" "}
@@ -98,9 +207,8 @@ function SellerPromiseMessage() {
                             message.seller_username?.slice(1)}
                       </p>
                       <p>Message: {message.message}</p>
-                      <p>
-                        Timestamp:{" "}
-                        {new Date(message.timestamp).toLocaleString()}
+                      <p className="d-flex justify-content-end">
+                        {formatTimestamp(message.timestamp)}
                       </p>
                     </div>
                   </div>
@@ -108,43 +216,47 @@ function SellerPromiseMessage() {
               </div>
             ))}
 
-            {/* <ul
-              className="py-2"
-              // style={{ backgroundColor: "rgba(40, 167, 69, 0.1)" }}
-            >
-              {sellerPromiseMessages?.map((message) => (
-                <li
-                  key={message.id}
-                  className={`border rounded p-4 py-2 mb-2 ${
-                    message.seller
-                      ? "bg-light"
-                      : "bg-success justify-content-end"
+            {/* {sellerPromiseMessages?.map((message, index) => (
+              <div key={message.id}>
+                {isFirstMessageOfDay(index, sellerPromiseMessages) && (
+                  <p className="text-center mb-0 mt-3">
+                    {new Date(message.timestamp).toLocaleDateString()}
+                  </p>
+                )}
+                <div
+                  className={`${
+                    message.buyer
+                      ? "d-flex justify-content-left"
+                      : "d-flex justify-content-end"
                   }`}
-                  // style={{ justifyContent: message.buyer ? "flex-start" : "flex-end", width: message.seller ? "auto" : "75%" }}
-                  // style={{ borderRadius: message.seller ? "20px 20px 20px 0" : "20px 20px 0 20px" }}
+                  style={{ maxWidth: "75%" }}
                 >
-                  <div
-                    className={`border rounded p-3 ${
-                      message.seller ? "bg-light" : "bg-success text-white"
-                    }`}
-                    style={{ maxWidth: "75%" }}
-                  >
-                    <p>
-                      User:{" "}
-                      {message.buyer_username
-                        ? message.buyer_username?.charAt(0).toUpperCase() +
-                          message.buyer_username?.slice(1)
-                        : message.seller_username?.charAt(0).toUpperCase() +
-                          message.seller_username?.slice(1)}
-                    </p>
-                    <p>Message: {message.message}</p>
-                    <p>
-                      Timestamp: {new Date(message.timestamp).toLocaleString()}
-                    </p>
+                  <div>
+                    <div
+                      className={`border rounded p-3 my-2 ${
+                        message.buyer
+                          ? "bg-light"
+                          : "bg-success justify-content-end"
+                      }`}
+                    >
+                      <p>
+                        User:{" "}
+                        {message.buyer_username
+                          ? message.buyer_username?.charAt(0).toUpperCase() +
+                            message.buyer_username?.slice(1)
+                          : message.seller_username?.charAt(0).toUpperCase() +
+                            message.seller_username?.slice(1)}
+                      </p>
+                      <p>Message: {message.message}</p>
+                      <p className="d-flex justify-content-end">
+                        {" "}
+                        {formatTimestamp(message.timestamp)}
+                      </p>
+                    </div>
                   </div>
-                </li>
-              ))}
-            </ul> */}
+                </div>
+              </div>
+            ))} */}
 
             <Form onSubmit={handleSubmitReply}>
               <Form.Group controlId="message">
