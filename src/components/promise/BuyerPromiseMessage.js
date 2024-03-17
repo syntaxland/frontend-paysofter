@@ -219,7 +219,7 @@ function BuyerPromiseMessage() {
                   type="submit"
                   variant="primary"
                 >
-                  Submit
+                  Send <i className="fa fa-paper-plane"></i> 
                 </Button>
               </div>
               {success && (

@@ -278,7 +278,7 @@ const isFirstMessageOfDay = (currentIndex, messages) => {
                   type="submit"
                   variant="primary"
                 >
-                  Submit
+                  Send <i className="fa fa-paper-plane"></i>
                 </Button>
               </div>
               {success && (
