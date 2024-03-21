@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Container, Button } from "react-bootstrap";
 // import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
+import { listSupportTicket } from "../../redux/actions/supportActions";
 import PaysofterPromise from "./PaysofterPromise";
 import AccountFund from "./AccountFund";
 // import OrderShipment from "./OrderShipment";
@@ -19,20 +20,41 @@ import Feedbacks from "./Feedbacks";
 import SupportTicket from "./SupportTicket";
 
 function AdminDashboard() {
+  const dispatch = useDispatch();
   const history = useHistory();
-
-  const [activeTab, setActiveTab] = useState("admin-dashboard");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  console.log("userInfo:", userInfo);
+  // console.log("userInfo:", userInfo);
+
+  // const userProfile = useSelector((state) => state.userProfile);
+  // const { profile } = userProfile;
+  // console.log("profile:", profile);
 
   useEffect(() => {
     if (!userInfo) {
       window.location.href = "/login";
     }
   }, [userInfo]);
+
+  const listSupportTicketState = useSelector(
+    (state) => state.listSupportTicketState
+  );
+  const { tickets } = listSupportTicketState;
+
+  const supportMsgCounted = tickets?.reduce(
+    (total, userMessages) => total + userMessages.admin_user_msg_count,
+    0
+  );
+
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(listSupportTicket());
+    }
+  }, [dispatch, userInfo]);
+
+  const [activeTab, setActiveTab] = useState("admin-dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -101,7 +123,9 @@ function AdminDashboard() {
               <div>
                 <Button
                   variant={
-                    activeTab === "admin-dashboard" ? "primary" : "outline-primary"
+                    activeTab === "admin-dashboard"
+                      ? "primary"
+                      : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("admin-dashboard")}
@@ -160,7 +184,9 @@ function AdminDashboard() {
 
               <div>
                 <Button
-                  variant={activeTab === "send-email" ? "primary" : "outline-primary"}
+                  variant={
+                    activeTab === "send-email" ? "primary" : "outline-primary"
+                  }
                   className="sidebar-link"
                   onClick={() => handleTabChange("send-email")}
                 >
@@ -171,7 +197,9 @@ function AdminDashboard() {
               <div>
                 <Button
                   variant={
-                    activeTab === "message-inbox" ? "primary" : "outline-primary"
+                    activeTab === "message-inbox"
+                      ? "primary"
+                      : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("message-inbox")}
@@ -197,7 +225,9 @@ function AdminDashboard() {
               <div>
                 <Button
                   variant={
-                    activeTab === "set-promo-code" ? "primary" : "outline-primary"
+                    activeTab === "set-promo-code"
+                      ? "primary"
+                      : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("set-promo-code")}
@@ -226,16 +256,17 @@ function AdminDashboard() {
                   className="sidebar-link"
                   onClick={() => handleTabChange("support-ticket")}
                 >
-                  <i className="fa fa-ticket"></i> Support Tickets
+                  <i className="fa fa-ticket"></i> Support Tickets{" "}
+                  {supportMsgCounted > 0 && (
+                    <span className="msg-counter">{supportMsgCounted}</span>
+                  )}
                 </Button>
               </div>
 
               <div>
                 <Button
                   variant={
-                    activeTab === "feedbacks"
-                      ? "primary"
-                      : "outline-primary"
+                    activeTab === "feedbacks" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("feedbacks")}
@@ -247,7 +278,9 @@ function AdminDashboard() {
               <div>
                 <Button
                   variant={
-                    activeTab === "admin-dashboard" ? "primary" : "outline-primary"
+                    activeTab === "admin-dashboard"
+                      ? "primary"
+                      : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleUserDashboard()}

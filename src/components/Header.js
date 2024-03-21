@@ -14,6 +14,10 @@ import {
 } from "react-bootstrap";
 import { getUserProfile } from "../redux/actions/userProfileActions";
 
+import {
+  getBuyerPromises,
+  getSellerPromises,
+} from "../redux/actions/PromiseActions";
 
 import { getUserMessages } from "../redux/actions/messagingActions";
 import { logout } from "../redux/actions/userActions";
@@ -26,9 +30,34 @@ function Header() {
   const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
 
-  const getUserMessagesState = useSelector((state) => state.getUserMessagesState);
+  const getUserMessagesState = useSelector(
+    (state) => state.getUserMessagesState
+  );
   const { messages } = getUserMessagesState;
-  console.log("messages:", messages);
+
+  const msgCounted = messages?.reduce(
+    (total, userMessages) => total + userMessages.msg_count,
+    0
+  );
+  const getSellerPromiseState = useSelector(
+    (state) => state.getSellerPromiseState
+  );
+  const { promises: sellerPromises } = getSellerPromiseState;
+
+  const getBuyerPromiseState = useSelector(
+    (state) => state.getBuyerPromiseState
+  );
+  const { promises: buyerPromises } = getBuyerPromiseState;
+
+  const sellerMsgCounted = sellerPromises?.reduce(
+    (total, userMessages) => total + userMessages.seller_msg_count,
+    0
+  );
+
+  const buyerMsgCounted = buyerPromises?.reduce(
+    (total, userMessages) => total + userMessages.buyer_msg_count,
+    0
+  );
 
   const [keyword, setKeyword] = useState("");
   const [greeting, setGreeting] = useState("");
@@ -89,14 +118,10 @@ function Header() {
     if (userInfo) {
       dispatch(getUserProfile());
       dispatch(getUserMessages());
+      dispatch(getSellerPromises());
+      dispatch(getBuyerPromises());
     }
   }, [dispatch, userInfo]);
-
-  const msgCounted = messages?.reduce(
-    (total, userMessages) => total + userMessages.msg_count,
-    0
-  );
-  // console.log("msgCounted:", msgCounted);
 
   return (
     <header>
@@ -298,24 +323,31 @@ function Header() {
                           <NavDropdown.Divider />
 
                           <div>
-                      {userInfo ? (
-                        <>
-                          <Nav.Link as={Link} to="/inbox">
-                            <i
-                              className="fas fa-message"
-                              style={{ fontSize: "16px" }}
-                            ></i>{" "}
-                            Inbox{" "}
-                            {msgCounted > 0 && (
-                              <span className="msg-counter">{msgCounted}</span>
+                            {userInfo ? (
+                              <>
+                                <Nav.Link as={Link} to="/inbox">
+                                  <i
+                                    className="fas fa-message"
+                                    style={{ fontSize: "16px" }}
+                                  ></i>{" "}
+                                  Inbox{" "}
+                                  {msgCounted +
+                                    sellerMsgCounted +
+                                    buyerMsgCounted >
+                                    0 && (
+                                    <span className="msg-counter">
+                                      {msgCounted +
+                                        sellerMsgCounted +
+                                        buyerMsgCounted}
+                                    </span>
+                                  )}
+                                </Nav.Link>
+                              </>
+                            ) : (
+                              <></>
                             )}
-                          </Nav.Link>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                    <NavDropdown.Divider />
+                          </div>
+                          <NavDropdown.Divider />
 
                           <div>
                             <Nav.Link
@@ -371,13 +403,11 @@ function Header() {
                                     className="fas fa-dashboard"
                                     style={{ fontSize: "16px" }}
                                   ></i>{" "}
-                                 Admin 
+                                  Admin
                                 </Nav.Link>
                               </>
                             ) : (
-                              <>
-                                
-                              </>
+                              <></>
                             )}
                           </div>
                           <NavDropdown.Divider />

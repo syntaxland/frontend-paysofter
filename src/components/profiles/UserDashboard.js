@@ -7,16 +7,18 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 // import { login } from "../../redux/actions/userActions";
-
 import { getUserProfile } from "../../redux/actions/userProfileActions";
-
 import { getUserMessages } from "../../redux/actions/messagingActions";
-
+import {
+  getBuyerPromises,
+  getSellerPromises,
+} from "../../redux/actions/PromiseActions";
+import { listSupportTicket } from "../../redux/actions/supportActions";
 import UserProfile from "./UserProfile";
 // import Transactions from "./Transactions";
 // import Payouts from "./Payouts";
 import Dashboard from "./Dashboard";
-import MessageInbox from "./MessageInbox";
+import Inbox from "./Inbox";
 // import CreditPoint from "./CreditPoint";
 import AccountFunds from "./AccountFunds";
 // import Referraols from "./Referrals";
@@ -35,28 +37,67 @@ function UserDashboard() {
   const { userInfo } = userLogin;
   // console.log("userInfo:", userInfo);
 
-  const getUserMessagesState = useSelector(
-    (state) => state.getUserMessagesState
-  );
-  const { messages } = getUserMessagesState;
-  console.log("messages:", messages);
-
   const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
   // console.log("profile:", profile?.is_usd_selected);
-
-  useEffect(() => {
-    if (userInfo) {
-      dispatch(getUserProfile());
-      dispatch(getUserMessages()); 
-    }
-  }, [dispatch, userInfo]);
 
   useEffect(() => {
     if (!userInfo) {
       window.location.href = "/login";
     }
   }, [userInfo]);
+
+  const getUserMessagesState = useSelector(
+    (state) => state.getUserMessagesState
+  );
+  const { messages } = getUserMessagesState;
+  console.log("messages:", messages);
+
+  const getSellerPromiseState = useSelector(
+    (state) => state.getSellerPromiseState
+  );
+  const { promises: sellerPromises } = getSellerPromiseState;
+
+  const getBuyerPromiseState = useSelector(
+    (state) => state.getBuyerPromiseState
+  );
+  const { promises: buyerPromises } = getBuyerPromiseState;
+
+  const listSupportTicketState = useSelector(
+    (state) => state.listSupportTicketState
+  );
+  const { tickets } = listSupportTicketState;
+
+  const supportMsgCounted = tickets?.reduce(
+    (total, userMessages) => total + userMessages.user_msg_count,
+    0
+  );
+
+  const msgCounted = messages?.reduce(
+    (total, userMessages) => total + userMessages.msg_count,
+    0
+  );
+  console.log("msgCounted:", msgCounted);
+
+  const sellerMsgCounted = sellerPromises?.reduce(
+    (total, userMessages) => total + userMessages.seller_msg_count,
+    0
+  );
+
+  const buyerMsgCounted = buyerPromises?.reduce(
+    (total, userMessages) => total + userMessages.buyer_msg_count,
+    0
+  );
+
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(getUserProfile());
+      dispatch(getUserMessages());
+      dispatch(getSellerPromises());
+      dispatch(getBuyerPromises());
+      dispatch(listSupportTicket());
+    }
+  }, [dispatch, userInfo]);
 
   const [activeTab, setActiveTab] = useState("user-dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -89,12 +130,6 @@ function UserDashboard() {
     history.push("/dashboard/sellers");
   };
 
-  const msgCounted = messages?.reduce(
-    (total, userMessages) => total + userMessages.msg_count,
-    0
-  );
-  console.log("msgCounted:", msgCounted);
-
   const renderTabContent = () => {
     switch (activeTab) {
       case "profile":
@@ -119,7 +154,7 @@ function UserDashboard() {
         return <PaysofterPromise />;
 
       case "message-inbox":
-        return <MessageInbox />;
+        return <Inbox />;
 
       // case "credit-point":
       //   return <CreditPoint />;
@@ -290,8 +325,10 @@ function UserDashboard() {
                   onClick={() => handleTabChange("message-inbox")}
                 >
                   <i className="fa fa-message"></i> Inbox{" "}
-                  {msgCounted > 0 && (
-                    <span className="msg-counter">{msgCounted}</span>
+                  {msgCounted + sellerMsgCounted + buyerMsgCounted > 0 && (
+                    <span className="msg-counter">
+                      {msgCounted + sellerMsgCounted + buyerMsgCounted}
+                    </span>
                   )}
                 </Button>
               </div>
@@ -370,7 +407,10 @@ function UserDashboard() {
                   className="sidebar-link"
                   onClick={() => handleTabChange("support-ticket")}
                 >
-                  <i className="fa fa-ticket"></i> Support Ticket
+                  <i className="fa fa-ticket"></i> Support Ticket{" "}
+                  {supportMsgCounted > 0 && (
+                    <span className="msg-counter">{supportMsgCounted}</span>
+                  )}
                 </Button>
               </div>
 

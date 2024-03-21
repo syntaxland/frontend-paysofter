@@ -12,7 +12,7 @@ import Loader from "../Loader";
 import Pagination from "../Pagination";
 import Timer from "../Timer";
 import SellerConfirmPromise from "../promise/SellerConfirmPromise";
-import SettleDisputedPromise from "../promise/SettleDisputedPromise";
+import SettleDisputedPromise from "../promise/SettleDisputedPromise"; 
 import { formatAmount } from "../FormatAmount";
 
 function PaysofterPromiseSeller({ history }) {

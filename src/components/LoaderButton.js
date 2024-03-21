@@ -1,9 +1,9 @@
 // LoaderButton.js
 import React from "react";
-// import { Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import {
     // BeatLoader,
-    CircleLoader,
+    // CircleLoader,
   //   BounceLoader,
   //   ClipLoader,
   // FadeLoader,
@@ -24,10 +24,10 @@ function LoaderButton() {
         <span className="visually-hidden">Loading...</span>
 
         {/* from react-bootstrap */}
-        {/* <Spinner annimation='border' variant='primary' size='lg' />  */}
+        <Spinner annimation='border' variant='primary' size='sm' /> 
 
         {/* from react-spinners */}
-        <CircleLoader color="blue" size={12} />
+        {/* <CircleLoader color="blue" size={12} /> */}
 
         {/* 
       <p>BeatLoader...<BeatLoader color="#ff0000" size={20} /></p><br />

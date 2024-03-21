@@ -3,13 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Container } from "react-bootstrap";
 import {
   buyerCreatePromiseMessage,
   listBuyerPromiseMessages,
 } from "../../redux/actions/PromiseActions";
 import Loader from "../Loader";
 import Message from "../Message";
+import LoaderButton from "../LoaderButton";
 
 function BuyerPromiseMessage() {
   const dispatch = useDispatch();
@@ -100,10 +101,10 @@ function BuyerPromiseMessage() {
   };
 
   return (
-    <div>
+    <Container>
       <div>
         <Row className="d-flex justify-content-center">
-          <Col className="border rounded p-4 bg-secondary" xs={10} md={10}>
+          <Col className="border rounded p-4 bg-secondary" xs={10} md={8}>
             {loading && <Loader />}
             {error && <Message variant="danger">{error}</Message>}
             {/* {success && (
@@ -123,7 +124,7 @@ function BuyerPromiseMessage() {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
-                    })}
+                    })} 
                   </p>
                 )}
                 <div
@@ -143,14 +144,14 @@ function BuyerPromiseMessage() {
                       }`}
                     >
                       <p>
-                        User:{" "}
+                        <i className="fas fa-user"></i>{" "}
                         {message.buyer_username
                           ? message.buyer_username?.charAt(0).toUpperCase() +
                             message.buyer_username?.slice(1)
                           : message.seller_username?.charAt(0).toUpperCase() +
                             message.seller_username?.slice(1)}
                       </p>
-                      <p>Message: {message.message}</p>
+                      <p>{message.message}</p>
                       <p className="d-flex justify-content-end">
                         {" "}
                         {formatTimestamp(message.timestamp)}
@@ -160,44 +161,6 @@ function BuyerPromiseMessage() {
                 </div>
               </div>
             ))}
-
-            {/* {buyerPromiseMessages?.map((message) => (
-              <div
-                className={`${
-                  message.seller
-                    ? "d-flex justify-content-left"
-                    : "d-flex justify-content-end"
-                }`}
-                style={{ maxWidth: "75%" }}
-              >
-                <div>
-                  <div key={message.id}>
-                    <div
-                      className={`border rounded p-3 my-2 ${
-                        message.seller
-                          ? "bg-light"
-                          : "bg-success justify-content-end"
-                      }`}
-                      // style={{ maxWidth: "75%" }}
-                    >
-                      <p>
-                        User:{" "}
-                        {message.buyer_username
-                          ? message.buyer_username?.charAt(0).toUpperCase() +
-                            message.buyer_username?.slice(1)
-                          : message.seller_username?.charAt(0).toUpperCase() +
-                            message.seller_username?.slice(1)}
-                      </p>
-                      <p>Message: {message.message}</p>
-                      <p>
-                        Timestamp:{" "}
-                        {new Date(message.timestamp).toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))} */}
 
             <Form onSubmit={handleSubmitReply}>
               <Form.Group controlId="message">
@@ -218,8 +181,14 @@ function BuyerPromiseMessage() {
                   className="w-100 rounded"
                   type="submit"
                   variant="primary"
+                  disabled={loading}
                 >
-                  Send <i className="fa fa-paper-plane"></i> 
+                  <div className="d-flex justify-content-center">
+                    <span className="py-1">
+                      Send <i className="fa fa-paper-plane"></i>
+                    </span>{" "}
+                    {loading && <LoaderButton />}
+                  </div>
                 </Button>
               </div>
               {success && (
@@ -229,7 +198,7 @@ function BuyerPromiseMessage() {
           </Col>
         </Row>
       </div>
-    </div>
+    </Container>
   );
 }
 

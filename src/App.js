@@ -35,7 +35,7 @@ import TermsAndConditionScreen from "./components/screens/TermsAndConditionScree
 // import Orders from "./components/profiles/Orders";
 // import Payments from "./components/profiles/Payments";
 import PaysofterPromise from "./components/profiles/PaysofterPromiseBuyer";
-import MessageInbox from "./components/profiles/MessageInbox";
+import Inbox from "./components/profiles/Inbox";
 
 import ToggleAccountSettings from "./components/settings/ToggleAccountSettings";
 import MaxWithdrawalSettings from "./components/settings/MaxWithdrawalSettings";
@@ -59,7 +59,8 @@ import BuyerPromiseMessage from "./components/promise/BuyerPromiseMessage";
 
 import CreateSupportTicket from "./components/support/CreateSupportTicket";
 import SupportTicket from "./components/support/SupportTicket";
-import SupportTicketDetails from "./components/support/SupportTicketDetails";
+import UserReplySupportTicket from "./components/support/UserReplySupportTicket"; 
+import AdminReplySupportTicket from "./components/support/AdminReplySupportTicket"; 
 
 import CreateFeedback from "./components/feedback/CreateFeedback";
 
@@ -121,11 +122,12 @@ function App() {
           <Route path="/dashboard/admin" component={AdminDashboard} />
 
           <Route path="/create-support-ticket" component={CreateSupportTicket} />
-          <Route path="/support/ticket/:id" component={SupportTicketDetails} />
+          <Route path="/user-reply-support-ticket/:id" component={UserReplySupportTicket} />
+          <Route path="/admin-reply-support-ticket/:id" component={AdminReplySupportTicket} />
           <Route path="/support/tickets/" component={SupportTicket} />
 
           <Route path="/create-feedback/" component={CreateFeedback} />
-          <Route path="/inbox" component={MessageInbox} />
+          <Route path="/inbox" component={Inbox} />
           {/* 
           <Route path="/products/search/:keyword" component={SearchScreen} />
           <Route path="/checkout" component={CheckoutScreen} />

@@ -77,12 +77,12 @@ import {
   sellerConfirmPromiseReducer,
   // createPromiseMessagesReducer,
   buyerCreatePromiseMessageReducer,
-sellerCreatePromiseMessageReducer,
+  sellerCreatePromiseMessageReducer,
   // listPromiseMessagesReducer,
   listBuyerPromiseMessagesReducer,
-listSellerPromiseMessagesReducer,
-buyerClearPromiseMessageReducer,
-sellerClearPromiseMessageReducer,
+  listSellerPromiseMessagesReducer,
+  buyerClearPromiseMessageReducer,
+  sellerClearPromiseMessageReducer,
 } from "./reducers/PromiseReducers";
 
 import {
@@ -111,10 +111,13 @@ import {
   listSupportTicketReducer,
   listSupportMessageReducer,
   replySupportTicketReducer,
+  adminReplySupportTicketReducer,
   listSupportTicketReplyReducer,
   ticketDetailListReducer,
   allTicketListReducer,
   allTicketResponseReducer,
+  clearUserSupportMsgCounterReducer,
+  clearAdminSupportMsgCounterReducer,
 } from "./reducers/supportReducers";
 
 import {
@@ -174,13 +177,13 @@ const reducer = combineReducers({
   settleDisputedPromiseState: settleDisputedPromiseReducer,
   // createPromiseMessageState: createPromiseMessagesReducer,
   buyerCreatePromiseMessageState: buyerCreatePromiseMessageReducer,
-sellerCreatePromiseMessageState: sellerCreatePromiseMessageReducer,
+  sellerCreatePromiseMessageState: sellerCreatePromiseMessageReducer,
   // listPromiseMessageState: listPromiseMessagesReducer,
 
   listBuyerPromiseMessagesState: listBuyerPromiseMessagesReducer,
-listSellerPromiseMessagesState: listSellerPromiseMessagesReducer,
-buyerClearPromiseMessageState: buyerClearPromiseMessageReducer,
-sellerClearPromiseMessageState: sellerClearPromiseMessageReducer,
+  listSellerPromiseMessagesState: listSellerPromiseMessagesReducer,
+  buyerClearPromiseMessageState: buyerClearPromiseMessageReducer,
+  sellerClearPromiseMessageState: sellerClearPromiseMessageReducer,
 
   creditPointBal: creditPointBalanceReducer,
   creditPointRequestCreate: creditPointRequestCreateReducer,
@@ -213,6 +216,7 @@ sellerClearPromiseMessageState: sellerClearPromiseMessageReducer,
   getSelectedCurrencyState: getSelectedCurrencyReducer,
 
   createSupportTicketState: createSupportTicketReducer,
+  adminReplySupportTicketState: adminReplySupportTicketReducer,
   createSupportMessageState: createSupportMessageReducer,
   listSupportTicketState: listSupportTicketReducer,
   listSupportMessageState: listSupportMessageReducer,
@@ -221,6 +225,8 @@ sellerClearPromiseMessageState: sellerClearPromiseMessageReducer,
   ticketDetailList: ticketDetailListReducer,
   allTicketList: allTicketListReducer,
   allTicketResponse: allTicketResponseReducer,
+  clearUserSupportMsgCounterState: clearUserSupportMsgCounterReducer,
+  clearAdminSupportMsgCounterState: clearAdminSupportMsgCounterReducer,
 
   feedbackCreate: feedbackCreateReducer,
   feedbackList: feedbackListReducer,
