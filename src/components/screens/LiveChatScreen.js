@@ -12,12 +12,13 @@ const LiveChatScreen = () => {
     dispatch(connectChat());
   }, [dispatch]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = () => { 
     if (message.trim() !== '') {
       dispatch(sendMessage(message));
       setMessage('');
     }
   };
+  
 
   return (
     <div className="live-chat-container">

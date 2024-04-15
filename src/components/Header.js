@@ -13,7 +13,7 @@ import {
   Col,
 } from "react-bootstrap";
 import { getUserProfile } from "../redux/actions/userProfileActions";
-
+import { listSupportTicket } from "../redux/actions/supportActions";
 import {
   getBuyerPromises,
   getSellerPromises,
@@ -56,6 +56,16 @@ function Header() {
 
   const buyerMsgCounted = buyerPromises?.reduce(
     (total, userMessages) => total + userMessages.buyer_msg_count,
+    0
+  );
+
+  const listSupportTicketState = useSelector(
+    (state) => state.listSupportTicketState
+  );
+  const { tickets } = listSupportTicketState;
+
+  const supportMsgCounted = tickets?.reduce(
+    (total, userMessages) => total + userMessages.user_msg_count,
     0
   );
 
@@ -120,6 +130,7 @@ function Header() {
       dispatch(getUserMessages());
       dispatch(getSellerPromises());
       dispatch(getBuyerPromises());
+      dispatch(listSupportTicket());
     }
   }, [dispatch, userInfo]);
 
@@ -369,7 +380,12 @@ function Header() {
                                     className="fas fa-question-circle"
                                     style={{ fontSize: "16px" }}
                                   ></i>{" "}
-                                  Support
+                                  Support{" "}
+                                  {supportMsgCounted > 0 && (
+                                    <span className="msg-counter">
+                                      {supportMsgCounted}
+                                    </span>
+                                  )}
                                 </Nav.Link>
                               </>
                             ) : (

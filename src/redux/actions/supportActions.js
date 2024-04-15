@@ -39,7 +39,8 @@ import {
   CLEAR_ADMIN_SUPPORT_MESSAGE_COUNTER_FAIL,
 } from "../constants/supportConstants";
 
-const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL } from "../../config/apiConfig";
 
 export const clearUserSupportMsgCounter =
   (ticketData) => async (dispatch, getState) => {

@@ -11,7 +11,7 @@ import {
   LIST_ALL_PAYMENTS_FAIL,
 } from "../constants/paymentConstants";
 
-const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL } from "../../config/apiConfig";
 
 export const createPayment = (paymentData) => async (dispatch, getState) => {
   try {

@@ -12,6 +12,7 @@ import { userPayoutReducer } from "./reducers/payoutReducers";
 import {
   userLoginReducers,
   userRegisterReducers,
+  updateUserLastLoginReducer,
 } from "./reducers/userReducers";
 
 import {
@@ -130,6 +131,7 @@ import { orderListReducer } from "./reducers/orderReducers";
 const reducer = combineReducers({
   userLogin: userLoginReducers,
   userRegister: userRegisterReducers,
+  updateUserLastLoginState: updateUserLastLoginReducer,
 
   emailOtpSend: emailOtpSendReducer,
   emailOtpVerify: emailOtpVerifyReducer,

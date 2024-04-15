@@ -140,7 +140,7 @@ function BuyerPromiseMessage() {
                       className={`border rounded p-3 my-2 ${
                         message.seller
                           ? "bg-light"
-                          : "bg-success justify-content-end"
+                          : "bg-success justify-content-end" 
                       }`}
                     >
                       <p>

@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
-import { listSupportTicket } from "../../redux/actions/supportActions";
+import { listAllSupportTickets } from "../../redux/actions/supportActions";
 import PaysofterPromise from "./PaysofterPromise";
 import AccountFund from "./AccountFund";
 // import OrderShipment from "./OrderShipment";
@@ -37,10 +37,10 @@ function AdminDashboard() {
     }
   }, [userInfo]);
 
-  const listSupportTicketState = useSelector(
-    (state) => state.listSupportTicketState
+  const allTicketList = useSelector(
+    (state) => state.allTicketList
   );
-  const { tickets } = listSupportTicketState;
+  const { tickets } = allTicketList;
 
   const supportMsgCounted = tickets?.reduce(
     (total, userMessages) => total + userMessages.admin_user_msg_count,
@@ -49,7 +49,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     if (userInfo) {
-      dispatch(listSupportTicket());
+      dispatch(listAllSupportTickets());
     }
   }, [dispatch, userInfo]);
 

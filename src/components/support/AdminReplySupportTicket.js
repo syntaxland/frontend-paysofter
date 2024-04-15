@@ -202,7 +202,7 @@ function AdminReplySupportTicket() {
                 <div
                   className={`${
                     message.user
-                      ? "d-flex justify-content-left"
+                      ? "d-flex justify-content-start"
                       : "d-flex justify-content-end"
                   }`}
                   style={{ maxWidth: "75%" }}

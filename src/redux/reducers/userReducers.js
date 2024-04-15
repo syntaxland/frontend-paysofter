@@ -7,6 +7,9 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
+  UPDATE_USER_LAST_LOGIN_REQUEST,
+  UPDATE_USER_LAST_LOGIN_SUCCESS,
+  UPDATE_USER_LAST_LOGIN_FAIL,
 } from "../constants/userConstants";
 
 const initialState = {
@@ -16,18 +19,31 @@ const initialState = {
   userInfo: [],
 };
 
-export const userLoginReducers = (state = initialState, action) => { 
+export const userLoginReducers = (state = initialState, action) => {
   switch (action.type) {
-    case USER_LOGIN_REQUEST: 
+    case USER_LOGIN_REQUEST:
       return { laoding: true };
     case USER_LOGIN_SUCCESS:
-      return { laoding: false, success: true, userInfo: action.payload }; 
+      return { laoding: false, success: true, userInfo: action.payload };
     case USER_LOGIN_FAIL:
       return { laoding: false, error: action.payload };
 
     case USER_LOGOUT:
       return {};
 
+    default:
+      return state;
+  }
+};
+
+export const updateUserLastLoginReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case UPDATE_USER_LAST_LOGIN_REQUEST:
+      return { laoding: true };
+    case UPDATE_USER_LAST_LOGIN_SUCCESS:
+      return { laoding: false, success: true, userInfo: action.payload };
+    case UPDATE_USER_LAST_LOGIN_FAIL:
+      return { laoding: false, error: action.payload };
     default:
       return state;
   }
@@ -41,12 +57,12 @@ export const userRegisterReducers = (state = initialState, action) => {
       return { loading: false, success: true, userInfo: action.payload };
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload };
-    
+
     case "STORE_REGISTRATION_DATA":
-    return {
-      ...state,
-      registrationData: action.payload,
-    };
+      return {
+        ...state,
+        registrationData: action.payload,
+      };
 
     case USER_LOGOUT:
       return {};

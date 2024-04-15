@@ -2,15 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { useHistory } from "react-router-dom";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap";
+import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
 import { getUserUsdAccountFundBalance } from "../../redux/actions/AccountFundActions";
 import ToggleUsdAccountSettings from "../settings/ToggleUsdAccountSettings";
 import FundUsdAccount from "./FundUsdAccount";
-import {formatAmount} from "../FormatAmount";
+import { formatAmount } from "../FormatAmount";
 
-const GetUsdAccountFundBalance = () => { 
+const GetUsdAccountFundBalance = () => {
   const dispatch = useDispatch();
   // const history = useHistory();
 
@@ -55,6 +55,11 @@ const GetUsdAccountFundBalance = () => {
   useEffect(() => {
     dispatch(getUserUsdAccountFundBalance());
   }, [dispatch]);
+
+  const [accountFundVisible, setAccountFundVisible] = useState(false);
+  const toggleAccountFundVisible = () => {
+    setAccountFundVisible(!accountFundVisible);
+  };
 
   return (
     <Container>
@@ -127,7 +132,7 @@ const GetUsdAccountFundBalance = () => {
               <Modal show={showFundAccount} onHide={handleFundAccountClose}>
                 <Modal.Header closeButton>
                   <Modal.Title className="text-center w-100 py-2">
-                  Fund Account
+                    Fund Account
                   </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{showFundAccount && <FundUsdAccount />}</Modal.Body>
@@ -165,18 +170,47 @@ const GetUsdAccountFundBalance = () => {
               </Modal>
             </Row>
 
-            <span>Balance: </span>
-            <strong>
-              {formatAmount(usdFundBalance?.balance)
-              
-              // ?.toLocaleString(undefined, {
-              //   minimumFractionDigits: 2,
-              //   maximumFractionDigits: 2,
-              // })
-              
-              }{" "}
-              USD
-            </strong>
+            {/* <span>Balance: </span>
+            <strong>{formatAmount(usdFundBalance?.balance)} USD</strong> */}
+
+            <Row className="d-flex justify-content-center">
+              <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                <Form.Group>
+                  <Form.Label>Balance: </Form.Label>
+                  <Form.Control
+                    className="text-center"
+                    type={accountFundVisible ? "text" : "password"}
+                    value={`${formatAmount(usdFundBalance?.balance)} USD`} 
+                    disabled
+                  />
+                  <div>
+                    <span>
+                      <Button
+                        variant="outline"
+                        className="rounded"
+                        size="sm"
+                        onClick={toggleAccountFundVisible}
+                      >
+                        {accountFundVisible ? (
+                          <span>
+                            <i className="fa fa-eye-slash"></i> Hide
+                          </span>
+                        ) : (
+                          <span>
+                            <i className="fa fa-eye"></i> Show
+                          </span>
+                        )}
+                      </Button>
+                    </span>
+                    <Button
+                      variant="outline"
+                      className="rounded"
+                      size="sm"
+                    ></Button>
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
 
             <div className="py-3">
               <Button

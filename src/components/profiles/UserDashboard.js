@@ -94,7 +94,7 @@ function UserDashboard() {
       dispatch(getUserProfile());
       dispatch(getUserMessages());
       dispatch(getSellerPromises());
-      dispatch(getBuyerPromises());
+      dispatch(getBuyerPromises()); 
       dispatch(listSupportTicket());
     }
   }, [dispatch, userInfo]);

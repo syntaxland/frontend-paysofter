@@ -239,7 +239,7 @@ function Dashboard() {
   // ];
 
   return (
-    <div className="justify-content-center text-center">
+    <div className="d-flex justify-content-center text-center">
       <Row>
         <Col>
           <div>
@@ -273,7 +273,7 @@ function Dashboard() {
                   </Col>
 
                   <Row className="py-2 d-flex justify-content-center">
-                    <Col md={4}>
+                    <Col xs={4} sm={4} md={4} lg={4} xl={4}>
                       <div>
                         <SelectCurrency
                         // selectedCurrency={selectedCurrency}

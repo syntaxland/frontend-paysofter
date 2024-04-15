@@ -48,7 +48,8 @@ import {
   CLEAR_SELLEE_PROMISE_MESSAG_COUNTERE_FAIL,
 } from "../constants/PromiseConstants";
 
-const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL } from "../../config/apiConfig";
 
 export const listBuyerPromiseMessages =
   (promiseId) => async (dispatch, getState) => {

@@ -108,7 +108,7 @@ function SupportTicket() {
                     <td>{index + 1}</td>
 
                     <td className="text-center">
-                      <ListGroup className="text-center py-1">
+                      <ListGroup className="text-center py-2">
                         <ListGroup.Item>#{ticket.ticket_id}</ListGroup.Item>
                       </ListGroup>
                       <Button
@@ -117,7 +117,7 @@ function SupportTicket() {
                         onClick={() => clearMessageCounter(ticket.ticket_id)}
                       >
                         <Link
-                          to={`/admin-reply-support-ticket/${ticket.ticket_id}`}
+                          to={`/user-reply-support-ticket/${ticket.ticket_id}`}
                           style={{ textDecoration: "none" }}
                         >
                           Reply Support{" "}

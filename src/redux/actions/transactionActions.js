@@ -9,7 +9,8 @@ import {
   TRANSACTION_CREATE_FAIL,
 } from "../constants/transactionConstants";
 
-const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL } from "../../config/apiConfig";
 
 export const getUserTransactions = () => async (dispatch, getState) => {
   try {

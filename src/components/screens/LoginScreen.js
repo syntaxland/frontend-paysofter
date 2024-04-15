@@ -1,14 +1,14 @@
 //LoginScreen.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import Loader from "../Loader";
 import Message from "../Message";
 import { useDispatch, useSelector } from "react-redux";
-import FormContainer from "../FormContainer"; 
-import { login } from "../../redux/actions/userActions";
+import FormContainer from "../FormContainer";
+import { login, updateUserLastLogin } from "../../redux/actions/userActions";
 // import GoogleLoginScreen from "./GoogleLoginScreen";
- 
+
 function LoginScreen({ location }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,22 +21,27 @@ function LoginScreen({ location }) {
   // const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { error, userInfo } = userLogin;
+  const { error, userInfo, success } = userLogin;
 
   // const handleGoogleLoginClick = () => {
   //   setShowGoogleLogin(true);
   // };
 
+  const lowerCaseEmail = email.toLowerCase();
+  const loginData = useMemo(() => {
+    return {
+      email: lowerCaseEmail.trim(),
+      password: password.trim(),
+    };
+  }, [lowerCaseEmail, password]);
+
   useEffect(() => {
     if (userInfo) {
       try {
         if (userInfo.is_verified) {
-          // If the email is verified, clear the userInfo and proceed with login
-          history.push("/dashboard/users");
-          // history.push(redirect);
-          setSuccessMessage("Login successful."); 
+          // history.push("/dashboard/users");
+          setSuccessMessage("Login successful.");
         } else {
-          // If the email is not verified, log out the user and redirect to the email verification page
           // dispatch(logout());
           history.push("/verify-email-otp");
           setSuccessMessage("Please verify your email.");
@@ -52,7 +57,8 @@ function LoginScreen({ location }) {
     setLoading(true); // Set loading to true before making the request
 
     try {
-      await dispatch(login(email, password)); // Wait for the login request to complete 
+      await dispatch(login(loginData));
+      // await dispatch(login(email, password)); // Wait for the login request to complete
       setLoading(false); // Set loading back to false after the request is completed
 
       // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -60,13 +66,24 @@ function LoginScreen({ location }) {
       // if (userInfo && userInfo.access) {
       //   let refreshTokenTime = 1000 * 60 * 0.1; // ms * hr * mins
       //   setTimeout(() => {
-      //     dispatch(refreshToken(userInfo.refresh)); 
+      //     dispatch(refreshToken(userInfo.refresh));
       //   }, refreshTokenTime);
       // }
     } catch (error) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        dispatch(updateUserLastLogin(loginData));
+        history.push("/dashboard/users");
+        console.log("UserLastLogin updated");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [dispatch, success, history, loginData]);
 
   return (
     <div>
@@ -81,7 +98,7 @@ function LoginScreen({ location }) {
           {loading && <Loader />}
           <Form.Group controlId="email">
             <Form.Label>
-              <i className="fas fa-envelope"></i> Email Address 
+              <i className="fas fa-envelope"></i> Email Address
             </Form.Label>
             <Form.Control
               required
@@ -89,7 +106,7 @@ function LoginScreen({ location }) {
               placeholder="Enter Email or Username"
               className="rounded w-100"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} 
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
 

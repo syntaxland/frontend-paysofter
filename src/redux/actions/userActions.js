@@ -7,13 +7,18 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_REQUEST,
+  UPDATE_USER_LAST_LOGIN_REQUEST,
+  UPDATE_USER_LAST_LOGIN_SUCCESS,
+  UPDATE_USER_LAST_LOGIN_FAIL,
 } from "../constants/userConstants";
+
 import axios from "axios";
-import axiosInstance from "../store";  
+import axiosInstance from "../store";
 
-const API_URL = process.env.REACT_APP_API_URL; 
+import { API_URL } from "../../config/apiConfig";
+// const API_URL = process.env.REACT_APP_API_URL;
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (loginData) => async (dispatch) => {
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -27,7 +32,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       `${API_URL}/api/user-login/`,
-      { email: email, password: password },
+      loginData,
       config
     );
 
@@ -37,12 +42,12 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     // Set access token in Axios headers
-    // axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`; 
+    // axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
     localStorage.setItem("userInfo", JSON.stringify(data));
 
     // Set timer to refresh the access token after refreshTokenTime minutes (ms)
     // let refreshTokenTime = 1000 * 60 * 900; // ms * hr * mins
-    let refreshTokenTime = 1000 * 60 * 60*24*7; // ms * hr * mins
+    let refreshTokenTime = 1000 * 60 * 60 * 24 * 7; // ms * hr * mins
     setTimeout(() => {
       dispatch(refreshToken(data.refresh));
     }, refreshTokenTime);
@@ -51,6 +56,39 @@ export const login = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const updateUserLastLogin = (loginData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_USER_LAST_LOGIN_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post(
+      `${API_URL}/api/update-user-last-login/`,
+      loginData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_USER_LAST_LOGIN_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_LAST_LOGIN_FAIL,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
@@ -79,7 +117,7 @@ export const loginWithGoogle =
         payload: data,
       });
 
-      localStorage.setItem("userInfo", JSON.stringify(data)); 
+      localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: USER_LOGIN_FAIL,
@@ -91,43 +129,42 @@ export const loginWithGoogle =
     }
   };
 
-export const register =
-  (formData) => async (dispatch) => {
-    try {
-      dispatch({
-        type: USER_REGISTER_REQUEST,
-      });
+export const register = (formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_REGISTER_REQUEST,
+    });
 
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
 
-      const { data } = await axios.post(
-        `${API_URL}/api/user-register/`,
-        formData,
-        config
-      );
+    const { data } = await axios.post(
+      `${API_URL}/api/user-register/`,
+      formData,
+      config
+    );
 
-      dispatch({
-        type: USER_REGISTER_SUCCESS,
-        payload: data,
-      });
+    dispatch({
+      type: USER_REGISTER_SUCCESS,
+      payload: data,
+    });
 
-      localStorage.setItem("registrationData", JSON.stringify(formData));
-      // window.location.reload();
-      // window.location.href = "/verify-email-otp";
-    } catch (error) {
-      dispatch({
-        type: USER_REGISTER_FAIL,
-        payload:
-          error.response && error.response.data.detail
-            ? error.response.data.detail
-            : error.message,
-      });
-    }
-  };
+    localStorage.setItem("registrationData", JSON.stringify(formData));
+    // window.location.reload();
+    // window.location.href = "/verify-email-otp";
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const refreshToken = (refreshToken) => async (dispatch) => {
   try {
@@ -155,7 +192,7 @@ export const refreshToken = (refreshToken) => async (dispatch) => {
 
     // Set timer to refresh the access token again after refreshTokenTime minutes (ms)
     // let refreshTokenTime = 1000 * 60 * 900; // ms * hr * mins
-    let refreshTokenTime = 1000 * 60 * 60*24*7; // ms * hr * mins
+    let refreshTokenTime = 1000 * 60 * 60 * 24 * 7; // ms * hr * mins
     setTimeout(() => {
       dispatch(refreshToken(data.refresh));
     }, refreshTokenTime);
@@ -164,8 +201,8 @@ export const refreshToken = (refreshToken) => async (dispatch) => {
     // Handle token expiration here
     if (error.response && error.response.status === 401) {
       // Token has expired, redirect the user to the login page
-      dispatch(logout()); 
-      // window.location.href = "/login"; 
+      dispatch(logout());
+      // window.location.href = "/login";
     } else {
       // Handle other errors or log out the user if token refresh fails
       dispatch(logout());

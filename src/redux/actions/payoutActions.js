@@ -6,7 +6,8 @@ import {
   USER_PAYOUT_FAIL,
 } from "../constants/payoutConstants";
 
-const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL } from "../../config/apiConfig";
 
 export const getUserPayouts = () => async (dispatch, getState) => {
   try {

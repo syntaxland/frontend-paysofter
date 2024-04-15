@@ -56,7 +56,8 @@ SET_MAX_USD_FUND_WITHDRAWAL_SUCCESS,
 SET_MAX_USD_FUND_WITHDRAWAL_FAIL,
 } from "../constants/AccountFundConstants";
 
-const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL } from "../../config/apiConfig";
 
 export const setMaxUsdWithdrawal = (amountData) => async (dispatch, getState) => {
   try {
