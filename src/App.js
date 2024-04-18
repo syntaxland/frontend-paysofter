@@ -25,6 +25,8 @@ import CreditPointRequestScreen from "./components/screens/CreditPointRequestScr
 // import SendEmailOtp from "./components/emailOtp/SendEmailOtp";
 import VerifyEmailOtpScreen from "./components/screens/VerifyEmailOtpScreen";
 import TermsAndConditionScreen from "./components/screens/TermsAndConditionScreen";
+import PrivacyPolicyScreen from "./components/screens/PrivacyPolicyScreen"; 
+import DeleteAccountGuideScreen from "./components/screens/DeleteAccountGuideScreen";
 
 // import ResendEmailOtp from "./components/emailOtp/ResendEmailOtp";
 // import UserProfile from "./components/profiles/UserProfile";
@@ -59,8 +61,8 @@ import BuyerPromiseMessage from "./components/promise/BuyerPromiseMessage";
 
 import CreateSupportTicket from "./components/support/CreateSupportTicket";
 import SupportTicket from "./components/support/SupportTicket";
-import UserReplySupportTicket from "./components/support/UserReplySupportTicket"; 
-import AdminReplySupportTicket from "./components/support/AdminReplySupportTicket"; 
+import UserReplySupportTicket from "./components/support/UserReplySupportTicket";
+import AdminReplySupportTicket from "./components/support/AdminReplySupportTicket";
 
 import CreateFeedback from "./components/feedback/CreateFeedback";
 
@@ -88,6 +90,8 @@ function App() {
             path="/terms-and-conditions"
             component={TermsAndConditionScreen}
           />
+          <Route path="/privacy-policy" component={PrivacyPolicyScreen} />
+          <Route path="/account-deletion-guide" component={DeleteAccountGuideScreen} />
 
           <Route path="/settings" component={Settings} />
           <Route path="/set-max-fund" component={MaxWithdrawalSettings} />
@@ -121,9 +125,18 @@ function App() {
           <Route path="/dashboard/sellers" component={SellerDashboard} />
           <Route path="/dashboard/admin" component={AdminDashboard} />
 
-          <Route path="/create-support-ticket" component={CreateSupportTicket} />
-          <Route path="/user-reply-support-ticket/:id" component={UserReplySupportTicket} />
-          <Route path="/admin-reply-support-ticket/:id" component={AdminReplySupportTicket} />
+          <Route
+            path="/create-support-ticket"
+            component={CreateSupportTicket}
+          />
+          <Route
+            path="/user-reply-support-ticket/:id"
+            component={UserReplySupportTicket}
+          />
+          <Route
+            path="/admin-reply-support-ticket/:id"
+            component={AdminReplySupportTicket}
+          />
           <Route path="/support/tickets/" component={SupportTicket} />
 
           <Route path="/create-feedback/" component={CreateFeedback} />

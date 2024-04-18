@@ -22,6 +22,7 @@ import {
 import { getUserMessages } from "../redux/actions/messagingActions";
 import { logout } from "../redux/actions/userActions";
 import "./Header.css";
+import logoImage from "../images/logo.png";
 
 function Header() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -147,8 +148,17 @@ function Header() {
           >
             <Container fluid>
               <Navbar.Brand as={Link} to="/">
-                <i className="fas fa-home" style={{ fontSize: "16px" }}></i>{" "}
-                Paysofter
+                {/* <i className="fas fa-home" style={{ fontSize: "16px" }}></i>{" "} */}
+                <img
+                  src={logoImage}
+                  alt="Paysofter"
+                  style={{
+                    maxHeight: "40px",
+                    maxWidth: "80px",
+                    height: "auto",
+                    width: "auto",
+                  }}
+                />
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="navbarCollapse" />
               <Navbar.Collapse id="navbarCollapse">
