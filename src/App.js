@@ -84,7 +84,7 @@ function App() {
           <Route path="/fund-account" component={FundAccount} />
           <Route
             path="/credit-point-request/"
-            component={CreditPointRequestScreen}
+            component={CreditPointRequestScreen} 
           />
           <Route
             path="/terms-and-conditions"

@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 
 const quotes = [
-  "For a softer payment experience...",
+  "For a softer payment experience...",  
   "Softer Pays, Any Day!",
   "Globally Pay, Live Softer!",
   "Soft Pays, PaySofter Stays!",

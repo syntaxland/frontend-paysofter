@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Col, Row, Button } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
-import { getUserTransactions } from "../../redux/actions/transactionActions";
+import { getUserTransactions } from "../../redux/actions/transactionActions"; 
 import { getUserPayouts } from "../../redux/actions/payoutActions";
 import { getUserProfile } from "../../redux/actions/userProfileActions";
 import { Line, Pie } from "react-chartjs-2";

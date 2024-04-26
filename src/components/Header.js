@@ -140,11 +140,12 @@ function Header() {
       <Row>
         <Col>
           <Navbar
-            bg="primary"
+            // bg="primary"
             variant="dark"
             className="custom-dark-blue"
             expand="md"
             sticky="top"
+            style={{ backgroundColor: '#0f172a' }}
           >
             <Container fluid>
               <Navbar.Brand as={Link} to="/">

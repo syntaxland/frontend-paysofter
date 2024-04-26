@@ -24,7 +24,7 @@ function Footer() {
 
   return (
     // <footer className="text-light footer custom-dark-blue">
-    <footer className="bg-primary text-light footer custom-dark-blue py-2">
+    <footer className="text-light footer custom-dark-blue py-2" style={{ backgroundColor: '#0f172a' }}>
       <Row>
         <Col>
           {/* <Row className="py-3">

@@ -50,8 +50,9 @@
 } */
 
 .profile-dropdown .dropdown-menu {
-  /* background-color: #343a40; */
-  background-color: blue;
+  background-color: #0f172a;
+  /* background-color: blue; */
+  /* background-color: blue; */
   color: white;
   transition: transform 0.3s ease-in-out;
   /* transform-origin: top right;  */
@@ -71,8 +72,8 @@
 .custom-dropdown .dropdown-menu {
   /* width: auto;  */
   width: 300px;
-  background-color: #007bff;
-  /* background-color: #343a40; */
+  /* background-color: #007bff; */
+  background-color: #0f172a;
   color: white;
 }
 
