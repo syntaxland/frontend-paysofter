@@ -24,48 +24,20 @@ function Footer() {
 
   return (
     // <footer className="text-light footer custom-dark-blue">
-    <footer className="text-light footer custom-dark-blue py-2" style={{ backgroundColor: '#0f172a' }}>
+    <footer
+      className="text-light footer custom-dark-blue py-2"
+      style={{ backgroundColor: "#0f172a", color: "white" }}
+    >
       <Row>
         <Col>
-          {/* <Row className="py-3">
-            <Col className="text-center">
-              <h5>Company</h5>
-              <ul className="list-unstyled">
-                <li>Contact Us</li>
-                <li>Terms of Service</li>
-              </ul>
-            </Col>
-            <Col className="text-center">
-              <h5>Categories</h5>
-              <ul className="list-unstyled">
-                <li>Payments</li>
-                <li>Financial Services</li>
-              </ul>
-            </Col>
-            <Col className="text-center">
-              <h5>Support</h5>
-              <ul className="list-unstyled">
-                <li>FAQs</li>
-                <li>Customer Service</li>
-              </ul>
-            </Col>
-          </Row> */}
-
           <Row>
             <Col className="text-muted py-2 text-center">
-              <ul className="">
+              <ul style={{ fontSize: "12px", color: "white" }}>
                 <strong>Offices:</strong> Lagos (<strong>Coming soon:</strong>{" "}
                 San Francisco, Ontario, London, Dubai, Mumbai, Accra,
                 Johannesburg, Sidney, Sao Paulo, Nairobi, Shanghai, Amsterdam,
                 Frankfurt)
-                {/* <li>Ontario</li>
-              <li>London</li>
-              <li>Dubai</li>
-              <li>Mumbai</li>
-              <li>Ghana</li>
-              <li>Johannesburg</li>
-              <li>Brazil</li>
-              <li>Kanye</li> */}
+                
               </ul>
             </Col>
           </Row>
