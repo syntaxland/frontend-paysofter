@@ -1,15 +1,14 @@
 // HomeScreen.js
 import React from "react";
 // import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Row, Col, Button, Container } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
 const quotes = [
-  "For a softer payment experience...",  
+  "For a softer payment experience...",
   "Softer Pays, Any Day!",
   "Globally Pay, Live Softer!",
   "Soft Pays, PaySofter Stays!",
@@ -55,11 +54,14 @@ const quotes = [
   "Paying? Go Softer, Go Global!",
   "Soften Payments, Go Global!",
   "Pay Globally, Pay Softer!",
-  "Your Oasis for Softer Payments!"
+  "Your Oasis for Softer Payments!",
 ];
 
 function HomeScreen({ history }) {
   // const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const settings = {
     // dots: true,
@@ -95,10 +97,26 @@ function HomeScreen({ history }) {
               variant="primary"
               className="rounded"
               size="sm"
-              onClick={() => history.push("/register")}
+              onClick={() => history.push("/about")}
+              disabled
             >
-              Create A Free Account <i className="fas fa-sign-in"></i>
+              Learn More <i className="fa fa-info-circle"></i>
             </Button>
+          </div>
+
+          <hr />
+
+          <div>
+            <Slider {...settings}>
+              {quotes.map((quote, index) => (
+                <div key={index} className="quote-slide">
+                  <p className="text-center py-2">
+                    <i className="fas fa-quote-left"></i> {quote}{" "}
+                    <i className="fas fa-quote-right"></i>
+                  </p>
+                </div>
+              ))}
+            </Slider>
           </div>
 
           <div className="text-center">
@@ -125,17 +143,23 @@ function HomeScreen({ history }) {
               resulting lack of trust? Paysofter Promise fills in this gap! With
               Paysofter Promise, payments made to a seller (utilizing the
               buyer's funded Paysofter Account Fund) are securely held in escrow
-              until specified conditions agreed upon by both the buyer and seller
-              are met.
+              until specified conditions agreed upon by both the buyer and
+              seller are met.
             </span>
-            <Button
-              variant="primary"
-              className="rounded"
-              size="sm"
-              onClick={() => history.push("/register")}
-            >
-              Open A Free Account <i className="fas fa-sign-in"></i>
-            </Button>
+            {userInfo ? (
+              <></>
+            ) : (
+              <>
+                <Button
+                  variant="primary"
+                  className="rounded"
+                  size="sm"
+                  onClick={() => history.push("/register")}
+                >
+                  Open A Free Account <i className="fas fa-sign-in"></i>
+                </Button>
+              </>
+            )}
           </div>
 
           <div className="text-center">
@@ -152,14 +176,20 @@ function HomeScreen({ history }) {
               Engrossed in your daily tasks? Paysofter effortlessly generates
               earnings on your behalf, rewarding your past endeavours...{" "}
             </span>
-            <Button
-              variant="primary"
-              className="rounded"
-              size="sm"
-              onClick={() => history.push("/register")}
-            >
-              Register <i className="fas fa-sign-in"></i>
-            </Button>
+            {userInfo ? (
+              <></>
+            ) : (
+              <>
+                <Button
+                  variant="primary"
+                  className="rounded"
+                  size="sm"
+                  onClick={() => history.push("/register")}
+                >
+                  Register <i className="fas fa-sign-in"></i>
+                </Button>
+              </>
+            )}
           </div>
 
           <div className="text-center">
@@ -179,31 +209,23 @@ function HomeScreen({ history }) {
               remarkably smoother and softer payment experience. A gateway
               crafted for every individual!"{" "}
             </span>
-            <Button
-              variant="primary"
-              className="rounded"
-              size="sm"
-              onClick={() => history.push("/register")}
-            >
-              Sign up <i className="fas fa-sign-in"></i>
-            </Button>
+
+            {userInfo ? (
+              <></>
+            ) : (
+              <>
+                <Button
+                  variant="primary"
+                  className="rounded"
+                  size="sm"
+                  onClick={() => history.push("/register")}
+                >
+                  Sign up <i className="fas fa-sign-in"></i>
+                </Button>
+              </>
+            )}
           </div>
-          <hr />
-
-          <div>
-          <Slider {...settings}>
-              {quotes.map((quote, index) => (
-                <div key={index} className="quote-slide">
-                  <p className="text-center py-2">
-                    <i className="fas fa-quote-left"></i> {quote}{" "}
-                    <i className="fas fa-quote-right"></i>
-                  </p>
-                </div>
-              ))}
-            </Slider>
-          </div>
-
-
+          
 
           <hr />
         </Col>

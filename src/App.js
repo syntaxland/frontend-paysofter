@@ -12,7 +12,7 @@ import HomeScreen from "./components/screens/HomeScreen";
 // // import FavouritesScreen from "./components/profiles/FavouritesScreen";
 // import SearchScreen from "./components/screens/SearchScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
-import LoginScreen from "./components/screens/LoginScreen";
+import LoginScreen from "./components/screens/LoginScreen"; 
 import FundAccount from "./components/FundAccount/FundAccount";
 // import CheckoutScreen from "./components/screens/CheckoutScreen";
 // import PaymentScreen from "./components/screens/PaymentScreen";

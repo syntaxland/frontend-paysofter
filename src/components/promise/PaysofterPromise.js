@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Table, Button, Row, Col, Modal, Container } from "react-bootstrap";
-import { getBuyerPromises } from "../../redux/actions/PromiseActions";
+import { getBuyerPromises } from "../../redux/actions/PromiseActions"; 
 import Message from "../Message";
 import Loader from "../Loader";
 import Timer from "../Timer";
 import Pagination from "../Pagination";
 import BuyerConfirmPromise from "../promise/BuyerConfirmPromise";
-import SettleDisputedPromise from "../promise/SettleDisputedPromise";
+import SettleDisputedPromise from "../promise/SettleDisputedPromise"; 
 import { formatAmount } from "../FormatAmount";
 
 function PaysofterPromise({ history }) {

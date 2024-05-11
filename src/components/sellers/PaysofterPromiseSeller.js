@@ -11,7 +11,7 @@ import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
 import Timer from "../Timer";
-import SellerConfirmPromise from "../promise/SellerConfirmPromise";
+import SellerConfirmPromise from "../promise/SellerConfirmPromise";  
 import SettleDisputedPromise from "../promise/SettleDisputedPromise"; 
 import { formatAmount } from "../FormatAmount";
 
