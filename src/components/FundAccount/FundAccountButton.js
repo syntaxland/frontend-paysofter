@@ -1,25 +1,29 @@
 // FundAccountButton.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import "react-datepicker/dist/react-datepicker.css";
 import CardPayment from "./CardPayment";
 import CardPaymentUsd from "./CardPaymentUsd";
 import UssdPayment from "./UssdPayment";
 import BankPayment from "./BankPayment";
 import TransferPayment from "./TransferPayment";
 import QrPayment from "./QrPayment";
-import {formatAmount} from "../FormatAmount";
+import { formatAmount } from "../FormatAmount";
 
-function FundAccountButton({ 
+function FundAccountButton({
   amount,
   currency,
-  showFundAccountButton,
-  setShowFundAccountButton,
 }) {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
+
+  const [showFundAccountButton, setShowFundAccountButton] = useState(false);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("card");
 
   const handlePaymentOptionChange = (option) => {
@@ -47,31 +51,22 @@ function FundAccountButton({
             <Modal.Title>Mock Payment (Test)</Modal.Title>
             <div>{userInfo.email}</div>
             <div>
-              {formatAmount(amount)
-              
-              // .toLocaleString(undefined, {
-              //   minimumFractionDigits: 2,
-              //   maximumFractionDigits: 2,
-              // })
-              
-              }{" "}
-              {currency}
+              {formatAmount(amount)} {currency}
             </div>
           </div>
         </Modal.Header>
 
         <Modal.Body>
           <Row>
-            {/* Left column with payment options */}
             <Col md={3}>
               <div className="text-center">
                 <p>Options</p>
 
-                {currency === "USD" && ( 
+                {currency === "USD" && (
                   <div className="py-1">
                     <Button
                       variant="outline-primary"
-                      onClick={() => handlePaymentOptionChange("card")} 
+                      onClick={() => handlePaymentOptionChange("card")}
                       className={
                         selectedPaymentOption === "card" ? "active" : ""
                       }
@@ -142,10 +137,7 @@ function FundAccountButton({
                 </div>
               </div>
             </Col>
-            {/* Right column with selected payment option component */}
             <Col md={9}>
-              {/* Conditionally render the selected payment option component */}
-
               {currency === "NGN" && (
                 <div>
                   {selectedPaymentOption === "card" && (

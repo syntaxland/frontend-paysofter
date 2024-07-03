@@ -7,7 +7,7 @@ import {
   getBuyerPromises,
   clearBuyerMessageCounter,
 } from "../../redux/actions/PromiseActions";
-import Message from "../Message"; 
+import Message from "../Message";
 import Loader from "../Loader";
 import Timer from "../Timer";
 import Pagination from "../Pagination";
@@ -132,6 +132,8 @@ function PaysofterPromiseBuyer() {
                       <th>Payment Method</th>
                       <th>Payment Provider</th>
                       <th>Promise Made At</th>
+                      <th>Promise Action</th>
+                      <th>Message Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -463,7 +465,14 @@ function PaysofterPromiseBuyer() {
                                     size="sm"
                                     disabled
                                   >
-                                    Promise Confirmed
+                                    Promise Confirmed{" "}
+                                    <i
+                                      className="fas fa-check-circle"
+                                      style={{
+                                        fontSize: "16px",
+                                        color: "green",
+                                      }}
+                                    ></i>
                                   </Button>
                                 </>
                               ) : (

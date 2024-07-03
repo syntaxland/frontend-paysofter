@@ -134,8 +134,8 @@ const GetNgnAccountFundBalance = () => {
                     <Form.Control
                       className="text-center"
                       type={accountFundVisible ? "text" : "password"}
-                    value={`${formatAmount(accountFundBalance?.balance)} NGN`} 
-                    // value={formatAmount(accountFundBalance?.balance) }
+                      value={`${formatAmount(accountFundBalance?.balance)} NGN`}
+                      // value={formatAmount(accountFundBalance?.balance) }
                       disabled
                     />
                     <div>

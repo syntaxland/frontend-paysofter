@@ -11,7 +11,7 @@ import Transactions from "./Transactions";
 import Payouts from "./Payouts";
 import Dashboard from "./Dashboard"; 
 // import MessageInbox from "./MessageInbox";
-// import CreditPoint from "./CreditPoint";
+// import CreditPoint from "./CreditPoint"; 
 // import AccountFunds from "./AccountFunds";
 // import Referrals from "./Referrals";
 import Webhooks from "./Webhooks";

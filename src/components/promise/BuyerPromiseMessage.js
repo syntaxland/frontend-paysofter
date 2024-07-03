@@ -11,7 +11,7 @@ import {
 import Loader from "../Loader";
 import Message from "../Message";
 import LoaderButton from "../LoaderButton";
-
+ 
 function BuyerPromiseMessage() {
   const dispatch = useDispatch();
   const history = useHistory();

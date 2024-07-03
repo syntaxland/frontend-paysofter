@@ -81,7 +81,7 @@ function SettleDisputedPromise({ promiseId }) {
           </Form>
 
           <Button
-            variant="primary"
+            variant="danger"
             onClick={handleSettleDisputedPromise}
             className="rounded mt-2 text-center w-100"
             disabled={keyword.toLowerCase() !== "confirm"}

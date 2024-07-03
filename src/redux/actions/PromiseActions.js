@@ -548,7 +548,7 @@ export const buyerConfirmPromise =
     try {
       dispatch({
         type: BUYER_CONFIRM_PROMISE_REQUEST,
-      });
+      }); 
 
       const {
         userLogin: { userInfo },

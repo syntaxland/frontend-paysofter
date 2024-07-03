@@ -10,13 +10,43 @@ import {
   LIST_ALL_PAYMENTS_REQUEST,
   LIST_ALL_PAYMENTS_SUCCESS,
   LIST_ALL_PAYMENTS_FAIL,
+  GET_PAYMENT_API_KEYS_REQUEST,
+  GET_PAYMENT_API_KEYS_SUCCESS,
+  GET_PAYMENT_API_KEYS_FAIL,
 } from "../constants/paymentConstants";
 
 const initialState = {
-  payments: [],
   loading: false,
   success: false,
   error: null,
+  payments: [],
+  paystackPublicKey: [],
+  paysofterPublicKey: [],
+};
+
+export const getPaymentApiKeysReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_PAYMENT_API_KEYS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_PAYMENT_API_KEYS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        paystackPublicKey: action.payload.paystackPublicKey,
+        paysofterPublicKey: action.payload.paysofterPublicKey,
+      };
+    case GET_PAYMENT_API_KEYS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
 export const paymentCreateReducer = (state = initialState, action) => {

@@ -1,14 +1,15 @@
 // FundUsdAccount.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
-import FundAccountButton from "./FundAccountButton";
+import PaymentScreen from "./PaymentScreen";
 
 const FundUsdAccount = ({ history }) => {
-  const fundAccountState = useSelector((state) => state.fundAccountState);
-  const { loading, success, error } = fundAccountState;
+  const fundUsdAccountState = useSelector((state) => state.fundUsdAccountState);  
+  const { loading, error } = fundUsdAccountState;
+
   const [messsage, setMesssage] = useState("");
   const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState(0); 
@@ -24,31 +25,30 @@ const FundUsdAccount = ({ history }) => {
     }
   };
 
-  useEffect(() => {
-    if (success) {
-      const timer = setTimeout(() => {
-        history.push("/dashboard");
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [success, history]);
+  // useEffect(() => {
+  //   if (success) {
+  //     const timer = setTimeout(() => {
+  //       history.push("/dashboard");
+  //     }, 5000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [success, history]);
 
   return (
     <Container>
       {showFundAccountButton && (
-        <FundAccountButton
+        <PaymentScreen
           amount={amount}
           currency={currency}
-          showFundAccountButton={showFundAccountButton}
-          setShowFundAccountButton={setShowFundAccountButton}
+          
         />
       )}
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
           <h2 className="py-3 text-center">Fund USD Account</h2>
-          {success && (
+          {/* {success && (
             <Message variant="success">Request sent successfully.</Message>
-          )}
+          )} */}
 
           {messsage && <Message variant="danger">{messsage}</Message>}
           {error && <Message variant="danger">{error}</Message>}

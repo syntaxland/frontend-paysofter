@@ -1,7 +1,7 @@
 // UserDashboard.js
 import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
-// import { Link} from "react-router-dom";
+// import { Link} from "react-router-dom"; 
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,7 +21,7 @@ import Dashboard from "./Dashboard";
 import Inbox from "./Inbox";
 // import CreditPoint from "./CreditPoint";
 import AccountFunds from "./AccountFunds";
-// import Referraols from "./Referrals";
+import Referrals from "./Referrals";
 // import Webhoks from "./Webhooks";
 // import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
@@ -165,8 +165,8 @@ function UserDashboard() {
       case "account-funds":
         return <AccountFunds />;
 
-      // case "referrals":
-      //   return <Referrals />;
+      case "referrals":
+        return <Referrals />;
 
       case "support-ticket":
         return <SupportTicket />;

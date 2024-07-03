@@ -1,18 +1,16 @@
 // Dashboard.js
-import React, {
-  useEffect,
-  // useState
-} from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom";
 import { Col, Row, Button } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
-import { getUserTransactions } from "../../redux/actions/transactionActions"; 
+import { getUserTransactions } from "../../redux/actions/transactionActions";
 import { getUserPayouts } from "../../redux/actions/payoutActions";
 import { getUserProfile } from "../../redux/actions/userProfileActions";
 import { Line, Pie } from "react-chartjs-2";
-// import Select from "react-select";
+import GetNgnAccountFundBalance from "../FundAccount/GetNgnAccountFundBalance";
+import GetUsdAccountFundBalance from "../FundAccount/GetUsdAccountFundBalance";
+import SelectCurrency from "../settings/SelectCurrency";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -25,9 +23,6 @@ import {
   PointElement,
   Title,
 } from "chart.js";
-import GetNgnAccountFundBalance from "../FundAccount/GetNgnAccountFundBalance";
-import GetUsdAccountFundBalance from "../FundAccount/GetUsdAccountFundBalance";
-import SelectCurrency from "../settings/SelectCurrency";
 
 ChartJS.register(
   ArcElement,
@@ -42,13 +37,10 @@ ChartJS.register(
 );
 
 function Dashboard() {
-  // const [creditPointEarning, setCreditPointEarning] = useState(0);
   const dispatch = useDispatch();
-  // const history = useHistory();
 
   const userProfile = useSelector((state) => state.userProfile);
   const { profile } = userProfile;
-  // console.log("is_usd_selected:", profile?.is_usd_selected);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -59,12 +51,6 @@ function Dashboard() {
     }
   }, [userInfo]);
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     dispatch(getUserProfile());
-  //   }
-  // }, [dispatch, userInfo]);
-
   const userTransactions = useSelector((state) => state.userTransactions);
   const {
     loading: transactionLoading,
@@ -73,13 +59,13 @@ function Dashboard() {
   } = userTransactions;
   console.log("Transactions:", transactions);
 
-  const creditPointBal = useSelector((state) => state.creditPointBal);
-  const {
-    loading: creditPointBalanceLoading,
-    error: creditPointBalanceError,
-    creditPointBalance,
-  } = creditPointBal;
-  console.log("Credit Point Balance:", creditPointBalance);
+  // const creditPointBal = useSelector((state) => state.creditPointBal);
+  // const {
+  //   loading: creditPointBalanceLoading,
+  //   error: creditPointBalanceError,
+  //   creditPointBalance,
+  // } = creditPointBal;
+  // console.log("Credit Point Balance:", creditPointBalance);
 
   const userPayouts = useSelector((state) => state.userPayouts);
   const { loading: payoutLoading, payouts, error: payoutError } = userPayouts;
@@ -87,16 +73,6 @@ function Dashboard() {
 
   const selectedCurrency = profile?.selected_currency;
   console.log("selected_currency:", profile?.selected_currency);
-
-  // const [selectedCurrency] = useState(profile?.selected_currency);
-
-  // const [selectedCurrency, setSelectedCurrency] = useState(profile?.selected_currency);
-  // const [liveMode, setLiveMode] = useState(false);
-
-  // const handleCurrencyChange = (selectedOption) => {
-  //   setSelectedCurrency(selectedOption.value);
-  //   // setSelectedCurrency(profile?.is_usd_selected ? "USD" : "NGN");
-  // };
 
   useEffect(() => {
     dispatch(getUserProfile());
@@ -139,46 +115,6 @@ function Dashboard() {
       },
     },
   };
-
-  // const getTotalTransaction = () => {
-  //   let totalPayment = 0;
-
-  //   transactions.forEach((transaction) => {
-  //     totalPayment += parseFloat(transaction.amount);
-  //   });
-  //   return totalPayment;
-  // };
-
-  // const creditPoints = creditPointBalance?.balance;
-  // const accountBalance = accountFundBalance?.balance;
-
-  // const withdrawCreditPoints =
-  //   creditPoints >= 1000 ? (
-  //     <Link
-  //       to={{
-  //         pathname: "/credit-point-request",
-  //         search: `?creditPoints=${creditPoints}`,
-  //       }}
-  //     >
-  //       <Button variant="primary" className="rounded">
-  //         Withdraw Points
-  //       </Button>
-  //     </Link>
-  //   ) : (
-  //     <p>
-  //       <Button variant="danger" className="rounded" readOnly>
-  //         Maturity from NGN 1,000
-  //       </Button>
-  //     </p>
-  //   );
-
-  // const handleFundAccount = () => {
-  //   history.push("/fund-account");
-  // };
-
-  // const handleFundAccountSettings = () => {
-  //   history.push("/toggle-fund");
-  // };
 
   const paidPayoutRateData = {
     labels: [
@@ -233,69 +169,25 @@ function Dashboard() {
     maintainAspectRatio: false,
   };
 
-  // const CURRENCY_CHOICES = [
-  //   ["USD", "USD"],
-  //   ["NGN", "NGN"],
-  // ];
-
   return (
     <div className="d-flex justify-content-center text-center">
       <Row>
         <Col>
           <div>
-            {creditPointBalanceLoading ||
-            transactionLoading ||
-            payoutLoading ? (
+            {transactionLoading || payoutLoading ? (
               <Loader />
-            ) : creditPointBalanceError || transactionError || payoutError ? (
+            ) : transactionError || payoutError ? (
               <Message variant="danger">
-                {creditPointBalanceError || transactionError || payoutError}
+                {transactionError || payoutError}
               </Message>
             ) : (
               <div>
                 <Row>
-                  <Col>
-                    <div>
-                      {/* <div className="bar-chart">
-                        <h2 className="py-2">
-                          <i className="	fas fa-money-bill"></i> Total Payments
-                        </h2>
-                        <div className="bar"></div>
-                        <strong>
-                          NGN{" "}
-                          {getTotalTransaction().toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
-                        </strong>
-                      </div> */}
-                    </div>
-                  </Col>
-
                   <Row className="py-2 d-flex justify-content-center">
                     <Col xs={4} sm={4} md={4} lg={4} xl={4}>
                       <div>
-                        <SelectCurrency
-                        // selectedCurrency={selectedCurrency}
-                        // handleCurrencyChange={handleCurrencyChange}
-                        />
+                        <SelectCurrency />
                       </div>
-                      {/* <div>
-                        <Select
-                          options={CURRENCY_CHOICES.map(([value, label]) => ({
-                            value,
-                            label,
-                          }))}
-                          value={{
-                            value: selectedCurrency,
-                            label: selectedCurrency,
-                          }}
-                          onChange={handleCurrencyChange}
-                          placeholder="Currencies"
-                          className="rounded py-2 mb-2"
-                          required
-                        />
-                      </div> */}
                     </Col>
                   </Row>
 
@@ -315,22 +207,6 @@ function Dashboard() {
                         </Col>
                       </Row>
                     )}
-
-                    {/* <Col>
-                      <h2 className="py-2">
-                        <i className="far fa-money-bill-alt"></i> Credit Point
-                        Wallet
-                      </h2>
-                      <p>Credit Point Balance:</p>
-                      <strong>
-                        NGN{" "}
-                        {creditPoints?.toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </strong>
-                      <div className="py-2">{withdrawCreditPoints}</div>
-                    </Col> */}
                   </Row>
 
                   <hr />
@@ -341,11 +217,7 @@ function Dashboard() {
 
                     <Col>
                       <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
+                        <Button variant="primary" className="rounded">
                           Airtime <i className="fas fa-phone"></i>
                         </Button>
                       </div>
@@ -353,11 +225,7 @@ function Dashboard() {
 
                     <Col>
                       <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
+                        <Button variant="primary" className="rounded">
                           Electricity <i className="fas fa-lightbulb"></i>
                         </Button>
                       </div>
@@ -365,11 +233,7 @@ function Dashboard() {
 
                     <Col>
                       <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
+                        <Button variant="primary" className="rounded">
                           Mobile Data <i className="fas fa-wifi"></i>
                         </Button>
                       </div>
@@ -377,11 +241,7 @@ function Dashboard() {
 
                     <Col>
                       <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
+                        <Button variant="primary" className="rounded">
                           CableTV <i className="fas fa-television"></i>
                         </Button>
                       </div>
@@ -389,11 +249,7 @@ function Dashboard() {
 
                     <Col>
                       <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
+                        <Button variant="primary" className="rounded">
                           Internet <i className="fas fa-globe"></i>
                         </Button>
                       </div>
@@ -401,11 +257,7 @@ function Dashboard() {
 
                     <Col>
                       <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
+                        <Button variant="primary" className="rounded">
                           Book Flight <i className="fa fa-plane"></i>
                         </Button>
                       </div>
@@ -413,11 +265,7 @@ function Dashboard() {
 
                     <Col>
                       <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
+                        <Button variant="primary" className="rounded">
                           Gaming <i className="fa fa-gamepad"></i>
                         </Button>
                       </div>
@@ -425,11 +273,7 @@ function Dashboard() {
 
                     <Col>
                       <div className="py-3">
-                        <Button
-                          variant="primary"
-                          // onClick={handleFundAccount}
-                          className="rounded"
-                        >
+                        <Button variant="primary" className="rounded">
                           POS Terminal <i className="fas fa-calculator"></i>
                         </Button>
                       </div>

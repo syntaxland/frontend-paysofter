@@ -8,7 +8,7 @@ import {
   clearSellerMessageCounter,
   getSellerPromises,
 } from "../../redux/actions/PromiseActions";
-import Message from "../Message";
+import Message from "../Message"; 
 import Loader from "../Loader";
 import DOMPurify from "dompurify";
 import Pagination from "../Pagination";

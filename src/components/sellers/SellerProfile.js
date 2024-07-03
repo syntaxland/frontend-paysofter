@@ -8,7 +8,7 @@ import {
   updateSellerAccount,
   getBusinessOwnerDetails,
   updateBusinessOwnerDetails,
-  getBusinessBankAccount,
+  getBusinessBankAccount, 
   updateBusinessBankAccount,
   getBvn,
   updateBvn,

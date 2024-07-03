@@ -31,7 +31,6 @@ function ToggleAccountSettings() {
     if (success) {
       const timer = setTimeout(() => {
         window.location.reload();
-        // history.push("/");
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -53,7 +52,6 @@ function ToggleAccountSettings() {
     <Container>
       <Row className="justify-content-center py-2">
         <Col>
-          {/* <h2 className="mb-4">Toggle Account Fund</h2> */}
           {loading && <Loader />}
           {success && (
             <Message variant="success">
@@ -115,9 +113,10 @@ function ToggleAccountSettings() {
           <p className="rounded mt-2 py-1 text-center">
             <i
               className="fa fa-warning text-warning"
-              style={{ fontSize: "18px", 
-              // color: "yellow"
-             }}
+              style={{
+                fontSize: "18px",
+                // color: "yellow"
+              }}
             ></i>{" "}
             Warning! This action will block or enable all transaction
             withdrawals from this account. Enter password for your account email{" "}
@@ -135,14 +134,14 @@ function ToggleAccountSettings() {
                 required
                 maxLength={100}
               />
-              <Form.Text className="text-danger">{passwordError}</Form.Text> 
+              <Form.Text className="text-danger">{passwordError}</Form.Text>
             </Form.Group>
             <Button
               variant="primary"
               onClick={handleFundAccountToggle}
               className="rounded mt-2 text-center w-100"
               disabled={loading || success}
-              >
+            >
               Toggle Account Fund Status
             </Button>
           </Form>

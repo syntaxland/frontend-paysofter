@@ -1,7 +1,6 @@
 // GetUsdAccountFundBalance.js
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom";
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
@@ -12,7 +11,6 @@ import { formatAmount } from "../FormatAmount";
 
 const GetUsdAccountFundBalance = () => {
   const dispatch = useDispatch();
-  // const history = useHistory();
 
   const getUserUsdAccountFundBalanceState = useSelector(
     (state) => state.getUserUsdAccountFundBalanceState
@@ -118,7 +116,6 @@ const GetUsdAccountFundBalance = () => {
                             className="fas fa-lock text-warning"
                             style={{
                               fontSize: "16px",
-                              // color: "yellow",
                             }}
                           ></i>{" "}
                           Locked
@@ -170,9 +167,6 @@ const GetUsdAccountFundBalance = () => {
               </Modal>
             </Row>
 
-            {/* <span>Balance: </span>
-            <strong>{formatAmount(usdFundBalance?.balance)} USD</strong> */}
-
             <Row className="d-flex justify-content-center">
               <Col xs={4} sm={4} md={4} lg={4} xl={4}>
                 <Form.Group>
@@ -180,7 +174,7 @@ const GetUsdAccountFundBalance = () => {
                   <Form.Control
                     className="text-center"
                     type={accountFundVisible ? "text" : "password"}
-                    value={`${formatAmount(usdFundBalance?.balance)} USD`} 
+                    value={`${formatAmount(usdFundBalance?.balance)} USD`}
                     disabled
                   />
                   <div>

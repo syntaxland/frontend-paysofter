@@ -588,3 +588,4 @@ function PaysofterPromiseSeller({ history }) {
 }
 
 export default PaysofterPromiseSeller;
+ 

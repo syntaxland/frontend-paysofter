@@ -3,6 +3,7 @@ import {
   USER_FUND_ACCOUNT_REQUEST,
   USER_FUND_ACCOUNT_SUCCESS,
   USER_FUND_ACCOUNT_FAIL,
+  RESET_USER_FUND_ACCOUNT_STATE,
   USER_ACCOUNT_FUND_BALANCE_REQUEST,
   USER_ACCOUNT_FUND_BALANCE_SUCCESS,
   USER_ACCOUNT_FUND_BALANCE_FAIL,
@@ -42,6 +43,7 @@ import {
   USER_FUND_USD_ACCOUNT_REQUEST,
   USER_FUND_USD_ACCOUNT_SUCCESS,
   USER_FUND_USD_ACCOUNT_FAIL,
+  RESET_USER_USD_FUND_ACCOUNT_STATE,
   GET_USER_USD_FUND_ACCOUNT_CREDITS_REQUEST,
   GET_USER_USD_FUND_ACCOUNT_CREDITS_SUCCESS,
   GET_USER_USD_FUND_ACCOUNT_CREDITS_FAIL,
@@ -49,8 +51,8 @@ import {
   GET_USER_USD_FUND_ACCOUNT_DEBITS_SUCCESS,
   GET_USER_USD_FUND_ACCOUNT_DEBITS_FAIL,
   SET_MAX_USD_FUND_WITHDRAWAL_REQUEST,
-SET_MAX_USD_FUND_WITHDRAWAL_SUCCESS,
-SET_MAX_USD_FUND_WITHDRAWAL_FAIL,
+  SET_MAX_USD_FUND_WITHDRAWAL_SUCCESS,
+  SET_MAX_USD_FUND_WITHDRAWAL_FAIL,
 } from "../constants/AccountFundConstants";
 
 const initialState = {
@@ -131,6 +133,8 @@ export const fundUsdAccountReducer = (state = initialState, action) => {
       };
     case USER_FUND_USD_ACCOUNT_FAIL:
       return { loading: false, error: action.payload };
+    case RESET_USER_USD_FUND_ACCOUNT_STATE:
+      return {};
     default:
       return state;
   }
@@ -328,6 +332,8 @@ export const fundAccountReducer = (state = initialState, action) => {
       };
     case USER_FUND_ACCOUNT_FAIL:
       return { loading: false, error: action.payload };
+    case RESET_USER_FUND_ACCOUNT_STATE:
+      return {};
     default:
       return state;
   }

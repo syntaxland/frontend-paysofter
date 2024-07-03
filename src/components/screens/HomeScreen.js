@@ -207,7 +207,7 @@ function HomeScreen({ history }) {
               each transactional effort. Don't possess a Paysofter account yet?
               You're merely three minutes away! Embark on a journey towards a
               remarkably smoother and softer payment experience. A gateway
-              crafted for every individual!"{" "}
+              crafted for every individual!{" "}
             </span>
 
             {userInfo ? (
@@ -225,7 +225,6 @@ function HomeScreen({ history }) {
               </>
             )}
           </div>
-          
 
           <hr />
         </Col>

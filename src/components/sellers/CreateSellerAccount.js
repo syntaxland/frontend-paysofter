@@ -1,11 +1,11 @@
 // CreateSellerAccount.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap"; 
 import { createSellerAccount } from "../../redux/actions/sellerActions";
 import Message from "../Message";
 import Loader from "../Loader";
-import LoaderButton from "../LoaderButton";
+import LoaderButton from "../LoaderButton"; 
 
 function CreateSellerAccount({ history }) {
   const dispatch = useDispatch();

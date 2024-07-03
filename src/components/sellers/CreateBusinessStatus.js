@@ -7,7 +7,7 @@ import Message from "../Message";
 import Loader from "../Loader";
 import LoaderButton from "../LoaderButton";
 
-function CreateBusinessStatus({ history }) {
+function CreateBusinessStatus({ history }) { 
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);

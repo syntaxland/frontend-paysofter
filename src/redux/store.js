@@ -7,7 +7,7 @@ import {
   userTransactionReducer,
   createTransactionReducer,
 } from "./reducers/transactionReducers";
-import { userPayoutReducer } from "./reducers/payoutReducers";
+import { userPayoutReducer } from "./reducers/payoutReducers"; 
 
 import {
   userLoginReducers,
@@ -19,6 +19,10 @@ import {
   selecteCurrencyReducer,
   getSelectedCurrencyReducer,
 } from "./reducers/settingsReducers";
+
+import {
+  getPaymentApiKeysReducer,
+} from "./reducers/paymentReducers";
 
 import {
   messagingReducer,
@@ -126,8 +130,15 @@ import {
   feedbackListReducer,
 } from "./reducers/feedbackReducers";
 
-import { referralReducer } from "./reducers/promoReducer";
-import { orderListReducer } from "./reducers/orderReducers";
+import {
+  referralReducer,
+  referralButtonReducer,
+  getUserReferralsReducer,
+  // createPromoCodeReducer,
+  // promoProductListReducer,
+} from "./reducers/promoReducer";
+
+// import { orderListReducer } from "./reducers/orderReducers";
 const reducer = combineReducers({
   userLogin: userLoginReducers,
   userRegister: userRegisterReducers,
@@ -136,6 +147,8 @@ const reducer = combineReducers({
   emailOtpSend: emailOtpSendReducer,
   emailOtpVerify: emailOtpVerifyReducer,
 
+  getPaymentApiKeysState: getPaymentApiKeysReducer,
+
   userProfile: getUserProfileReducer,
   updateProfile: updateUserProfileReducer,
   userChangePassword: changePasswordReducer,
@@ -143,7 +156,13 @@ const reducer = combineReducers({
   updateUserAvatar: updateUserAvatarReducer,
   sendPasswordResetLink: sendPasswordResetLinkReducer,
   resetPassword: resetPasswordReducer,
+
   referral: referralReducer,
+referralButton: referralButtonReducer,
+  userReferralState: getUserReferralsReducer,
+  // createPromoCodeState: createPromoCodeReducer,
+  // promoProductList: promoProductListReducer,
+
 
   userTransactions: userTransactionReducer,
   createTransactionState: createTransactionReducer,
@@ -212,7 +231,7 @@ const reducer = combineReducers({
   sellerBvnState: sellerBvnReducer,
   sellerPhotoState: sellerPhotoReducer,
 
-  orderList: orderListReducer,
+  // orderList: orderListReducer,
 
   selecteCurrencyState: selecteCurrencyReducer,
   getSelectedCurrencyState: getSelectedCurrencyReducer,

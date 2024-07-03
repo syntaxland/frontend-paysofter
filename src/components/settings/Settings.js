@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faExclamationTriangle,
+  faExclamationTriangle, 
   faSun,
   faMoon,
 } from "@fortawesome/free-solid-svg-icons";
