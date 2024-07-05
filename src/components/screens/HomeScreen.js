@@ -2,10 +2,14 @@
 import React from "react";
 // import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Row, Col, Button, Container } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { Row, Col, Button, Container, Card } from "react-bootstrap";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import AndriodIosImage from "../../images/andriod-ios.jpg";
 
 const quotes = [
   "For a softer payment experience...",
@@ -57,8 +61,9 @@ const quotes = [
   "Your Oasis for Softer Payments!",
 ];
 
-function HomeScreen({ history }) {
+function HomeScreen() {
   // const dispatch = useDispatch();
+  const history = useHistory();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -81,6 +86,24 @@ function HomeScreen({ history }) {
     <Container>
       <Row>
         <Col>
+          <div className="d-flex justify-content-end">
+            <div className="d-flex justify-content-between">
+              <span>Download at {" "}</span>
+
+              <span
+                onClick={() => history.push("/apps/")}
+                style={{ cursor: "pointer" }}
+              >
+                <Card className="rounded">
+                  <Card.Img
+                    src={AndriodIosImage}
+                    style={{ width: 160, height: 40 }}
+                  />
+                </Card>
+              </span>
+            </div>
+          </div>
+
           <div className="text-center">
             <hr />
             <h1 className="py-3">Your Softer Experience</h1>

@@ -12,7 +12,7 @@ import HomeScreen from "./components/screens/HomeScreen";
 // // import FavouritesScreen from "./components/profiles/FavouritesScreen";
 // import SearchScreen from "./components/screens/SearchScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
-import LoginScreen from "./components/screens/LoginScreen"; 
+import LoginScreen from "./components/screens/LoginScreen";
 import FundAccount from "./components/FundAccount/FundAccount";
 // import CheckoutScreen from "./components/screens/CheckoutScreen";
 // import PaymentScreen from "./components/screens/PaymentScreen";
@@ -25,8 +25,9 @@ import CreditPointRequestScreen from "./components/screens/CreditPointRequestScr
 // import SendEmailOtp from "./components/emailOtp/SendEmailOtp";
 import VerifyEmailOtpScreen from "./components/screens/VerifyEmailOtpScreen";
 import TermsAndConditionScreen from "./components/screens/TermsAndConditionScreen";
-import PrivacyPolicyScreen from "./components/screens/PrivacyPolicyScreen"; 
+import PrivacyPolicyScreen from "./components/screens/PrivacyPolicyScreen";
 import DeleteAccountGuideScreen from "./components/screens/DeleteAccountGuideScreen";
+import AppVersionScreen from "./components/screens/AppVersionScreen";
 
 // import ResendEmailOtp from "./components/emailOtp/ResendEmailOtp";
 // import UserProfile from "./components/profiles/UserProfile";
@@ -84,14 +85,18 @@ function App() {
           <Route path="/fund-account" component={FundAccount} />
           <Route
             path="/credit-point-request/"
-            component={CreditPointRequestScreen} 
+            component={CreditPointRequestScreen}
           />
           <Route
             path="/terms-and-conditions"
             component={TermsAndConditionScreen}
           />
           <Route path="/privacy-policy" component={PrivacyPolicyScreen} />
-          <Route path="/account-deletion-guide" component={DeleteAccountGuideScreen} />
+          <Route
+            path="/account-deletion-guide"
+            component={DeleteAccountGuideScreen}
+          />
+          <Route path="/apps/" component={AppVersionScreen} />
 
           <Route path="/settings" component={Settings} />
           <Route path="/set-max-fund" component={MaxWithdrawalSettings} />

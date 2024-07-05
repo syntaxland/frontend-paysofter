@@ -18,7 +18,6 @@ import {
   getBuyerPromises,
   getSellerPromises,
 } from "../redux/actions/PromiseActions";
-
 import { getUserMessages } from "../redux/actions/messagingActions";
 import { logout } from "../redux/actions/userActions";
 import "./Header.css";
