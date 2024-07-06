@@ -86,22 +86,24 @@ function HomeScreen() {
     <Container>
       <Row>
         <Col>
-          <div className="d-flex justify-content-end">
-            <div className="d-flex justify-content-between">
-              <span>Download at {" "}</span>
+          <div className="d-flex justify-content-center ">
+            <Row className="d-flex justify-content-between">
+              <Col style={{ fontSize: "12px" }} className="text-center">
+                Download Paysofter mobile app at {" => "}
+              </Col>
 
-              <span
+              <Col
                 onClick={() => history.push("/apps/")}
                 style={{ cursor: "pointer" }}
               >
                 <Card className="rounded">
                   <Card.Img
                     src={AndriodIosImage}
-                    style={{ width: 160, height: 40 }}
+                    style={{ width: 120, height: 30 }}
                   />
                 </Card>
-              </span>
-            </div>
+              </Col>
+            </Row>
           </div>
 
           <div className="text-center">
