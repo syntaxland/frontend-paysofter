@@ -6,6 +6,9 @@ import {
   GET_SELLER_PROMISE_REQUEST,
   GET_SELLER_PROMISE_SUCCESS,
   GET_SELLER_PROMISE_FAIL,
+  GET_SELLER_PROMISE_TEST_REQUEST,
+  GET_SELLER_PROMISE_TEST_SUCCESS,
+  GET_SELLER_PROMISE_TEST_FAIL,
   BUYER_CONFIRM_PROMISE_REQUEST,
   BUYER_CONFIRM_PROMISE_SUCCESS,
   BUYER_CONFIRM_PROMISE_FAIL,
@@ -225,6 +228,19 @@ export const getSellerPromiseReducer = (state = initialState, action) => {
     case GET_SELLER_PROMISE_SUCCESS:
       return { loading: false, success: true, promises: action.payload };
     case GET_SELLER_PROMISE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getSellerPromiseTestReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_SELLER_PROMISE_TEST_REQUEST:
+      return { ...state, loading: true };
+    case GET_SELLER_PROMISE_TEST_SUCCESS:
+      return { loading: false, success: true, promises: action.payload };
+    case GET_SELLER_PROMISE_TEST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

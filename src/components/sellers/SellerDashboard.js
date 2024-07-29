@@ -2,24 +2,35 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 // import { Link} from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 // import { login } from "../../redux/actions/userActions";
+
+import { getUserProfile } from "../../redux/actions/userProfileActions";
 import SellerProfile from "./SellerProfile";
-import Transactions from "./Transactions"; 
+import Transactions from "./Transactions";
+import TransactionsTest from "./TransactionsTest";
 import Payouts from "./Payouts";
-import Dashboard from "./Dashboard"; 
+import Dashboard from "./Dashboard";
 // import MessageInbox from "./MessageInbox";
-// import CreditPoint from "./CreditPoint"; 
+// import CreditPoint from "./CreditPoint";
 // import AccountFunds from "./AccountFunds";
 // import Referrals from "./Referrals";
 import Webhooks from "./Webhooks";
 import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
 import PaysofterPromiseSeller from "./PaysofterPromiseSeller";
+import TestPaysofterPromiseSeller from "./TestPaysofterPromiseSeller";
 
-function SellerDashboard({ history }) {
+function SellerDashboard() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const userProfile = useSelector((state) => state.userProfile);
+  const { profile } = userProfile;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -68,6 +79,9 @@ function SellerDashboard({ history }) {
       case "transactions":
         return <Transactions />;
 
+      case "transactions-test":
+        return <TransactionsTest />;
+
       case "payouts":
         return <Payouts />;
 
@@ -83,8 +97,8 @@ function SellerDashboard({ history }) {
       case "promise":
         return <PaysofterPromiseSeller />;
 
-      // case "message-inbox":
-      //   return <MessageInbox />;
+      case "promise-test":
+        return <TestPaysofterPromiseSeller />;
 
       // case "credit-point":
       //   return <CreditPoint />;
@@ -102,6 +116,10 @@ function SellerDashboard({ history }) {
         return <Dashboard />;
     }
   };
+
+  useEffect(() => {
+    dispatch(getUserProfile());
+  }, [dispatch]);
 
   return (
     <>
@@ -136,7 +154,7 @@ function SellerDashboard({ history }) {
               <div>
                 <Button
                   variant={
-                    activeTab === "profile" ? "primary" : "outline-primary" 
+                    activeTab === "profile" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
                   onClick={() => handleTabChange("profile")}
@@ -145,56 +163,71 @@ function SellerDashboard({ history }) {
                 </Button>
               </div>
 
-              <div>
-                <Button
-                  variant={
-                    activeTab === "promise" ? "primary" : "outline-primary"
-                  }
-                  className="sidebar-link"
-                  // onClick={() => handleTabChange("promise")}
-                  onClick={handlePaysofterPromise}
-                >
-                  <i className="fas fa-money-bill-wave"></i> Paysofter Promise 
-                </Button>
-              </div>
+              {profile?.is_api_key_live ? (
+                <div>
+                  <Button
+                    variant={
+                      activeTab === "promise" ? "primary" : "outline-primary"
+                    }
+                    className="sidebar-link"
+                    // onClick={() => handleTabChange("promise")}
+                    onClick={handlePaysofterPromise}
+                  >
+                    <i className="fa fa-cart-arrow-down"></i> Paysofter Promise{" "}
+                    <span className="live-mode">Live</span>
+                  </Button>
+                </div>
+              ) : (
+                <div>
+                  <Button
+                    variant={
+                      activeTab === "promise-test"
+                        ? "primary"
+                        : "outline-primary"
+                    }
+                    className="sidebar-link"
+                    onClick={() => handleTabChange("promise-test")}
+                  >
+                    <i className="fa fa-cart-arrow-down"></i> Paysofter Promise{" "}
+                    <span className="test-mode">Test</span>
+                  </Button>
+                </div>
+              )}
 
+             
 
-              {/* <div>
-                <Button
-                  variant={
-                    activeTab === "account-funds"
-                      ? "primary"
-                      : "outline-primary"
-                  }
-                  className="sidebar-link"
-                  onClick={() => handleTabChange("account-funds")}
-                >
-                  <i className="fas fa-money-bill-alt"></i> Acccount Funds
-                </Button>
-              </div> */}
+              {profile?.is_api_key_live ? (
+                <div>
+                  <Button
+                    variant={
+                      activeTab === "transactions"
+                        ? "primary"
+                        : "outline-primary"
+                    }
+                    className="sidebar-link"
+                    onClick={() => handleTabChange("transactions")}
+                  >
+                    <i className="fa fa-cart-arrow-down"></i> Transactions{" "}
+                    <span className="live-mode">Live</span>
+                  </Button>
+                </div>
+              ) : (
+                <div>
+                  <Button
+                    variant={
+                      activeTab === "transactions-test"
+                        ? "primary"
+                        : "outline-primary"
+                    }
+                    className="sidebar-link"
+                    onClick={() => handleTabChange("transactions-test")}
+                  >
+                    <i className="fa fa-cart-arrow-down"></i> Transactions{" "}
+                    <span className="test-mode">Test</span>
+                  </Button>
+                </div>
+              )}
 
-              <div>
-                <Button
-                  variant={
-                    activeTab === "transactions" ? "primary" : "outline-primary"
-                  }
-                  className="sidebar-link"
-                  onClick={() => handleTabChange("transactions")}
-                >
-                  <i className="fa fa-cart-arrow-down"></i> Transactions
-                </Button>
-              </div>
-              {/* <div>
-                <Button
-                  variant={
-                    activeTab === "order-items" ? "primary" : "outline-primary"
-                  }
-                  className="sidebar-link"
-                  onClick={() => handleTabChange("order-items")}
-                >
-                  <i className="fa fas fa-cart-plus"></i> Purchased Items
-                </Button>
-              </div> */}
               <div>
                 <Button
                   variant={
@@ -230,8 +263,6 @@ function SellerDashboard({ history }) {
                   <i className="fas fa-sack-dollar"></i> Credit Point
                 </Button>
               </div> */}
-
-             
 
               {/* <div>
                 <Button

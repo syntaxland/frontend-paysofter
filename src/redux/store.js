@@ -6,6 +6,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   userTransactionReducer,
   createTransactionReducer,
+  getUserTransactionsTestReducer
 } from "./reducers/transactionReducers";
 import { userPayoutReducer } from "./reducers/payoutReducers"; 
 
@@ -18,6 +19,7 @@ import {
 import {
   selecteCurrencyReducer,
   getSelectedCurrencyReducer,
+  toggleApiKeyStatusStateReducer
 } from "./reducers/settingsReducers";
 
 import {
@@ -78,6 +80,7 @@ import {
   settleDisputedPromiseReducer,
   getBuyerpromiseReducer,
   getSellerPromiseReducer,
+  getSellerPromiseTestReducer,
   buyerConfirmPromiseReducer,
   sellerConfirmPromiseReducer,
   // createPromiseMessagesReducer,
@@ -165,6 +168,7 @@ referralButton: referralButtonReducer,
 
 
   userTransactions: userTransactionReducer,
+  getUserTransactionsTestState: getUserTransactionsTestReducer,
   createTransactionState: createTransactionReducer,
   userPayouts: userPayoutReducer,
 
@@ -190,6 +194,7 @@ referralButton: referralButtonReducer,
   userAccountFundListState: userAccountFundListReducer,
   getBuyerPromiseState: getBuyerpromiseReducer,
   getSellerPromiseState: getSellerPromiseReducer,
+  getSellerPromiseTestState: getSellerPromiseTestReducer,
   buyerConfirmPromiseState: buyerConfirmPromiseReducer,
   sellerConfirmPromiseState: sellerConfirmPromiseReducer,
 
@@ -235,7 +240,7 @@ referralButton: referralButtonReducer,
 
   selecteCurrencyState: selecteCurrencyReducer,
   getSelectedCurrencyState: getSelectedCurrencyReducer,
-
+  toggleApiKeyStatusState: toggleApiKeyStatusStateReducer,
   createSupportTicketState: createSupportTicketReducer,
   adminReplySupportTicketState: adminReplySupportTicketReducer,
   createSupportMessageState: createSupportMessageReducer,

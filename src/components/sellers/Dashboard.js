@@ -2,16 +2,17 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { useHistory } from "react-router-dom";
-import { Col, Row, Button } from "react-bootstrap";
+import {
+  Col,
+  Row,
+  // Button
+} from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
-import { getCreditPointBalance } from "../../redux/actions/creditPointActions";
 import { getUserTransactions } from "../../redux/actions/transactionActions";
 import { getUserAccountFundBalance } from "../../redux/actions/AccountFundActions";
 import { getUserPayouts } from "../../redux/actions/payoutActions";
-
-import { getUserProfile } from "../../redux/actions/userProfileActions"; 
-
+import { getUserProfile } from "../../redux/actions/userProfileActions";
 import { Line, Pie } from "react-chartjs-2";
 
 import {
@@ -27,6 +28,7 @@ import {
   Title,
 } from "chart.js";
 // import ToggleAccountSettings from "../settings/ToggleAccountSettings";
+import ToggleApiKeyStatus from "../settings/ToggleApiKeyStatus";
 
 ChartJS.register(
   ArcElement,
@@ -54,8 +56,8 @@ function SellerDashboard() {
     }
   }, [userInfo]);
 
-  const userProfile = useSelector((state) => state.userProfile);
-  const { profile } = userProfile;
+  // const userProfile = useSelector((state) => state.userProfile);
+  // const { profile } = userProfile;
 
   const userTransactions = useSelector((state) => state.userTransactions);
   const {
@@ -64,14 +66,6 @@ function SellerDashboard() {
     transactions,
   } = userTransactions;
   console.log("Transactions:", transactions);
-
-  const creditPointBal = useSelector((state) => state.creditPointBal);
-  const {
-    loading: creditPointBalanceLoading,
-    error: creditPointBalanceError,
-    creditPointBalance,
-  } = creditPointBal;
-  console.log("Credit Point Balance:", creditPointBalance);
 
   const userAccountBalanceState = useSelector(
     (state) => state.userAccountBalanceState
@@ -106,7 +100,6 @@ function SellerDashboard() {
   // };
 
   useEffect(() => {
-    dispatch(getCreditPointBalance());
     dispatch(getUserTransactions());
     dispatch(getUserPayouts());
     dispatch(getUserAccountFundBalance());
@@ -158,37 +151,6 @@ function SellerDashboard() {
     });
     return totalPayment;
   };
-
-  // const creditPoints = creditPointBalance?.balance;
-  // const accountBalance = accountFundBalance?.balance;
-
-  // const withdrawCreditPoints =
-  //   creditPoints >= 1000 ? (
-  //     <Link
-  //       to={{
-  //         pathname: "/credit-point-request",
-  //         search: `?creditPoints=${creditPoints}`,
-  //       }}
-  //     >
-  //       <Button variant="primary" className="rounded">
-  //         Withdraw Points
-  //       </Button>
-  //     </Link>
-  //   ) : (
-  //     <p>
-  //       <Button variant="danger" className="rounded" readOnly>
-  //         Maturity from NGN 1,000
-  //       </Button>
-  //     </p>
-  //   );
-
-  // const handleFundAccount = () => {
-  //   history.push("/fund-account");
-  // };
-
-  // const handleFundAccountSettings = () => {
-  //   history.push("/toggle-fund");
-  // };
 
   const paidPayoutRateData = {
     labels: [
@@ -248,20 +210,11 @@ function SellerDashboard() {
       <Row>
         <Col>
           <div>
-            {loading ||
-            creditPointBalanceLoading ||
-            transactionLoading ||
-            payoutLoading ? (
+            {loading || transactionLoading || payoutLoading ? (
               <Loader />
-            ) : error ||
-              creditPointBalanceError ||
-              transactionError ||
-              payoutError ? (
+            ) : error || transactionError || payoutError ? (
               <Message variant="danger">
-                {error ||
-                  creditPointBalanceError ||
-                  transactionError ||
-                  payoutError}
+                {error || transactionError || payoutError}
               </Message>
             ) : (
               <div>
@@ -270,31 +223,7 @@ function SellerDashboard() {
                     <div>
                       <div className="bar-chart">
                         <p className="d-flex justify-content-end">
-                          <Button
-                            variant="outline-transparent"
-                            // onClick={handleToggleFundOpen}
-                            className="rounded"
-                            size="sm"
-                            title="Toggle API key mode."
-                          >
-                            {profile?.is_api_key_live ? (
-                              <>
-                                <i
-                                  className="fa fa-toggle-off"
-                                  style={{ fontSize: "16px", color: "green" }}
-                                ></i>{" "}
-                                <i>Live mode </i>
-                              </>
-                            ) : (
-                              <>
-                                <i
-                                  className="fa fa-toggle-on"
-                                  style={{ fontSize: "16px", color: "red" }}
-                                ></i>{" "}
-                                <i>Test mode </i>
-                              </>
-                            )}
-                          </Button>
+                          <ToggleApiKeyStatus />
                         </p>
                         <h2 className="py-2">
                           <i className="	fas fa-money-bill"></i> Total
@@ -433,23 +362,7 @@ function SellerDashboard() {
                       </div>
                     </Col>
 
-                    <Col>
-                      <h2 className="py-2">
-                        <i className="far fa-money-bill-alt"></i> Credit Point
-                        Wallet
-                      </h2>
-                      <p>Credit Point Balance:</p>
-                      <strong>
-                        NGN{" "}
-                        {creditPoints?.toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
-                      </strong>
-                      <div className="py-2">{withdrawCreditPoints}</div>
-                    </Col>
-                  </Row> */}
-
+                   
                   <hr />
                   {/* <Row>
                     <h2 className="py-3">Services</h2>

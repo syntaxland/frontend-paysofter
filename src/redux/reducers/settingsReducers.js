@@ -6,7 +6,9 @@ import {
   GET_SELECTED_CURRENCY_REQUEST,
   GET_SELECTED_CURRENCY_SUCCESS,
   GET_SELECTED_CURRENCY_FAIL,
-
+  TOGGLE_API_STATUS_REQUEST,
+  TOGGLE_API_STATUS_SUCCESS,
+  TOGGLE_API_STATUS_FAIL,
 } from "../constants/settingsConstants";
 
 const initialState = {
@@ -15,6 +17,19 @@ const initialState = {
   error: null,
   currencies: [],
   
+};
+
+export const toggleApiKeyStatusStateReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case TOGGLE_API_STATUS_REQUEST:
+      return { loading: true };
+    case TOGGLE_API_STATUS_SUCCESS:
+      return { loading: false, success: true };
+    case TOGGLE_API_STATUS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const selecteCurrencyReducer = (state = initialState, action) => {

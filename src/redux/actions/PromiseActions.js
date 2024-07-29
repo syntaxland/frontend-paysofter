@@ -7,6 +7,9 @@ import {
   GET_SELLER_PROMISE_REQUEST,
   GET_SELLER_PROMISE_SUCCESS,
   GET_SELLER_PROMISE_FAIL,
+  GET_SELLER_PROMISE_TEST_REQUEST,
+  GET_SELLER_PROMISE_TEST_SUCCESS,
+  GET_SELLER_PROMISE_TEST_FAIL,
   BUYER_CONFIRM_PROMISE_REQUEST,
   BUYER_CONFIRM_PROMISE_SUCCESS,
   BUYER_CONFIRM_PROMISE_FAIL,
@@ -506,6 +509,43 @@ export const getSellerPromises = () => async (dispatch, getState) => {
   }
 };
 
+export const getSellerPromisesTest = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_SELLER_PROMISE_TEST_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${API_URL}/api/get-seller-promises-test/`,
+      config
+    );
+
+    dispatch({
+      type: GET_SELLER_PROMISE_TEST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SELLER_PROMISE_TEST_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
 export const getBuyerPromises = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -548,7 +588,7 @@ export const buyerConfirmPromise =
     try {
       dispatch({
         type: BUYER_CONFIRM_PROMISE_REQUEST,
-      }); 
+      });
 
       const {
         userLogin: { userInfo },

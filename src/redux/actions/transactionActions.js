@@ -1,16 +1,55 @@
 // transactionActions.js
 import axios from "axios";
-import { 
+import {
   USER_TRANSACTION_REQUEST,
   USER_TRANSACTION_SUCCESS,
   USER_TRANSACTION_FAIL,
   TRANSACTION_CREATE_REQUEST,
   TRANSACTION_CREATE_SUCCESS,
   TRANSACTION_CREATE_FAIL,
+  GET_USER_TRANSACTIONS_TEST_REQUEST,
+  GET_USER_TRANSACTIONS_TEST_SUCCESS,
+  GET_USER_TRANSACTIONS_TEST_FAIL,
 } from "../constants/transactionConstants";
 
-// const API_URL = process.env.REACT_APP_API_URL;
 import { API_URL } from "../../config/apiConfig";
+
+export const getUserTransactionsTest = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_USER_TRANSACTIONS_TEST_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${API_URL}/api/get-user-test-transactions/`,
+      config
+    );
+
+    dispatch({
+      type: GET_USER_TRANSACTIONS_TEST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_TRANSACTIONS_TEST_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const getUserTransactions = () => async (dispatch, getState) => {
   try {
