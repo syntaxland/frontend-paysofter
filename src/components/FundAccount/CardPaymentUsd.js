@@ -61,7 +61,18 @@ function CardPaymentUsd({ amount, currency, userEmail }) {
     );
   };
 
-  const createdAt = new Date().toISOString();
+  const createdAt = new Date().toLocaleString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+    timeZoneName: "short",
+  });
+  // const paymentMethod = "Debit Card";
 
   const submitHandler = (e) => {
     e.preventDefault();
