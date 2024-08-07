@@ -16,7 +16,7 @@ function DocumentationScreen() {
   };
 
   const handlePaysofterReactNativeGithub = () => {
-    window.location.href = "https://www.npmjs.com/package/react-native-paysofter/";
+    window.location.href = "https://github.com/paysofter/react-native-paysofter/";
   };
 
   return (
