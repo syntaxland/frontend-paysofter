@@ -1,10 +1,14 @@
 // PaymentScreen.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, 
+  // useCallback 
+} from "react";
 import { Button, Row, Col, Modal } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getPaymentApiKeys } from "../../redux/actions/paymentActions";
+import { fundUserAccount } from "../../redux/actions/AccountFundActions";
 import Paystack from "./Paystack";
-import Paysofter from "./Paysofter";
+// import Paysofter from "./Paysofter";
+import { Paysofter } from "react-paysofter";
 import PaystackUsd from "./PaystackUsd";
 import Loader from "../Loader";
 import Message from "../Message";
@@ -23,6 +27,9 @@ function PaymentScreen({ amount, currency }) {
 
   const userEmail = userInfo.email;
 
+  const fundAccountState = useSelector((state) => state.fundAccountState);
+  const { loading: fundLoading, success, error: fundError } = fundAccountState;
+
   const getPaymentApiKeysState = useSelector(
     (state) => state.getPaymentApiKeysState
   );
@@ -30,6 +37,18 @@ function PaymentScreen({ amount, currency }) {
     getPaymentApiKeysState;
   console.log("apiKeys:", paystackPublicKey, paysofterPublicKey);
 
+  const createdAt = new Date().toLocaleString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+    timeZoneName: "short",
+  });
+  
   const [selectedPaymentGateway, setSelectedPaymentGateway] = useState(null);
 
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -55,9 +74,47 @@ function PaymentScreen({ amount, currency }) {
   };
   // console.log("paymentData:", paymentData);
 
+  const handleOnSuccess = () => {
+    console.log("handling onSuccess...");
+
+    const fundData = {
+      email: userEmail,
+      amount: amount,
+      currency: currency,
+      created_at: createdAt,
+    };
+    dispatch(fundUserAccount(fundData));
+  };
+
+  const onSuccess = () => {
+    handleOnSuccess();
+  };
+
+  const handleOnClose = () => {
+    console.log("handling onClose...");
+    window.location.reload();
+    window.location.href = "/";
+  };
+
+  const onClose = () => {
+    handleOnClose();
+  };
+
   useEffect(() => {
     dispatch(getPaymentApiKeys());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (success) {
+      // setHasHandledSuccess(true);
+      // setShowSuccessMessage(true);
+      // handleOnSuccess();
+      setTimeout(() => {
+        // setShowSuccessMessage(false);
+        // setShowSuccessScreen(true);
+      }, 3000);
+    }
+  }, [success]);
 
   return (
     <>
@@ -67,6 +124,8 @@ function PaymentScreen({ amount, currency }) {
             <h1 className="text-center py-2">Payment Page</h1>
             {loading && <Loader />}
             {error && <Message variant="danger">{error}</Message>}
+            {fundLoading && <Loader />}
+            {fundError && <Message variant="danger">{fundError}</Message>}
 
             <div className="text-center py-2">
               <Row className="text-center py-2">
@@ -170,9 +229,16 @@ function PaymentScreen({ amount, currency }) {
 
             {selectedPaymentGateway === "paysofter" && (
               <Paysofter
+                email={userEmail}
                 currency={currency}
                 amount={amount}
-                userEmail={userEmail}
+                paysofterPublicKey={paysofterPublicKey}
+                onSuccess={onSuccess}
+                onClose={onClose}
+                paymentRef={`PID${Math.floor(Math.random() * 100000000000000)}`}
+                showPromiseOption={true}
+                showFundOption={true}
+                showCardOption={true}
               />
             )}
           </Col>

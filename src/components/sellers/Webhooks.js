@@ -1,15 +1,15 @@
 // Webhooks.js
 import React from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 import {Row, Col, Container, Accordion } from "react-bootstrap";
-import Message from "../Message";
-import Loader from "../Loader";
+// import Message from "../Message";
+// import Loader from "../Loader";
 
 function Webhooks() {
-  const userProfile = useSelector((state) => state.userProfile);
-  const { loading: profileLoading, error: profileError, profile } = userProfile;
-  console.log("profile:", profile);
+  // const userProfile = useSelector((state) => state.userProfile);
+  // const { loading: profileLoading, error: profileError, profile } = userProfile;
+  // console.log("profile:", profile);
 
   return (
     <Container Fluid>
@@ -17,10 +17,10 @@ function Webhooks() {
         <h2 className="text-center py-3">
           <i className="fas fa-code"></i> SDK, Webhooks and Integrations
         </h2>
-
+{/* 
         {profileLoading && <Loader />}
 
-        {profileError && <Message variant="danger">{profileError}</Message>}
+        {profileError && <Message variant="danger">{profileError}</Message>} */}
 
         <Col>
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
@@ -39,7 +39,7 @@ function Webhooks() {
             <Accordion.Item eventKey="1">
               <Accordion.Header>JavaScript</Accordion.Header>
               <Accordion.Body>
-                <Row>
+                <Row> 
                   <Col>Venila JavaScript (+HTML5)</Col>
                   <Col>React</Col>
                   <Col>Vue</Col>

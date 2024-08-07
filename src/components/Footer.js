@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import { Row, Col, Modal, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import OtpDisableAccountFund from "./settings/OtpDisableAccountFund";
 
 function Footer() {
+  const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const currentYear = new Date().getFullYear();
@@ -19,7 +21,11 @@ function Footer() {
   };
 
   const softGlobalLink = () => {
-    window.location.href = "http://softglobal.org";
+    window.location.href = "https://softglobal.org";
+  };
+
+  const docsLink = () => {
+    history.push("/docs/");
   };
 
   return (
@@ -37,7 +43,6 @@ function Footer() {
                 San Francisco, Ontario, London, Dubai, Mumbai, Accra,
                 Johannesburg, Sidney, Sao Paulo, Nairobi, Shanghai, Amsterdam,
                 Frankfurt)
-                
               </ul>
             </Col>
           </Row>
@@ -80,6 +85,16 @@ function Footer() {
                 &copy; Paysofter Inc, {currentYear}. |{" "}
                 <i>For a softer payment experience...</i>
                 {/* <i>A payment solution for all humans...</i> */}
+              </p>
+
+              <p>
+                <Button
+                  variant="outline-transparent"
+                  className="rounded"
+                  onClick={docsLink}
+                >
+                  <i style={{ color: "blue" }}>See Documentation</i>
+                </Button>{" "}
               </p>
 
               <p>
