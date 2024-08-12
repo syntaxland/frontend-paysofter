@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
-import { getCreditPointBalance } from "../../redux/actions/creditPointActions";
+// import { getCreditPointBalance } from "../../redux/actions/creditPointActions";
 import { getUserTransactions } from "../../redux/actions/transactionActions";
 import { getUserAccountFundBalance } from "../../redux/actions/AccountFundActions";
 import { getUserPayouts } from "../../redux/actions/payoutActions";
@@ -50,13 +50,13 @@ function Dashboard() {
   } = userTransactions;
   console.log("Transactions:", transactions);
 
-  const creditPointBal = useSelector((state) => state.creditPointBal);
-  const {
-    loading: creditPointBalanceLoading,
-    error: creditPointBalanceError,
-    creditPointBalance,
-  } = creditPointBal;
-  console.log("Credit Point Balance:", creditPointBalance);
+  // const creditPointBal = useSelector((state) => state.creditPointBal);
+  // const {
+  //   loading: creditPointBalanceLoading,
+  //   error: creditPointBalanceError,
+  //   creditPointBalance,
+  // } = creditPointBal;
+  // console.log("Credit Point Balance:", creditPointBalance);
 
   const userAccountBalanceState = useSelector(
     (state) => state.userAccountBalanceState
@@ -91,7 +91,7 @@ function Dashboard() {
   // };
 
   useEffect(() => {
-    dispatch(getCreditPointBalance());
+    // dispatch(getCreditPointBalance());
     dispatch(getUserTransactions());
     dispatch(getUserPayouts());
     dispatch(getUserAccountFundBalance());
@@ -232,17 +232,14 @@ function Dashboard() {
         <Col>
           <div>
             {loading ||
-            creditPointBalanceLoading ||
             transactionLoading ||
             payoutLoading ? (
               <Loader />
             ) : error ||
-              creditPointBalanceError ||
               transactionError ||
               payoutError ? (
               <Message variant="danger">
                 {error ||
-                  creditPointBalanceError ||
                   transactionError ||
                   payoutError}
               </Message>

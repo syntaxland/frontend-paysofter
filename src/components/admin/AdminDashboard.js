@@ -225,14 +225,14 @@ function AdminDashboard() {
               <div>
                 <Button
                   variant={
-                    activeTab === "set-promo-code"
+                    activeTab === "verify-seller"
                       ? "primary"
                       : "outline-primary"
                   }
                   className="sidebar-link"
-                  onClick={() => handleTabChange("set-promo-code")}
+                  onClick={() => handleTabChange("verify-seller")}
                 >
-                  <i className="fas fa-gift"></i> Create Promo Code
+                  <i className="fas fa-gift"></i> Verify Seller
                 </Button>
               </div>
 

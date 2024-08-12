@@ -1,17 +1,19 @@
 // PaymentScreen.js
-import React, { useEffect, useState, 
-  // useCallback 
+import React, {
+  useEffect,
+  useState,
+  // useCallback
 } from "react";
 import { Button, Row, Col, Modal } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getPaymentApiKeys } from "../../redux/actions/paymentActions";
 import { fundUserAccount } from "../../redux/actions/AccountFundActions";
-import Paystack from "./Paystack";
-// import Paysofter from "./Paysofter";
-import { Paysofter } from "react-paysofter";
 import PaystackUsd from "./PaystackUsd";
 import Loader from "../Loader";
 import Message from "../Message";
+import Paystack from "./Paystack";
+import { Paysofter } from "../react-paysofter/src/index";
+// import { Paysofter } from "react-paysofter";
 
 function PaymentScreen({ amount, currency }) {
   const dispatch = useDispatch();
@@ -35,6 +37,7 @@ function PaymentScreen({ amount, currency }) {
   );
   const { loading, error, paystackPublicKey, paysofterPublicKey } =
     getPaymentApiKeysState;
+
   console.log("apiKeys:", paystackPublicKey, paysofterPublicKey);
 
   const createdAt = new Date().toLocaleString("en-US", {
@@ -48,7 +51,7 @@ function PaymentScreen({ amount, currency }) {
     hour12: true,
     timeZoneName: "short",
   });
-  
+
   const [selectedPaymentGateway, setSelectedPaymentGateway] = useState(null);
 
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -92,8 +95,8 @@ function PaymentScreen({ amount, currency }) {
 
   const handleOnClose = () => {
     console.log("handling onClose...");
-    window.location.reload();
-    window.location.href = "/";
+    // window.location.reload();
+    // window.location.href = "/";
   };
 
   const onClose = () => {
@@ -233,9 +236,13 @@ function PaymentScreen({ amount, currency }) {
                 currency={currency}
                 amount={amount}
                 paysofterPublicKey={paysofterPublicKey}
+                // amount="2000"
+                // currency="NGN"
+                // email="chibuzo.okenwa@gmail.com"
+                // paysofterPublicKey="live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
                 onSuccess={onSuccess}
                 onClose={onClose}
-                paymentRef={`PID${Math.floor(Math.random() * 100000000000000)}`}
+                paymentRef={`RID${Math.floor(Math.random() * 100000000000000)}`}
                 showPromiseOption={true}
                 showFundOption={true}
                 showCardOption={true}

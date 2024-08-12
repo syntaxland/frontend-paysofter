@@ -93,7 +93,7 @@ function Footer() {
                   className="rounded"
                   onClick={docsLink}
                 >
-                  <i style={{ color: "blue" }}>See Documentation</i>
+                  <i style={{ color: "#007bff" }}>See Documentation</i>
                 </Button>{" "}
               </p>
 

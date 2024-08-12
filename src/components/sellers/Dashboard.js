@@ -27,7 +27,7 @@ import {
   PointElement,
   Title,
 } from "chart.js";
-// import ToggleAccountSettings from "../settings/ToggleAccountSettings";
+import GetSellerId from "../settings/GetSellerId";
 import ToggleApiKeyStatus from "../settings/ToggleApiKeyStatus";
 
 ChartJS.register(
@@ -222,9 +222,10 @@ function SellerDashboard() {
                   <Col>
                     <div>
                       <div className="bar-chart">
-                        <p className="d-flex justify-content-end">
+                        <div className="d-flex justify-content-between">
+                          <GetSellerId />
                           <ToggleApiKeyStatus />
-                        </p>
+                        </div>
                         <h2 className="py-2">
                           <i className="	fas fa-money-bill"></i> Total
                           Transactions (Seller Account)

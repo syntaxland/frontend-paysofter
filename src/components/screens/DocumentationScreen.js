@@ -47,14 +47,14 @@ function DocumentationScreen() {
                     </p>
                     <p
                       onClick={handlePaysofterReactNpm}
-                      style={{ cursor: "pointer", color: "blue" }}
+                      style={{ cursor: "pointer", color: "#007bff" }}
                     >
                       See Doc at NPM
                     </p>
 
                     <p
                       onClick={handlePaysofterReactGithub}
-                      style={{ cursor: "pointer", color: "blue" }}
+                      style={{ cursor: "pointer", color: "#007bff" }}
                     >
                       Github{" "}
                     </p>
@@ -82,14 +82,14 @@ function DocumentationScreen() {
                     </p>
                     <p
                       onClick={handlePaysofterReactNativeNpm}
-                      style={{ cursor: "pointer", color: "blue" }}
+                      style={{ cursor: "pointer", color: "#007bff" }}
                     >
                       See Doc at NPM
                     </p>
 
                     <p
                       onClick={handlePaysofterReactNativeGithub}
-                      style={{ cursor: "pointer", color: "blue" }}
+                      style={{ cursor: "pointer", color: "#007bff" }}
                     >
                       Github{" "}
                     </p>

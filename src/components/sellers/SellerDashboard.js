@@ -5,9 +5,42 @@ import { Row, Col, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-// import { login } from "../../redux/actions/userActions";
+import { faBars, faTimes, faQrcode,
+  // faHome,
+  // faDashboard,
+  // faUser,
+  // faUserLock,
+  // faUserShield,
+  // faHandPeace,
+  // faUserPlus,
+  // faSackDollar,
+  // faMessage,
+  // faHeart,
+  // faEye,
+  // faThumbsUp,
+  // faComments,
+  // faTicket,
+  // faGear,
+  // faAd,
+  // faLink,
+  // faMoneyBill,
+  // faSignIn,
+  // faSignInAlt,
+  // faSignOut,
+  // faCaretDown,
+  // faUserCheck,
+  // faCodeCompare,
+  // faBullhorn,
+  // faCreditCard,
+  // faCreditCardAlt,
+  // faMoneyBill1,
+  faDollarSign,
+  // faMoneyBills,
+  // faCode,
+  // faSackDollar
 
+} from "@fortawesome/free-solid-svg-icons";
+// import { login } from "../../redux/actions/userActions";
 import { getUserProfile } from "../../redux/actions/userProfileActions";
 import SellerProfile from "./SellerProfile";
 import Transactions from "./Transactions";
@@ -18,7 +51,7 @@ import Dashboard from "./Dashboard";
 // import CreditPoint from "./CreditPoint";
 // import AccountFunds from "./AccountFunds";
 // import Referrals from "./Referrals";
-import Webhooks from "./Webhooks";
+// import Webhooks from "./Webhooks";
 import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
 import PaysofterPromiseSeller from "./PaysofterPromiseSeller";
@@ -85,8 +118,8 @@ function SellerDashboard() {
       case "payouts":
         return <Payouts />;
 
-      case "webhooks":
-        return <Webhooks />;
+      // case "webhooks":
+      //   return <Webhooks />;
 
       case "api-endpoints":
         return <ApiEndPoints />;
@@ -194,8 +227,6 @@ function SellerDashboard() {
                 </div>
               )}
 
-             
-
               {profile?.is_api_key_live ? (
                 <div>
                   <Button
@@ -207,7 +238,7 @@ function SellerDashboard() {
                     className="sidebar-link"
                     onClick={() => handleTabChange("transactions")}
                   >
-                    <i className="fa fa-cart-arrow-down"></i> Transactions{" "}
+                    <FontAwesomeIcon icon={faDollarSign} /> Transactions{" "}
                     <span className="live-mode">Live</span>
                   </Button>
                 </div>
@@ -222,7 +253,7 @@ function SellerDashboard() {
                     className="sidebar-link"
                     onClick={() => handleTabChange("transactions-test")}
                   >
-                    <i className="fa fa-cart-arrow-down"></i> Transactions{" "}
+                    <FontAwesomeIcon icon={faDollarSign} /> Transactions{" "}
                     <span className="test-mode">Test</span>
                   </Button>
                 </div>
@@ -319,6 +350,18 @@ function SellerDashboard() {
               <div>
                 <Button
                   variant={
+                    activeTab === "payment-link" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  onClick={() => handleTabChange("payment-link")}
+                >
+                  <FontAwesomeIcon icon={faQrcode} /> Payment Link
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
                     activeTab === "api-endpoints"
                       ? "primary"
                       : "outline-primary"
@@ -330,7 +373,7 @@ function SellerDashboard() {
                 </Button>
               </div>
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "webhooks" ? "primary" : "outline-primary"
@@ -340,7 +383,7 @@ function SellerDashboard() {
                 >
                   <i className="fas fa-codepen"></i> SDK & Webhooks
                 </Button>
-              </div>
+              </div> */}
 
               {/* <div>
                 <Button
