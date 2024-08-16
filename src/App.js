@@ -38,6 +38,9 @@ import BusinessOwnerDetail from "./components/sellers/BusinessOwnerDetail";
 import SellerBankAccount from "./components/sellers/SellerBankAccount";
 import SellerBvn from "./components/sellers/SellerBvn";
 import SellerPhoto from "./components/sellers/SellerPhoto";
+import CreatePaymentLink from "./components/sellers/CreatePaymentLink";
+import PaymentLinks from "./components/sellers/PaymentLinks";
+import PaymentLinkDetail from "./components/sellers/PaymentLinkDetail";
 
 // import PromiseMessage from "./components/promise/PromiseMessage";
 import SellerPromiseMessage from "./components/promise/SellerPromiseMessage";
@@ -100,7 +103,10 @@ function App() {
           <Route path="/seller/bank/" component={SellerBankAccount} />
           <Route path="/seller/bvn/" component={SellerBvn} />
           <Route path="/seller/photo/" component={SellerPhoto} />
-
+          <Route path="/create-payment-link/" component={CreatePaymentLink} />
+          <Route path="/payment-links/" component={PaymentLinks} />
+          <Route path="/payment-link" component={PaymentLinkDetail} />
+          
           <Route
             path="/seller/promise/message/:id"
             component={SellerPromiseMessage}

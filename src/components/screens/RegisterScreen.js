@@ -55,7 +55,6 @@ function RegisterScreen({ location }) {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const ref = params.get("ref");
-
     if (ref) {
       setReferralCode(ref);
     }

@@ -31,7 +31,7 @@ const FundAccount = () => {
   return (
     <Container>
       {!showPaymentPage && (
-        <Row className="justify-content-center">
+        <Row className="d-flex justify-content-center">
           <Col xs={12} md={6}>
             <h2 className="py-3 text-center">Fund NGN Account</h2>
 

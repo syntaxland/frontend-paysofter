@@ -56,6 +56,7 @@ import ApiEndPoints from "./ApiEndPoints";
 import Subscriptions from "./Subscriptions";
 import PaysofterPromiseSeller from "./PaysofterPromiseSeller";
 import TestPaysofterPromiseSeller from "./TestPaysofterPromiseSeller";
+import PaymentLinks from "./PaymentLinks";
 
 function SellerDashboard() {
   const dispatch = useDispatch();
@@ -136,8 +137,8 @@ function SellerDashboard() {
       // case "credit-point":
       //   return <CreditPoint />;
 
-      // case "recommended-products":
-      //   return <RecommendedProducts />;
+      case "payment-link":
+        return <PaymentLinks />;
 
       // case "account-funds":
       //   return <AccountFunds />;
@@ -355,7 +356,7 @@ function SellerDashboard() {
                   className="sidebar-link"
                   onClick={() => handleTabChange("payment-link")}
                 >
-                  <FontAwesomeIcon icon={faQrcode} /> Payment Link
+                  <FontAwesomeIcon icon={faQrcode} /> Payment Links
                 </Button>
               </div>
 

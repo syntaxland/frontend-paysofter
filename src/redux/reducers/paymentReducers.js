@@ -13,7 +13,22 @@ import {
   GET_PAYMENT_API_KEYS_REQUEST,
   GET_PAYMENT_API_KEYS_SUCCESS,
   GET_PAYMENT_API_KEYS_FAIL,
-  
+  CREATE_PAYMENT_LINK_REQUEST,
+  CREATE_PAYMENT_LINK_SUCCESS,
+  CREATE_PAYMENT_LINK_FAIL,
+  UPDATE_PAYMENT_LINK_REQUEST,
+  UPDATE_PAYMENT_LINK_SUCCESS,
+  UPDATE_PAYMENT_LINK_FAIL,
+  GET_PAYMENT_LINK_DETAIL_REQUEST,
+  GET_PAYMENT_LINK_DETAIL_SUCCESS,
+  GET_PAYMENT_LINK_DETAIL_FAIL,
+  GET_SELLER_PAYMENT_LINKS_REQUEST,
+  GET_SELLER_PAYMENT_LINKS_SUCCESS,
+  GET_SELLER_PAYMENT_LINKS_FAIL,
+
+  DELETE_PAYMENT_LINK_REQUEST,
+DELETE_PAYMENT_LINK_SUCCESS,
+DELETE_PAYMENT_LINK_FAIL,
 } from "../constants/paymentConstants";
 
 const initialState = {
@@ -23,6 +38,115 @@ const initialState = {
   payments: [],
   paystackPublicKey: [],
   paysofterPublicKey: [],
+  paymentLinks: [],
+};
+
+export const deletePaymentLinkReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case DELETE_PAYMENT_LINK_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_PAYMENT_LINK_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case DELETE_PAYMENT_LINK_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const createPaymentLinkReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case CREATE_PAYMENT_LINK_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_PAYMENT_LINK_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case CREATE_PAYMENT_LINK_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const updatePaymentLinkReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case UPDATE_PAYMENT_LINK_REQUEST:
+      return { loading: true };
+    case UPDATE_PAYMENT_LINK_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case UPDATE_PAYMENT_LINK_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getPaymentLinkDetailReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_PAYMENT_LINK_DETAIL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_PAYMENT_LINK_DETAIL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        paymentLinks: action.payload.data,
+      };
+    case GET_PAYMENT_LINK_DETAIL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const getSellerPaymentLinksReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_SELLER_PAYMENT_LINKS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_SELLER_PAYMENT_LINKS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        paymentLinks: action.payload,
+      };
+    case GET_SELLER_PAYMENT_LINKS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
 export const getPaymentApiKeysReducer = (state = initialState, action) => {

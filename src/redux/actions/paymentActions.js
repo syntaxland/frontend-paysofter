@@ -1,3 +1,4 @@
+// paymentActions.js
 import axios from "axios";
 import {
   PAYMENT_CREATE_REQUEST,
@@ -12,9 +13,209 @@ import {
   GET_PAYMENT_API_KEYS_REQUEST,
   GET_PAYMENT_API_KEYS_SUCCESS,
   GET_PAYMENT_API_KEYS_FAIL,
+  CREATE_PAYMENT_LINK_REQUEST,
+  CREATE_PAYMENT_LINK_SUCCESS,
+  CREATE_PAYMENT_LINK_FAIL,
+  UPDATE_PAYMENT_LINK_REQUEST,
+  UPDATE_PAYMENT_LINK_SUCCESS,
+  UPDATE_PAYMENT_LINK_FAIL,
+  GET_PAYMENT_LINK_DETAIL_REQUEST,
+  GET_PAYMENT_LINK_DETAIL_SUCCESS,
+  GET_PAYMENT_LINK_DETAIL_FAIL,
+  GET_SELLER_PAYMENT_LINKS_REQUEST,
+  GET_SELLER_PAYMENT_LINKS_SUCCESS,
+  GET_SELLER_PAYMENT_LINKS_FAIL,
+  DELETE_PAYMENT_LINK_REQUEST,
+  DELETE_PAYMENT_LINK_SUCCESS,
+  DELETE_PAYMENT_LINK_FAIL,
 } from "../constants/paymentConstants";
 
 import { API_URL } from "../../config/apiConfig";
+
+export const createPaymentLink = (sellerData) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: CREATE_PAYMENT_LINK_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `${API_URL}/api/create-payment-link/`,
+      sellerData,
+      config
+    );
+
+    dispatch({
+      type: CREATE_PAYMENT_LINK_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_PAYMENT_LINK_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const getPaymentLinkDetail =
+  (linkData) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: GET_PAYMENT_LINK_DETAIL_REQUEST });
+
+      // const {
+      //   userLogin: { userInfo },
+      // } = getState();
+
+      const config = {
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
+
+      // const { data } = await axios.get(
+      //   `${API_URL}/api/get-payment-link-detail/`,
+      //   linkData,
+      //   config
+      // );
+
+      const { link_id, seller_username } = linkData;
+      const url = `${API_URL}/api/get-payment-link-detail/?link_id=${link_id}&seller_username=${seller_username}`;
+      const { data } = await axios.get(url, config);
+
+      dispatch({
+        type: GET_PAYMENT_LINK_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_PAYMENT_LINK_DETAIL_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+export const updatePaymentLink = (pk) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: UPDATE_PAYMENT_LINK_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `${API_URL}/update-payment-link/${pk}/`,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_PAYMENT_LINK_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PAYMENT_LINK_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const deletePaymentLink = (pk) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: DELETE_PAYMENT_LINK_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `${API_URL}/api/delete-paid-ad/${pk}/`,
+      config
+    );
+
+    dispatch({
+      type: DELETE_PAYMENT_LINK_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_PAYMENT_LINK_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const getSellerPaymentLinks = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_SELLER_PAYMENT_LINKS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.access}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${API_URL}/api/get-seller-payment-links/`,
+      config
+    );
+
+    dispatch({
+      type: GET_SELLER_PAYMENT_LINKS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SELLER_PAYMENT_LINKS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
 
 export const getPaymentApiKeys = () => async (dispatch, getState) => {
   try {
@@ -160,5 +361,4 @@ export const getAllPaymentsList = () => async (dispatch, getState) => {
           : error.message,
     });
   }
-}; 
- 
+};

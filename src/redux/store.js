@@ -6,9 +6,9 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   userTransactionReducer,
   createTransactionReducer,
-  getUserTransactionsTestReducer
+  getUserTransactionsTestReducer,
 } from "./reducers/transactionReducers";
-import { userPayoutReducer } from "./reducers/payoutReducers"; 
+import { userPayoutReducer } from "./reducers/payoutReducers";
 
 import {
   userLoginReducers,
@@ -19,11 +19,16 @@ import {
 import {
   selecteCurrencyReducer,
   getSelectedCurrencyReducer,
-  toggleApiKeyStatusStateReducer
+  toggleApiKeyStatusStateReducer,
 } from "./reducers/settingsReducers";
 
 import {
   getPaymentApiKeysReducer,
+  createPaymentLinkReducer,
+  updatePaymentLinkReducer,
+  getPaymentLinkDetailReducer,
+  getSellerPaymentLinksReducer,
+  deletePaymentLinkReducer,
 } from "./reducers/paymentReducers";
 
 import {
@@ -151,6 +156,11 @@ const reducer = combineReducers({
   emailOtpVerify: emailOtpVerifyReducer,
 
   getPaymentApiKeysState: getPaymentApiKeysReducer,
+  createPaymentLinkState: createPaymentLinkReducer,
+  updatePaymentLinkState: updatePaymentLinkReducer,
+  getPaymentLinkDetailState: getPaymentLinkDetailReducer,
+  getSellerPaymentLinksState: getSellerPaymentLinksReducer,
+  deletePaymentLinkState: deletePaymentLinkReducer,
 
   userProfile: getUserProfileReducer,
   updateProfile: updateUserProfileReducer,
@@ -161,11 +171,10 @@ const reducer = combineReducers({
   resetPassword: resetPasswordReducer,
 
   referral: referralReducer,
-referralButton: referralButtonReducer,
+  referralButton: referralButtonReducer,
   userReferralState: getUserReferralsReducer,
   // createPromoCodeState: createPromoCodeReducer,
   // promoProductList: promoProductListReducer,
-
 
   userTransactions: userTransactionReducer,
   getUserTransactionsTestState: getUserTransactionsTestReducer,
