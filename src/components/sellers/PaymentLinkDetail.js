@@ -130,12 +130,15 @@ function PaymentLinkDetail({ location }) {
           <div className="text-center py-2">
             <img
               // src={paymentLinks.seller_logo}
-              alt="Company Logo"
+              alt="Seller Logo"
               className="img-fluid"
               style={{ width: "50px", height: "50px" }}
             />
           </div>
-          <div className="text-center py-2">{paymentLinks?.description}</div>
+          <h6 className="text-center py-2">{paymentLinks?.payment_name}</h6>
+          <strong className="text-center py-2">
+            <i>{paymentLinks?.description} </i>
+          </strong>
           {paymentLinks?.payment_qrcode && (
             <div className="text-center py-2">
               <img
@@ -232,7 +235,7 @@ function PaymentLinkDetail({ location }) {
 
           <div className="d-flex justify-content-center py-3">
             <Button
-              className="py-1 rounded w-100"
+              className="py-2 rounded w-100"
               variant="primary"
               onClick={initiatePayment}
               disabled={loading}

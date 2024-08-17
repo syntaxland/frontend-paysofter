@@ -357,7 +357,7 @@ function CreatePaymentLink() {
                 placeholder="Type your message"
                 rows={2}
                 value={description}
-                maxLength={150}
+                maxLength={140}
                 onChange={(e) => handleFieldChange("description", e.target.value)}
               ></Form.Control>
               {/* <ReactQuill
