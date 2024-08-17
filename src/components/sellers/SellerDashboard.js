@@ -356,7 +356,7 @@ function SellerDashboard() {
                   className="sidebar-link"
                   onClick={() => handleTabChange("payment-link")}
                 >
-                  <FontAwesomeIcon icon={faQrcode} /> Payment Links
+                  <FontAwesomeIcon icon={faQrcode} /> Paysofter Link
                 </Button>
               </div>
 

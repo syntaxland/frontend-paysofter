@@ -48,7 +48,7 @@ function PaymentLinkDetail({ location }) {
     sellerLogo,
   } = getPaymentLinkDetailState;
 
-  console.log("paymentLinks:", paymentLinks);
+  // console.log("paymentLinks:", paymentLinks);
 
   const [paymentInitiated, setPaymentInitiated] = useState(false);
 
@@ -56,8 +56,9 @@ function PaymentLinkDetail({ location }) {
   const [showPromiseOption, setShowPromiseOption] = useState("");
   const [showFundOption, setShowFundOption] = useState("");
   const [showCardOption, setShowCardOption] = useState("");
+  const [productAmount, setProductAmount] = useState("");
+  const [productCurrency, setProductCurrency] = useState("");
 
-  // prod
   useEffect(() => {
     if (paymentLinks) {
       const key = paymentLinks.is_api_key_live
@@ -68,10 +69,12 @@ function PaymentLinkDetail({ location }) {
       setShowPromiseOption(paymentLinks.show_promise_option);
       setShowFundOption(paymentLinks.show_fund_option);
       setShowCardOption(paymentLinks.show_card_option);
+      setProductAmount(paymentLinks.amount);
+      setProductCurrency(paymentLinks.currency);
     }
   }, [paymentLinks]);
 
-  // dev
+    // dev
   // useEffect(() => {
   //   if (paymentLinks) {
   //     const key = paymentLinks.is_api_key_live
@@ -86,12 +89,12 @@ function PaymentLinkDetail({ location }) {
 
   // }, [paymentLinks]);
 
-  console.log("is_api_key_live:", paymentLinks?.is_api_key_live);
-  console.log("live_api_key:", paymentLinks?.live_api_key);
-  console.log("test_api_key:", paymentLinks?.test_api_key);
-  console.log("showPromiseOption:", paymentLinks?.show_promise_option);
-  console.log("showFundOption:", paymentLinks?.show_fund_option);
-  console.log("showCardOption:", paymentLinks?.show_card_option);
+  // console.log("is_api_key_live:", paymentLinks?.is_api_key_live);
+  // console.log("live_api_key:", paymentLinks?.live_api_key);
+  // console.log("test_api_key:", paymentLinks?.test_api_key);
+  // console.log("showPromiseOption:", paymentLinks?.show_promise_option);
+  // console.log("showFundOption:", paymentLinks?.show_fund_option);
+  // console.log("showCardOption:", paymentLinks?.show_card_option);
 
   const [selectedCountry] = useState("US");
 
@@ -150,7 +153,7 @@ function PaymentLinkDetail({ location }) {
 
   const handleOnClose = () => {
     console.log("handling onClose...");
-    // window.location.reload();
+    window.location.reload();
   };
 
   const onClose = () => {
@@ -161,7 +164,7 @@ function PaymentLinkDetail({ location }) {
     <Container>
       <Row className="d-flex justify-content-center py-3">
         <Col xs={12} md={6}>
-          <h2 className="text-center py-3">Payment Link</h2>
+          <h2 className="text-center py-3">Paysofter Link</h2>
 
           <Row className="d-flex justify-content-between text-center">
             <Col md={6}>
@@ -307,8 +310,8 @@ function PaymentLinkDetail({ location }) {
           {paymentInitiated && (
             <Paysofter
               email={buyerEmail}
-              currency={paymentLinks?.currency}
-              amount={paymentLinks?.amount}
+              currency={productCurrency}
+              amount={productAmount}
               paysofterPublicKey={paysofterPublicKey}
               onSuccess={onSuccess}
               onClose={onClose}

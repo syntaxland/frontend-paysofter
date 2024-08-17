@@ -210,12 +210,12 @@ function CreatePaymentLink() {
     <Container>
       <Row className="d-flex justify-content-center py-2">
         <Col xs={12} md={6}>
-          <h2 className="text-center py-2">Create Payment Link</h2>
+          <h2 className="text-center py-2">Create Paysofter Link</h2>
           {loading && <Loader />}
 
           {success && (
             <Message variant="success" fixed>
-              Payment link created successfully.
+              Paysofter link created successfully.
             </Message>
           )}
           {error && (
@@ -381,7 +381,7 @@ function CreatePaymentLink() {
               disabled={loading || success}
             >
               <div className="d-flex justify-content-center">
-                <span className="py-1">Create Payment Link</span>
+                <span className="py-1">Create Paysofter Link</span>
                 {loading && <LoaderButton />}
               </div>
             </Button>

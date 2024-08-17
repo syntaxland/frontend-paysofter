@@ -40,7 +40,7 @@ function DeletePaymentLink() {
         <Col>
           <div>
             <h1 className="text-center py-3">
-              <FontAwesomeIcon icon={faQrcode} /> Delete Payment Links
+              <FontAwesomeIcon icon={faQrcode} /> Delete Link
             </h1>
             <div className="text-center py-1">Company Logo</div>
             

@@ -64,14 +64,14 @@ function PaymentLinks() {
     if (navigator.share) {
       navigator
         .share({
-          title: "Payment Link",
-          text: "Check out this payment link!",
+          title: "Paysofter Link",
+          text: "Check out this Paysofter link!",
           url: link,
         })
         .then(() => console.log("Shared successfully"))
         .catch((error) => console.error("Share failed:", error));
     } else {
-      alert("Please manually share the payment link: " + link);
+      alert("Please manually share the Paysofter link: " + link);
     }
   };
 
@@ -122,7 +122,7 @@ function PaymentLinks() {
         <Col>
           <div>
             <h1 className="text-center py-3">
-              <FontAwesomeIcon icon={faQrcode} /> Payment Links
+              <FontAwesomeIcon icon={faQrcode} /> Paysofter Links
             </h1>
             {/* <div className="text-center py-1">Company Logo</div> */}
             {loading ? (
@@ -133,7 +133,7 @@ function PaymentLinks() {
               <>
                 {currentItems.length === 0 ? (
                   <div className="text-center py-3">
-                    Payment links appear here.
+                    Paysofter links appear here.
                   </div>
                 ) : (
                   <Table striped bordered hover responsive className="table-sm">
@@ -354,7 +354,7 @@ function PaymentLinks() {
                 onClick={handleCreatePaymentLink}
                 className="rounded"
               >
-                Create Payment Link
+                Create Paysofter Link
               </Button>
             </div>
           </div>
