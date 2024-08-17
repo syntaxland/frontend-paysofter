@@ -48,18 +48,42 @@ function PaymentLinkDetail({ location }) {
     sellerLogo,
   } = getPaymentLinkDetailState;
 
-  // console.log("paymentLinks:", paymentLinks);
+  console.log("paymentLinks:", paymentLinks);
 
   const [paymentInitiated, setPaymentInitiated] = useState(false);
 
-  const [paysofterPublicKey] = useState(
-    paymentLinks?.is_api_key_live
-      ? paymentLinks?.live_api_key
-      : paymentLinks?.test_api_key
-  );
+  // const [paysofterPublicKey] = useState(
+  //   paymentLinks?.is_api_key_live
+  //     ? paymentLinks?.live_api_key
+  //     : paymentLinks?.test_api_key
+  // );
 
+  const [paysofterPublicKey, setPaysofterPublicKey] = useState("");
+
+  // useEffect(() => {
+  //   if (paymentLinks) {
+  //     const key = paymentLinks.is_api_key_live
+  //       ? paymentLinks.live_api_key
+  //       : paymentLinks.test_api_key;
+  //     setPaysofterPublicKey(key);
+  //   }
+  // }, [paymentLinks]);
+
+  useEffect(() => {
+    if (paymentLinks) {
+      const key = paymentLinks.is_api_key_live
+        ? "live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
+        : "test_api_key_8q45lnpo9kchan2z84ottwdd8lwib1phq70lxqhmordpxycg6c";
+      setPaysofterPublicKey(key);
+    }
+  }, [paymentLinks]);
+
+  console.log("is_api_key_live:", paymentLinks?.is_api_key_live);
   console.log("live_api_key:", paymentLinks?.live_api_key);
   console.log("test_api_key:", paymentLinks?.test_api_key);
+  console.log("show_promise_option:", paymentLinks?.show_promise_option);
+  console.log("show_fund_option:", paymentLinks?.show_fund_option);
+  console.log("show_card_option:", paymentLinks?.show_card_option);
 
   const [selectedCountry] = useState("US");
 
@@ -284,6 +308,9 @@ function PaymentLinkDetail({ location }) {
               showPromiseOption={paymentLinks?.show_promise_option}
               showFundOption={paymentLinks?.show_fund_option}
               showCardOption={paymentLinks?.show_card_option}
+              // showPromiseOption={true}
+              // showFundOption={true}
+              // showCardOption={true}
             />
           )}
         </Col>
