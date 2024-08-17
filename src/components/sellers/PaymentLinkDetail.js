@@ -52,38 +52,46 @@ function PaymentLinkDetail({ location }) {
 
   const [paymentInitiated, setPaymentInitiated] = useState(false);
 
-  // const [paysofterPublicKey] = useState(
-  //   paymentLinks?.is_api_key_live
-  //     ? paymentLinks?.live_api_key
-  //     : paymentLinks?.test_api_key
-  // );
-
   const [paysofterPublicKey, setPaysofterPublicKey] = useState("");
+  const [showPromiseOption, setShowPromiseOption] = useState("");
+  const [showFundOption, setShowFundOption] = useState("");
+  const [showCardOption, setShowCardOption] = useState("");
 
-  // useEffect(() => {
-  //   if (paymentLinks) {
-  //     const key = paymentLinks.is_api_key_live
-  //       ? paymentLinks.live_api_key
-  //       : paymentLinks.test_api_key;
-  //     setPaysofterPublicKey(key);
-  //   }
-  // }, [paymentLinks]);
-
+  // prod
   useEffect(() => {
     if (paymentLinks) {
       const key = paymentLinks.is_api_key_live
-        ? "live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
-        : "test_api_key_8q45lnpo9kchan2z84ottwdd8lwib1phq70lxqhmordpxycg6c";
+        ? paymentLinks.live_api_key
+        : paymentLinks.test_api_key;
       setPaysofterPublicKey(key);
+
+      setShowPromiseOption(paymentLinks.show_promise_option);
+      setShowFundOption(paymentLinks.show_fund_option);
+      setShowCardOption(paymentLinks.show_card_option);
     }
   }, [paymentLinks]);
+
+  // dev
+  // useEffect(() => {
+  //   if (paymentLinks) {
+  //     const key = paymentLinks.is_api_key_live
+  //       ? "live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
+  //       : "test_api_key_8q45lnpo9kchan2z84ottwdd8lwib1phq70lxqhmordpxycg6c";
+  //     setPaysofterPublicKey(key);
+
+  //     setShowPromiseOption(paymentLinks.show_promise_option);
+  //     setShowFundOption(paymentLinks.show_fund_option);
+  //     setShowCardOption(paymentLinks.show_card_option);
+  //   }
+
+  // }, [paymentLinks]);
 
   console.log("is_api_key_live:", paymentLinks?.is_api_key_live);
   console.log("live_api_key:", paymentLinks?.live_api_key);
   console.log("test_api_key:", paymentLinks?.test_api_key);
-  console.log("show_promise_option:", paymentLinks?.show_promise_option);
-  console.log("show_fund_option:", paymentLinks?.show_fund_option);
-  console.log("show_card_option:", paymentLinks?.show_card_option);
+  console.log("showPromiseOption:", paymentLinks?.show_promise_option);
+  console.log("showFundOption:", paymentLinks?.show_fund_option);
+  console.log("showCardOption:", paymentLinks?.show_card_option);
 
   const [selectedCountry] = useState("US");
 
@@ -305,12 +313,9 @@ function PaymentLinkDetail({ location }) {
               onSuccess={onSuccess}
               onClose={onClose}
               paymentRef={`RID${Math.floor(Math.random() * 10000000000000000)}`}
-              showPromiseOption={paymentLinks?.show_promise_option}
-              showFundOption={paymentLinks?.show_fund_option}
-              showCardOption={paymentLinks?.show_card_option}
-              // showPromiseOption={true}
-              // showFundOption={true}
-              // showCardOption={true}
+              showPromiseOption={showPromiseOption}
+              showFundOption={showFundOption}
+              showCardOption={showCardOption}
             />
           )}
         </Col>
