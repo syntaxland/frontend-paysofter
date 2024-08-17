@@ -39,6 +39,9 @@ const initialState = {
   paystackPublicKey: [],
   paysofterPublicKey: [],
   paymentLinks: [],
+  sellerBusinessName: [],
+  sellerTradingName: [],
+  sellerLogo: [],
 };
 
 export const deletePaymentLinkReducer = (state = initialState, action) => {
@@ -113,6 +116,10 @@ export const getPaymentLinkDetailReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         paymentLinks: action.payload.data,
+        sellerBusinessName: action.payload.seller_business_name,
+        sellerTradingName: action.payload.seller_trading_name,
+        sellerLogo: action.payload.seller_logo,
+
       };
     case GET_PAYMENT_LINK_DETAIL_FAIL:
       return {

@@ -1,16 +1,16 @@
 // CreateSellerAccount.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Button, Container, Row, Col } from "react-bootstrap"; 
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { createSellerAccount } from "../../redux/actions/sellerActions";
 import Message from "../Message";
 import Loader from "../Loader";
-import LoaderButton from "../LoaderButton"; 
+import LoaderButton from "../LoaderButton";
 
 function CreateSellerAccount({ history }) {
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin); 
+  const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
@@ -50,6 +50,7 @@ function CreateSellerAccount({ history }) {
   const [businessIndustryError, setBusinessIndustryError] = useState("");
   const [businessCategoryError, setBusinessCategoryError] = useState("");
   const [countryError, setCountryError] = useState("");
+  const [businessLogo, setBusinessLogo] = useState("");
   const [formError, setFormError] = useState("");
 
   const handleFieldChange = (fieldName, value) => {
@@ -90,6 +91,10 @@ function CreateSellerAccount({ history }) {
       case "country":
         setCountry(value);
         setCountryError("");
+        break;
+
+      case "businessLogo":
+        setBusinessLogo(value);
         break;
 
       default:
@@ -164,22 +169,40 @@ function CreateSellerAccount({ history }) {
     ["Others", "Others"],
   ];
 
-  const sellerData = {
-    business_name: businessName,
-    trading_name: tradingName,
-    // business_reg_num: businessRegNum,
-    business_address: businessAddress,
-    // business_type: businessType,
-    staff_size: staffSize,
-    business_industry: businessIndustry,
-    business_category: businessCategory,
-    business_description: businessDescription,
-    business_phone: businessPhone,
-    business_email: businessEmail,
-    support_email: supportEmail,
-    business_website: businessWebsite,
-    country: country,
-  };
+  // const sellerData = {
+  //   business_name: businessName,
+  //   trading_name: tradingName,
+  //   // business_reg_num: businessRegNum,
+  //   business_address: businessAddress,
+  //   // business_type: businessType,
+  //   staff_size: staffSize,
+  //   business_industry: businessIndustry,
+  //   business_category: businessCategory,
+  //   business_description: businessDescription,
+  //   business_phone: businessPhone,
+  //   business_email: businessEmail,
+  //   support_email: supportEmail,
+  //   business_website: businessWebsite,
+  //   country: country,
+  //   // business_logo: businessLogo,
+  // };
+
+  const sellerData = new FormData();
+  sellerData.append("business_name", businessName);
+  sellerData.append("trading_name", tradingName);
+  // sellerData.append("business_reg_num", businessRegNum);
+  sellerData.append("business_address", businessAddress);
+  // sellerData.append("business_type", businessType);
+  sellerData.append("staff_size", staffSize);
+  sellerData.append("business_industry", businessIndustry);
+  sellerData.append("business_category", businessCategory);
+  sellerData.append("business_description", businessDescription);
+  sellerData.append("business_phone", businessPhone);
+  sellerData.append("business_email", businessEmail);
+  sellerData.append("support_email", supportEmail);
+  sellerData.append("business_website", businessWebsite);
+  sellerData.append("country", country);
+  sellerData.append("business_logo", businessLogo);
 
   useEffect(() => {
     if (success) {
@@ -522,6 +545,19 @@ function CreateSellerAccount({ history }) {
                 required
               />
               <Form.Text className="text-danger">{countryError}</Form.Text>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Business Logo</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={(e) =>
+                  handleFieldChange("businessLogo", e.target.files[0])
+                }
+                placeholder="Upload Logo"
+                className="rounded py-2 mb-2"
+                maxLength={100}
+              />
             </Form.Group>
           </Form>
           <Button

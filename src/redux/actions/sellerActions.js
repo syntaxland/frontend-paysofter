@@ -217,8 +217,9 @@ export const updateSellerAccount =
 
       const config = {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.access}`,
+          // "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${userInfo.access}`,
         },
       };
 
@@ -540,8 +541,9 @@ export const createSellerAccount =
 
       const config = {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.access}`,
+          // "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${userInfo.access}`,
         },
       };
 

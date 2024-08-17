@@ -40,16 +40,20 @@ function PaymentLinkDetail({ location }) {
   const getPaymentLinkDetailState = useSelector(
     (state) => state.getPaymentLinkDetailState
   );
-  const { loading, paymentLinks } = getPaymentLinkDetailState;
+  const {
+    loading,
+    paymentLinks,
+    sellerBusinessName,
+    sellerTradingName,
+    sellerLogo,
+  } = getPaymentLinkDetailState;
 
   console.log(
     "paymentLinks:",
-    paymentLinks?.show_card_option,
-    paymentLinks?.test_api_key,
-    paymentLinks?.live_api_key,
-    paymentLinks?.is_api_key_live,
-    paymentLinks?.show_buyer_name,
-    paymentLinks?.show_buyer_phone
+    paymentLinks,
+    sellerBusinessName,
+    sellerTradingName,
+    sellerLogo
   );
 
   const [paymentInitiated, setPaymentInitiated] = useState(false);
@@ -124,33 +128,58 @@ function PaymentLinkDetail({ location }) {
 
   return (
     <Container>
-      <Row className="d-flex justify-content-center py-2">
+      <Row className="d-flex justify-content-center py-3">
         <Col xs={12} md={6}>
-          <h2 className="text-center py-2">Payment Link</h2>
-          <div className="text-center py-2">
-            <img
-              // src={paymentLinks.seller_logo}
-              alt="Seller Logo"
-              className="img-fluid"
-              style={{ width: "50px", height: "50px" }}
-            />
-          </div>
-          <h6 className="text-center py-2">{paymentLinks?.payment_name}</h6>
-          <strong className="text-center py-2">
-            <i>{paymentLinks?.description} </i>
-          </strong>
-          {paymentLinks?.payment_qrcode && (
-            <div className="text-center py-2">
-              <img
-                src={paymentLinks.payment_qrcode}
-                alt="QR Code"
-                className="img-fluid"
-                style={{ width: "150px", height: "150px" }}
-              />
-            </div>
-          )}
-          {loading && <Loader />}
+          <h2 className="text-center py-3">Payment Link</h2>
 
+          <Row className="d-flex justify-content-between text-center">
+            <Col md={6}>
+              {sellerLogo && (
+                <img
+                  src={sellerLogo}
+                  alt="Seller Logo"
+                  className="img-fluid"
+                  style={{ width: "50px", height: "50px" }}
+                />
+              )}
+              <h6 className="text-center">{sellerTradingName}</h6>
+            </Col>
+
+            <Col md={6}>
+              {paymentLinks?.payment_qrcode && (
+                <div>
+                  <img
+                    src={paymentLinks.payment_qrcode}
+                    alt="QR Code"
+                    className="img-fluid"
+                    style={{ width: "100px", height: "100px" }}
+                  />
+                </div>
+              )}
+            </Col>
+          </Row>
+
+          <div className="d-flex justify-content-center text-center mt-4 py-2">
+            {paymentLinks.payment_image && (
+              <img
+                src={paymentLinks?.payment_image}
+                alt="Product"
+                className="img-fluid"
+                style={{ width: "40px", height: "40px" }}
+              />
+            )}
+            <h6 className="text-center mr-2 py-2">
+              {paymentLinks?.payment_name}
+            </h6>
+          </div>
+
+          <div className="d-flex justify-content-center text-center py-2">
+            <strong>
+              <i>{paymentLinks?.description} </i>
+            </strong>
+          </div>
+
+          {loading && <Loader />}
           {formError && (
             <Message variant="danger" fixed>
               {formError}
@@ -159,7 +188,7 @@ function PaymentLinkDetail({ location }) {
 
           <Form>
             <Form.Group>
-              <Form.Label>Buyer Email</Form.Label>
+              <Form.Label>Buyer Email*</Form.Label>
               <Form.Control
                 type="email"
                 value={buyerEmail}
@@ -169,7 +198,7 @@ function PaymentLinkDetail({ location }) {
                 placeholder="Enter email"
                 className="rounded py-2 mb-2"
                 required
-                maxLength={30}
+                maxLength={225}
               />
               <Form.Text className="text-danger">{buyerEmailError}</Form.Text>
             </Form.Group>
@@ -209,7 +238,7 @@ function PaymentLinkDetail({ location }) {
                   onChange={(e) =>
                     handleFieldChange("buyerName", e.target.value)
                   }
-                  placeholder="Enter your name"
+                  placeholder="Enter name"
                   className="rounded py-2 mb-2"
                   required
                   maxLength={30}
@@ -223,7 +252,7 @@ function PaymentLinkDetail({ location }) {
                 <PhoneInput
                   country={selectedCountry}
                   value={buyerPhone}
-                  maxLength={18}
+                  maxLength={20}
                   onChange={(value) => {
                     setBuyerPhone(value);
                     handleFieldChange("buyerPhone", value);
@@ -233,7 +262,7 @@ function PaymentLinkDetail({ location }) {
             )}
           </Form>
 
-          <div className="d-flex justify-content-center py-3">
+          <div className="d-flex justify-content-center my-3 py-3">
             <Button
               className="py-2 rounded w-100"
               variant="primary"

@@ -8,7 +8,7 @@ import {
   updateSellerAccount,
   getBusinessOwnerDetails,
   updateBusinessOwnerDetails,
-  getBusinessBankAccount, 
+  getBusinessBankAccount,
   updateBusinessBankAccount,
   getBvn,
   updateBvn,
@@ -213,6 +213,8 @@ function SellerProfile() {
   const [photoDataChanges, setPhotoDataChanges] = useState(false);
 
   const [successMessage, setSuccessMessage] = useState("");
+
+
   const [businessData, setBusinessData] = useState({
     business_address: "",
     business_type: "",
@@ -225,6 +227,7 @@ function SellerProfile() {
     support_email: "",
     business_website: "",
     country: "",
+    business_logo: "",
   });
 
   const [businessStatusData, setBusinessStatusData] = useState({
@@ -258,9 +261,19 @@ function SellerProfile() {
     photo: "",
   });
 
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setBusinessData({ ...businessData, [name]: value });
+  //   setBusinessDataChanges(true);
+  // };
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setBusinessData({ ...businessData, [name]: value });
+    const { name, value, files } = e.target;
+    if (files) {
+      setBusinessData({ ...businessData, [name]: files[0] });
+    } else {
+      setBusinessData({ ...businessData, [name]: value });
+    }
     setBusinessDataChanges(true);
   };
 
@@ -281,6 +294,7 @@ function SellerProfile() {
         support_email: sellerAccount?.support_email,
         business_website: sellerAccount?.business_website,
         country: sellerAccount?.country,
+        business_logo: sellerAccount?.business_logo,
       });
       setBusinessDataChanges(false);
     }
@@ -345,7 +359,7 @@ function SellerProfile() {
     // if (name === "dob" && typeof value === "string") {
     //   const parsedDate = parseISO(value);
     //   setBusinessOwnerData({ ...businessOwnerData, [name]: parsedDate });
-    // } else 
+    // } else
     if (files) {
       setBusinessOwnerData({ ...businessOwnerData, [name]: files[0] });
     } else {
@@ -506,7 +520,40 @@ function SellerProfile() {
     updateSellerPhotoSuccess,
   ]);
 
+  // const handleUpdateBusinessAccount = () => {
+  //   dispatch(updateSellerAccount(businessData));
+  // };
+
   const handleUpdateBusinessAccount = () => {
+    const businessFormData = new FormData();
+    // businessFormData.append("business_name", businessData.business_name);
+    businessFormData.append("trading_name", businessData.trading_name);
+    businessFormData.append("business_address", businessData.business_address);
+    businessFormData.append("staff_size", businessData.staff_size);
+    businessFormData.append(
+      "business_industry",
+      businessData.business_industry
+    );
+    businessFormData.append(
+      "business_category",
+      businessData.business_category
+    );
+    businessFormData.append(
+      "business_description",
+      businessData.business_description
+    );
+    businessFormData.append("business_phone", businessData.business_phone);
+    businessFormData.append("business_email", businessData.business_email);
+    businessFormData.append("support_email", businessData.support_email);
+    businessFormData.append("business_website", businessData.business_website);
+    businessFormData.append("country", businessData.country);
+
+    if (businessData.business_logo instanceof File) {
+      businessFormData.append("business_logo", businessData.business_logo);
+    }
+
+    //   console.log("businessData:", businessData);
+
     dispatch(updateSellerAccount(businessData));
   };
 
@@ -765,7 +812,26 @@ function SellerProfile() {
                     <Form.Control
                       type="text"
                       name="country"
-                      value={businessData.country}
+                      value={businessData?.country}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>Business Logo</Form.Label>
+
+                    <div className="py-2">
+                      {businessData?.business_logo && (
+                        <img
+                          src={businessData?.business_logo}
+                          alt="Business Logo"
+                          style={{ maxWidth: "100%", maxHeight: "100px" }}
+                        />
+                      )}
+                    </div>
+                    <Form.Control
+                      type="file"
+                      name="business_logo"
                       onChange={handleInputChange}
                     />
                   </Form.Group>
@@ -942,7 +1008,9 @@ function SellerProfile() {
                     <div>
                       <DatePicker
                         selected={
-                          businessOwnerData.dob ? new Date(businessOwnerData.dob) : null
+                          businessOwnerData.dob
+                            ? new Date(businessOwnerData.dob)
+                            : null
                         }
                         onChange={(date) =>
                           handleBusinessOwnerInputChange({

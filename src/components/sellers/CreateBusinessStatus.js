@@ -73,7 +73,7 @@ function CreateBusinessStatus({ history }) {
   sellerData.append("business_name", businessName);
   sellerData.append("business_status", businessStatus);
   sellerData.append("business_reg_num", businessRegNum);
-  sellerData.append("business_reg_cert", businessRegCert); 
+  sellerData.append("business_reg_cert", businessRegCert);  
 
   useEffect(() => {
     if (success) {

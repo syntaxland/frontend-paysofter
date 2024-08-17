@@ -157,7 +157,7 @@ function CreatePaymentLink() {
   sellerData.append("show_card_option", showCardOption);
   sellerData.append("show_buyer_name", showBuyerName);
   sellerData.append("show_buyer_phone", showBuyerPhone);
-  sellerData.append("image", image);
+  sellerData.append("payment_image", image);
 
   console.log("sellerData:", sellerData);
 
