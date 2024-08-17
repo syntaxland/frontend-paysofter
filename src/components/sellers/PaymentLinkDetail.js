@@ -58,6 +58,9 @@ function PaymentLinkDetail({ location }) {
       : paymentLinks?.test_api_key
   );
 
+  console.log("live_api_key:", paymentLinks?.live_api_key);
+  console.log("test_api_key:", paymentLinks?.test_api_key);
+
   const [selectedCountry] = useState("US");
 
   const [buyerName, setBuyerName] = useState("");
