@@ -124,7 +124,7 @@ function PaymentLinks() {
             <h1 className="text-center py-3">
               <FontAwesomeIcon icon={faQrcode} /> Payment Links
             </h1>
-            <div className="text-center py-1">Company Logo</div>
+            {/* <div className="text-center py-1">Company Logo</div> */}
             {loading ? (
               <Loader />
             ) : error ? (
@@ -148,7 +148,7 @@ function PaymentLinks() {
                         <th>Show Fund Option</th>
                         <th>Show Buyer Name</th>
                         <th>Show Buyer Phone</th>
-                        <th>Link</th>
+                        {/* <th>Link</th> */}
                         <th>Copy Link</th>
                         <th>Share Link</th>
                         <th>QR Code Image</th>
@@ -232,10 +232,10 @@ function PaymentLinks() {
                               ></i>
                             )}
                           </td>
-                          <td>{paymentLink.payment_link}</td>
+                          {/* <td>{paymentLink.payment_link}</td> */}
                           <td>
                             <Button
-                              variant="success"
+                              variant="outline-transparent"
                               size="sm"
                               onClick={() =>
                                 copyToClipboard(
@@ -278,23 +278,23 @@ function PaymentLinks() {
                               size="sm"
                               onClick={() => shareQRCode(index)}
                             >
-                              Share QR Code <i className="fas fa-share-alt"></i>
+                              Share <i className="fas fa-share-alt"></i>
                             </Button>
                           </td>
                           <td>
                             <Button
-                              variant="success"
+                              variant="outline-primary"
                               size="sm"
                               onClick={() => downloadQRCode(index)}
                             >
-                              Download QR Code{" "}
+                              Download{" "}
                               <i className="fas fa-download"></i>
                             </Button>
                           </td>
                           <td>
-                            <Button variant="outline-primary" size="sm">
+                            <Button variant="outline-primary" size="sm" disabled>
                               <Link
-                                to={`/payment-link/${paymentLink.seller_username}/${paymentLink.id}/`}
+                                // to={`/payment-link/${paymentLink.seller_username}/${paymentLink.id}/`}
                                 style={{ textDecoration: "none" }}
                               >
                                <i className="fas fa-edit"></i> Edit
@@ -304,8 +304,7 @@ function PaymentLinks() {
                           <td>
                             <Button variant="outline-primary" size="sm">
                               <Link
-                                // to={`/payment-link/${paymentLink.seller_username}/${paymentLink.id}/`}
-                                to={`/payment-link?ref=${paymentLink.seller_username}&pk=${paymentLink.id}`}
+                                to={`/edit-link/${paymentLink.seller_username}/${paymentLink.id}/`}
                                 style={{ textDecoration: "none" }}
                               >
                                <i className="fas fa-eye"></i> View
@@ -313,9 +312,9 @@ function PaymentLinks() {
                             </Button>
                           </td>
                           <td>
-                            <Button variant="outline-danger" size="sm">
+                            <Button variant="outline-danger" size="sm" disabled>
                               <Link
-                                to={`/payment-link/${paymentLink.seller_username}/${paymentLink.id}/`}
+                                to={`/delete-link/${paymentLink.seller_username}/${paymentLink.id}/`}
                                 style={{ textDecoration: "none" }}
                               >
                                <i className="fas fa-trash"></i> Delete

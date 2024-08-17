@@ -13,7 +13,7 @@ function PaymentLinkDetail({ location }) {
   const dispatch = useDispatch();
   const [sellerUsername, setSellerUsername] = useState("");
   const [pk, setPk] = useState("");
-  console.log("pk, sellerUsername:", pk, sellerUsername);
+  // console.log("pk, sellerUsername:", pk, sellerUsername);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -48,14 +48,16 @@ function PaymentLinkDetail({ location }) {
     sellerLogo,
   } = getPaymentLinkDetailState;
 
-  console.log("paymentLinks:", paymentLinks);
+  // console.log("paymentLinks:", paymentLinks);
 
   const [paymentInitiated, setPaymentInitiated] = useState(false);
+
   const [paysofterPublicKey] = useState(
     paymentLinks?.is_api_key_live
       ? paymentLinks?.live_api_key
       : paymentLinks?.test_api_key
   );
+
   const [selectedCountry] = useState("US");
 
   const [buyerName, setBuyerName] = useState("");
@@ -89,7 +91,7 @@ function PaymentLinkDetail({ location }) {
     e.preventDefault(e);
 
     if (!buyerEmail) {
-      setBuyerEmailError("Please enter the payment name.");
+      setBuyerEmailError("Please enter email.");
     } else {
       setBuyerEmailError("");
     }
