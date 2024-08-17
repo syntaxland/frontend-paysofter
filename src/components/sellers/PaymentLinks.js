@@ -294,7 +294,7 @@ function PaymentLinks() {
                           <td>
                             <Button variant="outline-primary" size="sm" disabled>
                               <Link
-                                // to={`/payment-link/${paymentLink.seller_username}/${paymentLink.id}/`}
+                                to={`/edit-link/${paymentLink.seller_username}/${paymentLink.id}/`}
                                 style={{ textDecoration: "none" }}
                               >
                                <i className="fas fa-edit"></i> Edit
@@ -304,7 +304,7 @@ function PaymentLinks() {
                           <td>
                             <Button variant="outline-primary" size="sm">
                               <Link
-                                to={`/edit-link/${paymentLink.seller_username}/${paymentLink.id}/`}
+                                to={`/payment-link?ref=${paymentLink.seller_username}&pk=${paymentLink.id}`}
                                 style={{ textDecoration: "none" }}
                               >
                                <i className="fas fa-eye"></i> View
