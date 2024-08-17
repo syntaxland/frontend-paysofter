@@ -16,8 +16,8 @@ import Message from "../Message";
 import Loader from "../Loader";
 import LoaderButton from "../LoaderButton";
 import Select from "react-select";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
 import { MAIN_CURRENCY_CHOICES } from "../constants";
 
 function CreatePaymentLink() {
@@ -73,28 +73,28 @@ function CreatePaymentLink() {
 
   const [formError, setFormError] = useState("");
 
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["bold", "italic", "underline"],
-      [{ align: [] }],
-      ["link", "image"],
-      ["clean"],
-    ],
-  };
+  // const modules = {
+  //   toolbar: [
+  //     [{ header: "1" }, { header: "2" }, { font: [] }],
+  //     [{ list: "ordered" }, { list: "bullet" }],
+  //     ["bold", "italic", "underline"],
+  //     [{ align: [] }],
+  //     ["link", "image"],
+  //     ["clean"],
+  //   ],
+  // };
 
-  const formats = [
-    "header",
-    "font",
-    "list",
-    "bold",
-    "italic",
-    "underline",
-    "align",
-    "link",
-    "image",
-  ];
+  // const formats = [
+  //   "header",
+  //   "font",
+  //   "list",
+  //   "bold",
+  //   "italic",
+  //   "underline",
+  //   "align",
+  //   "link",
+  //   "image",
+  // ];
 
   const handleFieldChange = (fieldName, value) => {
     switch (fieldName) {
@@ -159,7 +159,7 @@ function CreatePaymentLink() {
   sellerData.append("show_buyer_phone", showBuyerPhone);
   sellerData.append("image", image);
 
-  console.log('sellerData:', sellerData)
+  console.log("sellerData:", sellerData);
 
   useEffect(() => {
     if (success) {
@@ -215,7 +215,7 @@ function CreatePaymentLink() {
 
           {success && (
             <Message variant="success" fixed>
-              Ad created successfully.
+              Payment link created successfully.
             </Message>
           )}
           {error && (
@@ -271,7 +271,7 @@ function CreatePaymentLink() {
               <Form.Control
                 type="number"
                 value={amount}
-                onChange={(e) => handleFieldChange("amount", e.target.value)} 
+                onChange={(e) => handleFieldChange("amount", e.target.value)}
                 placeholder="Enter amount"
                 className="rounded py-2 mb-2"
                 required
@@ -351,7 +351,16 @@ function CreatePaymentLink() {
 
             <Form.Group>
               <Form.Label>Description*</Form.Label>
-              <ReactQuill
+              <Form.Control
+                required
+                as="textarea"
+                placeholder="Type your message"
+                rows={2}
+                value={description}
+                maxLength={150}
+                onChange={(e) => handleFieldChange("description", e.target.value)}
+              ></Form.Control>
+              {/* <ReactQuill
                 value={description}
                 onChange={(value) => handleFieldChange("description", value)}
                 placeholder="Enter payment/product description"
@@ -360,7 +369,7 @@ function CreatePaymentLink() {
                 formats={formats}
                 maxLength={225}
                 required
-              />
+              /> */}
               <Form.Text className="text-danger">{descriptionError}</Form.Text>
             </Form.Group>
           </Form>

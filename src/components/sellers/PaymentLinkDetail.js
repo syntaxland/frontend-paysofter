@@ -2,9 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import // useHistory,
-// useParams,
-"react-router-dom";
 import { getPaymentLinkDetail } from "../../redux/actions/paymentActions";
 import Message from "../Message";
 import Loader from "../Loader";
@@ -43,21 +40,7 @@ function PaymentLinkDetail({ location }) {
   const getPaymentLinkDetailState = useSelector(
     (state) => state.getPaymentLinkDetailState
   );
-  const {
-    loading,
-    paymentLinks,
-    // amount,
-    // currency,
-    // description,
-    // show_promise_option,
-    // show_fund_option,
-    // show_card_option,
-    // test_api_key,
-    // live_api_key,
-    // is_api_key_live,
-    // show_buyer_name,
-    // show_buyer_phone,
-  } = getPaymentLinkDetailState;
+  const { loading, paymentLinks } = getPaymentLinkDetailState;
 
   console.log(
     "paymentLinks:",
@@ -143,7 +126,26 @@ function PaymentLinkDetail({ location }) {
     <Container>
       <Row className="d-flex justify-content-center py-2">
         <Col xs={12} md={6}>
-          <h2 className="text-center py-2">Paysofter Payment Link</h2>
+          <h2 className="text-center py-2">Payment Link</h2>
+          <div className="text-center py-2">
+            <img
+              // src={paymentLinks.seller_logo}
+              alt="Company Logo"
+              className="img-fluid"
+              style={{ width: "50px", height: "50px" }}
+            />
+          </div>
+          <div className="text-center py-2">{paymentLinks?.description}</div>
+          {paymentLinks?.payment_qrcode && (
+            <div className="text-center py-2">
+              <img
+                src={paymentLinks.payment_qrcode}
+                alt="QR Code"
+                className="img-fluid"
+                style={{ width: "150px", height: "150px" }}
+              />
+            </div>
+          )}
           {loading && <Loader />}
 
           {formError && (
@@ -161,7 +163,7 @@ function PaymentLinkDetail({ location }) {
                 onChange={(e) =>
                   handleFieldChange("buyerEmail", e.target.value)
                 }
-                placeholder="Enter payment/product name"
+                placeholder="Enter email"
                 className="rounded py-2 mb-2"
                 required
                 maxLength={30}
@@ -228,9 +230,9 @@ function PaymentLinkDetail({ location }) {
             )}
           </Form>
 
-          <div className="d-flex justify-content-center py-2">
+          <div className="d-flex justify-content-center py-3">
             <Button
-              className="py-1 rounded"
+              className="py-1 rounded w-100"
               variant="primary"
               onClick={initiatePayment}
               disabled={loading}

@@ -148,7 +148,7 @@ function PaymentLinks() {
                         <th>Show Fund Option</th>
                         <th>Show Buyer Name</th>
                         <th>Show Buyer Phone</th>
-                        <th>Payment Link</th>
+                        <th>Link</th>
                         <th>Copy Link</th>
                         <th>Share Link</th>
                         <th>QR Code Image</th>
