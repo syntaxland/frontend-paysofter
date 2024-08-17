@@ -44,17 +44,11 @@ function PaymentLinkDetail({ location }) {
     loading,
     paymentLinks,
     sellerBusinessName,
-    sellerTradingName,
+    // sellerTradingName,
     sellerLogo,
   } = getPaymentLinkDetailState;
 
-  console.log(
-    "paymentLinks:",
-    paymentLinks,
-    sellerBusinessName,
-    sellerTradingName,
-    sellerLogo
-  );
+  console.log("paymentLinks:", paymentLinks);
 
   const [paymentInitiated, setPaymentInitiated] = useState(false);
   const [paysofterPublicKey] = useState(
@@ -142,7 +136,7 @@ function PaymentLinkDetail({ location }) {
                   style={{ width: "50px", height: "50px" }}
                 />
               )}
-              <h6 className="text-center">{sellerTradingName}</h6>
+              <h6 className="text-center">{sellerBusinessName}</h6>
             </Col>
 
             <Col md={6}>
