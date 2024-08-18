@@ -5,7 +5,10 @@ import { Row, Col, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes, faQrcode,
+import {
+  faBars,
+  faTimes,
+  faQrcode,
   // faHome,
   // faDashboard,
   // faUser,
@@ -38,7 +41,6 @@ import { faBars, faTimes, faQrcode,
   // faMoneyBills,
   // faCode,
   // faSackDollar
-
 } from "@fortawesome/free-solid-svg-icons";
 // import { login } from "../../redux/actions/userActions";
 import { getUserProfile } from "../../redux/actions/userProfileActions";
@@ -97,9 +99,9 @@ function SellerDashboard() {
     history.push("/promise/seller");
   };
 
-  // const handleAddbusiness = () => {
-  //   history.push("/add-business");
-  // };
+  const handlePaysofterLink = () => {
+    history.push("/links");
+  };
 
   // const handleSellerDashboard = () => {
   //   history.push("/seller-dashboard");
@@ -263,6 +265,19 @@ function SellerDashboard() {
               <div>
                 <Button
                   variant={
+                    activeTab === "payment-link" ? "primary" : "outline-primary"
+                  }
+                  className="sidebar-link"
+                  // onClick={() => handleTabChange("payment-link")}
+                  onClick={handlePaysofterLink}
+                >
+                  <FontAwesomeIcon icon={faQrcode} /> Paysofter Link
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  variant={
                     activeTab === "payouts" ? "primary" : "outline-primary"
                   }
                   className="sidebar-link"
@@ -347,18 +362,6 @@ function SellerDashboard() {
                   <i className="fas fa-comments"></i> Live Chat
                 </Button>
               </div> */}
-
-              <div>
-                <Button
-                  variant={
-                    activeTab === "payment-link" ? "primary" : "outline-primary"
-                  }
-                  className="sidebar-link"
-                  onClick={() => handleTabChange("payment-link")}
-                >
-                  <FontAwesomeIcon icon={faQrcode} /> Paysofter Link
-                </Button>
-              </div>
 
               <div>
                 <Button

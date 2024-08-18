@@ -145,7 +145,7 @@ export const updatePaymentLink = (pk) => async (dispatch, getState) => {
   }
 };
 
-export const deletePaymentLink = (pk) => async (dispatch, getState) => {
+export const deletePaymentLink = (linkData) => async (dispatch, getState) => {
   try {
     dispatch({ type: DELETE_PAYMENT_LINK_REQUEST });
 
@@ -161,7 +161,8 @@ export const deletePaymentLink = (pk) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      `${API_URL}/api/delete-paid-ad/${pk}/`,
+      `${API_URL}/api/delete-payment-link/`,
+      linkData,
       config
     );
 

@@ -164,7 +164,7 @@ function CreatePaymentLink() {
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {
-        history.push("/payment-links/");
+        history.push("/links/");
         window.location.reload();
       }, 5000);
       return () => clearTimeout(timer);

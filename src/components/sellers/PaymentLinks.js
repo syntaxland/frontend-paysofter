@@ -2,28 +2,21 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
-import { Button, Table, Row, Col, Container } from "react-bootstrap";
+import { Button, Table, Row, Col, Container, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQrcode } from "@fortawesome/free-solid-svg-icons";
-import {
-  getSellerPaymentLinks,
-  // deletePaymentLink
-} from "../../redux/actions/paymentActions";
+import { getSellerPaymentLinks } from "../../redux/actions/paymentActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
+import DeletePaymentLink from "./DeletePaymentLink";
 import { formatAmount } from "../FormatAmount";
 import QRCode from "qrcode.react";
 
 function PaymentLinks() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const qrCodeRefs = useRef([]); // Store multiple refs for QR codes
-
-  // const deletePaymentLinkState = useSelector(
-  //   (state) => state.deletePaymentLinkState
-  // );
-  // const { loading: paymentLinkLoading , success: paymentLinkSuccess , error: paymentLinkError  } = deletePaymentLinkState;
+  const qrCodeRefs = useRef([]);
 
   const getSellerPaymentLinksState = useSelector(
     (state) => state.getSellerPaymentLinksState
@@ -82,7 +75,7 @@ function PaymentLinks() {
       .replace("image/png", "image/octet-stream");
     const a = document.createElement("a");
     a.href = qrUrl;
-    a.download = "payment-link-qr-code.png";
+    a.download = "paysofter-link-qr-code.png";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -91,7 +84,7 @@ function PaymentLinks() {
   const shareQRCode = (index) => {
     const canvas = qrCodeRefs.current[index].querySelector("canvas");
     canvas.toBlob((blob) => {
-      const file = new File([blob], "payment-link-qr-code.png", {
+      const file = new File([blob], "paysofter-link-qr-code.png", {
         type: "image/png",
       });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -103,17 +96,40 @@ function PaymentLinks() {
           })
           .catch((error) => console.error("Share failed:", error));
       } else {
-        downloadQRCode(index); // Fallback to download if sharing is not supported
+        downloadQRCode(index);
       }
     });
   };
 
   const handleCreatePaymentLink = () => {
-    history.push("/create-payment-link/");
+    history.push("/create-link/");
   };
 
-  // const handleCreatePaymentLink = () => {
-  //   history.push("/create-payment-link/");
+  const [selectedLink, setSelectedLink] = useState(null);
+  const [deleteLinkModal, setDeleteLinkModal] = useState(false);
+  const handleDeleteLinkOpen = (link) => {
+    setSelectedLink(link);
+    console.log(
+      "link:",
+      link,
+      "link.id",
+      link.id,
+      "selectedLink:",
+      selectedLink
+    );
+    setDeleteLinkModal(true);
+  };
+  const handleDeleteLinkClose = () => {
+    setDeleteLinkModal(false);
+  };
+
+  // const [editLinkModal, setEditLinkModal] = useState(false);
+  // const handleEditLinkOpen = (link) => {
+  //   setSelectedLink(link);
+  //   setEditLinkModal(true);
+  // };
+  // const handleEditLinkClose = () => {
+  //   setEditLinkModal(false);
   // };
 
   return (
@@ -287,38 +303,40 @@ function PaymentLinks() {
                               size="sm"
                               onClick={() => downloadQRCode(index)}
                             >
-                              Download{" "}
-                              <i className="fas fa-download"></i>
+                              <i className="fas fa-download"></i> Download
                             </Button>
                           </td>
                           <td>
-                            <Button variant="outline-primary" size="sm" disabled>
+                            <Button
+                              variant="outline-primary"
+                              size="sm"
+                              disabled
+                            >
                               <Link
                                 to={`/edit-link/${paymentLink.seller_username}/${paymentLink.id}/`}
                                 style={{ textDecoration: "none" }}
                               >
-                               <i className="fas fa-edit"></i> Edit
+                                <i className="fas fa-edit"></i> Edit
                               </Link>
                             </Button>
                           </td>
                           <td>
                             <Button variant="outline-primary" size="sm">
                               <Link
-                                to={`/payment-link?ref=${paymentLink.seller_username}&pk=${paymentLink.id}`}
+                                to={`/link?ref=${paymentLink.seller_username}&pk=${paymentLink.id}`}
                                 style={{ textDecoration: "none" }}
                               >
-                               <i className="fas fa-eye"></i> View
+                                <i className="fas fa-eye"></i> View
                               </Link>
                             </Button>
                           </td>
                           <td>
-                            <Button variant="outline-danger" size="sm" disabled>
-                              <Link
-                                to={`/delete-link/${paymentLink.seller_username}/${paymentLink.id}/`}
-                                style={{ textDecoration: "none" }}
-                              >
-                               <i className="fas fa-trash"></i> Delete
-                              </Link>
+                            <Button
+                              variant="outline-danger"
+                              size="sm"
+                              onClick={() => handleDeleteLinkOpen(paymentLink)}
+                            >
+                              <i className="fas fa-trash"></i> Delete
                             </Button>
                           </td>
                           <td>
@@ -354,9 +372,25 @@ function PaymentLinks() {
                 onClick={handleCreatePaymentLink}
                 className="rounded"
               >
-                Create Paysofter Link
+                Create Link
               </Button>
             </div>
+
+            <Modal show={deleteLinkModal} onHide={handleDeleteLinkClose}>
+              <Modal.Header closeButton>
+                <Modal.Title className="text-center w-100 py-2">
+                  Delete Link
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {deleteLinkModal && (
+                  <DeletePaymentLink
+                    linkId={selectedLink?.id}
+                    linkName={selectedLink?.payment_name}
+                  />
+                )}
+              </Modal.Body>
+            </Modal>
           </div>
         </Col>
       </Row>
