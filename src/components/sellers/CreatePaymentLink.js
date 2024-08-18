@@ -238,7 +238,7 @@ function CreatePaymentLink() {
                 onChange={(e) =>
                   handleFieldChange("paymentName", e.target.value)
                 }
-                placeholder="Enter payment/product name"
+                placeholder="Enter payment or product name"
                 className="rounded py-2 mb-2"
                 required
                 maxLength={30}

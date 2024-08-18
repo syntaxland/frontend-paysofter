@@ -41,6 +41,9 @@ const initialState = {
   paymentLinks: [],
   sellerBusinessName: [],
   sellerTradingName: [],
+  sellerTestApiKey: [],
+  sellerLiveApiKey: [],
+  isSellerApiKeyLive: [],
   sellerLogo: [],
 };
 
@@ -118,6 +121,9 @@ export const getPaymentLinkDetailReducer = (state = initialState, action) => {
         paymentLinks: action.payload.data,
         sellerBusinessName: action.payload.seller_business_name,
         sellerTradingName: action.payload.seller_trading_name,
+        sellerTestApiKey: action.payload.seller_test_api_key,
+        sellerLiveApiKey: action.payload.seller_live_api_key,
+        isSellerApiKeyLive: action.payload.is_seller_api_key_live,
         sellerLogo: action.payload.seller_logo,
 
       };

@@ -46,9 +46,12 @@ function PaymentLinkDetail({ location }) {
     sellerBusinessName,
     // sellerTradingName,
     sellerLogo,
+    sellerTestApiKey,
+    sellerLiveApiKey,
+    isSellerApiKeyLive,
   } = getPaymentLinkDetailState;
 
-  // console.log("paymentLinks:", paymentLinks);
+  console.log("paymentLinks:", paymentLinks);
 
   const [paymentInitiated, setPaymentInitiated] = useState(false);
 
@@ -61,9 +64,7 @@ function PaymentLinkDetail({ location }) {
 
   useEffect(() => {
     if (paymentLinks) {
-      const key = paymentLinks.is_api_key_live
-        ? paymentLinks.live_api_key
-        : paymentLinks.test_api_key;
+      const key = isSellerApiKeyLive ? sellerLiveApiKey : sellerTestApiKey;
       setPaysofterPublicKey(key);
 
       setShowPromiseOption(paymentLinks.show_promise_option);
@@ -72,9 +73,9 @@ function PaymentLinkDetail({ location }) {
       setProductAmount(paymentLinks.amount);
       setProductCurrency(paymentLinks.currency);
     }
-  }, [paymentLinks]);
+  }, [paymentLinks, isSellerApiKeyLive, sellerLiveApiKey, sellerTestApiKey]);
 
-    // dev
+  // dev
   // useEffect(() => {
   //   if (paymentLinks) {
   //     const key = paymentLinks.is_api_key_live
@@ -89,9 +90,9 @@ function PaymentLinkDetail({ location }) {
 
   // }, [paymentLinks]);
 
-  // console.log("is_api_key_live:", paymentLinks?.is_api_key_live);
-  // console.log("live_api_key:", paymentLinks?.live_api_key);
-  // console.log("test_api_key:", paymentLinks?.test_api_key);
+  console.log("isSellerApiKeyLive:", isSellerApiKeyLive);
+  console.log("sellerTestApiKey:", sellerTestApiKey);
+  console.log("sellerLiveApiKey:", sellerLiveApiKey); 
   // console.log("showPromiseOption:", paymentLinks?.show_promise_option);
   // console.log("showFundOption:", paymentLinks?.show_fund_option);
   // console.log("showCardOption:", paymentLinks?.show_card_option);
