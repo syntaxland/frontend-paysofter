@@ -322,12 +322,12 @@ function Header() {
                                   Go to Seller Dashboard
                                 </Nav.Link>
 
-                                <Nav.Link as={Link} to="/create-link">
+                                <Nav.Link as={Link} to="/links">
                                   <i
                                     className="fas fa-qrcode"
                                     style={{ fontSize: "16px" }}
                                   ></i>{" "}
-                                  Create Paysofter Link
+                                  Paysofter Link
                                 </Nav.Link>
                               </>
                             ) : (
