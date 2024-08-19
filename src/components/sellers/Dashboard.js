@@ -206,7 +206,7 @@ function SellerDashboard() {
   };
 
   return (
-    <div className="justify-content-center text-center">
+    <div className="d-flex justify-content-center text-center">
       <Row>
         <Col>
           <div>

@@ -10,6 +10,7 @@ import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
 import DeletePaymentLink from "./DeletePaymentLink";
+import EditPaymentLink from "./EditPaymentLink";
 import { formatAmount } from "../FormatAmount";
 import QRCode from "qrcode.react";
 
@@ -109,28 +110,22 @@ function PaymentLinks() {
   const [deleteLinkModal, setDeleteLinkModal] = useState(false);
   const handleDeleteLinkOpen = (link) => {
     setSelectedLink(link);
-    console.log(
-      "link:",
-      link,
-      "link.id",
-      link.id,
-      "selectedLink:",
-      selectedLink
-    );
+
     setDeleteLinkModal(true);
   };
   const handleDeleteLinkClose = () => {
     setDeleteLinkModal(false);
   };
 
-  // const [editLinkModal, setEditLinkModal] = useState(false);
-  // const handleEditLinkOpen = (link) => {
-  //   setSelectedLink(link);
-  //   setEditLinkModal(true);
-  // };
-  // const handleEditLinkClose = () => {
-  //   setEditLinkModal(false);
-  // };
+  const [editLinkModal, setEditLinkModal] = useState(false);
+  const handleEditLinkOpen = (link) => {
+    console.log("link:", link, "link.id", link.id);
+    setSelectedLink(link);
+    setEditLinkModal(true);
+  };
+  const handleEditLinkClose = () => {
+    setEditLinkModal(false);
+  };
 
   return (
     <Container>
@@ -310,14 +305,9 @@ function PaymentLinks() {
                             <Button
                               variant="outline-primary"
                               size="sm"
-                              disabled
+                              onClick={() => handleEditLinkOpen(paymentLink)}
                             >
-                              <Link
-                                to={`/edit-link/${paymentLink.seller_username}/${paymentLink.id}/`}
-                                style={{ textDecoration: "none" }}
-                              >
-                                <i className="fas fa-edit"></i> Edit
-                              </Link>
+                              <i className="fas fa-edit"></i> Edit
                             </Button>
                           </td>
                           <td>
@@ -387,6 +377,23 @@ function PaymentLinks() {
                   <DeletePaymentLink
                     linkId={selectedLink?.id}
                     linkName={selectedLink?.payment_name}
+                  />
+                )}
+              </Modal.Body>
+            </Modal>
+
+            <Modal show={editLinkModal} onHide={handleEditLinkClose}>
+              <Modal.Header closeButton>
+                <Modal.Title className="text-center w-100 py-2">
+                  Update Link
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {editLinkModal && (
+                  <EditPaymentLink
+                    linkId={selectedLink?.id}
+                    linkName={selectedLink?.payment_name}
+                    sellerUsername={selectedLink?.seller_username}
                   />
                 )}
               </Modal.Body>

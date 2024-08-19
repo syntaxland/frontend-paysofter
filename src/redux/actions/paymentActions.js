@@ -110,40 +110,42 @@ export const getPaymentLinkDetail =
     }
   };
 
-export const updatePaymentLink = (pk) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: UPDATE_PAYMENT_LINK_REQUEST });
+export const updatePaymentLink =
+  (editLinkFormData) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: UPDATE_PAYMENT_LINK_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${userInfo.access}`,
-      },
-    };
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo.access}`,
+        },
+      };
 
-    const { data } = await axios.put(
-      `${API_URL}/update-payment-link/${pk}/`,
-      config
-    );
+      const { data } = await axios.put(
+        `${API_URL}/api/update-payment-link/`,
+        editLinkFormData,
+        config
+      );
 
-    dispatch({
-      type: UPDATE_PAYMENT_LINK_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_PAYMENT_LINK_FAIL,
-      payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: UPDATE_PAYMENT_LINK_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_PAYMENT_LINK_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
 
 export const deletePaymentLink = (linkData) => async (dispatch, getState) => {
   try {
