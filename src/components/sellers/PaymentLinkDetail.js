@@ -5,7 +5,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { getPaymentLinkDetail } from "../../redux/actions/paymentActions";
 import Message from "../Message";
 import Loader from "../Loader";
-// import {formatAmount} from "../FormatAmount";
+import { formatAmount } from "../FormatAmount";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { Paysofter } from "react-paysofter";
@@ -93,7 +93,7 @@ function PaymentLinkDetail({ location }) {
 
   // console.log("isSellerApiKeyLive:", isSellerApiKeyLive);
   // console.log("sellerTestApiKey:", sellerTestApiKey);
-  // console.log("sellerLiveApiKey:", sellerLiveApiKey); 
+  // console.log("sellerLiveApiKey:", sellerLiveApiKey);
   // console.log("showPromiseOption:", paymentLinks?.show_promise_option);
   // console.log("showFundOption:", paymentLinks?.show_fund_option);
   // console.log("showCardOption:", paymentLinks?.show_card_option);
@@ -241,13 +241,19 @@ function PaymentLinkDetail({ location }) {
 
             <Form.Group>
               <Form.Label>Amount*</Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 type="number"
                 value={productAmount}
-                // onChange={(e) => handleFieldChange("amount", e.target.value)}
-                // placeholder="Enter amount"
+                onChange={(e) => handleFieldChange("amount", e.target.value)}
+                placeholder="Enter amount"
                 className="rounded py-2 mb-2"
                 required
+                disabled
+              /> */}
+              <input
+                type="text"
+                value={formatAmount(productAmount)}
+                className="form-control rounded py-2 mb-2"
                 disabled
               />
             </Form.Group>
@@ -268,7 +274,7 @@ function PaymentLinkDetail({ location }) {
             {paymentLinks?.show_buyer_name && (
               <Form.Group>
                 <Form.Label>Buyer Name</Form.Label>
-                <Form.Control 
+                <Form.Control
                   type="text"
                   value={buyerName}
                   onChange={(e) =>

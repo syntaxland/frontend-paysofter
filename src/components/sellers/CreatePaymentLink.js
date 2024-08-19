@@ -1,23 +1,13 @@
 // CreatePaymentLink.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Form,
-  Button,
-  Container,
-  Row,
-  Col,
-  // Modal
-} from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { createPaymentLink } from "../../redux/actions/paymentActions";
-// import { getUserProfile } from "../../redux/actions/userProfileActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import LoaderButton from "../LoaderButton";
 import Select from "react-select";
-// import ReactQuill from "react-quill";
-// import "react-quill/dist/quill.snow.css";
 import { MAIN_CURRENCY_CHOICES } from "../constants";
 
 function CreatePaymentLink() {
@@ -32,13 +22,6 @@ function CreatePaymentLink() {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  // const userProfile = useSelector((state) => state.userProfile);
-  // const { profile } = userProfile;
-
-  // useEffect(() => {
-  //   dispatch(getUserProfile());
-  // }, [dispatch]);
 
   useEffect(() => {
     if (!userInfo) {
@@ -73,28 +56,45 @@ function CreatePaymentLink() {
 
   const [formError, setFormError] = useState("");
 
-  // const modules = {
-  //   toolbar: [
-  //     [{ header: "1" }, { header: "2" }, { font: [] }],
-  //     [{ list: "ordered" }, { list: "bullet" }],
-  //     ["bold", "italic", "underline"],
-  //     [{ align: [] }],
-  //     ["link", "image"],
-  //     ["clean"],
-  //   ],
-  // };
+  const [showPromiseModal, setShowPromiseModal] = useState(false);
+  const handlePromiseModalShow = () => {
+    setShowPromiseModal(true);
+  };
+  const handlePromiseModalClose = () => {
+    setShowPromiseModal(false);
+  };
 
-  // const formats = [
-  //   "header",
-  //   "font",
-  //   "list",
-  //   "bold",
-  //   "italic",
-  //   "underline",
-  //   "align",
-  //   "link",
-  //   "image",
-  // ];
+  const [showCardModal, setShowCardModal] = useState(false);
+  const handleCardModalShow = () => {
+    setShowCardModal(true);
+  };
+  const handleCardModalClose = () => {
+    setShowCardModal(false);
+  };
+
+  const [showFundModal, setShowFundModal] = useState(false);
+  const handleFundModalShow = () => {
+    setShowFundModal(true);
+  };
+  const handleFundModalClose = () => {
+    setShowFundModal(false);
+  };
+
+  const [showBuyerNameModal, setShowBuyerNameModal] = useState(false);
+  const handleBuyerNameModalShow = () => {
+    setShowBuyerNameModal(true);
+  };
+  const handleBuyerNameModalClose = () => {
+    setShowBuyerNameModal(false);
+  };
+
+  const [showBuyerPhoneModal, setShowBuyerPhoneModal] = useState(false);
+  const handleBuyerPhoneModalShow = () => {
+    setShowBuyerPhoneModal(true);
+  };
+  const handleBuyerPhoneModalClose = () => {
+    setShowBuyerPhoneModal(false);
+  };
 
   const handleFieldChange = (fieldName, value) => {
     switch (fieldName) {
@@ -280,63 +280,216 @@ function CreatePaymentLink() {
             </Form.Group>
 
             <Form.Group>
-              <Form.Check
-                type="checkbox"
-                label="Show Promise Option?"
-                checked={showPromiseOption}
-                onChange={(e) =>
-                  handleFieldChange("showPromiseOption", e.target.checked)
-                }
-                className="rounded py-2 mb-2"
-              />
+              <Row className="py-2">
+                <Col md={10}>
+                  <Form.Check
+                    type="checkbox"
+                    label="Show Promise Option?"
+                    checked={showPromiseOption}
+                    onChange={(e) =>
+                      handleFieldChange("showPromiseOption", e.target.checked)
+                    }
+                    className="rounded py-2 mb-2"
+                  />
+                </Col>
+                <Col md={2}>
+                  <Button
+                    variant="outline"
+                    onClick={handlePromiseModalShow}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Whether to show the Card payment option for payment checkout."
+                  >
+                    <i className="fa fa-info-circle"> </i>
+                  </Button>
+
+                  <Modal
+                    show={showPromiseModal}
+                    onHide={handlePromiseModalClose}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title className="text-center w-100 py-2">
+                        Paysofter Promise Option Info
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p className="text-center">
+                        Whether to show the Promise payment option (default:
+                        true). If all other options are unchecked then Paysofter
+                        Promise payment option defaults to true.
+                      </p>
+                    </Modal.Body>
+                  </Modal>
+                </Col>
+              </Row>
             </Form.Group>
 
             <Form.Group>
-              <Form.Check
-                type="checkbox"
-                label="Show Card Option?"
-                checked={showCardOption}
-                onChange={(e) =>
-                  handleFieldChange("showCardOption", e.target.checked)
-                }
-                className="rounded py-2 mb-2"
-              />
+              <Row className="py-2">
+                <Col md={10}>
+                  <Form.Check
+                    type="checkbox"
+                    label="Show Card Option?"
+                    checked={showCardOption}
+                    onChange={(e) =>
+                      handleFieldChange("showCardOption", e.target.checked)
+                    }
+                    className="rounded py-2 mb-2"
+                  />
+                </Col>
+                <Col md={2}>
+                  <Button
+                    variant="outline"
+                    onClick={handleCardModalShow}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Whether to show the Card payment option for payment checkout."
+                  >
+                    <i className="fa fa-info-circle"> </i>
+                  </Button>
+
+                  <Modal show={showCardModal} onHide={handleCardModalClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title className="text-center w-100 py-2">
+                        Paysofter Card Option Info
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p className="text-center">
+                        Whether to show the Card payment option.
+                      </p>
+                    </Modal.Body>
+                  </Modal>
+                </Col>
+              </Row>
             </Form.Group>
 
             <Form.Group>
-              <Form.Check
-                type="checkbox"
-                label="Show Fund Option?"
-                checked={showFundOption}
-                onChange={(e) =>
-                  handleFieldChange("showFundOption", e.target.checked)
-                }
-                className="rounded py-2 mb-2"
-              />
+              <Row className="py-2">
+                <Col md={10}>
+                  <Form.Check
+                    type="checkbox"
+                    label="Show Fund Option?"
+                    checked={showFundOption}
+                    onChange={(e) =>
+                      handleFieldChange("showFundOption", e.target.checked)
+                    }
+                    className="rounded py-2 mb-2"
+                  />
+                </Col>
+                <Col md={2}>
+                  <Button
+                    variant="outline"
+                    onClick={handleFundModalShow}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Whether to show the Fund payment option for payment checkout."
+                  >
+                    <i className="fa fa-info-circle"> </i>
+                  </Button>
+
+                  <Modal show={showFundModal} onHide={handleFundModalClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title className="text-center w-100 py-2">
+                        Account Fund Option Info
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p className="text-center">
+                        Whether to show the Fund payment option.
+                      </p>
+                    </Modal.Body>
+                  </Modal>
+                </Col>
+              </Row>
             </Form.Group>
 
             <Form.Group>
-              <Form.Check
-                type="checkbox"
-                label="Show Buyer Name?"
-                checked={showBuyerName}
-                onChange={(e) =>
-                  handleFieldChange("showBuyerName", e.target.checked)
-                }
-                className="rounded py-2 mb-2"
-              />
+              <Row className="py-2">
+                <Col md={10}>
+                  <Form.Check
+                    type="checkbox"
+                    label="Show Buyer Name?"
+                    checked={showBuyerName}
+                    onChange={(e) =>
+                      handleFieldChange("showBuyerName", e.target.checked)
+                    }
+                    className="rounded py-2 mb-2"
+                  />
+                </Col>
+                <Col md={2}>
+                  <Button
+                    variant="outline"
+                    onClick={handleBuyerNameModalShow}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Whether to show the buyer name during checkout for referencing."
+                  >
+                    <i className="fa fa-info-circle"> </i>
+                  </Button>
+
+                  <Modal
+                    show={showBuyerNameModal}
+                    onHide={handleBuyerNameModalClose}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title className="text-center w-100 py-2">
+                      Show Buyer Name Info
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p className="text-center">
+                        Whether to collect the buyer's name during checkout.
+                        Although it is optional to the buyer if checked.
+                      </p>
+                    </Modal.Body>
+                  </Modal>
+                </Col>
+              </Row>
             </Form.Group>
 
             <Form.Group>
-              <Form.Check
-                type="checkbox"
-                label="Show Buyer Phone?"
-                checked={showBuyerPhone}
-                onChange={(e) =>
-                  handleFieldChange("showBuyerPhone", e.target.checked)
-                }
-                className="rounded py-2 mb-2"
-              />
+              <Row className="py-2">
+                <Col md={10}>
+                  <Form.Check
+                    type="checkbox"
+                    label="Show Buyer Phone?"
+                    checked={showBuyerPhone}
+                    onChange={(e) =>
+                      handleFieldChange("showBuyerPhone", e.target.checked)
+                    }
+                    className="rounded py-2 mb-2"
+                  />
+                </Col>
+                <Col md={2}>
+                  <Button
+                    variant="outline"
+                    onClick={handleBuyerPhoneModalShow}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Whether to cellect the buyer phone number during checkout for referencing."
+                  >
+                    <i className="fa fa-info-circle"> </i>
+                  </Button>
+
+                  <Modal
+                    show={showBuyerPhoneModal}
+                    onHide={handleBuyerPhoneModalClose}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title className="text-center w-100 py-2">
+                        Show Buyer Phone Info
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p className="text-center">
+                        Whether to collect the buyer's phone number during
+                        checkout. It is optional to the buyer.
+                      </p>
+                    </Modal.Body>
+                  </Modal>
+                </Col>
+              </Row>
             </Form.Group>
 
             <Form.Group>
@@ -358,7 +511,9 @@ function CreatePaymentLink() {
                 rows={2}
                 value={description}
                 maxLength={140}
-                onChange={(e) => handleFieldChange("description", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("description", e.target.value)
+                }
               ></Form.Control>
               {/* <ReactQuill
                 value={description}
