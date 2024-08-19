@@ -143,7 +143,7 @@ function Header() {
             className="custom-dark-blue"
             expand="md"
             sticky="top"
-            style={{ backgroundColor: '#0f172a' }} 
+            style={{ backgroundColor: "#0f172a" }}
           >
             <Container fluid>
               <Navbar.Brand as={Link} to="/">
@@ -320,6 +320,14 @@ function Header() {
                                     style={{ fontSize: "16px" }}
                                   ></i>{" "}
                                   Go to Seller Dashboard
+                                </Nav.Link>
+
+                                <Nav.Link as={Link} to="/create-link">
+                                  <i
+                                    className="fas fa-qrcode"
+                                    style={{ fontSize: "16px" }}
+                                  ></i>{" "}
+                                  Create Paysofter Link
                                 </Nav.Link>
                               </>
                             ) : (

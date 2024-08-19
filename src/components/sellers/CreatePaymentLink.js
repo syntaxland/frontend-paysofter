@@ -315,7 +315,7 @@ function CreatePaymentLink() {
                     <Modal.Body>
                       <p className="text-center">
                         Whether to show the Promise payment option (default:
-                        true). If all other options are unchecked then Paysofter
+                          checked). If all other options are unchecked then Paysofter
                         Promise payment option defaults to true.
                       </p>
                     </Modal.Body>
