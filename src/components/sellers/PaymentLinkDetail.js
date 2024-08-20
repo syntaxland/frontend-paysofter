@@ -318,12 +318,14 @@ function PaymentLinkDetail({ location }) {
           {paymentInitiated && (
             <Paysofter
               email={buyerEmail}
+              buyerName={buyerName}
+              buyerPhoneNumber={buyerPhone}
               currency={productCurrency}
               amount={productAmount}
               paysofterPublicKey={paysofterPublicKey}
               onSuccess={onSuccess}
               onClose={onClose}
-              paymentRef={`RID${Math.floor(Math.random() * 10000000000000000)}`}
+              referenceId={`RID${Math.floor(Math.random() * 10000000000000000)}`}
               showPromiseOption={showPromiseOption}
               showFundOption={showFundOption}
               showCardOption={showCardOption}

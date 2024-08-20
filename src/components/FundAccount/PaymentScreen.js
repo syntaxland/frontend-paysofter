@@ -242,7 +242,7 @@ function PaymentScreen({ amount, currency }) {
                 // paysofterPublicKey="live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
                 onSuccess={onSuccess}
                 onClose={onClose}
-                paymentRef={`RID${Math.floor(Math.random() * 100000000000000)}`}
+                referenceId={`RID${Math.floor(Math.random() * 10000000000000000)}`}
                 showPromiseOption={true}
                 showFundOption={true}
                 showCardOption={true}
