@@ -151,12 +151,14 @@ function CreatePaymentLink() {
   sellerData.append("payment_name", paymentName);
   sellerData.append("currency", currency);
   sellerData.append("amount", amount);
+  // sellerData.append("qty"qty);
   sellerData.append("description", description);
   sellerData.append("show_promise_option", showPromiseOption);
   sellerData.append("show_fund_option", showFundOption);
   sellerData.append("show_card_option", showCardOption);
   sellerData.append("show_buyer_name", showBuyerName);
   sellerData.append("show_buyer_phone", showBuyerPhone);
+  // sellerData.append("show_qty", showQty);
   sellerData.append("payment_image", image);
 
   console.log("sellerData:", sellerData);
