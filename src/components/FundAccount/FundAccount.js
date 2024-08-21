@@ -2,44 +2,45 @@
 import React, { useState } from "react";
 // import { useSelector } from "react-redux";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import Select from "react-select";
+// import Select from "react-select";
 import Message from "../Message";
 // import Loader from "../Loader";
 import PaymentScreen from "./PaymentScreen";
 
-const FundAccount = () => {
-  // const fundAccountState = useSelector((state) => state.fundAccountState);
-  // const { loading, error } = fundAccountState;
-
+const FundAccount = ({ currency }) => {
   const [messsage, setMesssage] = useState("");
-  const [currency, setCurrency] = useState("NGN");
   const [amount, setAmount] = useState(0);
   const [showPaymentPage, setShowPaymentPage] = useState(false);
+
+  const MINIMUM_AMOUNTS = {
+    NGN: 100,
+    USD: 1,
+    // other currencies
+  };
+  const minAmount = MINIMUM_AMOUNTS[currency] || 0;
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (amount >= 100) {
+    if (amount >= minAmount) {
       setShowPaymentPage(true);
     } else {
-      setMesssage("Minimum amount is 100 NGN.");
+      setMesssage(`Minimum amount is ${minAmount} ${currency}.`);
     }
   };
-
-  const CURRENCY_CHOICES = [["NGN", "NGN"]];
 
   return (
     <Container>
       {!showPaymentPage && (
         <Row className="d-flex justify-content-center">
           <Col xs={12} md={6}>
-            <h2 className="py-3 text-center">Fund NGN Account</h2>
+            <h2 className="py-3 text-center">Fund {currency} Account</h2>
 
             {messsage && <Message variant="danger">{messsage}</Message>}
             {/* {error && <Message variant="danger">{error}</Message>}
             {loading && <Loader />} */}
             <Form onSubmit={submitHandler}>
-              <Form.Group controlId="currency">
+              {/* <Form.Group controlId="currency">
                 <Row className="py-2 d-flex justify-content-center">
                   <Col md={8}>
                     <div>
@@ -62,7 +63,7 @@ const FundAccount = () => {
                     </div>
                   </Col>
                 </Row>
-              </Form.Group>
+              </Form.Group> */}
 
               <Form.Group controlId="amount">
                 <Form.Label>Amount</Form.Label>

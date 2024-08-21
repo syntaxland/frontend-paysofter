@@ -4,13 +4,14 @@ import React, {
   useState,
   // useCallback
 } from "react";
-import { Button, Row, Col, Modal } from "react-bootstrap";
+import { Button, Row, Col, Modal, ListGroup } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getPaymentApiKeys } from "../../redux/actions/paymentActions";
 import { fundUserAccount } from "../../redux/actions/AccountFundActions";
 import PaystackUsd from "./PaystackUsd";
 import Loader from "../Loader";
 import Message from "../Message";
+import { formatAmount } from "../FormatAmount";
 import Paystack from "./Paystack";
 import { Paysofter } from "../react-paysofter/src/index";
 // import { Paysofter } from "react-paysofter";
@@ -38,7 +39,14 @@ function PaymentScreen({ amount, currency }) {
   const { loading, error, paystackPublicKey, paysofterPublicKey } =
     getPaymentApiKeysState;
 
-  console.log("apiKeys:", paystackPublicKey, paysofterPublicKey);
+  const [paysofterApiKey, setPaysofterApiKey] = useState("");
+  useEffect(() => {
+    if (paysofterPublicKey) {
+      setPaysofterApiKey(paysofterPublicKey);
+    }
+  }, [paysofterPublicKey]);
+
+  console.log("apiKeys:", paystackPublicKey, paysofterApiKey);
 
   const createdAt = new Date().toLocaleString("en-US", {
     weekday: "long",
@@ -123,12 +131,22 @@ function PaymentScreen({ amount, currency }) {
     <>
       <Row>
         <div className="d-flex justify-content-center ">
-          <Col md={6}>
-            <h1 className="text-center py-2">Payment Page</h1>
+          <Col md={8}>
+            <h2 className="text-center py-2">Payment Page</h2>
             {loading && <Loader />}
             {error && <Message variant="danger">{error}</Message>}
             {fundLoading && <Loader />}
             {fundError && <Message variant="danger">{fundError}</Message>}
+
+            <div className="text-center py-2">
+              <ListGroup>
+                <ListGroup.Item>
+                  <strong>
+                    Amount: {formatAmount(amount)} {currency}
+                  </strong>
+                </ListGroup.Item>
+              </ListGroup>
+            </div>
 
             <div className="text-center py-2">
               <Row className="text-center py-2">
@@ -235,14 +253,12 @@ function PaymentScreen({ amount, currency }) {
                 email={userEmail}
                 currency={currency}
                 amount={amount}
-                paysofterPublicKey={paysofterPublicKey}
-                // amount="2000"
-                // currency="NGN"
-                // email="chibuzo.okenwa@gmail.com"
-                // paysofterPublicKey="live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
+                paysofterPublicKey={paysofterApiKey}
                 onSuccess={onSuccess}
                 onClose={onClose}
-                referenceId={`RID${Math.floor(Math.random() * 10000000000000000)}`}
+                referenceId={`RID${Math.floor(
+                  Math.random() * 10000000000000000
+                )}`}
                 showPromiseOption={true}
                 showFundOption={true}
                 showCardOption={true}

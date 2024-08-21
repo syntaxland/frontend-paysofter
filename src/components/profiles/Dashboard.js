@@ -1,5 +1,5 @@
 // Dashboard.js
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Col, Row, Button } from "react-bootstrap";
 import Message from "../Message";
@@ -71,7 +71,16 @@ function Dashboard() {
   const { loading: payoutLoading, payouts, error: payoutError } = userPayouts;
   console.log("User Dashboard Payouts:", payouts);
 
-  const selectedCurrency = profile?.selected_currency;
+  const [selectedCurrency, setSelectedCurrency] = useState(
+    profile?.selected_currency
+  );
+  useEffect(() => {
+    if (profile) {
+      setSelectedCurrency(profile?.selected_currency);
+    }
+  }, [profile]);
+
+  // const selectedCurrency = profile?.selected_currency;
   console.log("selected_currency:", profile?.selected_currency);
 
   useEffect(() => {
@@ -195,7 +204,9 @@ function Dashboard() {
                     {selectedCurrency === "NGN" && (
                       <Row className="py-2">
                         <Col>
-                          <GetNgnAccountFundBalance />
+                          <GetNgnAccountFundBalance
+                            currency={selectedCurrency}
+                          />
                         </Col>
                       </Row>
                     )}
@@ -203,7 +214,9 @@ function Dashboard() {
                     {selectedCurrency === "USD" && (
                       <Row className="py-2">
                         <Col>
-                          <GetUsdAccountFundBalance />
+                          <GetUsdAccountFundBalance
+                            currency={selectedCurrency}
+                          />
                         </Col>
                       </Row>
                     )}

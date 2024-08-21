@@ -6,10 +6,10 @@ import Message from "../Message";
 import Loader from "../Loader";
 import { getUserUsdAccountFundBalance } from "../../redux/actions/AccountFundActions";
 import ToggleUsdAccountSettings from "../settings/ToggleUsdAccountSettings";
-import FundUsdAccount from "./FundUsdAccount";
+import FundAccount from "./FundAccount";
 import { formatAmount } from "../FormatAmount";
 
-const GetUsdAccountFundBalance = () => {
+const GetUsdAccountFundBalance = ({currency}) => {
   const dispatch = useDispatch();
 
   const getUserUsdAccountFundBalanceState = useSelector(
@@ -69,7 +69,7 @@ const GetUsdAccountFundBalance = () => {
             <Row>
               <Col>
                 <h2 className="py-2">
-                  <i className="fas fa-wallet"></i> Account Fund Wallet (USD)
+                  <i className="fas fa-wallet"></i> Account Fund Wallet ({currency})
                 </h2>{" "}
                 <strong>Staus:</strong>{" "}
                 {usdFundBalance?.is_diabled ? (
@@ -132,7 +132,7 @@ const GetUsdAccountFundBalance = () => {
                     Fund Account
                   </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{showFundAccount && <FundUsdAccount />}</Modal.Body>
+                <Modal.Body>{showFundAccount && <FundAccount currency={currency} />}</Modal.Body>
               </Modal>
 
               <Modal
@@ -212,7 +212,7 @@ const GetUsdAccountFundBalance = () => {
                 onClick={handleFundAccountOpen}
                 className="rounded"
               >
-                Fund USD Account
+                Fund {currency} Account
               </Button>
             </div>
           </Col>

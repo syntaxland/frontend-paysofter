@@ -10,7 +10,7 @@ import ToggleAccountSettings from "../settings/ToggleAccountSettings";
 import FundAccount from "./FundAccount";
 import { formatAmount } from "../FormatAmount";
 
-const GetNgnAccountFundBalance = () => {
+const GetNgnAccountFundBalance = ({ currency }) => {
   const dispatch = useDispatch();
   // const history = useHistory();
 
@@ -18,7 +18,7 @@ const GetNgnAccountFundBalance = () => {
     (state) => state.userAccountBalanceState
   );
   const { loading, error, accountFundBalance } = userAccountBalanceState;
-  console.log("NGN accountFundBalance:", accountFundBalance);
+  console.log("accountFundBalance:", accountFundBalance, currency);
 
   const [showToggleAccountSettings, setShowToggleAccountSettings] =
     useState(false);
@@ -69,7 +69,8 @@ const GetNgnAccountFundBalance = () => {
           <Row>
             <Col>
               <h2 className="py-2">
-                <i className="fas fa-wallet"></i> Account Fund Wallet (NGN)
+                <i className="fas fa-wallet"></i> Account Fund Wallet (
+                {currency})
               </h2>{" "}
               <strong>Staus:</strong>{" "}
               {accountFundBalance?.is_diabled ? (
@@ -172,7 +173,7 @@ const GetNgnAccountFundBalance = () => {
                   onClick={handleFundAccountOpen}
                   className="rounded"
                 >
-                  Fund NGN Account
+                  Fund {currency} Account
                 </Button>
               </div>
             </Col>
@@ -184,7 +185,9 @@ const GetNgnAccountFundBalance = () => {
                 Fund Account
               </Modal.Title>
             </Modal.Header>
-            <Modal.Body>{showFundAccount && <FundAccount />}</Modal.Body>
+            <Modal.Body>
+              {showFundAccount && <FundAccount currency={currency} />}
+            </Modal.Body>
           </Modal>
 
           <Modal
