@@ -259,8 +259,8 @@ function PaymentScreen({ amount, currency }) {
                 referenceId={`RID${Math.floor(
                   Math.random() * 10000000000000000
                 )}`}
-                showPromiseOption={true}
-                showFundOption={true}
+                showPromiseOption={false}
+                showFundOption={false}
                 showCardOption={true}
               />
             )}
