@@ -43,6 +43,9 @@ function CreatePaymentLink() {
   const [amount, setAmount] = useState("");
   const [amountError, setAmountError] = useState("");
 
+  const [qty, setQty] = useState(1);
+  const [showQty, setShowQty] = useState(false);
+
   const [showPromiseOption, setShowPromiseOption] = useState(true);
   const [showFundOption, setShowFundOption] = useState(false);
   const [showCardOption, setShowCardOption] = useState(false);
@@ -55,6 +58,22 @@ function CreatePaymentLink() {
   const [image, setImage] = useState("");
 
   const [formError, setFormError] = useState("");
+
+  const [showQtyUnitModal, setShowQtyUnitModal] = useState(false);
+  const handleQtyUnitModalShow = () => {
+    setShowQtyUnitModal(true);
+  };
+  const handleQtyUnitModalClose = () => {
+    setShowQtyUnitModal(false);
+  };
+
+  const [showQtyModal, setShowQtyModal] = useState(false);
+  const handleQtyModalShow = () => {
+    setShowQtyModal(true);
+  };
+  const handleQtyModalClose = () => {
+    setShowQtyModal(false);
+  };
 
   const [showPromiseModal, setShowPromiseModal] = useState(false);
   const handlePromiseModalShow = () => {
@@ -117,6 +136,14 @@ function CreatePaymentLink() {
         setAmountError("");
         break;
 
+      case "qty":
+        setQty(value);
+        break;
+
+      case "showQty":
+        setShowQty(value);
+        break;
+
       case "description":
         setDescription(value);
         setDescriptionError("");
@@ -151,14 +178,14 @@ function CreatePaymentLink() {
   sellerData.append("payment_name", paymentName);
   sellerData.append("currency", currency);
   sellerData.append("amount", amount);
-  // sellerData.append("qty"qty);
+  sellerData.append("qty", qty);
   sellerData.append("description", description);
   sellerData.append("show_promise_option", showPromiseOption);
   sellerData.append("show_fund_option", showFundOption);
   sellerData.append("show_card_option", showCardOption);
   sellerData.append("show_buyer_name", showBuyerName);
   sellerData.append("show_buyer_phone", showBuyerPhone);
-  // sellerData.append("show_qty", showQty);
+  sellerData.append("show_qty", showQty);
   sellerData.append("payment_image", image);
 
   console.log("sellerData:", sellerData);
@@ -284,6 +311,92 @@ function CreatePaymentLink() {
             <Form.Group>
               <Row className="py-2">
                 <Col md={10}>
+                  <Form.Label>Quantity</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={qty}
+                    onChange={(e) => handleFieldChange("qty", e.target.value)}
+                    placeholder="Enter quantity in stock"
+                    className="rounded py-2 mb-2"
+                    required
+                  />
+                </Col>
+                <Col md={2}>
+                  <Button
+                    variant="outline"
+                    onClick={handleQtyUnitModalShow}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Units of the items available in stock which are to be checked out."
+                  >
+                    <i className="fa fa-info-circle"> </i>
+                  </Button>
+
+                  <Modal
+                    show={showQtyUnitModal}
+                    onHide={handleQtyUnitModalClose}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title className="text-center w-100 py-2">
+                        Quantity Info
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p className="text-center">
+                        Units of the items available in stock which are to be
+                        checked out. Set between 1 and 10,000 units or
+                        quantities. Default is 1 unit.
+                      </p>
+                    </Modal.Body>
+                  </Modal>
+                </Col>
+              </Row>
+            </Form.Group>
+
+            <Form.Group>
+              <Row className="py-2">
+                <Col md={10}>
+                  <Form.Check
+                    type="checkbox"
+                    label="Show Quantity?"
+                    checked={showQty}
+                    onChange={(e) =>
+                      handleFieldChange("showQty", e.target.checked)
+                    }
+                    className="rounded py-2 mb-2"
+                  />
+                </Col>
+                <Col md={2}>
+                  <Button
+                    variant="outline"
+                    onClick={handleQtyModalShow}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Whether to allow buyers select units of the items to be paid."
+                  >
+                    <i className="fa fa-info-circle"> </i>
+                  </Button>
+
+                  <Modal show={showQtyModal} onHide={handleQtyModalClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title className="text-center w-100 py-2">
+                        Show Quantity Info
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p className="text-center">
+                        Whether to allow buyers select units of the items to be
+                        paid.
+                      </p>
+                    </Modal.Body>
+                  </Modal>
+                </Col>
+              </Row>
+            </Form.Group>
+
+            <Form.Group>
+              <Row className="py-2">
+                <Col md={10}>
                   <Form.Check
                     type="checkbox"
                     label="Show Promise Option?"
@@ -317,8 +430,8 @@ function CreatePaymentLink() {
                     <Modal.Body>
                       <p className="text-center">
                         Whether to show the Promise payment option (default:
-                          checked). If all other options are unchecked then Paysofter
-                        Promise payment option defaults to true.
+                        checked). If all other options are unchecked then
+                        Paysofter Promise payment option defaults to true.
                       </p>
                     </Modal.Body>
                   </Modal>
@@ -436,7 +549,7 @@ function CreatePaymentLink() {
                   >
                     <Modal.Header closeButton>
                       <Modal.Title className="text-center w-100 py-2">
-                      Show Buyer Name Info
+                        Show Buyer Name Info
                       </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>

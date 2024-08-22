@@ -1,13 +1,15 @@
 // PaymentLinkDetail.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Modal } from "react-bootstrap";
 import { getPaymentLinkDetail } from "../../redux/actions/paymentActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import { formatAmount } from "../FormatAmount";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+
+import Select from "react-select";
 import { Paysofter } from "react-paysofter";
 
 function PaymentLinkDetail({ location }) {
@@ -62,10 +64,30 @@ function PaymentLinkDetail({ location }) {
   const [showCardOption, setShowCardOption] = useState("");
   const [productAmount, setProductAmount] = useState("");
   const [productCurrency, setProductCurrency] = useState("");
+  const [productQty, setProductQty] = useState("");
+  const [showQty, setShowQty] = useState("");
 
+  // useEffect(() => {
+  //   if (paymentLinks) {
+  //     const key = isSellerApiKeyLive ? sellerLiveApiKey : sellerTestApiKey;
+  //     setPaysofterPublicKey(key);
+
+  //     setShowPromiseOption(paymentLinks.show_promise_option);
+  //     setShowFundOption(paymentLinks.show_fund_option);
+  //     setShowCardOption(paymentLinks.show_card_option);
+  //     setProductAmount(paymentLinks.amount);
+  //     setProductCurrency(paymentLinks.currency);
+  //     setProductQty(paymentLinks.qty);
+  //     setShowQty(paymentLinks.show_qty);
+  //   }
+  // }, [paymentLinks, isSellerApiKeyLive, sellerLiveApiKey, sellerTestApiKey]);
+
+  // dev
   useEffect(() => {
     if (paymentLinks) {
-      const key = isSellerApiKeyLive ? sellerLiveApiKey : sellerTestApiKey;
+      const key = paymentLinks.is_api_key_live
+        ? "live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
+        : "test_api_key_8q45lnpo9kchan2z84ottwdd8lwib1phq70lxqhmordpxycg6c";
       setPaysofterPublicKey(key);
 
       setShowPromiseOption(paymentLinks.show_promise_option);
@@ -73,23 +95,10 @@ function PaymentLinkDetail({ location }) {
       setShowCardOption(paymentLinks.show_card_option);
       setProductAmount(paymentLinks.amount);
       setProductCurrency(paymentLinks.currency);
+      setProductQty(paymentLinks.qty);
+      setShowQty(paymentLinks.show_qty);
     }
   }, [paymentLinks, isSellerApiKeyLive, sellerLiveApiKey, sellerTestApiKey]);
-
-  // dev
-  // useEffect(() => {
-  //   if (paymentLinks) {
-  //     const key = paymentLinks.is_api_key_live
-  //       ? "live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
-  //       : "test_api_key_8q45lnpo9kchan2z84ottwdd8lwib1phq70lxqhmordpxycg6c";
-  //     setPaysofterPublicKey(key);
-
-  //     setShowPromiseOption(paymentLinks.show_promise_option);
-  //     setShowFundOption(paymentLinks.show_fund_option);
-  //     setShowCardOption(paymentLinks.show_card_option);
-  //   }
-
-  // }, [paymentLinks]);
 
   // console.log("isSellerApiKeyLive:", isSellerApiKeyLive);
   // console.log("sellerTestApiKey:", sellerTestApiKey);
@@ -106,6 +115,23 @@ function PaymentLinkDetail({ location }) {
   const [buyerEmailError, setBuyerEmailError] = useState("");
 
   const [formError, setFormError] = useState("");
+
+  const [showQtyUnitModal, setShowQtyUnitModal] = useState(false);
+  const handleQtyUnitModalShow = () => {
+    setShowQtyUnitModal(true);
+  };
+  const handleQtyUnitModalClose = () => {
+    setShowQtyUnitModal(false);
+  };
+
+  const [selectedQty, setSelectedQty] = useState(1);
+  const handleQtyChange = (selectedOption) => {
+    setSelectedQty(selectedOption.value);
+  };
+  const calculateTotalPrice = () => {
+    return selectedQty * productAmount;
+  };
+  console.log("qty:", selectedQty, 'amt:', calculateTotalPrice(), productCurrency);
 
   const handleFieldChange = (fieldName, value) => {
     switch (fieldName) {
@@ -252,7 +278,8 @@ function PaymentLinkDetail({ location }) {
               /> */}
               <input
                 type="text"
-                value={formatAmount(productAmount)}
+                // value={formatAmount(productAmount)}
+                value={formatAmount(calculateTotalPrice())}
                 className="form-control rounded py-2 mb-2"
                 disabled
               />
@@ -270,6 +297,54 @@ function PaymentLinkDetail({ location }) {
                 disabled
               />
             </Form.Group>
+
+            {showQty && (
+              <Form.Group>
+                <Row className="py-2">
+                  <Col md={10}>
+                    <Form.Label>Select Qty</Form.Label>
+                    <Select
+                      value={{
+                        value: selectedQty,
+                        label: selectedQty.toString(),
+                      }}
+                      onChange={handleQtyChange}
+                      options={Array.from({ length: productQty }, (_, i) => ({
+                        value: i + 1,
+                        label: (i + 1).toString(),
+                      }))}
+                    />
+                  </Col>
+                  <Col md={2}>
+                    <Button
+                      variant="outline"
+                      onClick={handleQtyUnitModalShow}
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Units of the items to be paid  for."
+                    >
+                      <i className="fa fa-info-circle"> </i>
+                    </Button>
+
+                    <Modal
+                      show={showQtyUnitModal}
+                      onHide={handleQtyUnitModalClose}
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title className="text-center w-100 py-2">
+                          Quantity Info
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <p className="text-center">
+                          Units of the items to be paid for.
+                        </p>
+                      </Modal.Body>
+                    </Modal>
+                  </Col>
+                </Row>
+              </Form.Group>
+            )}
 
             {paymentLinks?.show_buyer_name && (
               <Form.Group>
@@ -311,7 +386,10 @@ function PaymentLinkDetail({ location }) {
               onClick={initiatePayment}
               disabled={loading}
             >
-              Pay Now
+              Pay{" "}
+              <span>
+                ({formatAmount(calculateTotalPrice())} {productCurrency})
+              </span>
             </Button>
           </div>
 
@@ -321,11 +399,14 @@ function PaymentLinkDetail({ location }) {
               buyerName={buyerName}
               buyerPhoneNumber={buyerPhone}
               currency={productCurrency}
-              amount={productAmount}
+              qty={selectedQty}
+              amount={calculateTotalPrice()}
               paysofterPublicKey={paysofterPublicKey}
               onSuccess={onSuccess}
               onClose={onClose}
-              referenceId={`RID${Math.floor(Math.random() * 10000000000000000)}`}
+              referenceId={`RID${Math.floor(
+                Math.random() * 10000000000000000
+              )}`}
               showPromiseOption={showPromiseOption}
               showFundOption={showFundOption}
               showCardOption={showCardOption}

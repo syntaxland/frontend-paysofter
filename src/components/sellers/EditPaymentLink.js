@@ -55,12 +55,14 @@ function EditPaymentLink({ linkId, linkName, sellerUsername }) {
     payment_name: "",
     currency: "",
     amount: "",
+    qty: "",
+    show_qty: "",
     show_promise_option: "",
     show_fund_option: "",
     show_card_option: "",
     show_buyer_name: "",
     show_buyer_phone: "",
-    image: "",
+    payment_image: "",
     description: "",
   });
 
@@ -70,13 +72,14 @@ function EditPaymentLink({ linkId, linkName, sellerUsername }) {
         payment_name: paymentLinks?.payment_name,
         currency: paymentLinks?.currency,
         amount: paymentLinks?.amount,
+        qty: paymentLinks?.qty,
+        show_qty: paymentLinks?.show_qty,
         show_promise_option: paymentLinks?.show_promise_option,
         show_fund_option: paymentLinks?.show_fund_option,
         show_card_option: paymentLinks?.show_card_option,
         show_buyer_name: paymentLinks?.show_buyer_name,
         show_buyer_phone: paymentLinks?.show_buyer_phone,
-
-        image: paymentLinks?.image,
+        payment_image: paymentLinks?.payment_image,
         description: paymentLinks?.description,
       });
       setEditLinkChanges(false);
@@ -108,6 +111,8 @@ function EditPaymentLink({ linkId, linkName, sellerUsername }) {
     editLinkFormData.append("payment_name", editLinkData.payment_name);
     editLinkFormData.append("currency", editLinkData.currency);
     editLinkFormData.append("amount", editLinkData.amount);
+    editLinkFormData.append("qty", editLinkData.qty);
+    editLinkFormData.append("show_qty", editLinkData.show_qty);
     editLinkFormData.append(
       "show_promise_option",
       editLinkData.show_promise_option
@@ -120,8 +125,8 @@ function EditPaymentLink({ linkId, linkName, sellerUsername }) {
     editLinkFormData.append("description", editLinkData.description);
     editLinkFormData.append("link_id", linkId);
 
-    if (editLinkFormData.image instanceof File) {
-      editLinkFormData.append("image", editLinkData.image);
+    if (editLinkFormData.payment_image instanceof File) {
+      editLinkFormData.append("payment_image", editLinkData.payment_image);
     }
 
     console.log("editLinkFormData:", editLinkFormData);
@@ -208,6 +213,30 @@ function EditPaymentLink({ linkId, linkName, sellerUsername }) {
             </Form.Group>
 
             <Form.Group>
+              <Form.Label>Quantity</Form.Label>
+              <Form.Control
+                type="number"
+                name="qty"
+                value={editLinkData?.qty}
+                onChange={handleEditLinkChanges}
+                placeholder="Enter qty"
+                className="rounded py-2 mb-2"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Check
+                type="checkbox"
+                label="Show Quantity?"
+                name="show_qty"
+                checked={editLinkData.show_qty}
+                onChange={handleEditLinkChanges}
+                className="rounded py-2 mb-2"
+              />
+            </Form.Group>
+
+            <Form.Group>
               <Form.Check
                 type="checkbox"
                 label="Show Promise Option?"
@@ -263,11 +292,11 @@ function EditPaymentLink({ linkId, linkName, sellerUsername }) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Image</Form.Label>
+              <Form.Label>Product Image</Form.Label>
               <div className="py-2">
-                {paymentLinks?.image && (
+                {paymentLinks?.payment_image && (
                   <img
-                    src={paymentLinks?.image}
+                    src={paymentLinks?.payment_image}
                     alt="Link"
                     style={{ maxWidth: "100%", maxHeight: "100px" }}
                   />
@@ -275,7 +304,7 @@ function EditPaymentLink({ linkId, linkName, sellerUsername }) {
               </div>
               <Form.Control
                 type="file"
-                name="image"
+                name="payment_image"
                 onChange={handleEditLinkChanges}
                 placeholder="Upload the ID Card Photoname"
                 className="rounded py-2 mb-2"
