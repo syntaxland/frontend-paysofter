@@ -302,7 +302,7 @@ function PaymentLinkDetail({ location }) {
               <Form.Group>
                 <Row className="py-2">
                   <Col md={10}>
-                    <Form.Label>Select Qty</Form.Label>
+                    <Form.Label>Select Quantity</Form.Label>
                     <Select
                       value={{
                         value: selectedQty,
