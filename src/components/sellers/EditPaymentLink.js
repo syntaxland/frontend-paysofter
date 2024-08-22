@@ -26,7 +26,7 @@ function EditPaymentLink({ linkId, linkName, sellerUsername }) {
     (state) => state.getPaymentLinkDetailState
   );
   const { paymentLinks } = getPaymentLinkDetailState;
-  console.log("paymentLinks:", paymentLinks);
+  // console.log("paymentLinks:", paymentLinks);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -154,8 +154,8 @@ function EditPaymentLink({ linkId, linkName, sellerUsername }) {
             <Message variant="success" fixed>
               The{" "}
               <strong>
-                "<i>{linkName}</i>"
-              </strong>{" "}
+                <i> "{linkName}" </i>
+              </strong>
               link updated successfully.
             </Message>
           )}

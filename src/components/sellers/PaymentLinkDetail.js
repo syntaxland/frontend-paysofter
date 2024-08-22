@@ -67,27 +67,9 @@ function PaymentLinkDetail({ location }) {
   const [productQty, setProductQty] = useState("");
   const [showQty, setShowQty] = useState("");
 
-  // useEffect(() => {
-  //   if (paymentLinks) {
-  //     const key = isSellerApiKeyLive ? sellerLiveApiKey : sellerTestApiKey;
-  //     setPaysofterPublicKey(key);
-
-  //     setShowPromiseOption(paymentLinks.show_promise_option);
-  //     setShowFundOption(paymentLinks.show_fund_option);
-  //     setShowCardOption(paymentLinks.show_card_option);
-  //     setProductAmount(paymentLinks.amount);
-  //     setProductCurrency(paymentLinks.currency);
-  //     setProductQty(paymentLinks.qty);
-  //     setShowQty(paymentLinks.show_qty);
-  //   }
-  // }, [paymentLinks, isSellerApiKeyLive, sellerLiveApiKey, sellerTestApiKey]);
-
-  // dev
   useEffect(() => {
     if (paymentLinks) {
-      const key = paymentLinks.is_api_key_live
-        ? "live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
-        : "test_api_key_8q45lnpo9kchan2z84ottwdd8lwib1phq70lxqhmordpxycg6c";
+      const key = isSellerApiKeyLive ? sellerLiveApiKey : sellerTestApiKey;
       setPaysofterPublicKey(key);
 
       setShowPromiseOption(paymentLinks.show_promise_option);
@@ -99,6 +81,24 @@ function PaymentLinkDetail({ location }) {
       setShowQty(paymentLinks.show_qty);
     }
   }, [paymentLinks, isSellerApiKeyLive, sellerLiveApiKey, sellerTestApiKey]);
+
+  // // dev
+  // useEffect(() => {
+  //   if (paymentLinks) {
+  //     const key = paymentLinks.is_api_key_live
+  //       ? "live_api_key_4u0s3g57f7dsdefs0aad1ejx1n0xj114d8t73pn1gddcx9fdqg"
+  //       : "test_api_key_8q45lnpo9kchan2z84ottwdd8lwib1phq70lxqhmordpxycg6c";
+  //     setPaysofterPublicKey(key);
+
+  //     setShowPromiseOption(paymentLinks.show_promise_option);
+  //     setShowFundOption(paymentLinks.show_fund_option);
+  //     setShowCardOption(paymentLinks.show_card_option);
+  //     setProductAmount(paymentLinks.amount);
+  //     setProductCurrency(paymentLinks.currency);
+  //     setProductQty(paymentLinks.qty);
+  //     setShowQty(paymentLinks.show_qty);
+  //   }
+  // }, [paymentLinks, isSellerApiKeyLive, sellerLiveApiKey, sellerTestApiKey]);
 
   // console.log("isSellerApiKeyLive:", isSellerApiKeyLive);
   // console.log("sellerTestApiKey:", sellerTestApiKey);
