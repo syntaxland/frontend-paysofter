@@ -359,7 +359,7 @@ function PaymentLinks() {
             <div className="d-flex justify-content-center mt-5 py-3">
               <Button
                 variant="primary"
-                onClick={handleCreatePaymentLink}
+                onClick={handleCreatePaymentLink} 
                 className="rounded"
               >
                 Create Link

@@ -45,16 +45,42 @@ import {
   UPDATE_SELLER_PHOTO_REQUEST,
   UPDATE_SELLER_PHOTO_SUCCESS,
   UPDATE_SELLER_PHOTO_FAIL,
-
   CREATE_BUSINESS_STATUS_REQUEST,
-CREATE_BUSINESS_STATUS_SUCCESS,
-CREATE_BUSINESS_STATUS_FAIL,
-GET_BUSINESS_STATUS_REQUEST,
-GET_BUSINESS_STATUS_SUCCESS,
-GET_BUSINESS_STATUS_FAIL,
-UPDATE_BUSINESS_STATUS_REQUEST,
-UPDATE_BUSINESS_STATUS_SUCCESS,
-UPDATE_BUSINESS_STATUS_FAIL,
+  CREATE_BUSINESS_STATUS_SUCCESS,
+  CREATE_BUSINESS_STATUS_FAIL,
+  GET_BUSINESS_STATUS_REQUEST,
+  GET_BUSINESS_STATUS_SUCCESS,
+  GET_BUSINESS_STATUS_FAIL,
+  UPDATE_BUSINESS_STATUS_REQUEST,
+  UPDATE_BUSINESS_STATUS_SUCCESS,
+  UPDATE_BUSINESS_STATUS_FAIL,
+  GET_ALL_SELLERS_ACCOUNT_REQUEST,
+  GET_ALL_SELLERS_ACCOUNT_SUCCESS,
+  GET_ALL_SELLERS_ACCOUNT_FAIL,
+  GET_ALL_BUSINESS_STATUS_REQUEST,
+  GET_ALL_BUSINESS_STATUS_SUCCESS,
+  GET_ALL_BUSINESS_STATUS_FAIL,
+  GET_ALL_BUSINESS_OWNERS_DETAILS_REQUEST,
+  GET_ALL_BUSINESS_OWNERS_DETAILS_SUCCESS,
+  GET_ALL_BUSINESS_OWNERS_DETAILS_FAIL,
+  GET_ALL_SELLERS_BVN_REQUEST,
+  GET_ALL_SELLERS_BVN_SUCCESS,
+  GET_ALL_SELLERS_BVN_FAIL,
+  GET_ALL_SELLERS_PHOTO_REQUEST,
+  GET_ALL_SELLERS_PHOTO_SUCCESS,
+  GET_ALL_SELLERS_PHOTO_FAIL,
+  GET_ALL_SELLERS_BANK_ACCOUNT_REQUEST,
+  GET_ALL_SELLERS_BANK_ACCOUNT_SUCCESS,
+  GET_ALL_SELLERS_BANK_ACCOUNT_FAIL,
+  GET_ALL_SELLERS_REQUEST,
+  GET_ALL_SELLERS_SUCCESS,
+  GET_ALL_SELLERS_FAIL,
+  GET_SELLER_ACCOUNT_DETAIL_REQUEST,
+  GET_SELLER_ACCOUNT_DETAIL_SUCCESS,
+  GET_SELLER_ACCOUNT_DETAIL_FAIL,
+  VERIFY_SELLER_REQUEST,
+  VERIFY_SELLER_SUCCESS,
+  VERIFY_SELLER_FAIL,
 } from "../constants/sellerConstants";
 
 const initialState = {
@@ -67,6 +93,144 @@ const initialState = {
   sellerBankAccount: [],
   sellerBvn: [],
   sellerPhoto: [],
+  sellers: [],
+  businessOwnersDetails: [],
+  sellerNgnBank: [],
+  sellerUsdBank: [],
+};
+
+export const getAllSellersReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_ALL_SELLERS_REQUEST:
+      return { loading: true };
+    case GET_ALL_SELLERS_SUCCESS:
+      return { loading: false, success: true, sellers: action.payload };
+    case GET_ALL_SELLERS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getSellerAccountDetailReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_SELLER_ACCOUNT_DETAIL_REQUEST:
+      return { loading: true };
+    case GET_SELLER_ACCOUNT_DETAIL_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        sellerAccount: action.payload.seller_account, 
+        businessStatus: action.payload.business_status,
+        businessOwnersDetails: action.payload.business_owners_details,
+        sellerNgnBank: action.payload.seller_ngn_bank,
+        sellerUsdBank: action.payload.seller_usd_bank,
+        sellerBvn: action.payload.seller_bvn,
+        sellerPhoto: action.payload.seller_photo_url,
+      };
+    case GET_SELLER_ACCOUNT_DETAIL_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const verifySellerReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case VERIFY_SELLER_REQUEST:
+      return { loading: true };
+    case VERIFY_SELLER_SUCCESS:
+      return { loading: false, success: true };
+    case VERIFY_SELLER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getAllSellerAccountReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_ALL_SELLERS_ACCOUNT_REQUEST:
+      return { loading: true };
+    case GET_ALL_SELLERS_ACCOUNT_SUCCESS:
+      return { loading: false, success: true, sellerAccount: action.payload };
+    case GET_ALL_SELLERS_ACCOUNT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getAllBusinessOwnerDetailsReducer = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case GET_ALL_BUSINESS_OWNERS_DETAILS_REQUEST:
+      return { loading: true };
+    case GET_ALL_BUSINESS_OWNERS_DETAILS_SUCCESS:
+      return { loading: false, success: true, sellerDetails: action.payload };
+    case GET_ALL_BUSINESS_OWNERS_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getAllBusinessStatusReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_ALL_BUSINESS_STATUS_REQUEST:
+      return { loading: true };
+    case GET_ALL_BUSINESS_STATUS_SUCCESS:
+      return { loading: false, success: true, businessStatus: action.payload };
+    case GET_ALL_BUSINESS_STATUS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getAllBankAccountReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_ALL_SELLERS_BANK_ACCOUNT_REQUEST:
+      return { loading: true };
+    case GET_ALL_SELLERS_BANK_ACCOUNT_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        sellerBankAccount: action.payload,
+      };
+    case GET_ALL_SELLERS_BANK_ACCOUNT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getAllSellerBvnReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_ALL_SELLERS_BVN_REQUEST:
+      return { loading: true };
+    case GET_ALL_SELLERS_BVN_SUCCESS:
+      return { loading: false, success: true, sellerBvn: action.payload };
+    case GET_ALL_SELLERS_BVN_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getAllSellerPhotoReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_ALL_SELLERS_PHOTO_REQUEST:
+      return { loading: true };
+    case GET_ALL_SELLERS_PHOTO_SUCCESS:
+      return { loading: false, success: true, sellerPhoto: action.payload };
+    case GET_ALL_SELLERS_PHOTO_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
 };
 
 export const createBusinessStatusReducer = (state = initialState, action) => {
@@ -171,7 +335,11 @@ export const getBankAccountReducer = (state = initialState, action) => {
     case GET_BUSINESS_BANK_ACCOUNT_REQUEST:
       return { loading: true };
     case GET_BUSINESS_BANK_ACCOUNT_SUCCESS:
-      return { loading: false, success: true, sellerBankAccount: action.payload };
+      return {
+        loading: false,
+        success: true,
+        sellerBankAccount: action.payload,
+      };
     case GET_BUSINESS_BANK_ACCOUNT_FAIL:
       return { loading: false, error: action.payload };
     default:

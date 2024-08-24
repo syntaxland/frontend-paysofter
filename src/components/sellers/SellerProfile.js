@@ -17,6 +17,8 @@ import {
   getBusinessStatus,
   updateBusinessStatus,
 } from "../../redux/actions/sellerActions";
+
+import { getUserProfile } from "../../redux/actions/userProfileActions";
 import { Form, Button, Row, Col, Container, Accordion } from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
@@ -129,6 +131,9 @@ function SellerProfile() {
     }
   }, [userInfo]);
 
+  const userProfile = useSelector((state) => state.userProfile);
+  const { profile } = userProfile;
+
   const ID_TYPE_CHOICES = [
     // ["NIN", "NIN"],
     ["Intl Passport", "Intl Passport"],
@@ -213,7 +218,6 @@ function SellerProfile() {
   const [photoDataChanges, setPhotoDataChanges] = useState(false);
 
   const [successMessage, setSuccessMessage] = useState("");
-
 
   const [businessData, setBusinessData] = useState({
     business_address: "",
@@ -483,6 +487,8 @@ function SellerProfile() {
       dispatch(getBusinessBankAccount());
       dispatch(getBvn());
       dispatch(getSellerPhoto());
+
+      dispatch(getUserProfile());
     }
   }, [dispatch, userInfo]);
 
@@ -630,7 +636,7 @@ function SellerProfile() {
         </div>
         <p className="d-flex justify-content-end">
           <i> Verified </i>
-          {sellerAccount?.is_seller_verified ? (
+          {profile?.is_seller_account_verified ? (
             <i
               className="fas fa-check-circle"
               style={{ fontSize: "18px", color: "blue" }}

@@ -29,6 +29,7 @@ import Settings from "./components/settings/Settings";
 
 import UserDashboard from "./components/profiles/UserDashboard";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import Sellers from "./components/admin/Sellers";
 import SellerDashboard from "./components/sellers/SellerDashboard";
 import PaysofterPromiseSeller from "./components/sellers/PaysofterPromiseSeller";
 import CreateSellerAccount from "./components/sellers/CreateSellerAccount";
@@ -119,6 +120,7 @@ function App() {
           <Route path="/dashboard/users/" component={UserDashboard} />
           <Route path="/dashboard/sellers" component={SellerDashboard} />
           <Route path="/dashboard/admin" component={AdminDashboard} />
+          <Route path="/sellers/" component={Sellers} />
 
           <Route
             path="/create-support-ticket"

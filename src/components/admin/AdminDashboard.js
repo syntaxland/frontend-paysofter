@@ -15,7 +15,7 @@ import MessageInbox from "./MessageInbox";
 import SendEmail from "./SendEmail";
 import Dashboard from "./Dashboard";
 // import CreditPoint from "./CreditPoint";
-// import SetPromoCode from "./SetPromoCode";
+import Sellers from "./Sellers";
 import Feedbacks from "./Feedbacks";
 import SupportTicket from "./SupportTicket";
 
@@ -68,6 +68,10 @@ function AdminDashboard() {
     history.push("/dashboard/users");
   };
 
+  const handleSellers = () => {
+    history.push("/sellers/");
+  };
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "all-promises":
@@ -91,8 +95,8 @@ function AdminDashboard() {
       // case "credit-point-requests":
       //   return <CreditPoint />;
 
-      // case "promo-code":
-      //   return <PromoTimer />;
+      case "sellers":
+        return <Sellers />;
 
       case "feedbacks":
         return <Feedbacks />;
@@ -208,7 +212,7 @@ function AdminDashboard() {
                 </Button>
               </div>
 
-              <div>
+              {/* <div>
                 <Button
                   variant={
                     activeTab === "credit-point-requests"
@@ -220,19 +224,20 @@ function AdminDashboard() {
                 >
                   <i className="fas fa-sack-dollar"></i> Credit Point
                 </Button>
-              </div>
+              </div> */}
 
               <div>
                 <Button
                   variant={
-                    activeTab === "verify-seller"
+                    activeTab === "sellers"
                       ? "primary"
                       : "outline-primary"
                   }
                   className="sidebar-link"
-                  onClick={() => handleTabChange("verify-seller")}
+                  // onClick={() => handleTabChange("sellers")}
+                  onClick={() => handleSellers()}
                 >
-                  <i className="fas fa-gift"></i> Verify Seller
+                  <i className="fas fa-users"></i> Sellers
                 </Button>
               </div>
 

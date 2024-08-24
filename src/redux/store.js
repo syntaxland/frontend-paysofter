@@ -57,6 +57,15 @@ import {
   sellerBankAccountReducer,
   sellerBvnReducer,
   sellerPhotoReducer,
+  getAllSellerAccountReducer,
+  getAllBusinessOwnerDetailsReducer,
+  getAllBusinessStatusReducer,
+  getAllBankAccountReducer,
+  getAllSellerBvnReducer,
+  getAllSellerPhotoReducer,
+  getAllSellersReducer,
+  getSellerAccountDetailReducer,
+  verifySellerReducer,
 } from "./reducers/sellerReducers";
 
 import {
@@ -239,6 +248,17 @@ const reducer = combineReducers({
   updateSellerBvnState: updateSellerBvnReducer,
   getSellerPhotoState: getSellerPhotoReducer,
   updateSellerPhotoState: updateSellerPhotoReducer,
+
+  getAllSellerAccountState: getAllSellerAccountReducer,
+  getAllBusinessOwnerDetailsState: getAllBusinessOwnerDetailsReducer,
+  getAllBusinessStatusState: getAllBusinessStatusReducer,
+  getAllBankAccountState: getAllBankAccountReducer,
+  getAllSellerBvnState: getAllSellerBvnReducer,
+  getAllSellerPhotoState: getAllSellerPhotoReducer,
+
+  getAllSellersState: getAllSellersReducer,
+  getSellerAccountDetailState: getSellerAccountDetailReducer,
+  verifySellerState: verifySellerReducer,
 
   businessOwnerDetailState: businessOwnerDetailReducer,
   sellerBankAccountState: sellerBankAccountReducer,
