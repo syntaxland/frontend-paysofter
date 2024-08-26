@@ -2,7 +2,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile } from "../../redux/actions/userProfileActions";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import {
+  // Button,
+  Container,
+  Row,
+  Col,
+  ListGroup,
+} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Loader from "../Loader";
 
@@ -28,39 +34,35 @@ function GetSellerId() {
 
   return (
     <Container>
-      <Row className="d-flex justify-content-center py-2">
+      <Row >
         <Col>
           {loading && <Loader />}
-          <div className="d-flex">
-            <span>
-              <i
-                className="fa fa-user"
-                // style={{ fontSize: "16px", color: "red" }}
-              ></i>{" "}
-              Seller ID:{" "}
-              <Button
-                variant="outline-transparent"
-                // onClick={handleVerifySeller}
-                className="rounded"
-                size="sm"
-                title="Seller ID"
-                // disabled
-              >
-                {profile?.seller_id ? (
-                  <>
-                    <i style={{ fontSize: "14px", color: "green" }}>
-                      {profile?.seller_id}
-                    </i>
-                  </>
+          <div className="d-flex ">
+            <ListGroup className="text-center py-2">
+              <ListGroup.Item>
+                {profile?.is_seller_account_verified ? (
+                  <span style={{ color: "green" }}>
+                    <i className="fa fa-user"></i> Seller ID:{" "}
+                    {profile.seller_id}{" "}
+                    <i
+                      className="fas fa-check-circle"
+                      style={{
+                        fontSize: "16px",
+                        color: "green",
+                      }}
+                    ></i>
+                  </span>
                 ) : (
-                  <>
-                    <i style={{ fontSize: "14px", color: "red" }}>
-                      Seller Not Verified
-                    </i>
-                  </>
+                  <span style={{ color: "red" }}>
+                    <i className="fa fa-user"></i> Seller Not Verified{" "}
+                    <i
+                      className="fas fa-times-circle"
+                      // style={{ fontSize: "18px", color: "red" }}
+                    ></i>
+                  </span>
                 )}
-              </Button>
-            </span>
+              </ListGroup.Item>
+            </ListGroup>
           </div>
         </Col>
       </Row>

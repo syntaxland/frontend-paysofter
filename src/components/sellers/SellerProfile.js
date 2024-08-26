@@ -19,11 +19,20 @@ import {
 } from "../../redux/actions/sellerActions";
 
 import { getUserProfile } from "../../redux/actions/userProfileActions";
-import { Form, Button, Row, Col, Container, Accordion } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Row,
+  Col,
+  Container,
+  Accordion,
+  // ListGroup,
+} from "react-bootstrap";
 import Message from "../Message";
 import Loader from "../Loader";
 import LoaderButton from "../LoaderButton";
 import DatePicker from "react-datepicker";
+import GetSellerId from "../settings/GetSellerId";
 // import { parseISO } from "date-fns";
 
 function SellerProfile() {
@@ -131,8 +140,8 @@ function SellerProfile() {
     }
   }, [userInfo]);
 
-  const userProfile = useSelector((state) => state.userProfile);
-  const { profile } = userProfile;
+  // const userProfile = useSelector((state) => state.userProfile);
+  // const { profile } = userProfile;
 
   const ID_TYPE_CHOICES = [
     // ["NIN", "NIN"],
@@ -634,22 +643,11 @@ function SellerProfile() {
             </Message>
           )}
         </div>
-        <p className="d-flex justify-content-end">
-          <i> Verified </i>
-          {profile?.is_seller_account_verified ? (
-            <i
-              className="fas fa-check-circle"
-              style={{ fontSize: "18px", color: "blue" }}
-            ></i>
-          ) : (
-            <i
-              className="fas fa-times-circle"
-              style={{ fontSize: "18px", color: "red" }}
-            ></i>
-          )}
-        </p>
 
         <Col>
+          <div className="d-flex justify-content-end">
+            <GetSellerId />
+          </div>
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
             <Accordion.Item eventKey="0">
               <Accordion.Header>Business Account</Accordion.Header>

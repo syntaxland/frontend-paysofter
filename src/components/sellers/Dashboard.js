@@ -14,7 +14,6 @@ import { getUserAccountFundBalance } from "../../redux/actions/AccountFundAction
 import { getUserPayouts } from "../../redux/actions/payoutActions";
 import { getUserProfile } from "../../redux/actions/userProfileActions";
 import { Line, Pie } from "react-chartjs-2";
-
 import {
   Chart as ChartJS,
   ArcElement,
