@@ -2,7 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Table, Button, Row, Col, Modal, Container } from "react-bootstrap";
+import {
+  Table,
+  Button,
+  Row,
+  Col,
+  Modal,
+  Container,
+  ListGroup,
+} from "react-bootstrap";
 import {
   getBuyerPromises,
   clearBuyerMessageCounter,
@@ -141,30 +149,12 @@ function PaysofterPromiseBuyer() {
                       <tr key={promise.id} className="rounded">
                         <td>{index + 1}</td>
                         <td>
-                          {promise.buyer_promise_fulfilled ? (
-                            <>
-                              <Button variant="outline-link" size="sm" disabled>
-                                {promise.promise_id}
-                              </Button>
-                            </>
-                          ) : (
-                            <>
-                              <Button
-                                variant="outline-link"
-                                size="sm"
-                                // onClick={() =>
-                                //   handleConfirmPromiseOpen({
-                                //     promise_id: promise.promise_id,
-                                //     amount: promise.amount,
-                                //   })
-                                // }
-                              >
-                                {promise.promise_id}
-                              </Button>
-                            </>
-                          )}
+                          <ListGroup className="text-center py-2">
+                            <ListGroup.Item>
+                              {promise.promise_id}
+                            </ListGroup.Item>
+                          </ListGroup>
                         </td>
-
                         <td>
                           {promise.buyer_promise_fulfilled ? (
                             <span style={{ fontSize: "16px", color: "green" }}>

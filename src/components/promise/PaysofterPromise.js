@@ -2,14 +2,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Table, Button, Row, Col, Modal, Container } from "react-bootstrap";
-import { getBuyerPromises } from "../../redux/actions/PromiseActions"; 
+import {
+  Table,
+  Button,
+  Row,
+  Col,
+  Modal,
+  Container,
+  ListGroup,
+} from "react-bootstrap";
+import { getBuyerPromises } from "../../redux/actions/PromiseActions";
 import Message from "../Message";
 import Loader from "../Loader";
 import Timer from "../Timer";
 import Pagination from "../Pagination";
 import BuyerConfirmPromise from "../promise/BuyerConfirmPromise";
-import SettleDisputedPromise from "../promise/SettleDisputedPromise"; 
+import SettleDisputedPromise from "../promise/SettleDisputedPromise";
 import { formatAmount } from "../FormatAmount";
 
 function PaysofterPromise({ history }) {
@@ -131,9 +139,13 @@ function PaysofterPromise({ history }) {
                         <td>
                           {promise.buyer_promise_fulfilled ? (
                             <>
-                              <Button variant="outline-link" size="sm" disabled>
-                                {promise.promise_id}
-                              </Button>
+                              {/* <Button variant="outline-link" size="sm" disabled> */}
+                              <ListGroup className="text-center py-2">
+                                <ListGroup.Item>
+                                  {promise.promise_id}
+                                </ListGroup.Item>
+                              </ListGroup>
+                              {/* </Button> */}
                             </>
                           ) : (
                             <>
@@ -489,7 +501,7 @@ function PaysofterPromise({ history }) {
                             </Link>
                           </Button>
                         </td>
- 
+
                         {/* <td>
                           <>
                             {promise.is_cancelled ? (
