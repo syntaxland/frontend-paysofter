@@ -93,17 +93,16 @@ function Sellers() {
                                   <span style={{ color: "green" }}>
                                     {seller.seller_id}{" "}
                                   </span>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
+
                                   <span style={{ color: "green" }}>
+                                    Verified
                                     <i
                                       className="fas fa-check-circle"
                                       style={{
                                         fontSize: "16px",
                                         color: "green",
                                       }}
-                                    ></i>{" "}
-                                    Verified
+                                    ></i>
                                   </span>
                                 </ListGroup.Item>
                               </ListGroup>

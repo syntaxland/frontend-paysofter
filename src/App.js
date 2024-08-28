@@ -120,7 +120,7 @@ function App() {
           <Route path="/dashboard/users/" component={UserDashboard} />
           <Route path="/dashboard/sellers" component={SellerDashboard} />
           <Route path="/dashboard/admin" component={AdminDashboard} />
-          <Route path="/sellers/" component={Sellers} />
+          <Route path="/admin/sellers/" component={Sellers} />
 
           <Route
             path="/create-support-ticket"

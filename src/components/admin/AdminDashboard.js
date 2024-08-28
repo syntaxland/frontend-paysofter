@@ -69,7 +69,7 @@ function AdminDashboard() {
   };
 
   const handleSellers = () => {
-    history.push("/sellers/");
+    history.push("/admin/sellers/");
   };
 
   const renderTabContent = () => {

@@ -97,8 +97,12 @@ function PaymentScreen({ amount, currency }) {
     dispatch(fundUserAccount(fundData));
   };
 
+  const [successTriggered, setSuccessTriggered] = useState(false);
   const onSuccess = () => {
-    handleOnSuccess();
+    if (!successTriggered) {
+      handleOnSuccess();
+      setSuccessTriggered(true);
+    }
   };
 
   const handleOnClose = () => {
