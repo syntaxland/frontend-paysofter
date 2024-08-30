@@ -8,7 +8,6 @@ import Loader from "../Loader";
 import { formatAmount } from "../FormatAmount";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-
 import Select from "react-select";
 import { Paysofter } from "react-paysofter";
 
@@ -399,7 +398,6 @@ function PaymentLinkDetail({ location }) {
               buyerName={buyerName}
               buyerPhoneNumber={buyerPhone}
               currency={productCurrency}
-              qty={selectedQty}
               amount={calculateTotalPrice()}
               paysofterPublicKey={paysofterPublicKey}
               onSuccess={onSuccess}
@@ -407,6 +405,8 @@ function PaymentLinkDetail({ location }) {
               referenceId={`RID${Math.floor(
                 Math.random() * 10000000000000000
               )}`}
+              qty={selectedQty}
+              productName={paymentLinks?.payment_name}
               showPromiseOption={showPromiseOption}
               showFundOption={showFundOption}
               showCardOption={showCardOption}

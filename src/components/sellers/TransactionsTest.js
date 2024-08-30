@@ -6,12 +6,14 @@ import { getUserTransactionsTest } from "../../redux/actions/transactionActions"
 import Message from "../Message";
 import Loader from "../Loader";
 import Pagination from "../Pagination";
-import {formatAmount} from "../FormatAmount";
+import { formatAmount } from "../FormatAmount";
 
 function TransactionsTest() {
   const dispatch = useDispatch();
 
-  const getUserTransactionsTestState = useSelector((state) => state.getUserTransactionsTestState);
+  const getUserTransactionsTestState = useSelector(
+    (state) => state.getUserTransactionsTestState
+  );
   const { loading, transactions, error } = getUserTransactionsTestState;
   console.log("TransactionsTest:", transactions);
 
@@ -38,23 +40,29 @@ function TransactionsTest() {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <> 
+        <>
           {currentItems.length === 0 ? (
-            <div className="text-center py-3">Test transactions appear here.</div>
+            <div className="text-center py-3">
+              Test transactions appear here.
+            </div>
           ) : (
             <Table striped bordered hover responsive className="table-sm">
               <thead>
                 <tr>
                   <th>SN</th>
-                  <th>Payment ID</th>
+                  <th>Reference ID</th>
                   <th>Seller</th>
-                  <th>Payer</th> 
+                  <th>Payer</th>
                   <th>Amount</th>
                   <th>Payment Method</th>
                   <th>Currency</th>
                   <th>Successful</th>
                   <th>Payment Provider</th>
                   <th>Transaction ID</th>
+                  <th>Buyer Name</th>
+                  <th>Buyer Phone</th>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
                   <th>Created At</th>
                 </tr>
               </thead>
@@ -62,7 +70,7 @@ function TransactionsTest() {
                 {currentItems.map((transaction, index) => (
                   <tr key={transaction.id}>
                     <td>{index + 1}</td>
-                    <td>{transaction.payment_id}</td>
+                    <td>{transaction.reference_id}</td>
                     <td>
                       <td>{transaction.seller_email}</td>
                     </td>
@@ -79,12 +87,16 @@ function TransactionsTest() {
                       ) : (
                         <i
                           className="fas fa-times-circle"
-                          style={{ fontSize: "16px", color: "red" }} 
+                          style={{ fontSize: "16px", color: "red" }}
                         ></i>
                       )}
                     </td>
                     <td>{transaction.payment_provider}</td>
                     <td>{transaction.transaction_id}</td>
+                    <td>{transaction.buyer_name}</td>
+                    <td>{transaction.buyer_phone}</td>
+                    <td>{transaction.product_name}</td>
+                    <td>{transaction.qty}</td>
                     <td>
                       {new Date(transaction.timestamp).toLocaleString("en-US", {
                         weekday: "long",
