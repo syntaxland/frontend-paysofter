@@ -10,13 +10,10 @@ import {
   UPDATE_USER_LAST_LOGIN_REQUEST,
   UPDATE_USER_LAST_LOGIN_SUCCESS,
   UPDATE_USER_LAST_LOGIN_FAIL,
-} from "../constants/userConstants";
-
-import axios from "axios";
-import axiosInstance from "../store";
+} from "../constants/userConstants"; 
+import axios from "../../axiosConfig";
 
 import { API_URL } from "../../config/apiConfig";
-// const API_URL = process.env.REACT_APP_API_URL;
 
 export const login = (loginData) => async (dispatch) => {
   try {
@@ -47,10 +44,10 @@ export const login = (loginData) => async (dispatch) => {
 
     // Set timer to refresh the access token after refreshTokenTime minutes (ms)
     // let refreshTokenTime = 1000 * 60 * 900; // ms * hr * mins
-    let refreshTokenTime = 1000 * 60 * 60 * 24 * 7; // ms * hr * mins
-    setTimeout(() => {
-      dispatch(refreshToken(data.refresh));
-    }, refreshTokenTime);
+    // let refreshTokenTime = 1000 * 60 * 60 * 24 * 7; // ms * hr * mins
+    // setTimeout(() => {
+    //   dispatch(refreshToken(data.refresh));
+    // }, refreshTokenTime);
 
     // window.location.href = "/dashboard";
   } catch (error) {
@@ -180,12 +177,12 @@ export const refreshToken = (refreshToken) => async (dispatch) => {
       config
     );
 
-    // Update the access token in Axios headers
-    // axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
-    // Update the access token in Axios headers
-    axiosInstance.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${data.access}`;
+    // // Update the access token in Axios headers
+    // // axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
+    // // Update the access token in Axios headers
+    // axiosInstance.defaults.headers.common[
+    //   "Authorization"
+    // ] = `Bearer ${data.access}`;
 
     // Save the new access token in local storage
     localStorage.setItem("userInfo", JSON.stringify(data));

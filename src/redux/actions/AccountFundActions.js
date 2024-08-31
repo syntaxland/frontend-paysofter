@@ -1,5 +1,6 @@
 // AccountFundActions.js
-import axios from "axios";
+// import axios from "axios";
+import axios from "../../axiosConfig";
 import {
   USER_FUND_ACCOUNT_REQUEST,
   USER_FUND_ACCOUNT_SUCCESS,

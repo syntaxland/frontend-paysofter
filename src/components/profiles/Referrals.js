@@ -9,10 +9,20 @@ import {
 import Loader from "../Loader";
 import Message from "../Message";
 import QRCode from "qrcode.react";
+// import { QRCodeSVG } from "qrcode.react";
 
 function Referrals() {
   const dispatch = useDispatch();
-  const qrCodeRef = useRef(null); 
+  const qrCodeRef = useRef(null);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+      window.location.href = "/login";
+    }
+  }, [userInfo]);
 
   const referralState = useSelector((state) => state.referral);
   const { referralLink, referralCode, referralError, loading } = referralState;
@@ -52,7 +62,7 @@ function Referrals() {
       navigator
         .share({
           title: "Referral Link",
-          text: "Check out this referral link!",
+          text: `Check out ${userInfo.username}'s referral link!`,
           url: referralLink,
         })
         .then(() => console.log("Shared successfully"))
@@ -87,11 +97,11 @@ function Referrals() {
           .share({
             files: [file],
             title: "QR Code",
-            text: "Scan this QR code to use the referral link!",
+            text: `Scan ${userInfo.username}'s QR code to use the referral link!`,
           })
           .catch((error) => console.error("Share failed:", error));
       } else {
-        downloadQRCode(); 
+        downloadQRCode();
       }
     });
   };
@@ -184,8 +194,36 @@ function Referrals() {
               </div>
               <hr />
               <h5 className="pt-3">Your Referral QR Code:</h5>
-              <div ref={qrCodeRef}>
+              {/* <div ref={qrCodeRef}>
                 <QRCode value={referralLink} size={150} />
+              </div> */}
+
+              {/* <QRCodeSVG
+                value={referralLink}
+                size={150}
+                bgColor="#fff"
+                // fgColor="#007bff"
+                // level="L"
+              /> */}
+
+              <div
+                ref={qrCodeRef}
+                style={{
+                  padding: "20px",
+                  backgroundColor: "#6c757d",
+                  width: "190px",
+                  height: "190px",
+                  borderRadius: "10px",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                }}
+              >
+                <QRCode
+                  value={referralLink}
+                  size={150}
+                  bgColor="#fff"
+                  fgColor="#007bff"
+                  level="L"
+                />
               </div>
               <Button
                 variant="link"
