@@ -1,5 +1,5 @@
 // PaymentLinkDetail.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Container, Row, Col, Modal } from "react-bootstrap";
 import { getPaymentLinkDetail } from "../../redux/actions/paymentActions";
@@ -10,9 +10,12 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import Select from "react-select";
 import { Paysofter } from "react-paysofter";
+import QRCode from "qrcode.react";
 
 function PaymentLinkDetail({ location }) {
   const dispatch = useDispatch();
+  const linkRef = useRef(null);
+
   const [sellerUsername, setSellerUsername] = useState("");
   const [pk, setPk] = useState("");
   // console.log("pk, sellerUsername:", pk, sellerUsername);
@@ -53,7 +56,7 @@ function PaymentLinkDetail({ location }) {
     isSellerApiKeyLive,
   } = getPaymentLinkDetailState;
 
-  // console.log("paymentLinks:", paymentLinks);
+  console.log("paymentLinks:", paymentLinks?.payment_link);
 
   const [paymentInitiated, setPaymentInitiated] = useState(false);
 
@@ -65,6 +68,7 @@ function PaymentLinkDetail({ location }) {
   const [productCurrency, setProductCurrency] = useState("");
   const [productQty, setProductQty] = useState("");
   const [showQty, setShowQty] = useState("");
+  const [paymentLink, setPaymentLink] = useState("");
 
   useEffect(() => {
     if (paymentLinks) {
@@ -76,6 +80,7 @@ function PaymentLinkDetail({ location }) {
       setShowCardOption(paymentLinks.show_card_option);
       setProductAmount(paymentLinks.amount);
       setProductCurrency(paymentLinks.currency);
+      setPaymentLink(paymentLinks.payment_link);
       setProductQty(paymentLinks.qty);
       setShowQty(paymentLinks.show_qty);
     }
@@ -130,7 +135,13 @@ function PaymentLinkDetail({ location }) {
   const calculateTotalPrice = () => {
     return selectedQty * productAmount;
   };
-  console.log("qty:", selectedQty, 'amt:', calculateTotalPrice(), productCurrency);
+  console.log(
+    "qty:",
+    selectedQty,
+    "amt:",
+    calculateTotalPrice(),
+    productCurrency
+  );
 
   const handleFieldChange = (fieldName, value) => {
     switch (fieldName) {
@@ -207,7 +218,7 @@ function PaymentLinkDetail({ location }) {
             </Col>
 
             <Col md={6}>
-              {paymentLinks?.payment_qrcode && (
+              {/* {paymentLinks?.payment_qrcode && (
                 <div>
                   <img
                     src={paymentLinks.payment_qrcode}
@@ -216,7 +227,27 @@ function PaymentLinkDetail({ location }) {
                     style={{ width: "100px", height: "100px" }}
                   />
                 </div>
-              )}
+              )} */}
+
+              <div
+                ref={linkRef}
+                style={{
+                  padding: "20px",
+                  backgroundColor: "#6c757d",
+                  width: "140px",
+                  height: "140px",
+                  borderRadius: "10px",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                }}
+              >
+                <QRCode
+                  value={paymentLink}
+                  size={100}
+                  bgColor="#fff"
+                  fgColor="#343a40"
+                  // level="L"
+                />
+              </div>
             </Col>
           </Row>
 
@@ -226,7 +257,7 @@ function PaymentLinkDetail({ location }) {
                 src={paymentLinks?.payment_image}
                 alt="Product"
                 className="img-fluid"
-                style={{ width: "40px", height: "40px" }}
+                style={{ width: "80px", height: "80px" }}
               />
             )}
             <h6 className="text-center mr-2 py-2">
