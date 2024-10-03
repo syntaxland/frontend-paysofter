@@ -84,7 +84,7 @@ const MessageInbox = () => {
             <Loader />
           ) : (
             <>
-              {currentItems.length === 0 ? (
+              {currentItems?.length === 0 ? (
                 <div className="text-center py-3">
                   Inbox messages appear here.
                 </div>

@@ -4,7 +4,33 @@ import { useSelector } from "react-redux";
 
 import { Row, Col, Container, Accordion, Button, Form } from "react-bootstrap";
 import Message from "../Message";
-import Loader from "../Loader";
+import Loader from "../Loader"; 
+
+// Shared copyToClipboard function
+const copyToClipboard = (text) => {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        console.log("Copied to clipboard successfully!");
+      },
+      (err) => {
+        console.error("Failed to copy: ", err);
+      }
+    );
+  } else {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand("copy");
+      console.log("Fallback: Copied to clipboard successfully!");
+    } catch (err) {
+      console.error("Fallback: Unable to copy", err);
+    }
+    document.body.removeChild(textArea);
+  }
+};
 
 function ApiEndPoints() {
   const userProfile = useSelector((state) => state.userProfile);
@@ -15,45 +41,53 @@ function ApiEndPoints() {
   const [testSecretKeyVisible, setTestSecretKeyVisible] = useState(false);
   const [isTestKeyCopied, setIsTestKeyCopied] = useState(false);
 
-  const [isLiveSecretKeyCopied, setIsLiveSecretKeyCopied] = useState(false);
+  const [isLiveSecretKeyCopied, setIsLiveSecretKeyCopied] = useState(false); 
   const [liveSecretKeyVisible, setLiveSecretKeyVisible] = useState(false);
   const [isLiveKeyCopied, setIsLiveKeyCopied] = useState(false);
 
-  const copyToClipboardTestSecretKey = (text) => {
-    navigator.clipboard.writeText(text);
-    setIsTestSecretKeyCopied(true);
+  const handleCopy = (text, setCopyState) => {
+    copyToClipboard(text);
+    setCopyState(true);
     setTimeout(() => {
-      setIsTestSecretKeyCopied(false);
+      setCopyState(false);
     }, 3000);
   };
 
-  const copyToClipboardTestKey = (text) => {
-    navigator.clipboard.writeText(text);
-    setIsTestKeyCopied(true);
-    setTimeout(() => {
-      setIsTestKeyCopied(false);
-    }, 3000);
-  };
+  // const copyToClipboardTestSecretKey = (text) => {
+  //   navigator.clipboard.writeText(text);
+  //   setIsTestSecretKeyCopied(true); 
+  //   setTimeout(() => {
+  //     setIsTestSecretKeyCopied(false);
+  //   }, 3000);
+  // };
+
+  // const copyToClipboardTestKey = (text) => {
+  //   navigator.clipboard.writeText(text);
+  //   setIsTestKeyCopied(true);
+  //   setTimeout(() => {
+  //     setIsTestKeyCopied(false);
+  //   }, 3000);
+  // };
 
   const toggleTestSecretKeyVisibility = () => {
     setTestSecretKeyVisible(!testSecretKeyVisible);
   };
 
-  const copyToClipboardLiveSecretKey = (text) => {
-    navigator.clipboard.writeText(text);
-    setIsLiveSecretKeyCopied(true);
-    setTimeout(() => {
-      setIsLiveSecretKeyCopied(false);
-    }, 3000);
-  };
+  // const copyToClipboardLiveSecretKey = (text) => {
+  //   navigator.clipboard.writeText(text);
+  //   setIsLiveSecretKeyCopied(true);
+  //   setTimeout(() => {
+  //     setIsLiveSecretKeyCopied(false);
+  //   }, 3000);
+  // };
 
-  const copyToClipboardLiveKey = (text) => {
-    navigator.clipboard.writeText(text);
-    setIsLiveKeyCopied(true);
-    setTimeout(() => {
-      setIsLiveKeyCopied(false);
-    }, 3000);
-  };
+  // const copyToClipboardLiveKey = (text) => {
+  //   navigator.clipboard.writeText(text);
+  //   setIsLiveKeyCopied(true);
+  //   setTimeout(() => {
+  //     setIsLiveKeyCopied(false);
+  //   }, 3000);
+  // };
 
   const toggleLiveSecretKeyVisibility = () => {
     setLiveSecretKeyVisible(!liveSecretKeyVisible);
@@ -81,7 +115,7 @@ function ApiEndPoints() {
                     <Form.Control
                       type="text"
                       name="first_name"
-                      value={profile.test_api_key}
+                      value={profile?.test_api_key}
                       readOnly
                     />
 
@@ -89,9 +123,10 @@ function ApiEndPoints() {
                       variant="outline"
                       className="rounded"
                       size="sm"
-                      onClick={() =>
-                        copyToClipboardTestKey(profile.test_api_key)
-                      }
+                      // onClick={() =>
+                      //   copyToClipboardTestKey(profile?.test_api_key)
+                      // }
+                      onClick={() => handleCopy(profile?.test_api_key, setIsTestKeyCopied)}
                     >
                       {isTestKeyCopied ? (
                         <span>
@@ -110,7 +145,7 @@ function ApiEndPoints() {
                     <Form.Control
                       type={testSecretKeyVisible ? "text" : "password"}
                       name="first_name"
-                      value={profile.test_api_secret_key}
+                      value={profile?.test_api_secret_key}
                       readOnly
                     />
                     <div>
@@ -136,11 +171,12 @@ function ApiEndPoints() {
                         variant="outline"
                         className="rounded"
                         size="sm"
-                        onClick={() =>
-                          copyToClipboardTestSecretKey(
-                            profile.test_api_secret_key
-                          )
-                        }
+                        // onClick={() =>
+                        //   copyToClipboardTestSecretKey(
+                        //     profile.test_api_secret_key
+                        //   )
+                        // }
+                        onClick={() => handleCopy(profile?.test_api_secret_key, setIsTestSecretKeyCopied)}
                       >
                         {isTestSecretKeyCopied ? (
                           <span>
@@ -175,9 +211,10 @@ function ApiEndPoints() {
                       variant="outline"
                       className="rounded"
                       size="sm"
-                      onClick={() =>
-                        copyToClipboardLiveKey(profile.live_api_key)
-                      }
+                      // onClick={() =>
+                      //   copyToClipboardLiveKey(profile.live_api_key)
+                      // }
+                      onClick={() => handleCopy(profile?.live_api_key, setIsLiveKeyCopied)}
                     >
                       {isLiveKeyCopied ? (
                         <span>
@@ -222,11 +259,12 @@ function ApiEndPoints() {
                         variant="outline"
                         className="rounded"
                         size="sm"
-                        onClick={() =>
-                          copyToClipboardLiveSecretKey(
-                            profile.live_api_secret_key
-                          )
-                        }
+                        // onClick={() =>
+                        //   copyToClipboardLiveSecretKey(
+                        //     profile.live_api_secret_key
+                        //   )
+                        // }
+                        onClick={() => handleCopy(profile?.live_api_secret_key, setIsLiveSecretKeyCopied)}
                       >
                         {isLiveSecretKeyCopied ? (
                           <span>

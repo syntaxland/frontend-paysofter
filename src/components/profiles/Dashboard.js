@@ -10,7 +10,7 @@ import { getUserProfile } from "../../redux/actions/userProfileActions";
 import { Line, Pie } from "react-chartjs-2";
 import GetNgnAccountFundBalance from "../FundAccount/GetNgnAccountFundBalance";
 import GetUsdAccountFundBalance from "../FundAccount/GetUsdAccountFundBalance";
-import SelectCurrency from "../settings/SelectCurrency";
+import SelectCurrency from "../settings/SelectCurrency"; 
 import {
   Chart as ChartJS,
   ArcElement,

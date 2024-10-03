@@ -5,7 +5,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 // import Select from "react-select";
 import Message from "../Message";
 // import Loader from "../Loader";
-import PaymentScreen from "./PaymentScreen";
+import PaymentScreen from "./PaymentScreen"; 
 
 const FundAccount = ({ currency }) => {
   const [messsage, setMesssage] = useState("");

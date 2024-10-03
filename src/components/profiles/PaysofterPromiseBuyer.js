@@ -75,11 +75,11 @@ function PaysofterPromiseBuyer() {
   const formatAccountId = (accountId) => {
     const accountIdStr = String(accountId);
 
-    if (accountIdStr.length < 8) {
+    if (accountIdStr?.length < 8) {
       return accountIdStr;
     } else {
       const maskedPart =
-        "*".repeat(accountIdStr.length - 4) + accountIdStr.slice(-4);
+        "*".repeat(accountIdStr?.length - 4) + accountIdStr?.slice(-4);
       return maskedPart;
     }
   };
@@ -108,7 +108,7 @@ function PaysofterPromiseBuyer() {
             <Message variant="danger">{error}</Message>
           ) : (
             <>
-              {currentItems.length === 0 ? (
+              {currentItems?.length === 0 ? (
                 <div className="text-center py-3">Promises appear here.</div>
               ) : (
                 <Table
@@ -577,7 +577,7 @@ function PaysofterPromiseBuyer() {
               )}
               <Pagination
                 itemsPerPage={itemsPerPage}
-                totalItems={promises.length}
+                totalItems={promises?.length}
                 currentPage={currentPage}
                 paginate={paginate}
               />

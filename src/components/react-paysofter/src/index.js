@@ -8,7 +8,7 @@ import Loader from "./Loader";
 import MessageFixed from "./MessageFixed";
 import { PAYSOFTER_API_URL } from "./config/apiConfig";
 
-export function Paysofter({
+export function Paysofter({ 
   amount,
   currency,
   email,

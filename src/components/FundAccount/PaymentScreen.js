@@ -5,7 +5,7 @@ import React, {
   // useCallback
 } from "react";
 import { Button, Row, Col, Modal, ListGroup } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"; 
 import { getPaymentApiKeys } from "../../redux/actions/paymentActions";
 import { fundUserAccount } from "../../redux/actions/AccountFundActions";
 import PaystackUsd from "./PaystackUsd";
@@ -13,8 +13,8 @@ import Loader from "../Loader";
 import Message from "../Message";
 import { formatAmount } from "../FormatAmount";
 import Paystack from "./Paystack";
-import { Paysofter } from "../react-paysofter/src/index";
-// import { Paysofter } from "react-paysofter";
+// import { Paysofter } from "../react-paysofter/src/index";
+import { Paysofter } from "react-paysofter";
 
 function PaymentScreen({ amount, currency }) {
   const dispatch = useDispatch();

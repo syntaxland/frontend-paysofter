@@ -45,7 +45,7 @@ function PaysofterPromise({ history }) {
   const handleConfirmPromiseOpen = (promise) => {
     setSelectedPromise(promise);
     setShowConfirmPromise(true);
-  };
+  }; 
 
   const handleConfirmPromiseClose = () => {
     setShowConfirmPromise(false);

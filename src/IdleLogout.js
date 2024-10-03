@@ -5,7 +5,7 @@ import { logout } from "./redux/actions/userActions";
 
 const IdleLogout = () => {
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.userLogin);
+  const { userInfo } = useSelector((state) => state.userLogin); 
 
   const idleTimeout = useRef(null);
 

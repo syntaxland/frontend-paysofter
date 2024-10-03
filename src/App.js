@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import HomeScreen from "./components/screens/HomeScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
 import LoginScreen from "./components/screens/LoginScreen";
-import FundAccount from "./components/FundAccount/FundAccount";
+import FundAccount from "./components/FundAccount/FundAccount"; 
 import CreditPointRequestScreen from "./components/screens/CreditPointRequestScreen";
 import DocumentationScreen from "./components/screens/DocumentationScreen";
 
