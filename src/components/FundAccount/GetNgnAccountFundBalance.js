@@ -10,7 +10,7 @@ import ToggleAccountSettings from "../settings/ToggleAccountSettings";
 import FundAccount from "./FundAccount";
 import { formatAmount } from "../FormatAmount";
 
-const GetNgnAccountFundBalance = ({ currency }) => {
+const GetNgnAccountFundBalance = ({ currency }) => { 
   const dispatch = useDispatch();
   // const history = useHistory();
 

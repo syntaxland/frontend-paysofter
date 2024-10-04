@@ -9,7 +9,7 @@ import ToggleUsdAccountSettings from "../settings/ToggleUsdAccountSettings";
 import FundAccount from "./FundAccount";
 import { formatAmount } from "../FormatAmount";
 
-const GetUsdAccountFundBalance = ({currency}) => {
+const GetUsdAccountFundBalance = ({currency}) => { 
   const dispatch = useDispatch();
 
   const getUserUsdAccountFundBalanceState = useSelector(

@@ -8,7 +8,7 @@ import Loader from "../Loader";
 import Message from "../Message";
 import Select from "react-select";
 
-const CURRENCY_CHOICES = [ 
+const CURRENCY_CHOICES = [  
   ["USD", "USD"],
   ["NGN", "NGN"],
 ];

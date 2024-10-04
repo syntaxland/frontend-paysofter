@@ -148,13 +148,13 @@ function CardPayment({
     if (paymentSuccess && !hasHandledSuccess) {
       setHasHandledSuccess(true);
       setShowSuccessMessage(true);
-      handleOnSuccess();
+      // handleOnSuccess();
       setTimeout(() => {
         setShowSuccessMessage(false);
         setShowSuccessScreen(true);
       }, 3000);
     }
-  }, [paymentSuccess, handleOnSuccess, hasHandledSuccess]);
+  }, [paymentSuccess, hasHandledSuccess]);
 
   return (
     <div>

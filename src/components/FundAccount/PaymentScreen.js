@@ -5,14 +5,14 @@ import React, {
   // useCallback
 } from "react";
 import { Button, Row, Col, Modal, ListGroup } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux"; 
+import { useSelector, useDispatch } from "react-redux";
 import { getPaymentApiKeys } from "../../redux/actions/paymentActions";
 import { fundUserAccount } from "../../redux/actions/AccountFundActions";
-import PaystackUsd from "./PaystackUsd";
 import Loader from "../Loader";
 import Message from "../Message";
 import { formatAmount } from "../FormatAmount";
 import Paystack from "./Paystack";
+import PaystackUsd from "./PaystackUsd";
 // import { Paysofter } from "../react-paysofter/src/index";
 import { Paysofter } from "react-paysofter";
 
@@ -141,6 +141,11 @@ function PaymentScreen({ amount, currency }) {
             {error && <Message variant="danger">{error}</Message>}
             {fundLoading && <Loader />}
             {fundError && <Message variant="danger">{fundError}</Message>}
+            {success && (
+              <Message variant="success">
+                Your account funded with {formatAmount(amount)} {currency}.
+              </Message>
+            )}
 
             <div className="text-center py-2">
               <ListGroup>
@@ -234,6 +239,9 @@ function PaymentScreen({ amount, currency }) {
                     currency={currency}
                     amount={amount}
                     userEmail={userEmail}
+                    paystackPublicKey={paystackPublicKey}
+                    onSuccess={onSuccess}
+                    onClose={onClose}
                   />
                 )}
               </div>
@@ -247,6 +255,9 @@ function PaymentScreen({ amount, currency }) {
                     currency={currency}
                     amount={amount}
                     userEmail={userEmail}
+                    paystackPublicKey={paystackPublicKey}
+                    onSuccess={onSuccess}
+                    onClose={onClose}
                   />
                 )}
               </div>
