@@ -6,7 +6,7 @@ import Loader from "../Loader";
 import Message from "../Message";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../FormContainer";
-import { login, updateUserLastLogin } from "../../redux/actions/userActions";
+import { login, updateUserLastLogin } from "../../redux/actions/userActions"; 
 // import GoogleLoginScreen from "./GoogleLoginScreen";
 
 function LoginScreen({ location }) {
@@ -22,6 +22,16 @@ function LoginScreen({ location }) {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { error, userInfo, success } = userLogin;
+
+  useEffect(() => {
+    if (userInfo && userInfo.is_verified) {
+      setSuccessMessage("You are already logged in.");
+      const timer = setTimeout(() => {
+        history.push("/"); 
+      }, 3000); 
+      return () => clearTimeout(timer); 
+    }
+  }, [userInfo, history]);
 
   // const handleGoogleLoginClick = () => {
   //   setShowGoogleLogin(true);
